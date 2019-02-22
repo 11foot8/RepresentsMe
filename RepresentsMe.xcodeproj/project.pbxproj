@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		13287BB92220479B00622CD4 /* OfficialScraperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BB82220479B00622CD4 /* OfficialScraperTests.swift */; };
-		13287BBB2220490E00622CD4 /* apikey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBA2220490E00622CD4 /* apikey.swift */; };
 		13287BBD222065D400622CD4 /* OfficialScraperTestsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */; };
+		13287BC02220BEA300622CD4 /* apikey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBA2220490E00622CD4 /* apikey.swift */; };
 		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
 		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
 		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
@@ -96,6 +96,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13287BC22220C09A00622CD4 /* OfficialScraper */ = {
+			isa = PBXGroup;
+			children = (
+				13527111221F74AB00442AA6 /* JSONData.swift */,
+				13527115221F74AC00442AA6 /* JSONDivision.swift */,
+				13527114221F74AB00442AA6 /* JSONOffice.swift */,
+				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
+				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
+				1352711F221F8AA200442AA6 /* Official.swift */,
+				1352711B221F793800442AA6 /* ParserError.swift */,
+			);
+			path = OfficialScraper;
+			sourceTree = "<group>";
+		};
 		3B1EFD47221F06E9003176BF = {
 			isa = PBXGroup;
 			children = (
@@ -119,13 +133,8 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
-				13527111221F74AB00442AA6 /* JSONData.swift */,
-				13527115221F74AC00442AA6 /* JSONDivision.swift */,
-				13527114221F74AB00442AA6 /* JSONOffice.swift */,
-				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
-				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
-				1352711F221F8AA200442AA6 /* Official.swift */,
-				1352711B221F793800442AA6 /* ParserError.swift */,
+				13287BC22220C09A00622CD4 /* OfficialScraper */,
+				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD55221F06E9003176BF /* ViewController.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
@@ -143,7 +152,6 @@
 				3B1EFD6B221F06EC003176BF /* RepresentsMeTests.swift */,
 				3B1EFD6D221F06EC003176BF /* Info.plist */,
 				13287BB82220479B00622CD4 /* OfficialScraperTests.swift */,
-				13287BBA2220490E00622CD4 /* apikey.swift */,
 				13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */,
 			);
 			path = RepresentsMeTests;
@@ -298,6 +306,7 @@
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
+				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,7 +317,6 @@
 			files = (
 				3B1EFD6C221F06EC003176BF /* RepresentsMeTests.swift in Sources */,
 				13287BB92220479B00622CD4 /* OfficialScraperTests.swift in Sources */,
-				13287BBB2220490E00622CD4 /* apikey.swift in Sources */,
 				13287BBD222065D400622CD4 /* OfficialScraperTestsData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
