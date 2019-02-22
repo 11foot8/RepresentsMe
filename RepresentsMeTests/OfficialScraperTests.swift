@@ -59,6 +59,48 @@ class OfficialScraperTests: XCTestCase {
         XCTAssertNil(officials)
     }
     
+    /// Test that an error is thrown if a division is missing a name
+    func testDivisionMissingName() {
+        let json = OfficialScraperTestsData.invalid_division_json_string
+        let data:Data = json.data(using: .utf8)!
+        do {
+            let _ = try JSONDecoder().decode(JSONDivision.self, from: data)
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        } catch ParserError.missingRequiredFieldError(let message) {
+            XCTAssertEqual(message, "JSONDivision missing required field 'name'")
+        } catch {
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        }
+    }
+    
+    /// Test that an error is thrown if an office is missing a name
+    func testOfficeMissingName() {
+        let json = OfficialScraperTestsData.invalid_office_json_string
+        let data:Data = json.data(using: .utf8)!
+        do {
+            let _ = try JSONDecoder().decode(JSONOffice.self, from: data)
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        } catch ParserError.missingRequiredFieldError(let message) {
+            XCTAssertEqual(message, "JSONOffice missing required field 'name'")
+        } catch {
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        }
+    }
+    
+    /// Test that an error is thrown if an official is missing a name
+    func testOfficialMissingName() {
+        let json = OfficialScraperTestsData.invalid_official_json_string
+        let data:Data = json.data(using: .utf8)!
+        do {
+            let _ = try JSONDecoder().decode(JSONOfficial.self, from: data)
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        } catch ParserError.missingRequiredFieldError(let message) {
+            XCTAssertEqual(message, "JSONOfficial missing required field 'name'")
+        } catch {
+            XCTFail("Did not throw a ParserError.missingRequiredFieldError")
+        }
+    }
+    
     /// Makes the request.
     ///
     /// - Parameter address:    The address to request for

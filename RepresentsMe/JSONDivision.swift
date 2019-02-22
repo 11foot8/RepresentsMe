@@ -24,7 +24,6 @@ struct JSONDivision: Decodable {
     /// - Throws: ParserError.missingRequiredField if name is not present.
     init(from decoder: Decoder) throws {
         let values = try decodeContainer(decoder: decoder)
-        
         if values.contains(.name) {
             self.name = try values.decode(String.self, forKey: .name)
         } else {

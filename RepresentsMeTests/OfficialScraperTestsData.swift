@@ -11,6 +11,7 @@ import Foundation
 
 class OfficialScraperTestsData {
     
+    // The Array of expected officials for testScrapingData()
     static let expectedOfficials:[Official] = [
         Official(0,
                  "Donald J. Trump",
@@ -399,4 +400,83 @@ class OfficialScraperTestsData {
                  "County Treasurer",
                  "Travis County"),
     ]
+    
+    // The JSON string for testDivisionMissingName()
+    static let invalid_division_json_string =
+        """
+        {
+        "ocd-division/country:us/state:tx": {
+           "officeIndices": [
+            2,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11
+           ]
+          }
+        }
+        """
+    
+    // The JSON string for testOfficeMissingName()
+    static let invalid_office_json_string =
+        """
+        {
+          "divisionId": "ocd-division/country:us",
+          "levels": [
+           "country"
+          ],
+          "roles": [
+           "headOfState",
+           "headOfGovernment"
+          ],
+          "officialIndices": [
+           0
+          ]
+        }
+        """
+    
+    // The JSON string for testOfficialMissingaName()
+    static let invalid_official_json_string =
+        """
+        {
+           "address": [
+            {
+             "line1": "The White House",
+             "line2": "1600 Pennsylvania Avenue NW",
+             "city": "Washington",
+             "state": "DC",
+             "zip": "20500"
+            }
+           ],
+           "party": "Republican Party",
+           "phones": [
+            "(202) 456-1111"
+           ],
+           "urls": [
+            "http://www.whitehouse.gov/"
+           ],
+           "photoUrl": "https://www.whitehouse.gov/sites/whitehouse.gov/files/images/45/PE%20Color.jpg",
+           "channels": [
+            {
+             "type": "GooglePlus",
+             "id": "+whitehouse"
+            },
+            {
+             "type": "Facebook",
+             "id": "whitehouse"
+            },
+            {
+             "type": "Twitter",
+             "id": "potus"
+            },
+            {
+             "type": "YouTube",
+             "id": "whitehouse"
+            }
+           ]
+        }
+        """
 }
