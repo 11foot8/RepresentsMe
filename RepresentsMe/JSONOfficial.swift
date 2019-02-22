@@ -9,13 +9,13 @@
 /// Struct to represent an official from the JSON string. Used to build
 /// Official objects.
 struct JSONOfficial: Decodable {
-    var name:String                     // The name of the offical
-    var photoUrl:String                 // URL to photo
-    var party:String                    // The party of the official
-    var address:[[String: String]]      // Array of addresses for the official
-    var phones:[String]                 // Array of phones for the official
-    var urls:[String]                   // Array of urls for the official
-    var channels:[[String: String]]     // Array of social media for the offical
+    var name:String = ""                     // The name of the offical
+    var photoUrl:String = ""                 // URL to photo
+    var party:String = ""                    // The party of the official
+    var address:[[String: String]] = []      // Array of addresses
+    var phones:[String] = []                 // Array of phones for the official
+    var urls:[String] = []                   // Array of urls for the official
+    var channels:[[String: String]] = []     // Array of social media accounts
     
     /// CodingKeys for decoding into an official
     enum CodingKeys: String, CodingKey {
@@ -33,7 +33,7 @@ struct JSONOfficial: Decodable {
     ///
     /// - Throws: ParserError.missingRequiredField if name is not present.
     init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let values = try decodeContainer(decoder: decoder)
         
         if values.contains(.name) {
             self.name = try values.decode(String.self, forKey: .name)
@@ -44,40 +44,45 @@ struct JSONOfficial: Decodable {
         
         if values.contains(.photoUrl) {
             self.photoUrl = try values.decode(String.self, forKey: .photoUrl)
-        } else {
-            self.photoUrl = ""
         }
         
         if values.contains(.party) {
             self.party = try values.decode(String.self, forKey: .party)
-        } else {
-            self.party = ""
         }
         
         if values.contains(.address) {
             self.address = try values.decode([[String: String]].self,
                                              forKey: .address)
-        } else {
-            self.address = []
         }
         
         if values.contains(.phones) {
             self.phones = try values.decode([String].self, forKey: .phones)
-        } else {
-            self.phones = []
         }
         
         if values.contains(.urls) {
             self.urls = try values.decode([String].self, forKey: .urls)
-        } else {
-            self.urls = []
         }
         
         if values.contains(.channels) {
             self.channels = try values.decode([[String: String]].self,
                                               forKey: .channels)
-        } else {
-            self.channels = []
         }
+    }
+    
+    /// Decodes the JSON into a container converting any thrown errors into
+    /// a ParserError.
+    ///
+    /// - Parameter decoder:    the decoder to use
+    ///
+    /// - Returns: the KeyedDecodingContainer
+    ///
+    /// - Throws: ParserError.decodeError if failed to decode
+    private func decodeContainer(decoder:Decoder) throws ->
+        KeyedDecodingContainer<CodingKeys> {
+            do {
+                return try decoder.container(keyedBy: CodingKeys.self)
+            } catch {
+                throw ParserError.decodeError(error.localizedDescription)
+            }
     }
 }

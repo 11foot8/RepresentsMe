@@ -37,7 +37,7 @@ class OfficialScraper {
     public static func getForAddress(
         address:String,
         apikey:String,
-        completion: @escaping ([Official]?, Error?) -> ()) throws {
+        completion: @escaping ([Official]?, ParserError?) -> ()) throws {
 
         
         // Build the request
@@ -58,7 +58,7 @@ class OfficialScraper {
                 return completion(Official.buildOfficials(data: jsonData), nil)
             } catch {
                 // Error occurred while parsing JSON
-                return completion(nil, error)
+                return completion(nil, error as? ParserError)
             }
         }.resume()
     }

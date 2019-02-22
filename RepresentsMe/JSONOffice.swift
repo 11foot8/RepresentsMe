@@ -9,11 +9,11 @@
 /// Struct to represent an office listed in the JSON string. Used to build
 /// Office objects.
 struct JSONOffice: Decodable {
-    var name:String             // The name of the office
-    var divisionId:String       // The division of the office
-    var levels:[String]         // The levels covered by the office
-    var roles:[String]          // The roles covered by the office
-    var officialIndices:[Int]   // The officials that belong in this office
+    var name:String = ""             // The name of the office
+    var divisionId:String = ""       // The division of the office
+    var levels:[String] = []         // The levels covered by the office
+    var roles:[String] = []          // The roles covered by the office
+    var officialIndices:[Int] = []   // The officials that belong in this office
     
     /// CodingKeys for decoding into an Office
     enum CodingKeys: String, CodingKey {
@@ -29,7 +29,7 @@ struct JSONOffice: Decodable {
     ///
     /// - Throws: ParserError.missingRequiredField if name is not present.
     init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let values = try decodeContainer(decoder: decoder)
         
         if values.contains(.name) {
             self.name = try values.decode(String.self, forKey: .name)
@@ -40,27 +40,36 @@ struct JSONOffice: Decodable {
         
         if values.contains(.divisionId) {
             self.divisionId = try values.decode(String.self, forKey: .divisionId)
-        } else {
-            self.divisionId = ""
         }
         
         if values.contains(.levels) {
             self.levels = try values.decode([String].self, forKey: .levels)
-        } else {
-            self.levels = []
         }
         
         if values.contains(.roles) {
             self.roles = try values.decode([String].self, forKey: .roles)
-        } else {
-            self.roles = []
         }
         
         if values.contains(.officialIndices) {
             self.officialIndices = try values.decode([Int].self,
                                                      forKey: .officialIndices)
-        } else {
-            self.officialIndices = []
         }
+    }
+    
+    /// Decodes the JSON into a container converting any thrown errors into
+    /// a ParserError.
+    ///
+    /// - Parameter decoder:    the decoder to use
+    ///
+    /// - Returns: the KeyedDecodingContainer
+    ///
+    /// - Throws: ParserError.decodeError if failed to decode
+    private func decodeContainer(decoder:Decoder) throws ->
+        KeyedDecodingContainer<CodingKeys> {
+            do {
+                return try decoder.container(keyedBy: CodingKeys.self)
+            } catch {
+                throw ParserError.decodeError(error.localizedDescription)
+            }
     }
 }
