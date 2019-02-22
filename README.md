@@ -6,8 +6,12 @@ Engaging voters from Objective-C to Shining Sea 🇺🇸
 
 🎉 The following functionality is completed: 🎉
 
+### Pre-Work
 - [X] Storyboard wireframe
 - [X] Loading Screen
+
+### Alpha
+- [X] Storyboard constraints
 
 ## Our Team
 - [Benjamin Singer](https://github.com/bzsinger)
