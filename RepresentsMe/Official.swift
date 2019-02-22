@@ -7,18 +7,34 @@
 //
 
 /// Class containing the information avaliable for a government official.
-class Official {
+class Official: Equatable {
     var index:Int                       // The order of the official. Closer to
                                         // zero means covers larger population
     var name:String                     // The name of the official
     var photoURL:String                 // The photo url of the official
     var party:String                    // The political party of the official
-    var addresses:[[String :String]]    // The addresses for the official
+    var addresses:[[String: String]]    // The addresses for the official
     var phones:[String]                 // The phones for the official
     var urls:[String]                   // The urls for the official
     var socialMedia:[[String: String]]  // The social media profiles
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
+    
+    /// Creates a default empty Official
+    init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
+         _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
+         _ socialMedia:[[String: String]], _ office:String, _ division:String) {
+        self.index = index
+        self.name = name
+        self.photoURL = photoURL
+        self.party = party
+        self.addresses = addresses
+        self.phones = phones
+        self.urls = urls
+        self.socialMedia = socialMedia
+        self.office = office
+        self.division = division
+    }
     
     /// Builds an Official
     ///
@@ -38,6 +54,21 @@ class Official {
         self.socialMedia = official.channels
         self.office = office.name
         self.division = division.name
+    }
+    
+    public func repr() -> String {
+        return "<Official " +
+            "\(self.index)," +
+            "\(self.name)," +
+            "\(self.photoURL)," +
+            "\(self.party)," +
+            "\(self.addresses)," +
+            "\(self.phones)," +
+            "\(self.urls)," +
+            "\(self.socialMedia)," +
+            "\(self.office)," +
+            "\(self.division)," +
+        "/>"
     }
     
     /// Factory method to build Officials given the JSON data
@@ -70,5 +101,20 @@ class Official {
             lhs.index < rhs.index
             
         })
+    }
+    
+    static func == (lhs: Official, rhs: Official) -> Bool {
+        return (
+            lhs.index == rhs.index &&
+            lhs.name == rhs.name &&
+            lhs.photoURL == rhs.photoURL &&
+            lhs.party == rhs.party &&
+            lhs.addresses == rhs.addresses &&
+            lhs.phones == rhs.phones &&
+            lhs.urls == rhs.urls &&
+            lhs.socialMedia == rhs.socialMedia &&
+            lhs.office == rhs.office &&
+            lhs.division == rhs.division
+        )
     }
 }
