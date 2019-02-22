@@ -13,6 +13,7 @@
 		13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527114221F74AB00442AA6 /* JSONOffice.swift */; };
 		1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527115221F74AC00442AA6 /* JSONDivision.swift */; };
 		1352711C221F793800442AA6 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711B221F793800442AA6 /* ParserError.swift */; };
+		13527120221F8AA200442AA6 /* Official.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711F221F8AA200442AA6 /* Official.swift */; };
 		3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD53221F06E9003176BF /* AppDelegate.swift */; };
 		3B1EFD56221F06E9003176BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD55221F06E9003176BF /* ViewController.swift */; };
 		3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD57221F06E9003176BF /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		13527114221F74AB00442AA6 /* JSONOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOffice.swift; sourceTree = "<group>"; };
 		13527115221F74AC00442AA6 /* JSONDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDivision.swift; sourceTree = "<group>"; };
 		1352711B221F793800442AA6 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
+		1352711F221F8AA200442AA6 /* Official.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Official.swift; sourceTree = "<group>"; };
 		3B1EFD50221F06E9003176BF /* RepresentsMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepresentsMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B1EFD55221F06E9003176BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				13527114221F74AB00442AA6 /* JSONOffice.swift */,
 				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
 				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
+				1352711F221F8AA200442AA6 /* Official.swift */,
 				1352711B221F793800442AA6 /* ParserError.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD55221F06E9003176BF /* ViewController.swift */,
@@ -283,6 +286,7 @@
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
+				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,

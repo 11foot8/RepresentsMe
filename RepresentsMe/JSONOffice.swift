@@ -26,14 +26,16 @@ struct JSONOffice: Decodable {
     
     /// Decodes the JSON for this Office defaulting attributes that are not
     /// present as keys in the JSON string.
+    ///
+    /// - Throws: ParserError.missingRequiredField if name is not present.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if values.contains(.name) {
             self.name = try values.decode(String.self, forKey: .name)
         } else {
-            self.name = ""
-            // TODO: raise error
+            throw ParserError.missingRequiredField(
+                "JSONOffice missing required field 'name'")
         }
         
         if values.contains(.divisionId) {

@@ -16,4 +16,7 @@ enum ParserError: Error {
     
     /// Thrown when failed to make the request.
     case requestFailed(String)
+    
+    /// Thrown when a JSON object is missing a required field.
+    case missingRequiredField(String)
 }
