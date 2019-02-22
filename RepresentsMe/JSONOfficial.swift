@@ -6,8 +6,8 @@
 //  Copyright © 2019 11foot8. All rights reserved.
 //
 
-// Struct to represent an official from the JSON string. Used to build
-// Official objects.
+/// Struct to represent an official from the JSON string. Used to build
+/// Official objects.
 struct JSONOfficial: Decodable {
     var name:String                     // The name of the offical
     var photoUrl:String                 // URL to photo
@@ -17,7 +17,7 @@ struct JSONOfficial: Decodable {
     var urls:[String]                   // Array of urls for the official
     var channels:[[String: String]]     // Array of social media for the offical
     
-    // CodingKeys for decoding into an official
+    /// CodingKeys for decoding into an official
     enum CodingKeys: String, CodingKey {
         case name
         case photoUrl
@@ -28,8 +28,8 @@ struct JSONOfficial: Decodable {
         case channels
     }
     
-    // Decodes the JSON for this Official defaulting attributes that are not
-    // present as keys in the JSON string.
+    /// Decodes the JSON for this Official defaulting attributes that are not
+    /// present as keys in the JSON string.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         

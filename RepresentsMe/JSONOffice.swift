@@ -6,8 +6,8 @@
 //  Copyright © 2019 11foot8. All rights reserved.
 //
 
-// Struct to represent an office listed in the JSON string. Used to build
-// Office objects.
+/// Struct to represent an office listed in the JSON string. Used to build
+/// Office objects.
 struct JSONOffice: Decodable {
     var name:String             // The name of the office
     var divisionId:String       // The division of the office
@@ -15,7 +15,7 @@ struct JSONOffice: Decodable {
     var roles:[String]          // The roles covered by the office
     var officialIndices:[Int]   // The officials that belong in this office
     
-    // CodingKeys for decoding into an Office
+    /// CodingKeys for decoding into an Office
     enum CodingKeys: String, CodingKey {
         case name
         case divisionId
@@ -24,8 +24,8 @@ struct JSONOffice: Decodable {
         case officialIndices
     }
     
-    // Decodes the JSON for this Office defaulting attributes that are not
-    // present as keys in the JSON string.
+    /// Decodes the JSON for this Office defaulting attributes that are not
+    /// present as keys in the JSON string.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
