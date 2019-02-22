@@ -7,9 +7,10 @@ Engaging voters from Objective-C to Shining Sea 🇺🇸
 🎉 The following functionality is completed: 🎉
 
 - [X] Storyboard wireframe
+- [X] Loading Screen
 
 ## Our Team
 - [Benjamin Singer](https://github.com/bzsinger)
 - [Jacob Hausmann](https://github.com/jeh97)
 - [Michael Tirtowidjojo](https://github.com/tirtow)
-- Varun Adiga
+- [Varun Adiga](https://github.com/varunadiga)
