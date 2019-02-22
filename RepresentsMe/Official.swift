@@ -16,6 +16,7 @@ class Official: Equatable {
     var addresses:[[String: String]]    // The addresses for the official
     var phones:[String]                 // The phones for the official
     var urls:[String]                   // The urls for the official
+    var emails:[String]                 // The emails for the official
     var socialMedia:[[String: String]]  // The social media profiles
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
@@ -28,19 +29,22 @@ class Official: Equatable {
     /// - Parameter party:          The political party of the official
     /// - Parameter addresses:      An Array of addresses for the official
     /// - Parameter phones:         An Array of phone numbers for the official
+    /// - Parameter emails:         An Array of emails for the official
     /// - Parameter urls:           An Array of URLs for the official
     /// - Parameter socialMedia:    An Array of social media accounts
     /// - Parameter office:         The name of the official's office
     /// - Parameter division:       The name of the office's division
     init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
          _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
-         _ socialMedia:[[String: String]], _ office:String, _ division:String) {
+         _ emails:[String], _ socialMedia:[[String: String]],
+         _ office:String, _ division:String) {
         self.index = index
         self.name = name
         self.photoURL = photoURL
         self.party = party
         self.addresses = addresses
         self.phones = phones
+        self.emails = emails
         self.urls = urls
         self.socialMedia = socialMedia
         self.office = office
@@ -62,6 +66,7 @@ class Official: Equatable {
         self.addresses = official.address
         self.phones = official.phones
         self.urls = official.urls
+        self.emails = official.emails
         self.socialMedia = official.channels
         self.office = office.name
         self.division = division.name
@@ -79,6 +84,7 @@ class Official: Equatable {
             "\(self.addresses)," +
             "\(self.phones)," +
             "\(self.urls)," +
+            "\(self.emails)," +
             "\(self.socialMedia)," +
             "\(self.office)," +
             "\(self.division)," +
@@ -134,6 +140,7 @@ class Official: Equatable {
             lhs.addresses == rhs.addresses &&
             lhs.phones == rhs.phones &&
             lhs.urls == rhs.urls &&
+            lhs.emails == rhs.emails &&
             lhs.socialMedia == rhs.socialMedia &&
             lhs.office == rhs.office &&
             lhs.division == rhs.division

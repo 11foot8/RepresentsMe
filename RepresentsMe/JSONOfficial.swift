@@ -15,6 +15,7 @@ struct JSONOfficial: Decodable {
     var address:[[String: String]] = []      // Array of addresses
     var phones:[String] = []                 // Array of phones for the official
     var urls:[String] = []                   // Array of urls for the official
+    var emails:[String] = []                 // Array of emails for the official
     var channels:[[String: String]] = []     // Array of social media accounts
     
     /// CodingKeys for decoding into an official
@@ -25,6 +26,7 @@ struct JSONOfficial: Decodable {
         case party
         case phones
         case urls
+        case emails
         case channels
     }
     
@@ -61,6 +63,10 @@ struct JSONOfficial: Decodable {
         
         if values.contains(.urls) {
             self.urls = try values.decode([String].self, forKey: .urls)
+        }
+        
+        if values.contains(.emails) {
+            self.emails = try values.decode([String].self, forKey: .emails)
         }
         
         if values.contains(.channels) {
