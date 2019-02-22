@@ -21,24 +21,11 @@ class OfficialScraperTests: XCTestCase {
 
     /// Test successful scraping of data
     func testScrapingData() {
-        var error:ParserError?
-        var officials:[Official]?
+        let result = makeRequest(address: "2317 Speedway, Austin, TX 78712",
+                                 apikey: civic_api_key)
+        let officials = result.0
+        let error = result.1
         
-        // Make the request
-        let expectation = self.expectation(description: "Scraping")
-        do {
-            try OfficialScraper.getForAddress(
-                address: "2317 Speedway, Austin, TX 78712",
-                apikey: civi_api_key) { o, e in
-                    error = e
-                    officials = o
-                    expectation.fulfill()
-            }
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
         XCTAssertNil(error)
         XCTAssertNotNil(officials)
         
@@ -53,6 +40,33 @@ class OfficialScraperTests: XCTestCase {
     
     /// Test that an error is received if an invalid address is given
     func testInvalidAddress() {
+        let result = makeRequest(address: "invalid", apikey: civic_api_key)
+        let officials = result.0
+        let error = result.1
+        
+        XCTAssertNotNil(error)
+        XCTAssertNil(officials)
+    }
+    
+    /// Test that an error is received if an invalid api key is given
+    func testInvalidAPIKey() {
+        let result = makeRequest(address: "2317 Speedway, Austin, TX 78712",
+                                 apikey: "invalid")
+        let officials = result.0
+        let error = result.1
+        
+        XCTAssertNotNil(error)
+        XCTAssertNil(officials)
+    }
+    
+    /// Makes the request.
+    ///
+    /// - Parameter address:    The address to request for
+    /// - Parameter apikey:     The apikey to use
+    ///
+    /// - Returns: a tuple with the resulting Officials and errors if any
+    func makeRequest(address:String, apikey:String,
+                     timeout:Double = 10) -> ([Official]?, ParserError?) {
         var error:ParserError?
         var officials:[Official]?
         
@@ -60,18 +74,17 @@ class OfficialScraperTests: XCTestCase {
         let expectation = self.expectation(description: "Scraping")
         do {
             try OfficialScraper.getForAddress(
-                address: "invalid",
-                apikey: civi_api_key) { o, e in
+                address: address,
+                apikey: apikey) { o, e in
                     error = e
                     officials = o
                     expectation.fulfill()
             }
         } catch {
-            XCTFail(error.localizedDescription)
+            return (officials, error as? ParserError)
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
-        XCTAssertNotNil(error)
-        XCTAssertNil(officials)
+        waitForExpectations(timeout: timeout, handler: nil)
+        return (officials, error)
     }
 }
