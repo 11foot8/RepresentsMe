@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
+		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
+		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
+		13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527114221F74AB00442AA6 /* JSONOffice.swift */; };
+		1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527115221F74AC00442AA6 /* JSONDivision.swift */; };
 		3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD53221F06E9003176BF /* AppDelegate.swift */; };
 		3B1EFD56221F06E9003176BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD55221F06E9003176BF /* ViewController.swift */; };
 		3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD57221F06E9003176BF /* Main.storyboard */; };
@@ -35,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13527111221F74AB00442AA6 /* JSONData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		13527112221F74AB00442AA6 /* JSONOfficial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOfficial.swift; sourceTree = "<group>"; };
+		13527113221F74AB00442AA6 /* OfficialScraper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialScraper.swift; sourceTree = "<group>"; };
+		13527114221F74AB00442AA6 /* JSONOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOffice.swift; sourceTree = "<group>"; };
+		13527115221F74AC00442AA6 /* JSONDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDivision.swift; sourceTree = "<group>"; };
 		3B1EFD50221F06E9003176BF /* RepresentsMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepresentsMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B1EFD55221F06E9003176BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +109,11 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
+				13527111221F74AB00442AA6 /* JSONData.swift */,
+				13527115221F74AC00442AA6 /* JSONDivision.swift */,
+				13527114221F74AB00442AA6 /* JSONOffice.swift */,
+				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
+				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD55221F06E9003176BF /* ViewController.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
@@ -260,8 +275,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B1EFD56221F06E9003176BF /* ViewController.swift in Sources */,
+				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
+				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
+				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
+				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
+				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -454,6 +475,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
