@@ -28,7 +28,7 @@ struct JSONDivision: Decodable {
         if values.contains(.name) {
             self.name = try values.decode(String.self, forKey: .name)
         } else {
-            throw ParserError.missingRequiredField(
+            throw ParserError.missingRequiredFieldError(
                 "JSONDivision missing required field 'name'")
         }
         

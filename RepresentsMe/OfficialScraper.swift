@@ -48,7 +48,7 @@ class OfficialScraper {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 // Error occurred, abort
-                return completion(nil, ParserError.requestFailed(
+                return completion(nil, ParserError.requestFailedError(
                     error?.localizedDescription ?? "Request failed."))
             }
             
@@ -102,7 +102,7 @@ class OfficialScraper {
         do {
             return try JSONDecoder().decode(JSONData.self, from: data)
         } catch {
-            throw ParserError.decodeError(error as! String)
+            throw ParserError.decodeError(error.localizedDescription)
         }
     }
 }

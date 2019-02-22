@@ -20,7 +20,18 @@ class Official: Equatable {
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
     
-    /// Creates a default empty Official
+    /// Creates an Official given the values for each field.
+    ///
+    /// - Parameter index:          The index of the official
+    /// - Parameter name:           The name of the official
+    /// - Parameter photoURL:       The URL to the photo of the official
+    /// - Parameter party:          The political party of the official
+    /// - Parameter addresses:      An Array of addresses for the official
+    /// - Parameter phones:         An Array of phone numbers for the official
+    /// - Parameter urls:           An Array of URLs for the official
+    /// - Parameter socialMedia:    An Array of social media accounts
+    /// - Parameter office:         The name of the official's office
+    /// - Parameter division:       The name of the office's division
     init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
          _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
          _ socialMedia:[[String: String]], _ office:String, _ division:String) {
@@ -56,6 +67,9 @@ class Official: Equatable {
         self.division = division.name
     }
     
+    /// Get a String representation of this Official
+    ///
+    /// - Returns: the representation
     public func repr() -> String {
         return "<Official " +
             "\(self.index)," +
@@ -103,6 +117,14 @@ class Official: Equatable {
         })
     }
     
+    /// Checks if two Officials are equal.
+    /// Two Officials are equal if all of their fields are equal.
+    ///
+    /// - Parameter lhs: an Official to check
+    /// - Parameter rhs: an Official to check
+    ///
+    /// - Returns: true if all fields in lhs equal the fields in rhs, false
+    ///            otherwise.
     static func == (lhs: Official, rhs: Official) -> Bool {
         return (
             lhs.index == rhs.index &&

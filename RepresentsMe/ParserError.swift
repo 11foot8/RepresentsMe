@@ -15,8 +15,11 @@ enum ParserError: Error {
     case decodeError(String)
     
     /// Thrown when failed to make the request.
-    case requestFailed(String)
+    case requestFailedError(String)
     
     /// Thrown when a JSON object is missing a required field.
-    case missingRequiredField(String)
+    case missingRequiredFieldError(String)
+    
+    /// Thrown when an invalid address is given
+    case invalidAddressError(String)
 }
