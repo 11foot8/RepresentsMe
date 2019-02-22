@@ -38,9 +38,7 @@ class OfficialScraper {
         address:String,
         apikey:String,
         completion: @escaping ([Official]?, Error?) -> ()) throws {
-        
-        // TODO: remove, For commandline
-        let runLoop = CFRunLoopGetCurrent()
+
         
         // Build the request
         let url = URL(string: try buildURL(address: address, apikey: apikey))
@@ -49,16 +47,10 @@ class OfficialScraper {
         // Make the request
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
-                // TODO: remove, for commandline
-                CFRunLoopStop(runLoop)
-                
                 // Error occurred, abort
                 return completion(nil, ParserError.requestFailed(
                     error?.localizedDescription ?? "Request failed."))
             }
-            
-            // TODO: remove, for commandline
-            CFRunLoopStop(runLoop)
             
             do {
                 // Try to parse the JSON
