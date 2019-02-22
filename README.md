@@ -13,4 +13,4 @@ Engaging voters from Objective-C to Shining Sea 🇺🇸
 - [Benjamin Singer](https://github.com/bzsinger)
 - [Jacob Hausmann](https://github.com/jeh97)
 - [Michael Tirtowidjojo](https://github.com/tirtow)
-- Varun Adiga
+- [Varun Adiga](https://github.com/varunadiga)
