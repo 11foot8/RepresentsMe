@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13287BB92220479B00622CD4 /* OfficialScraperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BB82220479B00622CD4 /* OfficialScraperTests.swift */; };
+		13287BBD222065D400622CD4 /* OfficialScraperTestsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */; };
+		13287BC02220BEA300622CD4 /* apikey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBA2220490E00622CD4 /* apikey.swift */; };
+		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
+		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
+		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
+		13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527114221F74AB00442AA6 /* JSONOffice.swift */; };
+		1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527115221F74AC00442AA6 /* JSONDivision.swift */; };
+		1352711C221F793800442AA6 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711B221F793800442AA6 /* ParserError.swift */; };
+		13527120221F8AA200442AA6 /* Official.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711F221F8AA200442AA6 /* Official.swift */; };
 		3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD53221F06E9003176BF /* AppDelegate.swift */; };
 		3B1EFD56221F06E9003176BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD55221F06E9003176BF /* ViewController.swift */; };
 		3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD57221F06E9003176BF /* Main.storyboard */; };
@@ -35,6 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13287BB82220479B00622CD4 /* OfficialScraperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialScraperTests.swift; sourceTree = "<group>"; };
+		13287BBA2220490E00622CD4 /* apikey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apikey.swift; sourceTree = "<group>"; };
+		13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialScraperTestsData.swift; sourceTree = "<group>"; };
+		13527111221F74AB00442AA6 /* JSONData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		13527112221F74AB00442AA6 /* JSONOfficial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOfficial.swift; sourceTree = "<group>"; };
+		13527113221F74AB00442AA6 /* OfficialScraper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialScraper.swift; sourceTree = "<group>"; };
+		13527114221F74AB00442AA6 /* JSONOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOffice.swift; sourceTree = "<group>"; };
+		13527115221F74AC00442AA6 /* JSONDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDivision.swift; sourceTree = "<group>"; };
+		1352711B221F793800442AA6 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
+		1352711F221F8AA200442AA6 /* Official.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Official.swift; sourceTree = "<group>"; };
 		3B1EFD50221F06E9003176BF /* RepresentsMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepresentsMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B1EFD55221F06E9003176BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +96,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13287BC22220C09A00622CD4 /* OfficialScraper */ = {
+			isa = PBXGroup;
+			children = (
+				13527111221F74AB00442AA6 /* JSONData.swift */,
+				13527115221F74AC00442AA6 /* JSONDivision.swift */,
+				13527114221F74AB00442AA6 /* JSONOffice.swift */,
+				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
+				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
+				1352711F221F8AA200442AA6 /* Official.swift */,
+				1352711B221F793800442AA6 /* ParserError.swift */,
+			);
+			path = OfficialScraper;
+			sourceTree = "<group>";
+		};
 		3B1EFD47221F06E9003176BF = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +133,8 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
+				13287BC22220C09A00622CD4 /* OfficialScraper */,
+				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD55221F06E9003176BF /* ViewController.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
@@ -115,6 +151,8 @@
 			children = (
 				3B1EFD6B221F06EC003176BF /* RepresentsMeTests.swift */,
 				3B1EFD6D221F06EC003176BF /* Info.plist */,
+				13287BB82220479B00622CD4 /* OfficialScraperTests.swift */,
+				13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */,
 			);
 			path = RepresentsMeTests;
 			sourceTree = "<group>";
@@ -259,9 +297,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
 				3B1EFD56221F06E9003176BF /* ViewController.swift in Sources */,
+				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
+				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
+				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
+				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
+				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
+				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
+				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +316,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B1EFD6C221F06EC003176BF /* RepresentsMeTests.swift in Sources */,
+				13287BB92220479B00622CD4 /* OfficialScraperTests.swift in Sources */,
+				13287BBD222065D400622CD4 /* OfficialScraperTestsData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +485,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -454,6 +503,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -472,6 +522,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -492,6 +543,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -511,6 +563,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -530,6 +583,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
