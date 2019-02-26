@@ -33,7 +33,6 @@ class MapViewController: UIViewController {
     @IBOutlet weak var goButton: UIButton!
     
     @IBAction func addressButtonTouchUp(_ sender: Any) {
-        print("address")
         let center = getCenterLocation(for: mapView)
         let time = Date()
         guard let previousLocation = self.previousLocation else { return }
@@ -46,7 +45,8 @@ class MapViewController: UIViewController {
         
     }
     @IBAction func goButtonTouchUp(_ sender: Any) {
-        print("go")
+        // TODO: Check address validity
+        // TODO: Send address to representative table view
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +134,7 @@ class MapViewController: UIViewController {
             let streetName = placemark.thoroughfare ?? ""
             let city = placemark.locality ?? ""
             let state = placemark.administrativeArea ?? ""
-            let country = placemark.country ?? ""
+//            let country = placemark.country ?? ""
             let zipcode = placemark.postalCode ?? ""
             
             DispatchQueue.main.async {
@@ -149,7 +149,6 @@ class MapViewController: UIViewController {
 
 extension MapViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("status")
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
         }
