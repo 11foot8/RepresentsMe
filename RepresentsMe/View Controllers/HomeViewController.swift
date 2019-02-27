@@ -23,11 +23,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        OfficialScraper.getForAddress(address: TEMP_ADDR, apikey: civic_api_key) { (officialList: [Official]?, error: ParserError?) in
+        OfficialScraper.getForAddress(address: TEMP_ADDR, apikey: civic_api_key) {
+            (officialList: [Official]?, error: ParserError?) in
             if error == nil {
                 if let officialList = officialList {
                     self.officials = officialList
-                    self.officialsTableView.reloadData()
+                    DispatchQueue.main.async {
+                        self.officialsTableView.reloadData()
+                    }
                 }
             }
             // TODO: Handle ParserErrors
