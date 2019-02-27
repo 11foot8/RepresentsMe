@@ -12,13 +12,13 @@ class OfficialCell: UITableViewCell {
 
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var positionLabel: UILabel!
+    @IBOutlet weak var officeLabel: UILabel!
     @IBOutlet weak var partyLabel: UILabel!
 
     var official: Official? {
         didSet {
             nameLabel.text = official?.name
-            positionLabel.text = official?.office
+            officeLabel.text = official?.office
             partyLabel.text = official?.party
         }
     }
@@ -30,8 +30,7 @@ class OfficialCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        // TODO: Define behavior on selection
     }
 
 }

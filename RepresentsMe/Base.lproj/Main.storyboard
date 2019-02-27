@@ -47,7 +47,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-s0-6ud">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-s0-6ud">
                                                     <rect key="frame" x="100" y="37" width="260" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -71,9 +71,9 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="nameLabel" destination="fOA-2N-Nnz" id="jnd-HS-vtS"/>
+                                            <outlet property="officeLabel" destination="Oe8-s0-6ud" id="U4d-u5-gCu"/>
                                             <outlet property="partyLabel" destination="Sil-GG-Ocs" id="Mks-4r-yhK"/>
                                             <outlet property="portraitImageView" destination="wxk-dh-gof" id="xRX-cp-djs"/>
-                                            <outlet property="positionLabel" destination="Oe8-s0-6ud" id="lXU-tt-nH2"/>
                                             <segue destination="V5Z-GW-aU6" kind="show" id="wIs-Ge-Slh"/>
                                         </connections>
                                     </tableViewCell>
