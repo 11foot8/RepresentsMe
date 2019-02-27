@@ -37,14 +37,19 @@ class OfficialScraper {
     public static func getForAddress(
         address:String,
         apikey:String,
-        completion: @escaping ([Official]?, ParserError?) -> ()) throws {
+        completion: @escaping ([Official]?, ParserError?) -> ()) {
 
-        
         // Build the request
-        let url = URL(string: try buildURL(address: address, apikey: apikey))
+        var urlString:String? = nil
+        do {
+            urlString = try buildURL(address: address, apikey: apikey)
+        } catch {
+            return completion(nil, error as? ParserError)
+        }
+
+        let url = URL(string: urlString!)
         let request:URLRequest = URLRequest(url: url!)
-        
-        // Make the request
+
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 // Error occurred, abort
