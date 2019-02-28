@@ -246,11 +246,7 @@
                                 </constraints>
                             </view>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJx-BS-wG6">
-<<<<<<< HEAD
-                                <rect key="frame" x="16" y="462" width="158" height="300"/>
-=======
                                 <rect key="frame" x="16" y="438" width="158" height="164"/>
->>>>>>> 9bfba5cf406d1bd662cce3b699258c9988813ac8
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="158" id="nEg-TE-LQB"/>
@@ -261,11 +257,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jd-kn-l7Q">
-<<<<<<< HEAD
-                                <rect key="frame" x="197" y="462" width="162" height="300"/>
-=======
                                 <rect key="frame" x="197" y="438" width="162" height="164"/>
->>>>>>> 9bfba5cf406d1bd662cce3b699258c9988813ac8
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="162" id="9a5-VB-dUJ"/>
