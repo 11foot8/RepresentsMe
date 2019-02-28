@@ -8,16 +8,18 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
     
     
-    let regionInMeters:CLLocationDistance = 10000 // Regions will be 10 km across
-    var previousLocation:CLLocation? // Save previous location to limit geocode frequency
+    let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
+    var previousLocation:CLLocation?                         // Save previous location to limit
+                                                             // geocode frequency
     var previousGeocodeTime:Date?
-    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // only request new geocodes when pin is moved 50+ meters
-    let minimumTimeForNewGecode:TimeInterval = 1 // only request new geocodes once every second
+    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // only request new geocodes when
+                                                             // pin is moved 50+ meters
+    let minimumTimeForNewGecode:TimeInterval = 1             // only request new geocode once per second
     
     let addressMessage = "Tap here to update address"
 
@@ -44,12 +46,10 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-        // Do any additional setup after loading the view.
     }
     
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
-            // set up our location manager
             setupLocationManager()
             checkLocationAuthorization()
         } else {
@@ -64,8 +64,7 @@ class MapViewController: UIViewController {
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways:
-        case .authorizedWhenInUse:
+        case .authorizedWhenInUse, .authorizedAlways:
             startTrackingUserLocation()
             break
         case .denied:
@@ -124,7 +123,6 @@ class MapViewController: UIViewController {
             let streetName = placemark.thoroughfare ?? ""
             let city = placemark.locality ?? ""
             let state = placemark.administrativeArea ?? ""
-//            let country = placemark.country ?? ""
             let zipcode = placemark.postalCode ?? ""
             
             DispatchQueue.main.async {
@@ -133,26 +131,23 @@ class MapViewController: UIViewController {
             }
         }
     }
-}
 
-extension MapViewController : CLLocationManagerDelegate {
+    /// CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
         }
     }
-    
-    // Called when user's GPS location moves
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error:: \(error)")
+        // TODO: Handle error
     }
-}
 
-extension MapViewController : MKMapViewDelegate {
+    /// MKMapViewDelegate
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = getCenterLocation(for: mapView)
         guard let previousLocation = self.previousLocation else { return }
