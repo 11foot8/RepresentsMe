@@ -64,8 +64,7 @@ class MapViewController: UIViewController {
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways:
-        case .authorizedWhenInUse:
+        case .authorizedWhenInUse, .authorizedAlways:
             startTrackingUserLocation()
             break
         case .denied:
