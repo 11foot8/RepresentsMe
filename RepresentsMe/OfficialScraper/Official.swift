@@ -7,7 +7,7 @@
 //
 
 /// Class containing the information avaliable for a government official.
-class Official: Equatable {
+class Official: Equatable, CustomStringConvertible {
     var index:Int                       // The order of the official. Closer to
                                         // zero means covers larger population
     var name:String                     // The name of the official
@@ -20,6 +20,10 @@ class Official: Equatable {
     var socialMedia:[[String: String]]  // The social media profiles
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
+
+    var description:String {            // Returns textual representation of the
+        return repr()                   // official. Conforms class to
+    }                                   // CustomStringConvertible protocol.
     
     /// Creates an Official given the values for each field.
     ///
