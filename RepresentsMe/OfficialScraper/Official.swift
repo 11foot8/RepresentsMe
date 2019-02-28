@@ -6,16 +6,20 @@
 //  Copyright © 2019 11foot8. All rights reserved.
 //
 
+import Foundation
+import UIKit
+
 /// Class containing the information avaliable for a government official.
 class Official: Equatable, CustomStringConvertible {
     var index:Int                       // The order of the official. Closer to
                                         // zero means covers larger population
     var name:String                     // The name of the official
-    var photoURL:String                 // The photo url of the official
+    var photo:UIImage?                  // The cached photo of the official
+    var photoURL:URL?                   // The photo url of the official
     var party:String                    // The political party of the official
     var addresses:[[String: String]]    // The addresses for the official
     var phones:[String]                 // The phones for the official
-    var urls:[String]                   // The urls for the official
+    var urls:[URL?]                     // The urls for the official
     var emails:[String]                 // The emails for the official
     var socialMedia:[[String: String]]  // The social media profiles
     var office:String                   // The name of the official's office
@@ -38,8 +42,8 @@ class Official: Equatable, CustomStringConvertible {
     /// - Parameter socialMedia:    An Array of social media accounts
     /// - Parameter office:         The name of the official's office
     /// - Parameter division:       The name of the office's division
-    init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
-         _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
+    init(_ index:Int, _ name:String, _ photoURL:URL?, _ party:String,
+         _ addresses:[[String: String]], _ phones:[String], _ urls:[URL?],
          _ emails:[String], _ socialMedia:[[String: String]],
          _ office:String, _ division:String) {
         self.index = index
@@ -65,11 +69,11 @@ class Official: Equatable, CustomStringConvertible {
          official:JSONOfficial) {
         self.index = index
         self.name = official.name
-        self.photoURL = official.photoUrl
+        self.photoURL = URL(string: official.photoUrl)
         self.party = official.party
         self.addresses = official.address
         self.phones = official.phones
-        self.urls = official.urls
+        self.urls = official.urls.map{URL(string: $0)}
         self.emails = official.emails
         self.socialMedia = official.channels
         self.office = office.name
@@ -83,7 +87,7 @@ class Official: Equatable, CustomStringConvertible {
         return "<Official " +
             "\(self.index)," +
             "\(self.name)," +
-            "\(self.photoURL)," +
+            "\(self.photoURL?.absoluteString ?? "")," +
             "\(self.party)," +
             "\(self.addresses)," +
             "\(self.phones)," +
@@ -149,5 +153,35 @@ class Official: Equatable, CustomStringConvertible {
             lhs.office == rhs.office &&
             lhs.division == rhs.division
         )
+    }
+
+    /// Returns Official's photo
+    ///
+    /// - Parameter completion:     the completion handler to use to return the
+    ///                             downloaded photo.
+    public func getPhoto (completion: @escaping (Official, UIImage?) -> ()) {
+
+        // If the photo has been cached, return the cached photo
+        if let photo = photo {
+            return completion(self, photo)
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            if let photoURL = self.photoURL {
+                
+                // TODO: Handle Data error
+                let data = try? Data(contentsOf: photoURL)
+                
+                if let imageData = data {
+                    self.photo = UIImage(data: imageData)
+                } else {
+                    // If the photo does not exist or could not be downloaded,
+                    // set photo to empty
+                    self.photo = UIImage()
+                }
+
+                completion(self, self.photo)
+            }
+        }
     }
 }
