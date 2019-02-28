@@ -5,10 +5,6 @@
 //  Created by Jacob Hausmann on 2/22/19.
 //  Copyright © 2019 11foot8. All rights reserved.
 
-// code borrowed from tutorial at https://www.youtube.com/watch?v=2wxE8byc2FQ
-// https://www.dropbox.com/sh/keburc19mdiitj8/AADBqv7k0FnlWUQzIuni58Iba?dl=0
-//
-
 import UIKit
 import MapKit
 
@@ -16,15 +12,12 @@ class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
-    // Regions will be 10 km across
-    let regionInMeters:CLLocationDistance = 10000
-    // Save previous location to limit geocode frequency
-    var previousLocation:CLLocation?
+    
+    let regionInMeters:CLLocationDistance = 10000 // Regions will be 10 km across
+    var previousLocation:CLLocation? // Save previous location to limit geocode frequency
     var previousGeocodeTime:Date?
-    // only request new geocodes when pin is moved 50+ meters
-    let minimumDistanceForNewGeocode:CLLocationDistance = 50
-    // only request new geocodes once every second
-    let minimumTimeForNewGecode:TimeInterval = 1
+    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // only request new geocodes when pin is moved 50+ meters
+    let minimumTimeForNewGecode:TimeInterval = 1 // only request new geocodes once every second
     
     let addressMessage = "Tap here to update address"
 
@@ -41,13 +34,13 @@ class MapViewController: UIViewController {
         guard center.distance(from: previousLocation) > minimumDistanceForNewGeocode || time.timeIntervalSince(previousGeocodeTime) > minimumTimeForNewGecode else { return }
         
         getReverseGeocode()
-        
-        
     }
+    
     @IBAction func goButtonTouchUp(_ sender: Any) {
         // TODO: Check address validity
         // TODO: Send address to representative table view
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
@@ -60,7 +53,7 @@ class MapViewController: UIViewController {
             setupLocationManager()
             checkLocationAuthorization()
         } else {
-            // show alert for letting user know they have to turn this on
+            // TODO: show alert for letting user know they have to turn this on
         }
     }
     
@@ -71,6 +64,7 @@ class MapViewController: UIViewController {
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways:
         case .authorizedWhenInUse:
             startTrackingUserLocation()
             break
@@ -82,9 +76,6 @@ class MapViewController: UIViewController {
             break
         case .restricted:
             // TODO: show an alert letting them know whats up
-            break
-        case .authorizedAlways:
-            // Never should have this authorization
             break
         }
     }
@@ -120,7 +111,6 @@ class MapViewController: UIViewController {
             guard let self = self else { return }
             if let _ = error {
                 // TODO: Show alert informing the user
-                print("error:: ",error!)
                 return
             }
             
@@ -141,8 +131,6 @@ class MapViewController: UIViewController {
                 self.addressButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
                 self.addressButton.setTitle("\(streetNumber) \(streetName)\n\(city), \(state) \(zipcode)", for: .normal)
             }
-            
-            
         }
     }
 }
@@ -154,10 +142,9 @@ extension MapViewController : CLLocationManagerDelegate {
         }
     }
     
+    // Called when user's GPS location moves
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //        guard let location = locations.last else { return }
-        //        let region = MKCoordinateRegion.init(center:location.coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        //        mapView.setRegion(region, animated: true)
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -173,7 +160,5 @@ extension MapViewController : MKMapViewDelegate {
         if (previousLocation.distance(from: center) > minimumDistanceForNewGeocode) {
             addressButton.setTitle(addressMessage, for: .normal)
         }
-        
-        
     }
 }
