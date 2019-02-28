@@ -20,6 +20,19 @@ class OfficialCell: UITableViewCell {
             nameLabel.text = official?.name
             officeLabel.text = official?.office
             partyLabel.text = official?.party
+
+            portraitImageView.image = UIImage()
+            official?.getPhoto(completion: { (photoOfficial, image) in
+                // Ensure that photo is matched to correct cell
+                if (photoOfficial == self.official) {
+                    DispatchQueue.main.async {
+                        self.portraitImageView.image = image
+                    }
+                }
+            })
+
+            portraitImageView.layer.cornerRadius = 8.0
+            portraitImageView.clipsToBounds = true
         }
     }
 
