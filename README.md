@@ -8,10 +8,11 @@ Engaging voters from Objective-C to Shining Sea 🇺🇸
 
 ### Pre-Work
 - [X] Storyboard wireframe
-- [X] Loading Screen
 
 ### Alpha
+- [X] Loading Screen
 - [X] Storyboard constraints
+- [X] Display officials in home screen table
 
 ## Our Team
 - [Benjamin Singer](https://github.com/bzsinger)
