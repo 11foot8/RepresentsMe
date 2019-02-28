@@ -115,7 +115,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             guard let placemark = placemarks?.first else {
                 // TODO: Show alert informing the user
-                print("No placemark")
                 return
             }
             
@@ -139,9 +138,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // TODO: Handle error
