@@ -100,7 +100,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13287BC22220C09A00622CD4 /* OfficialScraper */ = {
+		13287BC22220C09A00622CD4 /* Scraper */ = {
 			isa = PBXGroup;
 			children = (
 				13527111221F74AB00442AA6 /* JSONData.swift */,
@@ -111,7 +111,7 @@
 				1352711F221F8AA200442AA6 /* Official.swift */,
 				1352711B221F793800442AA6 /* ParserError.swift */,
 			);
-			path = OfficialScraper;
+			path = Scraper;
 			sourceTree = "<group>";
 		};
 		3B1EFD47221F06E9003176BF = {
@@ -137,12 +137,11 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
-				13287BC22220C09A00622CD4 /* OfficialScraper */,
+				13287BC22220C09A00622CD4 /* Scraper */,
 				3B45F0B62226F15B00FA5B8B /* View Controllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
-				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
 				3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */,
@@ -175,6 +174,7 @@
 		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 			);
 			path = "View Controllers";
@@ -511,7 +511,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -526,7 +529,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -542,7 +548,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -559,7 +569,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -575,7 +589,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -591,7 +609,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
