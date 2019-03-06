@@ -98,7 +98,7 @@
             </objects>
             <point key="canvasLocation" x="2015.2" y="133.5832083958021"/>
         </scene>
-        <!--Item-->
+        <!--Settings-->
         <scene sceneID="xBk-JX-H5A">
             <objects>
                 <viewController id="BT9-sG-X2W" sceneMemberID="viewController">
@@ -187,7 +187,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pnt-4I-Rff"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="KCh-do-OdY"/>
+                    <tabBarItem key="tabBarItem" title="Settings" id="KCh-do-OdY"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s5W-No-11w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -246,7 +246,7 @@
                                 </constraints>
                             </view>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJx-BS-wG6">
-                                <rect key="frame" x="16" y="438" width="158" height="164"/>
+                                <rect key="frame" x="16" y="462" width="158" height="251"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="158" id="nEg-TE-LQB"/>
@@ -257,7 +257,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jd-kn-l7Q">
-                                <rect key="frame" x="197" y="438" width="162" height="164"/>
+                                <rect key="frame" x="197" y="462" width="162" height="251"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="162" id="9a5-VB-dUJ"/>
@@ -473,10 +473,10 @@
             </objects>
             <point key="canvasLocation" x="-1159.2" y="-97.601199400299862"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="aFl-qF-Yqa">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="zsX-O5-swd" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="zsX-O5-swd" customClass="TabBarViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2wa-HA-4I0">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -493,11 +493,11 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Item-->
+        <!--Officials-->
         <scene sceneID="bes-u0-kCt">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cfR-IA-rLJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="n5y-IU-9Wr"/>
+                    <tabBarItem key="tabBarItem" title="Officials" id="n5y-IU-9Wr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SKD-xQ-ud3">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -657,7 +657,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a2S-4s-mxQ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="4ab-xl-D4O"/>
+                    <tabBarItem key="tabBarItem" title="Map" id="4ab-xl-D4O"/>
                     <connections>
                         <outlet property="addressButton" destination="KP1-JE-qoY" id="M7x-Bg-Ugg"/>
                         <outlet property="goButton" destination="K7J-bH-Kff" id="Lbn-tT-IDL"/>
