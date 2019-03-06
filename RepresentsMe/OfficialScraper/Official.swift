@@ -42,18 +42,18 @@ class Official: Equatable, CustomStringConvertible {
     /// - Parameter socialMedia:    An Array of social media accounts
     /// - Parameter office:         The name of the official's office
     /// - Parameter division:       The name of the office's division
-    init(_ index:Int, _ name:String, _ photoURL:URL?, _ party:String,
-         _ addresses:[[String: String]], _ phones:[String], _ urls:[URL?],
+    init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
+         _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
          _ emails:[String], _ socialMedia:[[String: String]],
          _ office:String, _ division:String) {
         self.index = index
         self.name = name
-        self.photoURL = photoURL
+        self.photoURL = URL(string: photoURL)
         self.party = party
         self.addresses = addresses
         self.phones = phones
         self.emails = emails
-        self.urls = urls
+        self.urls = urls.map {URL(string: $0)}
         self.socialMedia = socialMedia
         self.office = office
         self.division = division

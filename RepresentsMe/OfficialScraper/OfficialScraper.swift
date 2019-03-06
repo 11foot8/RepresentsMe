@@ -12,10 +12,14 @@ import Foundation
 ///
 /// Example:
 ///
-/// try OfficialScraper.getForAddress(
+/// OfficialScraper.getForAddress(
 ///     address: "my address", apikey: "my apikey") { officials, error in
 ///
-///     if error == nil {
+///     if let error = error {
+///         // Handle error
+///     }
+///
+///     if let officials = officials {
 ///         // Do stuff
 ///     }
 /// }
@@ -61,9 +65,12 @@ class OfficialScraper {
                 // Try to parse the JSON
                 let jsonData = try parseJSON(data: data!)
                 return completion(Official.buildOfficials(data: jsonData), nil)
+            } catch ParserError.invalidAddressError(let message) {
+                // An invalid address was given, bubble the error up
+                return completion(nil, ParserError.invalidAddressError(message))
             } catch {
-                // Error occurred while parsing JSON
-                return completion(nil, error as? ParserError)
+                // Some other error occurred, just return an empty Array
+                return completion([], nil)
             }
         }.resume()
     }
@@ -107,6 +114,21 @@ class OfficialScraper {
         do {
             return try JSONDecoder().decode(JSONData.self, from: data)
         } catch {
+            if let errorJSON = String(data: data,
+                                      encoding: String.Encoding.utf8) {
+                if errorJSON.contains("Failed to parse address") {
+                    // Invalid address was given
+                    throw ParserError.invalidAddressError(
+                        "Failed to parse address")
+                }
+                
+                if errorJSON.contains("keyInvalid") {
+                    // API key is invalid
+                    throw ParserError.invalidAPIKeyError("Invalid API Key")
+                }
+            }
+            
+            // Some other decoding error occurred
             throw ParserError.decodeError(error.localizedDescription)
         }
     }
