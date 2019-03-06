@@ -29,34 +29,18 @@ class Official: Equatable, CustomStringConvertible {
         return repr()                   // official. Conforms class to
     }                                   // CustomStringConvertible protocol.
     
-    /// Creates an Official given the values for each field.
-    ///
-    /// - Parameter index:          The index of the official
-    /// - Parameter name:           The name of the official
-    /// - Parameter photoURL:       The URL to the photo of the official
-    /// - Parameter party:          The political party of the official
-    /// - Parameter addresses:      An Array of addresses for the official
-    /// - Parameter phones:         An Array of phone numbers for the official
-    /// - Parameter emails:         An Array of emails for the official
-    /// - Parameter urls:           An Array of URLs for the official
-    /// - Parameter socialMedia:    An Array of social media accounts
-    /// - Parameter office:         The name of the official's office
-    /// - Parameter division:       The name of the office's division
-    init(_ index:Int, _ name:String, _ photoURL:String, _ party:String,
-         _ addresses:[[String: String]], _ phones:[String], _ urls:[String],
-         _ emails:[String], _ socialMedia:[[String: String]],
-         _ office:String, _ division:String) {
-        self.index = index
-        self.name = name
-        self.photoURL = URL(string: photoURL)
-        self.party = party
-        self.addresses = addresses
-        self.phones = phones
-        self.emails = emails
-        self.urls = urls.map {URL(string: $0)}
-        self.socialMedia = socialMedia
-        self.office = office
-        self.division = division
+    /// Default the values for an Official
+    init() {
+        self.index = -1
+        self.name = ""
+        self.party = ""
+        self.addresses = [[:]]
+        self.phones = []
+        self.urls = []
+        self.emails = []
+        self.socialMedia = [[:]]
+        self.office = ""
+        self.division = ""
     }
     
     /// Builds an Official
