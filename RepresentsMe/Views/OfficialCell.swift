@@ -21,7 +21,7 @@ class OfficialCell: UITableViewCell {
             officeLabel.text = official?.office
             partyLabel.text = official?.party
 
-            portraitImageView.image = UIImage()
+            portraitImageView.image = UIImage(named: "default-photo.png")
             official?.getPhoto(completion: { (photoOfficial, image) in
                 // Ensure that photo is matched to correct cell
                 if (photoOfficial == self.official) {
