@@ -22,4 +22,6 @@ enum ParserError: Error {
     
     /// Thrown when an invalid address is given
     case invalidAddressError(String)
+    
+    case invalidAPIKeyError(String)
 }
