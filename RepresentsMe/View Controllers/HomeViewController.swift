@@ -9,12 +9,16 @@
 import UIKit
 
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
-let TEMP_ADDR = "201 Gregson St. Durham, NC 27701"
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var officialsTableView: UITableView!
 
+    var addr = Address(streetNumber: "201",
+                       streetName: "Gregson St",
+                       city: "Durham",
+                       state: "NC",
+                       zipcode: "27701")
     var officials: [Official] = []
 
     override func viewDidLoad() {
@@ -23,7 +27,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        OfficialScraper.getForAddress(address: TEMP_ADDR, apikey: civic_api_key) {
+        navigationItem.title = addr.streetRepr()
+
+        OfficialScraper.getForAddress(address: addr, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil {
                 if let officialList = officialList {

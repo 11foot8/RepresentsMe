@@ -33,6 +33,7 @@
 		3B1EFD77221F06EC003176BF /* RepresentsMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */; };
 		3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B22222414F00FA5B8B /* HomeViewController.swift */; };
 		3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B42222452D00FA5B8B /* OfficialCell.swift */; };
+		3B9072C822309B2700B8A2F8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9072C722309B2700B8A2F8 /* Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +75,7 @@
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B1EFD58221F06E9003176BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B1EFD5B221F06E9003176BF /* RepresentsMe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RepresentsMe.xcdatamodel; sourceTree = "<group>"; };
-		3B1EFD5D221F06EC003176BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3B1EFD5D221F06EC003176BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = /Users/bzsinger/Desktop/RepresentsMe/RepresentsMe/Assets.xcassets; sourceTree = "<absolute>"; };
 		3B1EFD60221F06EC003176BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B1EFD62221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B1EFD67221F06EC003176BF /* RepresentsMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepresentsMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +86,7 @@
 		3B1EFD78221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B45F0B22222414F00FA5B8B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3B45F0B42222452D00FA5B8B /* OfficialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialCell.swift; sourceTree = "<group>"; };
+		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +114,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13287BC22220C09A00622CD4 /* OfficialScraper */ = {
+		13287BC22220C09A00622CD4 /* Scraper */ = {
 			isa = PBXGroup;
 			children = (
 				13527111221F74AB00442AA6 /* JSONData.swift */,
@@ -120,16 +122,16 @@
 				13527114221F74AB00442AA6 /* JSONOffice.swift */,
 				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
 				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
-				1352711F221F8AA200442AA6 /* Official.swift */,
 				1352711B221F793800442AA6 /* ParserError.swift */,
 			);
-			path = OfficialScraper;
+			path = Scraper;
 			sourceTree = "<group>";
 		};
 		13BD31AA22302078000A6BEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				13287BC22220C09A00622CD4 /* OfficialScraper */,
+				3B9072C722309B2700B8A2F8 /* Address.swift */,
+				1352711F221F8AA200442AA6 /* Official.swift */,
 				13BD31BE223027E1000A6BEE /* FontAwesome */,
 			);
 			path = Models;
@@ -177,15 +179,16 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
-				13BD31BD22302605000A6BEE /* Fonts */,
+				13287BC22220C09A00622CD4 /* Scraper */,
 				13BD31AA22302078000A6BEE /* Models */,
 				3B45F0B62226F15B00FA5B8B /* View Controllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
-				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
 				3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */,
+				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
+				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
 			);
@@ -371,6 +374,7 @@
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
+				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				13BD31AE223020CD000A6BEE /* Enum.swift in Sources */,
