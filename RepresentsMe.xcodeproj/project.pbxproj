@@ -122,9 +122,7 @@
 				13527114221F74AB00442AA6 /* JSONOffice.swift */,
 				13527112221F74AB00442AA6 /* JSONOfficial.swift */,
 				13527113221F74AB00442AA6 /* OfficialScraper.swift */,
-				1352711F221F8AA200442AA6 /* Official.swift */,
 				1352711B221F793800442AA6 /* ParserError.swift */,
-				3B9072C722309B2700B8A2F8 /* Address.swift */,
 			);
 			path = Scraper;
 			sourceTree = "<group>";
@@ -132,7 +130,8 @@
 		13BD31AA22302078000A6BEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				13287BC22220C09A00622CD4 /* OfficialScraper */,
+				3B9072C722309B2700B8A2F8 /* Address.swift */,
+				1352711F221F8AA200442AA6 /* Official.swift */,
 				13BD31BE223027E1000A6BEE /* FontAwesome */,
 			);
 			path = Models;
@@ -181,15 +180,15 @@
 			isa = PBXGroup;
 			children = (
 				13287BC22220C09A00622CD4 /* Scraper */,
-				13BD31BD22302605000A6BEE /* Fonts */,
 				13BD31AA22302078000A6BEE /* Models */,
 				3B45F0B62226F15B00FA5B8B /* View Controllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3B1EFD57221F06E9003176BF /* Main.storyboard */,
-				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
 				3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */,
+				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
+				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
 			);

@@ -160,7 +160,6 @@ class Official: Equatable, CustomStringConvertible {
     /// - Parameter completion:     the completion handler to use to return the
     ///                             downloaded photo.
     public func getPhoto (completion: @escaping (Official, UIImage?) -> ()) {
-
         // If the photo has been cached, return the cached photo
         if let photo = photo {
             return completion(self, photo)
