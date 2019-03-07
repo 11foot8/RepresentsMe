@@ -8,6 +8,8 @@
 import UIKit
 import MapKit
 
+let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
+
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
@@ -17,15 +19,25 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var previousLocation:CLLocation?                         // Save previous location to limit
                                                              // geocode frequency
     var previousGeocodeTime:Date?
-    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // only request new geocodes when
+    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // Only request new geocodes when
                                                              // pin is moved 50+ meters
-    let minimumTimeForNewGecode:TimeInterval = 1             // only request new geocode once per second
+    let minimumTimeForNewGecode:TimeInterval = 1             // Only request new geocode once per second
     
     let addressMessage = "Tap here to update address"
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var goButton: UIButton!
+
+    var address:Address?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        checkLocationServices()
+
+        addressButton.titleLabel?.lineBreakMode = .byWordWrapping
+        resetButtons()
+    }
     
     @IBAction func addressButtonTouchUp(_ sender: Any) {
         let center = getCenterLocation(for: mapView)
@@ -39,13 +51,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     @IBAction func goButtonTouchUp(_ sender: Any) {
-        // TODO: Check address validity
-        // TODO: Send address to representative table view
+        // TODO: Check address validity - incl. addresses outside of US
+        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        checkLocationServices()
+
+    func resetButtons() {
+        addressButton.setTitle(addressMessage, for: .normal)
+        goButton.isUserInteractionEnabled = false
+        goButton.backgroundColor = .gray
+    }
+
+    func enableGoButton() {
+        self.goButton.isUserInteractionEnabled = true
+        self.goButton.backgroundColor = .black
     }
     
     func checkLocationServices() {
@@ -118,15 +136,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 return
             }
             
-            let streetNumber = placemark.subThoroughfare ?? ""
-            let streetName = placemark.thoroughfare ?? ""
-            let city = placemark.locality ?? ""
-            let state = placemark.administrativeArea ?? ""
-            let zipcode = placemark.postalCode ?? ""
+            self.address = Address(with: placemark)
             
             DispatchQueue.main.async {
-                self.addressButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-                self.addressButton.setTitle("\(streetNumber) \(streetName)\n\(city), \(state) \(zipcode)", for: .normal)
+                self.addressButton.setTitle("\(self.address!)", for: .normal)
+                self.enableGoButton()
             }
         }
     }
@@ -150,7 +164,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         guard let previousLocation = self.previousLocation else { return }
         
         if (previousLocation.distance(from: center) > minimumDistanceForNewGeocode) {
-            addressButton.setTitle(addressMessage, for: .normal)
+            resetButtons()
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
+            let destination = segue.destination as! HomeViewController
+            destination.addr = self.address!
         }
     }
 }

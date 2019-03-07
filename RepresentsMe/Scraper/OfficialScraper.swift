@@ -35,14 +35,14 @@ class OfficialScraper {
     /// - Throws: ParseError.invalidArgumentError if address cannot be formatted
     ///           as a URL query argument.
     public static func getForAddress(
-        address:String,
+        address:Address,
         apikey:String,
         completion: @escaping ([Official]?, ParserError?) -> ()) {
 
         // Build the request
         var urlString:String? = nil
         do {
-            urlString = try buildURL(address: address, apikey: apikey)
+            urlString = try buildURL(address: address.description, apikey: apikey)
         } catch {
             return completion(nil, error as? ParserError)
         }

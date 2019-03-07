@@ -14,7 +14,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var officialsTableView: UITableView!
 
-    let addr = "201 Gregson St. Durham, NC 27701"
+    var addr = Address(streetNumber: "201",
+                       streetName: "Gregson St",
+                       city: "Durham",
+                       state: "NC",
+                       zipcode: "27701")
     var officials: [Official] = []
 
     override func viewDidLoad() {
@@ -22,6 +26,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
+
+        navigationItem.title = addr.streetRepr()
 
         OfficialScraper.getForAddress(address: addr, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
