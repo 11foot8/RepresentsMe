@@ -23,7 +23,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Outlets
     @IBOutlet weak var officialsTableView: UITableView!
 
-
+    // MARK: Actions
+    @IBAction func locateTouchUp(_ sender: Any) {
+    }
+    
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,7 +15,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     // MARK: Properties
     let locationManager = CLLocationManager()
     
-    let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
+    let regionInMeters:CLLocationDistance = 1000            // Regions will be 10 km across
     var previousLocation:CLLocation?                         // Save previous location to limit
                                                              // geocode frequency
     var previousGeocodeTime:Date?
@@ -37,7 +37,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-
+        
         addressButton.titleLabel?.lineBreakMode = .byWordWrapping
         resetButtons()
     }
@@ -68,8 +68,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Check address validity - incl. addresses outside of US
         performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
     }
-
     
+    @IBAction func locateTouchUp(_ sender: Any) {
+        centerViewOnUserLocation()
+    }
+    
+    // MARK: Methods
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
         goButton.isUserInteractionEnabled = false
@@ -114,17 +118,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func startTrackingUserLocation() {
         mapView.showsUserLocation = true
-        centerViewOnUserLocation()
         locationManager.startUpdatingLocation()
         previousLocation = getCenterLocation(for: mapView)
         previousGeocodeTime = Date()
+        centerViewOnUserLocation()
     }
-    
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)
+            mapView.setCenter(location, animated: true)
         }
     }
     
@@ -160,7 +164,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
-    /// CLLocationManagerDelegate
+    // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
@@ -173,7 +177,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Handle error
     }
 
-    /// MKMapViewDelegate
+    // MARK: MKMapViewDelegate
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = getCenterLocation(for: mapView)
         guard let previousLocation = self.previousLocation else { return }
