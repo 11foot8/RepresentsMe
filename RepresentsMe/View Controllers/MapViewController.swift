@@ -19,6 +19,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var previousLocation:CLLocation?                         // Save previous location to limit
                                                              // geocode frequency
     var previousGeocodeTime:Date?
+
     let minimumDistanceForNewGeocode:CLLocationDistance = 50 // Only request new geocodes when
                                                              // pin is moved 50+ meters
     let minimumTimeForNewGecode:TimeInterval = 1             // Only request new geocode once per second

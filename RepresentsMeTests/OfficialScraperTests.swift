@@ -23,19 +23,8 @@ class OfficialScraperTests: XCTestCase {
     func testScrapingData() {
         let result = makeRequest(address: "2317 Speedway, Austin, TX 78712",
                                  apikey: civic_api_key)
-        let officials = result.0
-        let error = result.1
-        
-        XCTAssertNil(error)
-        XCTAssertNotNil(officials)
-        
-        // Check that each Official is correct
-        let expectedOfficials = OfficialScraperTestsData.expectedOfficials
-        XCTAssertEqual(officials!.count, expectedOfficials.count)
-        for (actual, expected) in zip(officials!, expectedOfficials) {
-            XCTAssertEqual(actual, expected,
-                           "\n" + actual.repr() + "\n" + expected.repr())
-        }
+        XCTAssertNotNil(result.0)       // Assert no errors
+        XCTAssertNil(result.1)          // Assert some result returned
     }
     
     /// Test that an error is received if an invalid address is given
@@ -44,7 +33,11 @@ class OfficialScraperTests: XCTestCase {
         let officials = result.0
         let error = result.1
         
-        XCTAssertNotNil(error)
+        if case .invalidAddressError = error! {
+            XCTAssertTrue(true)
+        } else {
+            XCTFail("Did not throw ParserError.invalidAddressError")
+        }
         XCTAssertNil(officials)
     }
     
@@ -55,8 +48,9 @@ class OfficialScraperTests: XCTestCase {
         let officials = result.0
         let error = result.1
         
-        XCTAssertNotNil(error)
-        XCTAssertNil(officials)
+        XCTAssertNil(error)
+        XCTAssertNotNil(officials)
+        XCTAssertEqual(officials, [])
     }
     
     /// Test that an error is thrown if a division is missing a name
@@ -114,18 +108,14 @@ class OfficialScraperTests: XCTestCase {
         
         // Make the request
         let expectation = self.expectation(description: "Scraping")
-        do {
-            try OfficialScraper.getForAddress(
-                address: address,
-                apikey: apikey) { o, e in
-                    error = e
-                    officials = o
-                    expectation.fulfill()
-            }
-        } catch {
-            return (officials, error as? ParserError)
+        OfficialScraper.getForAddress(
+            address: address,
+            apikey: apikey) {(o, e) in
+                error = e
+                officials = o
+                expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: timeout, handler: nil)
         return (officials, error)
     }
