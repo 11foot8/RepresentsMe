@@ -59,14 +59,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == detailsSegueIdentifier,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.passedName = officials[officialsIndex].name
-            destination.passedSeat = officials[officialsIndex].office
-            destination.passedParty = officials[officialsIndex].party
-            destination.passedEmails = officials[officialsIndex].emails
-            destination.passedPhoneNums = officials[officialsIndex].phones
-            if let officialsPic = officials[officialsIndex].photo {
-                destination.passedPicture = officialsPic
-            }
+            destination.passedOfficial = officials[officialsIndex]
         }
     }
 }

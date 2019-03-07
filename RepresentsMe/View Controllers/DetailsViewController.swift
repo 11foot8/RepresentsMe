@@ -16,19 +16,15 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var officialContact: UILabel!
     @IBOutlet weak var officialPicture: UIImageView!
     
-    var passedName = String()
-    var passedSeat = String()
-    var passedParty = String()
-    var passedEmails = [String]()
-    var passedPhoneNums = [String]()
-    var passedPicture = UIImage()
+    var passedOfficial:Official?
     
     override func viewWillAppear(_ animated: Bool) {
-        officialName.text = passedName
-        officialSeat.text = passedSeat
-        officialParty.text = passedParty
-        officialPicture.image = passedPicture
-        
+        officialName.text = passedOfficial?.name
+        officialSeat.text = passedOfficial?.office
+        officialParty.text = passedOfficial?.party
+        if let passedPic = passedOfficial?.photo {
+            officialPicture.image = passedPic
+        }
     }
     
     override func viewDidLoad() {
