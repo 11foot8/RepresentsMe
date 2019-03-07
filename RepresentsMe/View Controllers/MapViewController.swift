@@ -12,8 +12,8 @@ let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    // MARK: Properties
     let locationManager = CLLocationManager()
-    
     
     let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
     var previousLocation:CLLocation?                         // Save previous location to limit
@@ -26,12 +26,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     let addressMessage = "Tap here to update address"
 
+    // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var goButton: UIButton!
 
     var address:Address?
 
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
@@ -40,6 +42,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         resetButtons()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    // MARK: Actions
     @IBAction func addressButtonTouchUp(_ sender: Any) {
         let center = getCenterLocation(for: mapView)
         let time = Date()
@@ -56,6 +69,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
     }
 
+    
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
         goButton.isUserInteractionEnabled = false

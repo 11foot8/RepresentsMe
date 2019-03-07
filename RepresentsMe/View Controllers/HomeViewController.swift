@@ -11,24 +11,26 @@ import UIKit
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    @IBOutlet weak var officialsTableView: UITableView!
-
+    
+    // MARK: Properties
     var addr = Address(streetNumber: "201",
                        streetName: "Gregson St",
                        city: "Durham",
                        state: "NC",
                        zipcode: "27701")
     var officials: [Official] = []
+    
+    // MARK: Outlets
+    @IBOutlet weak var officialsTableView: UITableView!
 
+
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
-
-        navigationItem.title = addr.streetRepr()
-
+        navigationItem.title = "\(addr.city), \(addr.state)"
         OfficialScraper.getForAddress(address: addr, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil {
@@ -43,6 +45,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return officials.count
     }
