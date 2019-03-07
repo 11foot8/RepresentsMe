@@ -12,8 +12,8 @@ let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    // MARK: Properties
     let locationManager = CLLocationManager()
-    
     
     let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
     var previousLocation:CLLocation?                         // Save previous location to limit
@@ -26,20 +26,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     let addressMessage = "Tap here to update address"
 
+    // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var goButton: UIButton!
 
     var address:Address?
 
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-
         addressButton.titleLabel?.lineBreakMode = .byWordWrapping
         resetButtons()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    // MARK: Actions
     @IBAction func addressButtonTouchUp(_ sender: Any) {
         let center = getCenterLocation(for: mapView)
         let time = Date()
@@ -55,7 +67,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Check address validity - incl. addresses outside of US
         performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
     }
-
+    
+    @IBAction func locateTouchUp(_ sender: Any) {
+        centerViewOnUserLocation()
+    }
+    
+    // MARK: Methods
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
         goButton.isUserInteractionEnabled = false
@@ -100,17 +117,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func startTrackingUserLocation() {
         mapView.showsUserLocation = true
-        centerViewOnUserLocation()
         locationManager.startUpdatingLocation()
+        centerViewOnUserLocation()
         previousLocation = getCenterLocation(for: mapView)
         previousGeocodeTime = Date()
     }
     
-    
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
+            // Set zoom level
             mapView.setRegion(region, animated: true)
+            // Correct center
+            mapView.setCenter(location, animated: true)
         }
     }
     
@@ -146,7 +165,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
-    /// CLLocationManagerDelegate
+    // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
@@ -159,7 +178,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Handle error
     }
 
-    /// MKMapViewDelegate
+    // MARK: MKMapViewDelegate
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = getCenterLocation(for: mapView)
         guard let previousLocation = self.previousLocation else { return }
