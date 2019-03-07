@@ -9,6 +9,27 @@
 import Foundation
 import UIKit
 
+let DEFAULT_NOT_LOADED = UIImage.fontAwesomeIcon(
+    name: .userCircle,
+    style: .solid,
+    textColor: .gray,
+    size: PORTRAIT_SIZE)
+let DEFAULT_NIL = UIImage.fontAwesomeIcon(
+    name: .userCircle,
+    style: .solid,
+    textColor: .black,
+    size: PORTRAIT_SIZE)
+let DEFAULT_REPUBLICAN = UIImage.fontAwesomeIcon(
+    name: .userCircle,
+    style: .solid,
+    textColor: .red,
+    size: PORTRAIT_SIZE)
+let DEFAULT_DEMOCRAT = UIImage.fontAwesomeIcon(
+    name: .userCircle,
+    style: .solid,
+    textColor: .blue,
+    size: PORTRAIT_SIZE)
+
 /// Class containing the information avaliable for a government official.
 class Official: Equatable, CustomStringConvertible {
     var index:Int                       // The order of the official. Closer to
@@ -78,6 +99,7 @@ class Official: Equatable, CustomStringConvertible {
         self.socialMedia = official.channels
         self.office = office.name
         self.division = division.name
+        self.photo = DEFAULT_NOT_LOADED
     }
     
     /// Get a String representation of this Official
@@ -161,26 +183,29 @@ class Official: Equatable, CustomStringConvertible {
     ///                             downloaded photo.
     public func getPhoto (completion: @escaping (Official, UIImage?) -> ()) {
         // If the photo has been cached, return the cached photo
-        if let photo = photo {
+        if photo != DEFAULT_NOT_LOADED {
             return completion(self, photo)
         }
 
         DispatchQueue.global(qos: .background).async {
             if let photoURL = self.photoURL {
-                
-                // TODO: Handle Data error
-                let data = try? Data(contentsOf: photoURL)
-                
-                if let imageData = data {
+                if let imageData = try? Data(contentsOf: photoURL) {
                     self.photo = UIImage(data: imageData)
-                } else {
-                    // If the photo does not exist or could not be downloaded,
-                    // set photo to empty
-                    self.photo = UIImage()
+                    return completion(self, self.photo)
                 }
-
-                completion(self, self.photo)
             }
+            
+            // If the photo does not exist or could not be downloaded,
+            // set photo to empty
+            if self.party == "Republican Party" {
+                self.photo = DEFAULT_REPUBLICAN
+            } else if self.party == "Democratic Party" {
+                self.photo = DEFAULT_DEMOCRAT
+            } else {
+                self.photo = DEFAULT_NIL
+            }
+            
+            return completion(self, self.photo)
         }
     }
 }
