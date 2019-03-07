@@ -15,7 +15,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     // MARK: Properties
     let locationManager = CLLocationManager()
     
-    let regionInMeters:CLLocationDistance = 1000            // Regions will be 10 km across
+    let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
     var previousLocation:CLLocation?                         // Save previous location to limit
                                                              // geocode frequency
     var previousGeocodeTime:Date?
@@ -37,7 +37,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-        
         addressButton.titleLabel?.lineBreakMode = .byWordWrapping
         resetButtons()
     }
@@ -119,15 +118,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func startTrackingUserLocation() {
         mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
+        centerViewOnUserLocation()
         previousLocation = getCenterLocation(for: mapView)
         previousGeocodeTime = Date()
-        centerViewOnUserLocation()
     }
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
+            // Set zoom level
             mapView.setRegion(region, animated: true)
+            // Correct center
             mapView.setCenter(location, animated: true)
         }
     }
