@@ -75,7 +75,7 @@
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B1EFD58221F06E9003176BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B1EFD5B221F06E9003176BF /* RepresentsMe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RepresentsMe.xcdatamodel; sourceTree = "<group>"; };
-		3B1EFD5D221F06EC003176BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = /Users/bzsinger/Desktop/RepresentsMe/RepresentsMe/Assets.xcassets; sourceTree = "<absolute>"; };
+		3B1EFD5D221F06EC003176BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = RepresentsMe/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		3B1EFD60221F06EC003176BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B1EFD62221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B1EFD67221F06EC003176BF /* RepresentsMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepresentsMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
