@@ -22,8 +22,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: Outlets
     @IBOutlet weak var officialsTableView: UITableView!
-
-
+    
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

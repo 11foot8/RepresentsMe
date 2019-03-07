@@ -37,7 +37,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-
         addressButton.titleLabel?.lineBreakMode = .byWordWrapping
         resetButtons()
     }
@@ -68,8 +67,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Check address validity - incl. addresses outside of US
         performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
     }
-
     
+    @IBAction func locateTouchUp(_ sender: Any) {
+        centerViewOnUserLocation()
+    }
+    
+    // MARK: Methods
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
         goButton.isUserInteractionEnabled = false
@@ -114,17 +117,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func startTrackingUserLocation() {
         mapView.showsUserLocation = true
-        centerViewOnUserLocation()
         locationManager.startUpdatingLocation()
+        centerViewOnUserLocation()
         previousLocation = getCenterLocation(for: mapView)
         previousGeocodeTime = Date()
     }
     
-    
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
+            // Set zoom level
             mapView.setRegion(region, animated: true)
+            // Correct center
+            mapView.setCenter(location, animated: true)
         }
     }
     
@@ -160,7 +165,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
-    /// CLLocationManagerDelegate
+    // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
@@ -173,7 +178,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // TODO: Handle error
     }
 
-    /// MKMapViewDelegate
+    // MARK: MKMapViewDelegate
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = getCenterLocation(for: mapView)
         guard let previousLocation = self.previousLocation else { return }

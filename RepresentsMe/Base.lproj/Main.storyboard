@@ -8,6 +8,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Font Awesome 5 Free-Solid-900.otf">
+            <string>FontAwesome5Free-Solid</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -829,7 +834,7 @@
                                 </connections>
                             </mapView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pin" translatesAutoresizingMaskIntoConstraints="NO" id="fee-bn-Tpl">
-                                <rect key="frame" x="167.66666666666666" y="366" width="40" height="40"/>
+                                <rect key="frame" x="167.66666666666666" y="346" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="p3D-9t-wbp"/>
                                     <constraint firstAttribute="width" constant="40" id="rL4-TS-CzD"/>
@@ -864,16 +869,32 @@
                                     <action selector="addressButtonTouchUp:" destination="XZG-Pc-5F1" eventType="touchUpInside" id="hu7-9f-wow"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHd-vm-2ew">
+                                <rect key="frame" x="317" y="621" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="atY-e1-gaJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="ycY-co-tAc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="36"/>
+                                <state key="normal" title="location-arrow">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="locateTouchUp:" destination="XZG-Pc-5F1" eventType="touchUpInside" id="cVd-bE-LAW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="leading" secondItem="sC1-2e-ypV" secondAttribute="leading" id="78u-D1-RQw"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="K7J-bH-Kff" secondAttribute="trailing" id="7ln-5a-JDy"/>
-                            <constraint firstItem="fee-bn-Tpl" firstAttribute="centerY" secondItem="sC1-2e-ypV" secondAttribute="centerY" constant="-20" id="EN6-gM-Rrb"/>
+                            <constraint firstItem="fee-bn-Tpl" firstAttribute="centerY" secondItem="sC1-2e-ypV" secondAttribute="centerY" constant="-40" id="EN6-gM-Rrb"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="bottom" secondItem="sC1-2e-ypV" secondAttribute="bottom" id="GHa-45-RTw"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="bottom" secondItem="KP1-JE-qoY" secondAttribute="bottom" id="Ld2-Gb-T8a"/>
+                            <constraint firstItem="K7J-bH-Kff" firstAttribute="top" secondItem="EHd-vm-2ew" secondAttribute="bottom" constant="8" id="Lu6-3X-l4r"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="trailing" secondItem="sC1-2e-ypV" secondAttribute="trailing" id="Pzs-EM-Va4"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="bottom" secondItem="K7J-bH-Kff" secondAttribute="bottom" id="TZC-6N-EW9"/>
+                            <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="EHd-vm-2ew" secondAttribute="trailing" constant="8" id="dbX-NM-5Mf"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="top" secondItem="sC1-2e-ypV" secondAttribute="top" id="iKt-By-YVP"/>
                             <constraint firstItem="KP1-JE-qoY" firstAttribute="leading" secondItem="a2S-4s-mxQ" secondAttribute="leading" id="qQf-7j-14S"/>
                             <constraint firstItem="K7J-bH-Kff" firstAttribute="leading" secondItem="KP1-JE-qoY" secondAttribute="trailing" id="rnX-Be-TZq"/>
