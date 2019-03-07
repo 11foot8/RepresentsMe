@@ -191,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s5W-No-11w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2018.4000000000001" y="913.30049261083752"/>
+            <point key="canvasLocation" x="2015" y="913"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ttv-8G-SZo">
@@ -717,7 +717,6 @@
             </objects>
             <point key="canvasLocation" x="2784.8000000000002" y="-548.27586206896558"/>
         </scene>
-        <!--Item-->
         <!--Officials-->
         <scene sceneID="bes-u0-kCt">
             <objects>
@@ -883,7 +882,6 @@
                         <viewLayoutGuide key="safeArea" id="a2S-4s-mxQ"/>
                     </view>
                     <navigationItem key="navigationItem" id="sPo-XR-ivW"/>
-                    <tabBarItem key="tabBarItem" title="Map" id="4ab-xl-D4O"/>
                     <connections>
                         <outlet property="addressButton" destination="KP1-JE-qoY" id="M7x-Bg-Ugg"/>
                         <outlet property="goButton" destination="K7J-bH-Kff" id="Lbn-tT-IDL"/>
@@ -932,11 +930,11 @@
             </objects>
             <point key="canvasLocation" x="2796" y="-1238.423645320197"/>
         </scene>
-        <!--Item-->
+        <!--Map-->
         <scene sceneID="p41-lb-Vwd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jGO-i0-7IK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="4ab-xl-D4O"/>
+                    <tabBarItem key="tabBarItem" title="Map" id="4ab-xl-D4O"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3uS-CY-Knd">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -956,7 +954,6 @@
         <image name="Pin" width="16" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZH4-ze-G8p"/>
         <segue reference="kjF-jh-uxz"/>
         <segue reference="wIs-Ge-Slh"/>
         <segue reference="aS0-JL-Lkj"/>
