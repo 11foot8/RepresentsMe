@@ -9,12 +9,21 @@
 import Foundation
 import UIKit
 
+let LIGHT_BLUE = UIColor(red: 64 / 255,
+                         green: 86 / 255,
+                         blue: 244 / 255,
+                         alpha: 1)
+let LIGHT_RED = UIColor(red: 206 / 255,
+                        green: 45 / 255,
+                        blue: 79 / 255,
+                        alpha: 1)
+
 let DEFAULT_NOT_LOADED = UIImage.fontAwesomeIcon(
     name: .userCircle,
     style: .solid,
     textColor: .gray,
     size: PORTRAIT_SIZE)
-let DEFAULT_NIL = UIImage.fontAwesomeIcon(
+let DEFAULT_NON_PARTISAN = UIImage.fontAwesomeIcon(
     name: .userCircle,
     style: .solid,
     textColor: .black,
@@ -22,12 +31,12 @@ let DEFAULT_NIL = UIImage.fontAwesomeIcon(
 let DEFAULT_REPUBLICAN = UIImage.fontAwesomeIcon(
     name: .userCircle,
     style: .solid,
-    textColor: .red,
+    textColor: LIGHT_RED,
     size: PORTRAIT_SIZE)
 let DEFAULT_DEMOCRAT = UIImage.fontAwesomeIcon(
     name: .userCircle,
     style: .solid,
-    textColor: .blue,
+    textColor: LIGHT_BLUE,
     size: PORTRAIT_SIZE)
 
 /// Class containing the information avaliable for a government official.
@@ -202,7 +211,7 @@ class Official: Equatable, CustomStringConvertible {
             } else if self.party == "Democratic Party" {
                 self.photo = DEFAULT_DEMOCRAT
             } else {
-                self.photo = DEFAULT_NIL
+                self.photo = DEFAULT_NON_PARTISAN
             }
             
             return completion(self, self.photo)
