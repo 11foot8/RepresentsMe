@@ -149,7 +149,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
     /// - Parameter animated: Whether or not to animate the transition
     func centerView(on location:CLLocationCoordinate2D, animated:Bool) {
         let region = MKCoordinateRegion.init(center:location,
-                                             latitudinalMeters:regionInMeters,
+                                             latitudinalMeters: regionInMeters,
                                              longitudinalMeters: regionInMeters)
         // Set zoom level
         mapView.setRegion(region, animated: animated)
