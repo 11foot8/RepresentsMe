@@ -261,6 +261,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
             }
             DispatchQueue.main.async {
                 self.centerView(on: (placemark.location?.coordinate)!, animated: false)
+                self.getReverseGeocode()
             }
         }
     }
