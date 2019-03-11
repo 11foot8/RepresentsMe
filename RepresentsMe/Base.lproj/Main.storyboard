@@ -883,18 +883,33 @@
                                     <action selector="locateTouchUp:" destination="XZG-Pc-5F1" eventType="touchUpInside" id="cVd-bE-LAW"/>
                                 </connections>
                             </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="afy-M6-dTb">
+                                <rect key="frame" x="0.0" y="88" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8A-4I-nkM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                <color key="backgroundColor" red="0.77620589733123779" green="0.78001105785369873" blue="0.80481857061386108" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="U8A-4I-nkM" firstAttribute="leading" secondItem="sC1-2e-ypV" secondAttribute="leading" id="3g3-Pw-T92"/>
+                            <constraint firstItem="afy-M6-dTb" firstAttribute="top" secondItem="a2S-4s-mxQ" secondAttribute="top" id="3mT-ee-5gT"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="leading" secondItem="sC1-2e-ypV" secondAttribute="leading" id="78u-D1-RQw"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="K7J-bH-Kff" secondAttribute="trailing" id="7ln-5a-JDy"/>
+                            <constraint firstItem="afy-M6-dTb" firstAttribute="top" secondItem="U8A-4I-nkM" secondAttribute="bottom" id="83T-yw-CFG"/>
                             <constraint firstItem="fee-bn-Tpl" firstAttribute="centerY" secondItem="sC1-2e-ypV" secondAttribute="centerY" constant="-40" id="EN6-gM-Rrb"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="bottom" secondItem="sC1-2e-ypV" secondAttribute="bottom" id="GHa-45-RTw"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="bottom" secondItem="KP1-JE-qoY" secondAttribute="bottom" id="Ld2-Gb-T8a"/>
                             <constraint firstItem="K7J-bH-Kff" firstAttribute="top" secondItem="EHd-vm-2ew" secondAttribute="bottom" constant="8" id="Lu6-3X-l4r"/>
+                            <constraint firstItem="U8A-4I-nkM" firstAttribute="top" secondItem="sC1-2e-ypV" secondAttribute="top" id="O4D-H6-MH5"/>
+                            <constraint firstItem="afy-M6-dTb" firstAttribute="leading" secondItem="a2S-4s-mxQ" secondAttribute="leading" id="OV1-F2-fGf"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="trailing" secondItem="sC1-2e-ypV" secondAttribute="trailing" id="Pzs-EM-Va4"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="bottom" secondItem="K7J-bH-Kff" secondAttribute="bottom" id="TZC-6N-EW9"/>
+                            <constraint firstAttribute="trailing" secondItem="U8A-4I-nkM" secondAttribute="trailing" id="adn-5g-dUP"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="EHd-vm-2ew" secondAttribute="trailing" constant="8" id="dbX-NM-5Mf"/>
+                            <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="afy-M6-dTb" secondAttribute="trailing" id="gdW-dv-Anb"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="top" secondItem="sC1-2e-ypV" secondAttribute="top" id="iKt-By-YVP"/>
                             <constraint firstItem="KP1-JE-qoY" firstAttribute="leading" secondItem="a2S-4s-mxQ" secondAttribute="leading" id="qQf-7j-14S"/>
                             <constraint firstItem="K7J-bH-Kff" firstAttribute="leading" secondItem="KP1-JE-qoY" secondAttribute="trailing" id="rnX-Be-TZq"/>
@@ -907,10 +922,20 @@
                         <outlet property="addressButton" destination="KP1-JE-qoY" id="M7x-Bg-Ugg"/>
                         <outlet property="goButton" destination="K7J-bH-Kff" id="Lbn-tT-IDL"/>
                         <outlet property="mapView" destination="Yw8-0P-Y2x" id="eFZ-Oy-Udb"/>
+                        <outlet property="searchBar" destination="afy-M6-dTb" id="uQ7-xG-cyf"/>
+                        <outlet property="searchDisplayController" destination="nZe-Oe-lWg" id="Ot6-hl-pw3"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="sandboxOfficials" id="aS0-JL-Lkj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFN-yo-Ynw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="nZe-Oe-lWg">
+                    <connections>
+                        <outlet property="delegate" destination="XZG-Pc-5F1" id="ikA-As-T8a"/>
+                        <outlet property="searchContentsController" destination="XZG-Pc-5F1" id="Dqv-8S-Dsh"/>
+                        <outlet property="searchResultsDataSource" destination="XZG-Pc-5F1" id="KWn-Z2-rQq"/>
+                        <outlet property="searchResultsDelegate" destination="XZG-Pc-5F1" id="LfD-4P-z1H"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1079.2" y="912.5615763546798"/>
         </scene>

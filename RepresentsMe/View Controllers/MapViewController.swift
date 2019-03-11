@@ -10,12 +10,12 @@ import MapKit
 
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate {
     
     // MARK: Properties
     let locationManager = CLLocationManager()
     
-    let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
+    let regionInMeters:CLLocationDistance = 100            // Regions will be 10 km across
     var previousLocation:CLLocation?                         // Save previous location to limit
                                                              // geocode frequency
     var previousGeocodeTime:Date?
@@ -26,12 +26,34 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     let addressMessage = "Tap here to update address"
 
+    var address:Address?
+
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
 
-    var address:Address?
+    // MARK: Actions
+    @IBAction func addressButtonTouchUp(_ sender: Any) {
+        let center = getCenterLocation(for: mapView)
+        let time = Date()
+        guard let previousLocation = self.previousLocation else { return }
+        guard let previousGeocodeTime = self.previousGeocodeTime else { return }
+
+        guard center.distance(from: previousLocation) > minimumDistanceForNewGeocode || time.timeIntervalSince(previousGeocodeTime) > minimumTimeForNewGecode else { return }
+
+        getReverseGeocode()
+    }
+
+    @IBAction func goButtonTouchUp(_ sender: Any) {
+        // TODO: Check address validity - incl. addresses outside of US
+        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+    }
+
+    @IBAction func locateTouchUp(_ sender: Any) {
+        centerViewOnUserLocation()
+    }
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -39,6 +61,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         checkLocationServices()
         addressButton.titleLabel?.lineBreakMode = .byWordWrapping
         resetButtons()
+        searchBar.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,27 +74,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    // MARK: Actions
-    @IBAction func addressButtonTouchUp(_ sender: Any) {
-        let center = getCenterLocation(for: mapView)
-        let time = Date()
-        guard let previousLocation = self.previousLocation else { return }
-        guard let previousGeocodeTime = self.previousGeocodeTime else { return }
-        
-        guard center.distance(from: previousLocation) > minimumDistanceForNewGeocode || time.timeIntervalSince(previousGeocodeTime) > minimumTimeForNewGecode else { return }
-        
-        getReverseGeocode()
-    }
-    
-    @IBAction func goButtonTouchUp(_ sender: Any) {
-        // TODO: Check address validity - incl. addresses outside of US
-        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
-    }
-    
-    @IBAction func locateTouchUp(_ sender: Any) {
-        centerViewOnUserLocation()
-    }
-    
+
     // MARK: Methods
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
@@ -125,12 +128,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
-            // Set zoom level
-            mapView.setRegion(region, animated: true)
-            // Correct center
-            mapView.setCenter(location, animated: true)
+            centerView(on: location,animated: true)
         }
+    }
+
+    func centerView(on location:CLLocationCoordinate2D, animated:Bool) {
+        let region = MKCoordinateRegion.init(center:location, latitudinalMeters:regionInMeters, longitudinalMeters: regionInMeters)
+        // Set zoom level
+        mapView.setRegion(region, animated: animated)
+        // Correct center
+        mapView.setCenter(location, animated: animated)
     }
     
     func getCenterLocation(for mapView:MKMapView) -> CLLocation {
@@ -165,6 +172,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
+    // Convert MKCoordinateRegion to CLCircularRegion
+    func convertRegion(mk:MKCoordinateRegion) -> (CLCircularRegion) {
+        let center = mk.center
+        let span = mk.span
+        let nw = CLLocation(latitude: center.latitude + span.latitudeDelta/2, longitude: center.longitude - span.longitudeDelta/2)
+        let se = CLLocation(latitude: center.latitude - span.latitudeDelta/2, longitude: center.longitude + span.longitudeDelta/2)
+        let radius = nw.distance(from: se)
+        let region = CLCircularRegion(center: center, radius: radius, identifier: "region")
+        return region
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
@@ -192,6 +214,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! HomeViewController
             destination.addr = self.address!
+        }
+    }
+
+    // MARK: UISearchBarDelegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+        let address:String = searchBar.text!
+        let geocoder = CLGeocoder()
+
+        let region = convertRegion(mk: mapView.region)
+        geocoder.geocodeAddressString(address, in: region) { (placemarks, error) in
+            if let _ = error {
+                // TODO: Show alert informing user
+                return
+            }
+            guard let placemark = placemarks?.first else {
+                // TODO: show alert informing user search failed
+                return
+            }
+            DispatchQueue.main.async {
+                self.centerView(on: (placemark.location?.coordinate)!, animated: false)
+            }
         }
     }
 }
