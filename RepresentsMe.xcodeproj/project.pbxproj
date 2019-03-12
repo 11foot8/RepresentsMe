@@ -33,6 +33,8 @@
 		3B1EFD77221F06EC003176BF /* RepresentsMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */; };
 		3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B22222414F00FA5B8B /* HomeViewController.swift */; };
 		3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B42222452D00FA5B8B /* OfficialCell.swift */; };
+		3B649F052237264800E88430 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F042237264800E88430 /* SettingsCell.swift */; };
+		3B649F072237274100E88430 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F062237274100E88430 /* SettingsViewController.swift */; };
 		3B9072C822309B2700B8A2F8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9072C722309B2700B8A2F8 /* Address.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,8 @@
 		3B1EFD78221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B45F0B22222414F00FA5B8B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3B45F0B42222452D00FA5B8B /* OfficialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialCell.swift; sourceTree = "<group>"; };
+		3B649F042237264800E88430 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		3B649F062237274100E88430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,6 +225,7 @@
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
+				3B649F062237274100E88430 /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				3B45F0B42222452D00FA5B8B /* OfficialCell.swift */,
+				3B649F042237264800E88430 /* SettingsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -369,8 +375,10 @@
 			files = (
 				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
+				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
+				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
