@@ -148,6 +148,47 @@
                                             <outlet property="titleLabel" destination="9be-UQ-JVY" id="3fJ-Kp-9zj"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="switchSettingsCell" id="eD7-Jl-mJW" customClass="SwitchSettingsCell" customModule="RepresentsMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eD7-Jl-mJW" id="Pre-7L-yZh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="082-ud-d6V">
+                                                    <rect key="frame" x="16" y="10" width="24" height="24"/>
+                                                    <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="24"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP4-6h-FxV">
+                                                    <rect key="frame" x="56" y="11.333333333333336" width="246" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="246" id="W5G-5O-jP7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sc4-gd-3fw">
+                                                    <rect key="frame" x="310" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Sc4-gd-3fw" secondAttribute="trailing" constant="16" id="377-rY-EMS"/>
+                                                <constraint firstItem="082-ud-d6V" firstAttribute="leading" secondItem="Pre-7L-yZh" secondAttribute="leading" constant="16" id="R8c-wT-4IN"/>
+                                                <constraint firstItem="sP4-6h-FxV" firstAttribute="centerY" secondItem="Pre-7L-yZh" secondAttribute="centerY" id="WdS-3k-h6T"/>
+                                                <constraint firstItem="sP4-6h-FxV" firstAttribute="leading" secondItem="Pre-7L-yZh" secondAttribute="leading" constant="56" id="bSn-Xb-NZa"/>
+                                                <constraint firstItem="Sc4-gd-3fw" firstAttribute="centerY" secondItem="Pre-7L-yZh" secondAttribute="centerY" id="hKS-Mj-aAg"/>
+                                                <constraint firstItem="082-ud-d6V" firstAttribute="centerY" secondItem="Pre-7L-yZh" secondAttribute="centerY" id="tzj-Ub-cVq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageLabel" destination="082-ud-d6V" id="8IE-QD-1lu"/>
+                                            <outlet property="titleLabel" destination="sP4-6h-FxV" id="OhI-Mg-nAA"/>
+                                            <outlet property="valueSwitch" destination="Sc4-gd-3fw" id="NTz-Qi-ETm"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                             </tableView>
@@ -168,7 +209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klR-Kn-D53" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="913"/>
+            <point key="canvasLocation" x="2796" y="912.5615763546798"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ttv-8G-SZo">

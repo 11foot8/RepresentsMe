@@ -9,16 +9,25 @@
 import UIKit
 
 let SETTINGS_CELL_IDENTIFIER = "settingsCell"
+let SWITCH_SETTINGS_CELL_IDENTIFIER = "switchSettingsCell"
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    enum CellType {
+        case Normal
+        case Switch
+    }
 
     @IBOutlet weak var tableView: UITableView!
 
     // Data for Settings table view
-    // [("Section Name", [("Setting", "Image Name")]), ...]
-    let data:[(String, [(String, String)])] = [("User", [("Username", "user"), ("Password", "key")]),
-                                               ("", [("Address","home")]),
-                                               ("", [("Notifications", "bell")])]
+    // [("Section Name", CellType, [("Setting", "Image Name")]), ...]
+    let data:[(String, CellType, [(String, String)])] = [("User", CellType.Normal,
+                                                          [("Username", "user"), ("Password", "key")]),
+                                                         ("", CellType.Normal,
+                                                          [("Address", "home")]),
+                                                         ("", CellType.Switch,
+                                                          [("Notifications", "bell")])]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +44,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SETTINGS_CELL_IDENTIFIER) as! SettingsCell
-
         let section = data[indexPath.section]
-        let settingsForSection = section.1
+        let cellType = section.1
+
+        let settingsForSection = section.2
         let settingForRow = settingsForSection[indexPath.row]
+
+        var cell = SettingsCell()
+        switch cellType {
+            case .Normal:
+                cell = tableView.dequeueReusableCell(withIdentifier: SETTINGS_CELL_IDENTIFIER) as! SettingsCell
+            case .Switch:
+                cell = tableView.dequeueReusableCell(withIdentifier: SWITCH_SETTINGS_CELL_IDENTIFIER) as! SwitchSettingsCell
+        }
 
         cell.imageLabel.text = settingForRow.1
         cell.titleLabel.text = settingForRow.0
@@ -51,7 +68,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].1.count
+        return data[section].2.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
