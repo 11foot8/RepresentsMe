@@ -32,15 +32,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationItem.title = "\(addr.city), \(addr.state)"
         OfficialScraper.getForAddress(address: addr, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
-            if error == nil {
-                if let officialList = officialList {
-                    self.officials = officialList
-                    DispatchQueue.main.async {
-                        self.officialsTableView.reloadData()
-                    }
+            if error == nil, let officialList = officialList {
+                self.officials = officialList
+                DispatchQueue.main.async {
+                    self.officialsTableView.reloadData()
                 }
             }
-            // TODO: Handle ParserErrors
         }
     }
 
