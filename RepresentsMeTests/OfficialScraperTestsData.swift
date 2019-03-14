@@ -93,7 +93,7 @@ class OfficialScraperTestsData {
 
 /// Extend Official with hardcoded values for creating officials when testing
 extension Official {
-    
+
     /// Creates an Official given the values for each field.
     ///
     /// - Parameter index:          The index of the official
@@ -116,7 +116,7 @@ extension Official {
         self.index = index
         self.name = name
         self.photoURL = URL(string: photoURL)
-        self.party = party
+        self.party = PoliticalParty.determine(for: party)
         self.addresses = addresses
         self.phones = phones
         self.emails = emails
