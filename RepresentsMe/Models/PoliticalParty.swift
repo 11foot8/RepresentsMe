@@ -30,7 +30,11 @@ class PoliticalParty: Equatable {
         name: "Democrat",
         color: PoliticalParty.LIGHT_BLUE,
         aliases: ["Democrat", "Democratic", "Democratic Party"])
-    static let nonpartisan = PoliticalParty(name: "Nonpartisan", color: .black)
+    static let nonpartisan = PoliticalParty(
+        name: "Nonpartisan",
+        color: .black,
+        aliases: ["Nonpartisan", "none"])
+    static let unknown = PoliticalParty(name: "Unknown", color: .black)
     
     var name:String         // The name to display
     var image:UIImage       // The default image to use
@@ -48,7 +52,7 @@ class PoliticalParty: Equatable {
                                              style: .solid,
                                              textColor: color,
                                              size: PORTRAIT_SIZE)
-        self.aliases = aliases
+        self.aliases = aliases.map {$0.lowercased()}
     }
     
     /// Determines the PoliticalParty given an alias for the party.
@@ -57,6 +61,7 @@ class PoliticalParty: Equatable {
     ///
     /// - Returns: the PoliticalParty matching the given alias
     static func determine(for alias:String) -> PoliticalParty {
+        let alias = alias.lowercased()
         if PoliticalParty.republican.aliases.contains(alias) {
             return PoliticalParty.republican
         }
@@ -65,7 +70,11 @@ class PoliticalParty: Equatable {
             return PoliticalParty.democratic
         }
         
-        return nonpartisan
+        if PoliticalParty.nonpartisan.aliases.contains(alias) {
+            return PoliticalParty.nonpartisan
+        }
+        
+        return PoliticalParty.unknown
     }
     
     /// Compares two political parties for equality
