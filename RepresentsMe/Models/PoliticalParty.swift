@@ -37,6 +37,7 @@ class PoliticalParty: Equatable {
     static let unknown = PoliticalParty(name: "Unknown", color: .black)
     
     var name:String         // The name to display
+    var color:UIColor       // The color for the party
     var image:UIImage       // The default image to use
     var aliases:[String]    // Aliases for the party
     
@@ -48,6 +49,7 @@ class PoliticalParty: Equatable {
     /// - Parameter aliases:    the aliases for the party
     private init(name:String, color:UIColor, aliases:[String] = []) {
         self.name = name
+        self.color = color
         self.image = UIImage.fontAwesomeIcon(name: .userCircle,
                                              style: .solid,
                                              textColor: color,

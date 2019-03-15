@@ -21,7 +21,7 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         officialName.text = passedOfficial?.name
         officialSeat.text = passedOfficial?.office
-        officialParty.text = passedOfficial?.party
+        officialParty.text = passedOfficial?.party.name
         if let passedPic = passedOfficial?.photo {
             officialPicture.image = passedPic
         }

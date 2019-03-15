@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zsX-O5-swd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zsX-O5-swd">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,10 +58,22 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHh-kx-P2y" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                                    <rect key="frame" x="15" y="11" width="77" height="77"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballRotateChase"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Sil-GG-Ocs" firstAttribute="leading" secondItem="fOA-2N-Nnz" secondAttribute="leading" id="4eK-aP-ZiQ"/>
+                                                <constraint firstItem="PHh-kx-P2y" firstAttribute="width" secondItem="wxk-dh-gof" secondAttribute="width" id="7E9-bo-FHU"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Sil-GG-Ocs" secondAttribute="bottom" constant="4" id="GRu-Q7-gS0"/>
+                                                <constraint firstItem="PHh-kx-P2y" firstAttribute="top" secondItem="wxk-dh-gof" secondAttribute="top" id="INX-Ec-nnx"/>
                                                 <constraint firstItem="Sil-GG-Ocs" firstAttribute="top" secondItem="Oe8-s0-6ud" secondAttribute="bottom" constant="8" id="Lpf-Yk-JPV"/>
                                                 <constraint firstItem="wxk-dh-gof" firstAttribute="leading" secondItem="9I3-FY-3gD" secondAttribute="leadingMargin" id="NDL-xi-O2j"/>
                                                 <constraint firstItem="fOA-2N-Nnz" firstAttribute="top" secondItem="9I3-FY-3gD" secondAttribute="topMargin" id="R2G-JG-Shf"/>
@@ -70,11 +82,14 @@
                                                 <constraint firstItem="wxk-dh-gof" firstAttribute="top" secondItem="9I3-FY-3gD" secondAttribute="topMargin" id="aAX-db-QpV"/>
                                                 <constraint firstItem="Oe8-s0-6ud" firstAttribute="trailing" secondItem="9I3-FY-3gD" secondAttribute="trailingMargin" id="b43-Mo-gpw"/>
                                                 <constraint firstItem="Oe8-s0-6ud" firstAttribute="leading" secondItem="fOA-2N-Nnz" secondAttribute="leading" id="c6N-wV-Up5"/>
+                                                <constraint firstItem="PHh-kx-P2y" firstAttribute="leading" secondItem="wxk-dh-gof" secondAttribute="leading" id="d9U-Y8-Dau"/>
                                                 <constraint firstItem="fOA-2N-Nnz" firstAttribute="trailing" secondItem="9I3-FY-3gD" secondAttribute="trailingMargin" id="ijS-Mz-hdC"/>
                                                 <constraint firstItem="Oe8-s0-6ud" firstAttribute="top" secondItem="fOA-2N-Nnz" secondAttribute="bottom" constant="5" id="oId-EU-QP0"/>
+                                                <constraint firstItem="PHh-kx-P2y" firstAttribute="height" secondItem="wxk-dh-gof" secondAttribute="height" id="s72-Y8-hJO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="loadingIndicator" destination="PHh-kx-P2y" id="gap-zS-8As"/>
                                             <outlet property="nameLabel" destination="fOA-2N-Nnz" id="jnd-HS-vtS"/>
                                             <outlet property="officeLabel" destination="Oe8-s0-6ud" id="U4d-u5-gCu"/>
                                             <outlet property="partyLabel" destination="Sil-GG-Ocs" id="Mks-4r-yhK"/>
@@ -101,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2015.2" y="133.5832083958021"/>
+            <point key="canvasLocation" x="2015.2" y="133.00492610837438"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="xib-WN-IZM">
