@@ -227,8 +227,11 @@
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				3B649F062237274100E88430 /* SettingsViewController.swift */,
+<<<<<<< HEAD
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
+=======
+				3B649F062237274100E88430 /* SettingsViewController.swift */,
+>>>>>>> 4f36510e26f6c726957fd8c4afe05f8ee58a12fe
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";

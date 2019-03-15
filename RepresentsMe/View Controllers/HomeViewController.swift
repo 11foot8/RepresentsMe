@@ -55,4 +55,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.official = officials[indexPath.row]
         return cell
     }
+    
+    let detailsSegueIdentifier = "detailsSegueIdentifier"
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == detailsSegueIdentifier,
+            let destination = segue.destination as? DetailsViewController,
+            let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
+            destination.passedOfficial = officials[officialsIndex]
+        }
+    }
 }
