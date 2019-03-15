@@ -44,7 +44,8 @@ class OfficialScraper {
         do {
             urlString = try buildURL(address: address.description, apikey: apikey)
         } catch {
-            return completion(nil, error as? ParserError)
+            // Failed to build the url, return an empty Array
+            return completion([], nil)
         }
 
         let url = URL(string: urlString!)
@@ -53,8 +54,7 @@ class OfficialScraper {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 // Error occurred, abort
-                return completion(nil, ParserError.requestFailedError(
-                    error?.localizedDescription ?? "Request failed."))
+                return completion([], nil)
             }
             
             do {
@@ -62,8 +62,8 @@ class OfficialScraper {
                 let jsonData = try parseJSON(data: data!)
                 return completion(Official.buildOfficials(data: jsonData), nil)
             } catch {
-                // Error occurred while parsing JSON
-                return completion(nil, error as? ParserError)
+                // Error occurred while parsing JSON, return an empty Array
+                return completion([], nil)
             }
         }.resume()
     }

@@ -9,34 +9,10 @@
 import Foundation
 import UIKit
 
-let LIGHT_BLUE = UIColor(red: 64 / 255,
-                         green: 86 / 255,
-                         blue: 244 / 255,
-                         alpha: 1)
-let LIGHT_RED = UIColor(red: 206 / 255,
-                        green: 45 / 255,
-                        blue: 79 / 255,
-                        alpha: 1)
-
 let DEFAULT_NOT_LOADED = UIImage.fontAwesomeIcon(
     name: .userCircle,
     style: .solid,
     textColor: .gray,
-    size: PORTRAIT_SIZE)
-let DEFAULT_NON_PARTISAN = UIImage.fontAwesomeIcon(
-    name: .userCircle,
-    style: .solid,
-    textColor: .black,
-    size: PORTRAIT_SIZE)
-let DEFAULT_REPUBLICAN = UIImage.fontAwesomeIcon(
-    name: .userCircle,
-    style: .solid,
-    textColor: LIGHT_RED,
-    size: PORTRAIT_SIZE)
-let DEFAULT_DEMOCRAT = UIImage.fontAwesomeIcon(
-    name: .userCircle,
-    style: .solid,
-    textColor: LIGHT_BLUE,
     size: PORTRAIT_SIZE)
 
 /// Class containing the information avaliable for a government official.
@@ -46,7 +22,7 @@ class Official: Equatable, CustomStringConvertible {
     var name:String                     // The name of the official
     var photo:UIImage?                  // The cached photo of the official
     var photoURL:URL?                   // The photo url of the official
-    var party:String                    // The political party of the official
+    var party:PoliticalParty            // The political party of the official
     var addresses:[[String: String]]    // The addresses for the official
     var phones:[String]                 // The phones for the official
     var urls:[URL?]                     // The urls for the official
@@ -59,36 +35,19 @@ class Official: Equatable, CustomStringConvertible {
         return repr()                   // official. Conforms class to
     }                                   // CustomStringConvertible protocol.
     
-    /// Creates an Official given the values for each field.
-    ///
-    /// - Parameter index:          The index of the official
-    /// - Parameter name:           The name of the official
-    /// - Parameter photoURL:       The URL to the photo of the official
-    /// - Parameter party:          The political party of the official
-    /// - Parameter addresses:      An Array of addresses for the official
-    /// - Parameter phones:         An Array of phone numbers for the official
-    /// - Parameter emails:         An Array of emails for the official
-    /// - Parameter urls:           An Array of URLs for the official
-    /// - Parameter socialMedia:    An Array of social media accounts
-    /// - Parameter office:         The name of the official's office
-    /// - Parameter division:       The name of the office's division
-    init(_ index:Int, _ name:String, _ photoURL:URL?, _ party:String,
-         _ addresses:[[String: String]], _ phones:[String], _ urls:[URL?],
-         _ emails:[String], _ socialMedia:[[String: String]],
-         _ office:String, _ division:String) {
-        self.index = index
-        self.name = name
-        self.photoURL = photoURL
-        self.party = party
-        self.addresses = addresses
-        self.phones = phones
-        self.emails = emails
-        self.urls = urls
-        self.socialMedia = socialMedia
-        self.office = office
-        self.division = division
+    init() {
+        self.index = -1
+        self.name = ""
+        self.party = PoliticalParty.unknown
+        self.addresses = [[:]]
+        self.phones = []
+        self.urls = []
+        self.emails = []
+        self.socialMedia = [[:]]
+        self.office = ""
+        self.division = ""
     }
-    
+
     /// Builds an Official
     ///
     /// - Parameter index:      the index of this Official in the JSON
@@ -100,7 +59,7 @@ class Official: Equatable, CustomStringConvertible {
         self.index = index
         self.name = official.name
         self.photoURL = URL(string: official.photoUrl)
-        self.party = official.party
+        self.party = PoliticalParty.determine(for: official.party)
         self.addresses = official.address
         self.phones = official.phones
         self.urls = official.urls.map{URL(string: $0)}
@@ -206,14 +165,8 @@ class Official: Equatable, CustomStringConvertible {
             
             // If the photo does not exist or could not be downloaded,
             // set photo to empty
-            if self.party == "Republican Party" {
-                self.photo = DEFAULT_REPUBLICAN
-            } else if self.party == "Democratic Party" {
-                self.photo = DEFAULT_DEMOCRAT
-            } else {
-                self.photo = DEFAULT_NON_PARTISAN
-            }
-            
+            self.photo = self.party.image
+
             return completion(self, self.photo)
         }
     }

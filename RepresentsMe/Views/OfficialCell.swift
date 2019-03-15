@@ -21,7 +21,7 @@ class OfficialCell: UITableViewCell {
         didSet {
             nameLabel.text = official?.name
             officeLabel.text = official?.office
-            partyLabel.text = official?.party
+            partyLabel.text = official?.party.name
 
             portraitImageView.image = DEFAULT_NOT_LOADED
             official?.getPhoto(completion: { (photoOfficial, image) in

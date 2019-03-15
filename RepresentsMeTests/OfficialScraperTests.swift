@@ -10,6 +10,17 @@ import XCTest
 @testable import RepresentsMe
 
 class OfficialScraperTests: XCTestCase {
+    
+    let validAddress = Address(streetNumber: "2317",
+                               streetName: "Speedway",
+                               city: "Austin",
+                               state: "TX",
+                               zipcode: "78712")
+    let invalidAddress = Address(streetNumber: "invalid",
+                                 streetName: "",
+                                city: "",
+                                state: "",
+                                zipcode: "")
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -21,35 +32,33 @@ class OfficialScraperTests: XCTestCase {
 
     /// Test successful scraping of data
     func testScrapingData() {
-        let result = makeRequest(address: "2317 Speedway, Austin, TX 78712",
+        let result = makeRequest(address: validAddress,
                                  apikey: civic_api_key)
         XCTAssertNotNil(result.0)       // Assert no errors
         XCTAssertNil(result.1)          // Assert some result returned
     }
     
-    /// Test that an error is received if an invalid address is given
+    /// Test that an empty array is received if an invalid address is given
     func testInvalidAddress() {
-        let result = makeRequest(address: "invalid", apikey: civic_api_key)
+        let result = makeRequest(address: invalidAddress,
+                                 apikey: civic_api_key)
         let officials = result.0
         let error = result.1
         
-        if case .invalidAddressError = error! {
-            XCTAssertTrue(true)
-        } else {
-            XCTFail("Did not throw ParserError.invalidAddressError")
-        }
-        XCTAssertNil(officials)
+        XCTAssertNotNil(officials)
+        XCTAssertNil(error)
+        XCTAssertEqual(officials, [])
     }
     
-    /// Test that an error is received if an invalid api key is given
+    /// Test that an empty array is received if an invalid API key is given
     func testInvalidAPIKey() {
-        let result = makeRequest(address: "2317 Speedway, Austin, TX 78712",
+        let result = makeRequest(address: validAddress,
                                  apikey: "invalid")
         let officials = result.0
         let error = result.1
         
-        XCTAssertNil(error)
         XCTAssertNotNil(officials)
+        XCTAssertNil(error)
         XCTAssertEqual(officials, [])
     }
     
@@ -101,7 +110,7 @@ class OfficialScraperTests: XCTestCase {
     /// - Parameter apikey:     The apikey to use
     ///
     /// - Returns: a tuple with the resulting Officials and errors if any
-    func makeRequest(address:String, apikey:String,
+    func makeRequest(address:Address, apikey:String,
                      timeout:Double = 10) -> ([Official]?, ParserError?) {
         var error:ParserError?
         var officials:[Official]?
