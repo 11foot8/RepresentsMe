@@ -52,7 +52,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-s0-6ud">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-s0-6ud">
                                                     <rect key="frame" x="100" y="37" width="260" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -76,6 +76,7 @@
                                                 <constraint firstItem="PHh-kx-P2y" firstAttribute="top" secondItem="wxk-dh-gof" secondAttribute="top" id="INX-Ec-nnx"/>
                                                 <constraint firstItem="Sil-GG-Ocs" firstAttribute="top" secondItem="Oe8-s0-6ud" secondAttribute="bottom" constant="8" id="Lpf-Yk-JPV"/>
                                                 <constraint firstItem="wxk-dh-gof" firstAttribute="leading" secondItem="9I3-FY-3gD" secondAttribute="leadingMargin" id="NDL-xi-O2j"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PHh-kx-P2y" secondAttribute="bottom" constant="8" id="OLH-mK-5nw"/>
                                                 <constraint firstItem="fOA-2N-Nnz" firstAttribute="top" secondItem="9I3-FY-3gD" secondAttribute="topMargin" id="R2G-JG-Shf"/>
                                                 <constraint firstItem="fOA-2N-Nnz" firstAttribute="leading" secondItem="wxk-dh-gof" secondAttribute="trailing" constant="8" id="Rma-iW-HpF"/>
                                                 <constraint firstItem="Sil-GG-Ocs" firstAttribute="trailing" secondItem="9I3-FY-3gD" secondAttribute="trailingMargin" id="U4S-0a-qdp"/>
@@ -138,7 +139,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJ0-1V-YUJ">
-                                                    <rect key="frame" x="16" y="10" width="24" height="24"/>
+                                                    <rect key="frame" x="16" y="8" width="65.666666666666671" height="28"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -794,7 +795,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Yw8-0P-Y2x">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <connections>
                                     <outlet property="delegate" destination="XZG-Pc-5F1" id="OS4-Kp-qnf"/>
                                 </connections>
