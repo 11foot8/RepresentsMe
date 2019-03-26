@@ -13,6 +13,9 @@ Engaging voters from Objective-C to Shining Sea 🇺🇸
 - [X] Loading Screen
 - [X] Storyboard constraints
 - [X] Display officials in home screen table
+- [X] Show user location in Mapview
+- [X] Allow location selection in sandbox MapView
+- [X] Allow location search in sandbox MapView
 
 ## Our Team
 - [Benjamin Singer](https://github.com/bzsinger)
