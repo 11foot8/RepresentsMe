@@ -10,12 +10,17 @@ import UIKit
 import CoreLocation
 
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
+let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
 
 var userAddr = Address(streetNumber: "201",
                        streetName: "Gregson St",
                        city: "Durham",
                        state: "NC",
-                       zipcode: "27701")
+                       zipcode: "27701") {
+                didSet {
+                    userAddrChanged = true
+                }
+}
 var userAddrChanged = false
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
@@ -41,6 +46,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        // If the user changed the address in Settings or
+        // we haven't been passed an address by the MapViewController,
+        // get Officials with the user-specificed address
         if addr == nil || userAddrChanged {
             addr = userAddr
             userAddrChanged = false
@@ -48,6 +57,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    // MARK: User Location
     func getOfficials(for address: Address) {
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
@@ -61,8 +71,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    /// Check that location services are enabled, if so set up services, if not alert user that location services are
-    /// not enabled.
+    /// Check that location services are enabled, if so set up services,
+    /// if not alert user that location services are not enabled.
     func checkLocationServices() {
         // Check if Location Services are enabled globally
         if CLLocationManager.locationServicesEnabled() {
@@ -79,8 +89,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
-    /// Check what location authorization the application has, and alert user if they need to take action to enable
-    /// locaiton authorization.
+    /// Check what location authorization the application has, and alert user if
+    /// they need to take action to enable location authorization.
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
@@ -100,16 +110,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func getReverseGeocode() {
-        let center = locationManager.location    // Current coordinates to geocode
+        let location = locationManager.location    // Current coordinates to geocode
         let geoCoder = CLGeocoder()              // Geocoder instance to use
 
-        if center == nil {
+        if location == nil {
             return
         }
 
-        // Reverse geocode 'center'
         // Request will come back with 'placemarks' and 'error' as parameters
-        geoCoder.reverseGeocodeLocation(center!) { (placemarks, error) in
+        geoCoder.reverseGeocodeLocation(location!) { (placemarks, error) in
             // If an error occured, alert user and return immediately
             if let _ = error {
                 // TODO: Show alert informing the user
@@ -122,26 +131,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return
             }
 
-            // Get address from the placemark
+            // Get address from the placemark, save it, and reload Officials
             userAddr = Address(with: placemark)
             self.addr = userAddr
             self.getOfficials(for: userAddr)
-        }
-    }
-
-    func reloadForNewAddress() {
-        if addr == nil {
-            addr = userAddr
-        }
-        navigationItem.title = "\(addr!.city), \(addr!.state)"
-        OfficialScraper.getForAddress(address: addr!, apikey: civic_api_key) {
-            (officialList: [Official]?, error: ParserError?) in
-            if error == nil, let officialList = officialList {
-                self.officials = officialList
-                DispatchQueue.main.async {
-                    self.officialsTableView.reloadData()
-                }
-            }
         }
     }
 
@@ -160,10 +153,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
-    
-    let detailsSegueIdentifier = "detailsSegueIdentifier"
+
+    // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == detailsSegueIdentifier,
+        if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
             destination.passedOfficial = officials[officialsIndex]

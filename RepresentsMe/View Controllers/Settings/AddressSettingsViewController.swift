@@ -28,11 +28,16 @@ class AddressSettingsViewController: UIViewController {
 
     @IBAction func saveAddress(_ sender: Any) {
         guard
-            streetNumberTextField.text != nil,
-            streetNameTextField.text != nil,
-            cityTextField.text != nil,
-            stateTextField.text != nil,
-            zipcodeTextField.text != nil
+            let streetNumber = streetNumberTextField.text,
+            streetNumber.count > 0,
+            let streetName = streetNameTextField.text,
+            streetName.count > 0,
+            let city = cityTextField.text,
+            city.count > 0,
+            let state = stateTextField.text,
+            state.count > 0,
+            let zipcode = zipcodeTextField.text,
+            zipcode.count > 0
             else {
                 let alert = UIAlertController(
                     title: "Empty Fields",
@@ -44,8 +49,11 @@ class AddressSettingsViewController: UIViewController {
                 return
         }
 
-        userAddr = Address(streetNumber: streetNumberTextField.text!, streetName: streetNameTextField.text!, city: cityTextField.text!, state: stateTextField.text!, zipcode: zipcodeTextField.text!)
-        userAddrChanged = true
+        userAddr = Address(streetNumber: streetNumberTextField.text!,
+                           streetName: streetNameTextField.text!,
+                           city: cityTextField.text!,
+                           state: stateTextField.text!,
+                           zipcode: zipcodeTextField.text!)
 
         let alert = UIAlertController(
             title: "Saved",
