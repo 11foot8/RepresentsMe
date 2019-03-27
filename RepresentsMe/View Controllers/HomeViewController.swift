@@ -156,6 +156,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.official = officials[indexPath.row]
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
     
     let detailsSegueIdentifier = "detailsSegueIdentifier"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
