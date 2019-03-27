@@ -454,7 +454,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -463,7 +463,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		349FA7F04B70F9AC92B9CCED /* [CP] Check Pods Manifest.lock */ = {
