@@ -97,7 +97,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
     func checkLocationServices() {
         // Check if Location Services are enabled globally
         if CLLocationManager.locationServicesEnabled() {
-            
             setupLocationManager()
             checkLocationAuthorization()
         } else {
@@ -230,7 +229,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         self.view.endEditing(true)
     }
 
-    // MARK: - CLLocationManagerDelegate
+    // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
@@ -240,10 +239,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         default:
             // TODO: Alert user that location is no longer authorized
             break
-
-        }
-        if status == .authorizedWhenInUse {
-            locationManager.requestLocation()
         }
     }
 
