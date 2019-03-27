@@ -34,6 +34,7 @@
 		3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */; };
 		3B1EFD6C221F06EC003176BF /* RepresentsMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD6B221F06EC003176BF /* RepresentsMeTests.swift */; };
 		3B1EFD77221F06EC003176BF /* RepresentsMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */; };
+		3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */; };
 		3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B22222414F00FA5B8B /* HomeViewController.swift */; };
 		3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B42222452D00FA5B8B /* OfficialCell.swift */; };
 		3B649F052237264800E88430 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F042237264800E88430 /* SettingsCell.swift */; };
@@ -95,6 +96,7 @@
 		3B1EFD72221F06EC003176BF /* RepresentsMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepresentsMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentsMeUITests.swift; sourceTree = "<group>"; };
 		3B1EFD78221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewController.swift; sourceTree = "<group>"; };
 		3B45F0B22222414F00FA5B8B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3B45F0B42222452D00FA5B8B /* OfficialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialCell.swift; sourceTree = "<group>"; };
 		3B649F042237264800E88430 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -241,14 +243,23 @@
 			path = RepresentsMeUITests;
 			sourceTree = "<group>";
 		};
+		3B2C789A224BC4D90036AFD0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3B649F062237274100E88430 /* SettingsViewController.swift */,
+				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
-				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				3B649F062237274100E88430 /* SettingsViewController.swift */,
+				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
+				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
+				3B2C789A224BC4D90036AFD0 /* Settings */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -508,6 +519,7 @@
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
+				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				133BD33B223A76F00069279A /* PoliticalParty.swift in Sources */,
