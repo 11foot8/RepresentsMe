@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zsX-O5-swd">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
@@ -60,7 +59,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-s0-6ud">
-                                                    <rect key="frame" x="100" y="37" width="260" height="18"/>
+                                                    <rect key="frame" x="100" y="37" width="234" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -146,7 +145,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJ0-1V-YUJ">
-                                                    <rect key="frame" x="16" y="8" width="65.666666666666671" height="28"/>
+                                                    <rect key="frame" x="16" y="10" width="24" height="24"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -348,14 +347,14 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8k-dl-get">
                                 <rect key="frame" x="-12" y="274" width="399" height="504"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FirstName LastName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3s-J5-Zz6">
-                                        <rect key="frame" x="28" y="20" width="343" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXY-SU-akR">
+                                        <rect key="frame" x="182.33333333333334" y="49" width="34.666666666666657" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXY-SU-akR">
-                                        <rect key="frame" x="182.33333333333334" y="49" width="34.666666666666657" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FirstName LastName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3s-J5-Zz6">
+                                        <rect key="frame" x="28" y="20" width="343" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -412,20 +411,9 @@
                                             <action selector="websiteButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="j8D-QI-KUv"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XR-Ps-ufA">
-                                        <rect key="frame" x="60" y="322" width="30" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="26"/>
-                                        <state key="normal" title="facebook-square">
-                                            <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="facebookButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="L11-oQ-iyA"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a19-Tz-BcN">
-                                        <rect key="frame" x="184.66666666666666" y="321" width="30" height="41"/>
-                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="29"/>
+                                        <rect key="frame" x="164.66666666666666" y="301" width="70" height="92"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="twitter-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -434,13 +422,23 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pwh-CN-Hl4">
-                                        <rect key="frame" x="309" y="323" width="30" height="38"/>
-                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="26"/>
+                                        <rect key="frame" x="301" y="301" width="70" height="92"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="youtube-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="youtubeButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="Q9h-VJ-acw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XR-Ps-ufA">
+                                        <rect key="frame" x="28" y="301" width="70" height="92"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
+                                        <state key="normal" title="facebook-square">
+                                            <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="facebookButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="L11-oQ-iyA"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -452,25 +450,28 @@
                                     <constraint firstItem="4Od-fq-lVD" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="CNf-aQ-hQU"/>
                                     <constraint firstAttribute="trailing" secondItem="cMe-UG-GBM" secondAttribute="trailing" constant="28" id="Ca2-gQ-zrs"/>
                                     <constraint firstItem="cMe-UG-GBM" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="28" id="Cs6-ZX-Yyo"/>
+                                    <constraint firstItem="a19-Tz-BcN" firstAttribute="top" secondItem="cMe-UG-GBM" secondAttribute="bottom" constant="99" id="HdY-Z9-Jkk"/>
                                     <constraint firstItem="cdg-kt-WWj" firstAttribute="top" secondItem="9uj-c0-c1n" secondAttribute="bottom" constant="24" id="Hdw-8t-jf3"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pwh-CN-Hl4" secondAttribute="trailing" constant="28" id="LHg-Cj-5bp"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="OeI-Hg-k2L"/>
                                     <constraint firstAttribute="bottom" secondItem="K3s-J5-Zz6" secondAttribute="bottom" constant="414" id="VMg-2n-QBN"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="top" secondItem="A8k-dl-get" secondAttribute="top" constant="20" id="Vq8-ua-Aox"/>
                                     <constraint firstItem="cMe-UG-GBM" firstAttribute="top" secondItem="4Od-fq-lVD" secondAttribute="bottom" constant="8" id="aVg-Hh-Qa0"/>
+                                    <constraint firstItem="6XR-Ps-ufA" firstAttribute="top" secondItem="cMe-UG-GBM" secondAttribute="bottom" constant="99" id="bia-Bt-gpF"/>
                                     <constraint firstItem="4Od-fq-lVD" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="bmw-k9-5mZ"/>
+                                    <constraint firstItem="Pwh-CN-Hl4" firstAttribute="top" secondItem="cMe-UG-GBM" secondAttribute="bottom" constant="99" id="bwm-LS-nlg"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="leading" secondItem="cdg-kt-WWj" secondAttribute="leading" id="ddW-tU-XtT"/>
+                                    <constraint firstItem="6XR-Ps-ufA" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="28" id="e3B-FS-lEP"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="trailing" secondItem="cMe-UG-GBM" secondAttribute="trailing" id="eSJ-7m-ulh"/>
                                     <constraint firstItem="a19-Tz-BcN" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="faS-8x-AhA"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="centerX" secondItem="SXY-SU-akR" secondAttribute="centerX" id="g3i-hY-xwu"/>
                                     <constraint firstItem="3wu-N3-voZ" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="g4U-nU-pbG"/>
-                                    <constraint firstItem="a19-Tz-BcN" firstAttribute="top" secondItem="cMe-UG-GBM" secondAttribute="bottom" constant="119" id="iV1-PQ-g0o"/>
-                                    <constraint firstItem="Pwh-CN-Hl4" firstAttribute="top" secondItem="cMe-UG-GBM" secondAttribute="bottom" constant="121" id="kAp-rU-JJr"/>
                                     <constraint firstAttribute="trailing" secondItem="cXc-8h-tP3" secondAttribute="trailing" constant="60" id="l7r-DF-TyR"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="28" id="mQP-G1-GOw"/>
                                     <constraint firstItem="9uj-c0-c1n" firstAttribute="top" secondItem="SXY-SU-akR" secondAttribute="bottom" constant="8" id="oPP-pl-sEz"/>
                                     <constraint firstAttribute="trailing" secondItem="K3s-J5-Zz6" secondAttribute="trailing" constant="28" id="pHq-7b-LYG"/>
+                                    <constraint firstItem="a19-Tz-BcN" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="qHp-PT-2RT"/>
                                     <constraint firstItem="cXc-8h-tP3" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="sMQ-tv-IJp"/>
-                                    <constraint firstAttribute="trailing" secondItem="Pwh-CN-Hl4" secondAttribute="trailing" constant="60" id="uej-Xv-R5W"/>
                                     <constraint firstItem="3wu-N3-voZ" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="xqq-Vb-wzf"/>
                                     <constraint firstItem="4Od-fq-lVD" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="60" id="zw0-h8-i1i"/>
                                 </constraints>

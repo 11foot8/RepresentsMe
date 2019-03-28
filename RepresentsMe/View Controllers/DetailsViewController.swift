@@ -51,11 +51,16 @@ class DetailsViewController: UIViewController {
         officialUrls = passedOfficial!.urls
         officialEmails = passedOfficial!.emails
         
-        if (passedOfficial?.socialMedia.count)! > 0,
-            let dict = passedOfficial?.socialMedia[0] {
-            officialFB = dict["facebook"] ?? ""
-            officialTwitter = dict["twitter"] ?? ""
-            officialYT = dict["youtube"] ?? ""
+        if let passedOfficial = passedOfficial {
+            for dict in passedOfficial.socialMedia {
+                if (officialFB == "" && dict["type"] == "Facebook") {
+                    officialFB = dict["id"]!
+                } else if (officialTwitter == "" && dict["type"] == "Twitter") {
+                    officialTwitter = dict["id"]!
+                } else if (officialYT == "" && dict["type"] == "YouTube") {
+                    officialYT = dict["id"]!
+                }
+            }
         }
     }
     
@@ -118,21 +123,22 @@ class DetailsViewController: UIViewController {
     
     @IBAction func facebookButtonPressed(_ sender: Any) {
         if officialFB != "",
-            let url = URL(string: officialFB) {
+            let url = URL(string: "http://www.facebook.com/\(officialFB)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     @IBAction func twitterButtonPressed(_ sender: Any) {
         if officialTwitter != "",
-            let url = URL(string: officialFB) {
+            let url = URL(string: "http://www.twitter.com/\(officialTwitter)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     @IBAction func youtubeButtonPressed(_ sender: Any) {
         if officialYT != "",
-            let url = URL(string: officialFB) {
+            let url = URL(string: "http://www.youtube.com/\(officialYT)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
