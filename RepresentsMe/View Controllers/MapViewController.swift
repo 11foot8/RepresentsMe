@@ -102,6 +102,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         } else {
             // TODO: show alert for letting user know they have to turn this on
         }
+
+        previousLocation = getCenterLocation(for: mapView)
+        previousGeocodeTime = Date()
     }
 
     /// Do setup for locationManager.
@@ -239,6 +242,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         default:
             // TODO: Alert user that location is no longer authorized
             break
+
+        }
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
         }
     }
 

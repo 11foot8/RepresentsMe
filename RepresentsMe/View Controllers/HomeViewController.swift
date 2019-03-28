@@ -26,7 +26,7 @@ var userAddrChanged = false
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     // MARK: Properties
-    var addr: Address? = nil
+    var addr: Address = userAddr
     var officials: [Official] = []
     
     // MARK: Outlets
@@ -42,6 +42,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.dataSource = self
 
         checkLocationServices()
+        getOfficials(for: addr)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -50,10 +51,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // If the user changed the address in Settings or
         // we haven't been passed an address by the MapViewController,
         // get Officials with the user-specificed address
-        if addr == nil || userAddrChanged {
+        if userAddrChanged {
             addr = userAddr
             userAddrChanged = false
-            getOfficials(for: addr!)
+            getOfficials(for: addr)
         }
     }
 
@@ -64,7 +65,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if error == nil, let officialList = officialList {
                 self.officials = officialList
                 DispatchQueue.main.async {
-                    self.navigationItem.title = "\(self.addr!.city), \(self.addr!.state)"
+                    self.navigationItem.title = "\(self.addr.city), \(self.addr.state)"
                     self.officialsTableView.reloadData()
                 }
             }
