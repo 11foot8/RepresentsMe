@@ -122,12 +122,9 @@ class DetailsViewController: UIViewController {
     // Opens up email app when email button is pressed. Does not work on simulator
     @IBAction func emailButtonPressed(_ sender: Any) {
         if officialEmails.count > 0 {
+            let email = "mailto:\(officialEmails[0])"
             if let url = URL(string: "mailto:\(officialEmails[0])") {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
+                UIApplication.shared.open(url)
             }
         }
     }
