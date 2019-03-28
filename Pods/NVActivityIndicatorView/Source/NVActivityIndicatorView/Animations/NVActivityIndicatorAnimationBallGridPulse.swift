@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorAnimationBallGridBeat.swift
+//  NVActivityIndicatorAnimationBallGridPulse.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)
@@ -27,24 +27,40 @@
 
 import UIKit
 
-class NVActivityIndicatorAnimationBallGridBeat: NVActivityIndicatorAnimationDelegate {
+class NVActivityIndicatorAnimationBallGridPulse: NVActivityIndicatorAnimationDelegate {
 
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSpacing: CGFloat = 2
         let circleSize = (size.width - circleSpacing * 2) / 3
         let x = (layer.bounds.size.width - size.width) / 2
         let y = (layer.bounds.size.height - size.height) / 2
-        let durations = [0.96, 0.93, 1.19, 1.13, 1.34, 0.94, 1.2, 0.82, 1.19]
+        let durations: [CFTimeInterval] = [0.72, 1.02, 1.28, 1.42, 1.45, 1.18, 0.87, 1.45, 1.06]
         let beginTime = CACurrentMediaTime()
-        let beginTimes = [0.36, 0.4, 0.68, 0.41, 0.71, -0.15, -0.12, 0.01, 0.32]
-        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
+        let beginTimes: [CFTimeInterval] = [ -0.06, 0.25, -0.17, 0.48, 0.31, 0.03, 0.46, 0.78, 0.45]
+        #if swift(>=4.2)
+        let timingFunction = CAMediaTimingFunction(name: .default)
+        #else
+        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
+        #endif
+
+        // Scale animation
+        let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+
+        scaleAnimation.keyTimes = [0, 0.5, 1]
+        scaleAnimation.timingFunctions = [timingFunction, timingFunction]
+        scaleAnimation.values = [1, 0.5, 1]
+
+        // Opacity animation
+        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+
+        opacityAnimation.keyTimes = [0, 0.5, 1]
+        opacityAnimation.timingFunctions = [timingFunction, timingFunction]
+        opacityAnimation.values = [1, 0.7, 1]
 
         // Animation
-        let animation = CAKeyframeAnimation(keyPath: "opacity")
+        let animation = CAAnimationGroup()
 
-        animation.keyTimes = [0, 0.5, 1]
-        animation.timingFunctions = [timingFunction, timingFunction]
-        animation.values = [1, 0.7, 1]
+        animation.animations = [scaleAnimation, opacityAnimation]
         animation.repeatCount = HUGE
         animation.isRemovedOnCompletion = false
 

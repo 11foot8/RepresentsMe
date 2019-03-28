@@ -12,11 +12,11 @@ import CoreLocation
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
 
-var userAddr = Address(streetNumber: "201",
-                       streetName: "Gregson St",
-                       city: "Durham",
-                       state: "NC",
-                       zipcode: "27701") {
+var userAddr = Address(streetNumber: "110",
+                       streetName: "Inner Campus Drive",
+                       city: "Austin",
+                       state: "TX",
+                       zipcode: "78712") {
                 didSet {
                     userAddrChanged = true
                 }
@@ -109,6 +109,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    /// Gets user location for finding Officials
     func getReverseGeocode() {
         let location = locationManager.location    // Current coordinates to geocode
         let geoCoder = CLGeocoder()              // Geocoder instance to use
@@ -135,6 +136,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             userAddr = Address(with: placemark)
             self.addr = userAddr
             self.getOfficials(for: userAddr)
+        }
+    }
+
+    // MARK: CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+            locationManager.startUpdatingLocation()
+            getReverseGeocode()
         }
     }
 

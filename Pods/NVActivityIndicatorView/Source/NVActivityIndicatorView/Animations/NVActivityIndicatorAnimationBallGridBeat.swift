@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorAnimationBallPulseSync.swift
+//  NVActivityIndicatorAnimationBallGridBeat.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)
@@ -27,41 +27,46 @@
 
 import UIKit
 
-class NVActivityIndicatorAnimationBallPulseSync: NVActivityIndicatorAnimationDelegate {
+class NVActivityIndicatorAnimationBallGridBeat: NVActivityIndicatorAnimationDelegate {
 
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSpacing: CGFloat = 2
         let circleSize = (size.width - circleSpacing * 2) / 3
         let x = (layer.bounds.size.width - size.width) / 2
-        let y = (layer.bounds.size.height - circleSize) / 2
-        let deltaY = (size.height / 2 - circleSize / 2) / 2
-        let duration: CFTimeInterval = 0.6
+        let y = (layer.bounds.size.height - size.height) / 2
+        let durations = [0.96, 0.93, 1.19, 1.13, 1.34, 0.94, 1.2, 0.82, 1.19]
         let beginTime = CACurrentMediaTime()
-        let beginTimes: [CFTimeInterval] = [0.07, 0.14, 0.21]
-        let timingFunciton = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        let beginTimes = [0.36, 0.4, 0.68, 0.41, 0.71, -0.15, -0.12, 0.01, 0.32]
+        #if swift(>=4.2)
+        let timingFunction = CAMediaTimingFunction(name: .default)
+        #else
+        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
+        #endif
 
         // Animation
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
+        let animation = CAKeyframeAnimation(keyPath: "opacity")
 
-        animation.keyTimes = [0, 0.33, 0.66, 1]
-        animation.timingFunctions = [timingFunciton, timingFunciton, timingFunciton]
-        animation.values = [0, deltaY, -deltaY, 0]
-        animation.duration = duration
+        animation.keyTimes = [0, 0.5, 1]
+        animation.timingFunctions = [timingFunction, timingFunction]
+        animation.values = [1, 0.7, 1]
         animation.repeatCount = HUGE
         animation.isRemovedOnCompletion = false
 
         // Draw circles
         for i in 0 ..< 3 {
-            let circle = NVActivityIndicatorShape.circle.layerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
-            let frame = CGRect(x: x + circleSize * CGFloat(i) + circleSpacing * CGFloat(i),
-                               y: y,
-                               width: circleSize,
-                               height: circleSize)
+            for j in 0 ..< 3 {
+                let circle = NVActivityIndicatorShape.circle.layerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
+                let frame = CGRect(x: x + circleSize * CGFloat(j) + circleSpacing * CGFloat(j),
+                                   y: y + circleSize * CGFloat(i) + circleSpacing * CGFloat(i),
+                                   width: circleSize,
+                                   height: circleSize)
 
-            animation.beginTime = beginTime + beginTimes[i]
-            circle.frame = frame
-            circle.add(animation, forKey: "animation")
-            layer.addSublayer(circle)
+                animation.duration = durations[3 * i + j]
+                animation.beginTime = beginTime + beginTimes[3 * i + j]
+                circle.frame = frame
+                circle.add(animation, forKey: "animation")
+                layer.addSublayer(circle)
+            }
         }
     }
 }
