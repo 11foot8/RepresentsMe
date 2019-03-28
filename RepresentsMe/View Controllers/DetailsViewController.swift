@@ -18,6 +18,10 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var officialLocation: MKMapView!
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     
+    @IBOutlet weak var facebookButton: UIButton!
+    @IBOutlet weak var twitterButton: UIButton!
+    @IBOutlet weak var youtubeButton: UIButton!
+
     var passedOfficial:Official?
     var officialAddress:Address?
     var officialPhones:[String] = []
@@ -62,6 +66,21 @@ class DetailsViewController: UIViewController {
                 }
             }
         }
+
+        if officialFB == "" {
+            facebookButton.setTitleColor(.gray, for: .normal)
+                facebookButton.isUserInteractionEnabled = false
+        }
+
+        if officialTwitter == "" {
+            twitterButton.setTitleColor(.gray, for: .normal)
+            twitterButton.isUserInteractionEnabled = false
+        }
+
+        if officialYT == "" {
+            youtubeButton.setTitleColor(.gray, for: .normal)
+            youtubeButton.isUserInteractionEnabled = false
+        }
     }
     
     // Set the center of the MKMapView to the address of the selected official
@@ -104,7 +123,6 @@ class DetailsViewController: UIViewController {
     @IBAction func emailButtonPressed(_ sender: Any) {
         if officialEmails.count > 0 {
             if let url = URL(string: "mailto:\(officialEmails[0])") {
-                print("made it")
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url)
                 } else {

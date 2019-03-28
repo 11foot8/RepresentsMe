@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -492,12 +492,15 @@
                         <viewLayoutGuide key="safeArea" id="QNy-pu-XKb"/>
                     </view>
                     <connections>
+                        <outlet property="facebookButton" destination="6XR-Ps-ufA" id="a6r-7l-Qhl"/>
                         <outlet property="officialLocation" destination="JLz-iC-oeO" id="QLK-D9-N2b"/>
                         <outlet property="officialName" destination="K3s-J5-Zz6" id="9GI-JI-pSh"/>
                         <outlet property="officialParty" destination="9uj-c0-c1n" id="ptR-yT-fBc"/>
                         <outlet property="officialPicture" destination="cxU-Qv-kIJ" id="5Bj-3O-hfY"/>
                         <outlet property="officialSeat" destination="SXY-SU-akR" id="ZfE-7I-fYc"/>
                         <outlet property="scrollViewOutlet" destination="A8k-dl-get" id="PJx-Ds-djE"/>
+                        <outlet property="twitterButton" destination="a19-Tz-BcN" id="a8a-fZ-aRF"/>
+                        <outlet property="youtubeButton" destination="Pwh-CN-Hl4" id="kCD-9m-NhS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mLd-dq-nU4" userLabel="First Responder" sceneMemberID="firstResponder"/>
