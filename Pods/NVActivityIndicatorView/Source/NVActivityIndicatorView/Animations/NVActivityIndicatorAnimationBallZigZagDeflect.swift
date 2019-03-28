@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorAnimationBallZigZag.swift
+//  NVActivityIndicatorAnimationBallZigZagDeflect.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)
@@ -26,13 +26,12 @@
 //
 
 import UIKit
-import QuartzCore
 
-class NVActivityIndicatorAnimationBallZigZag: NVActivityIndicatorAnimationDelegate {
+class NVActivityIndicatorAnimationBallZigZagDeflect: NVActivityIndicatorAnimationDelegate {
 
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSize: CGFloat = size.width / 5
-        let duration: CFTimeInterval = 0.7
+        let duration: CFTimeInterval = 0.75
         let deltaX = size.width / 2 - circleSize / 2
         let deltaY = size.height / 2 - circleSize / 2
         let frame = CGRect(x: (layer.bounds.size.width - circleSize) / 2, y: (layer.bounds.size.height - circleSize) / 2, width: circleSize, height: circleSize)
@@ -41,16 +40,21 @@ class NVActivityIndicatorAnimationBallZigZag: NVActivityIndicatorAnimationDelega
         let animation = CAKeyframeAnimation(keyPath: "transform")
 
         animation.keyTimes = [0, 0.33, 0.66, 1]
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        #if swift(>=4.2)
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        #else
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        #endif
 
         animation.values = [
             NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(-deltaX, -deltaY, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(deltaX, -deltaY, 0)),
-            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0))
         ]
         animation.duration = duration
         animation.repeatCount = HUGE
+        animation.autoreverses = true
         animation.isRemovedOnCompletion = false
 
         // Draw circle 1
@@ -61,7 +65,7 @@ class NVActivityIndicatorAnimationBallZigZag: NVActivityIndicatorAnimationDelega
             NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(deltaX, deltaY, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(-deltaX, deltaY, 0)),
-            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0))
         ]
 
         // Draw circle 2

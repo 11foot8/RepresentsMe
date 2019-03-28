@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorAnimationBallScale.swift
+//  NVActivityIndicatorBallClipRotate.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)
@@ -27,41 +27,44 @@
 
 import UIKit
 
-class NVActivityIndicatorAnimationBallScale: NVActivityIndicatorAnimationDelegate {
+class NVActivityIndicatorAnimationBallClipRotate: NVActivityIndicatorAnimationDelegate {
 
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
-        let duration: CFTimeInterval = 1
+        let duration: CFTimeInterval = 0.75
 
-        // Scale animation
-        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        //    Scale animation
+        let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
 
-        scaleAnimation.duration = duration
-        scaleAnimation.fromValue = 0
-        scaleAnimation.toValue = 1
+        scaleAnimation.keyTimes = [0, 0.5, 1]
+        scaleAnimation.values = [1, 0.6, 1]
 
-        // Opacity animation
-        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+        // Rotate animation
+        let rotateAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
 
-        opacityAnimation.duration = duration
-        opacityAnimation.fromValue = 1
-        opacityAnimation.toValue = 0
+        rotateAnimation.keyTimes = scaleAnimation.keyTimes
+        rotateAnimation.values = [0, Double.pi, 2 * Double.pi]
 
         // Animation
         let animation = CAAnimationGroup()
 
-        animation.animations = [scaleAnimation, opacityAnimation]
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.animations = [scaleAnimation, rotateAnimation]
+        #if swift(>=4.2)
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        #else
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        #endif
         animation.duration = duration
         animation.repeatCount = HUGE
         animation.isRemovedOnCompletion = false
 
         // Draw circle
-        let circle = NVActivityIndicatorShape.circle.layerWith(size: size, color: color)
+        let circle = NVActivityIndicatorShape.ringThirdFour.layerWith(size: CGSize(width: size.width, height: size.height), color: color)
+        let frame = CGRect(x: (layer.bounds.size.width - size.width) / 2,
+                           y: (layer.bounds.size.height - size.height) / 2,
+                           width: size.width,
+                           height: size.height)
 
-        circle.frame = CGRect(x: (layer.bounds.size.width - size.width) / 2,
-                              y: (layer.bounds.size.height - size.height) / 2,
-                              width: size.width,
-                              height: size.height)
+        circle.frame = frame
         circle.add(animation, forKey: "animation")
         layer.addSublayer(circle)
     }

@@ -25,6 +25,7 @@ class OfficialCell: UITableViewCell {
             officeLabel.text = official?.office
             partyLabel.text = official?.party.name
 
+            portraitImageView.image = nil
             loadingIndicator.isHidden = false
             loadingIndicator.color = official?.party.color ?? .black
             loadingIndicator.startAnimating()
