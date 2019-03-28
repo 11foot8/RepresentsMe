@@ -114,7 +114,7 @@ class DetailsViewController: UIViewController {
     // database
     @IBAction func callButtonPressed(_ sender: Any) {
         if officialPhones.count > 0 {
-            guard let number = URL(string: "tel://" + officialPhones[0]) else { return }
+            guard let number = URL(string: "tel://" + officialPhones[0].filter("01234567890.".contains)) else { return }
             UIApplication.shared.open(number)
         }
     }
