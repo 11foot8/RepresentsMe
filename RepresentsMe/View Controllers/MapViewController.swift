@@ -13,7 +13,7 @@ let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 class MapViewController: UIViewController, CLLocationManagerDelegate,
                             MKMapViewDelegate, UISearchBarDelegate {
     
-    // MARK: Properties
+    // MARK: - Properties
     let locationManager = CLLocationManager()
     
     let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
@@ -30,13 +30,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
 
     var address:Address?
 
-    // MARK: Outlets
+    // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var goButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
 
-    // MARK: Actions
+    // MARK: - Actions
     @IBAction func addressButtonTouchUp(_ sender: Any) {
         let center = getCenterLocation(for: mapView)
         let time = Date()
@@ -58,7 +58,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         centerViewOnUserLocation()
     }
 
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
@@ -78,7 +78,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
     }
     
 
-    // MARK: Methods
+    // MARK: - Methods
     /// Reset address button and go button to default states.
     func resetButtons() {
         addressButton.setTitle(addressMessage, for: .normal)
@@ -97,7 +97,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
     func checkLocationServices() {
         // Check if Location Services are enabled globally
         if CLLocationManager.locationServicesEnabled() {
-            
             setupLocationManager()
             checkLocationAuthorization()
         } else {
@@ -232,8 +231,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
 
     // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
             locationManager.requestLocation()
+            startTrackingUserLocation()
+            break
+        default:
+            // TODO: Alert user that location is no longer authorized
+            break
         }
     }
 
@@ -260,7 +265,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         }
     }
 
-    // MARK: UISearchBarDelegate
+    // MARK: - UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Hide keyboard when 'Search' is tapped
         self.view.endEditing(true)
