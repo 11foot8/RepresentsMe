@@ -9,6 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Font Awesome 5 Free-Regular-400.otf">
+            <string>FontAwesome5Free-Regular</string>
+        </array>
         <array key="Font Awesome 5 Free-Solid-900.otf">
             <string>FontAwesome5Free-Solid</string>
         </array>
@@ -234,9 +237,39 @@
                                             <constraint firstAttribute="height" constant="4" id="9Ti-8Z-RDA"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Od-fq-lVD">
+                                        <rect key="frame" x="60" y="135" width="30" height="29"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
+                                        <state key="normal" title="phone">
+                                            <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="callButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="QA4-2q-JXE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3">
+                                        <rect key="frame" x="309" y="135" width="30" height="29"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                        <state key="normal" title="envelope">
+                                            <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="emailButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="3O3-wc-XS0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wu-N3-voZ">
+                                        <rect key="frame" x="184.66666666666666" y="135" width="30" height="29"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
+                                        <state key="normal" title="external-link-alt">
+                                            <color key="titleColor" red="0.24861783286830486" green="0.62991085583233741" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="websiteButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="j8D-QI-KUv"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMe-UG-GBM">
-                                        <rect key="frame" x="28" y="135" width="343" height="30"/>
-                                        <state key="normal" title="Contact"/>
+                                        <rect key="frame" x="28" y="172" width="343" height="30"/>
+                                        <state key="normal" title="View All Contact Info"/>
                                         <connections>
                                             <segue destination="5VN-HP-B4K" kind="show" identifier="contactSegueIdentifier" id="jfA-UK-ZVE"/>
                                         </connections>
@@ -247,18 +280,26 @@
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="centerX" secondItem="9uj-c0-c1n" secondAttribute="centerX" id="7zy-od-J7o"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="trailing" secondItem="cdg-kt-WWj" secondAttribute="trailing" id="84k-wC-p6P"/>
                                     <constraint firstItem="SXY-SU-akR" firstAttribute="top" secondItem="K3s-J5-Zz6" secondAttribute="bottom" constant="8" id="9cT-X1-HB2"/>
-                                    <constraint firstItem="cMe-UG-GBM" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="Fcg-oX-3Ft"/>
+                                    <constraint firstItem="4Od-fq-lVD" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="CNf-aQ-hQU"/>
+                                    <constraint firstAttribute="trailing" secondItem="cMe-UG-GBM" secondAttribute="trailing" constant="28" id="Ca2-gQ-zrs"/>
+                                    <constraint firstItem="cMe-UG-GBM" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="28" id="Cs6-ZX-Yyo"/>
                                     <constraint firstItem="cdg-kt-WWj" firstAttribute="top" secondItem="9uj-c0-c1n" secondAttribute="bottom" constant="24" id="Hdw-8t-jf3"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="OeI-Hg-k2L"/>
                                     <constraint firstAttribute="bottom" secondItem="K3s-J5-Zz6" secondAttribute="bottom" constant="414" id="VMg-2n-QBN"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="top" secondItem="A8k-dl-get" secondAttribute="top" constant="20" id="Vq8-ua-Aox"/>
+                                    <constraint firstItem="cMe-UG-GBM" firstAttribute="top" secondItem="4Od-fq-lVD" secondAttribute="bottom" constant="8" id="aVg-Hh-Qa0"/>
+                                    <constraint firstItem="4Od-fq-lVD" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="bmw-k9-5mZ"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="leading" secondItem="cdg-kt-WWj" secondAttribute="leading" id="ddW-tU-XtT"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="trailing" secondItem="cMe-UG-GBM" secondAttribute="trailing" id="eSJ-7m-ulh"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="centerX" secondItem="SXY-SU-akR" secondAttribute="centerX" id="g3i-hY-xwu"/>
-                                    <constraint firstItem="cMe-UG-GBM" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="jQe-2o-3zs"/>
+                                    <constraint firstItem="3wu-N3-voZ" firstAttribute="centerX" secondItem="A8k-dl-get" secondAttribute="centerX" id="g4U-nU-pbG"/>
+                                    <constraint firstAttribute="trailing" secondItem="cXc-8h-tP3" secondAttribute="trailing" constant="60" id="l7r-DF-TyR"/>
                                     <constraint firstItem="K3s-J5-Zz6" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="28" id="mQP-G1-GOw"/>
                                     <constraint firstItem="9uj-c0-c1n" firstAttribute="top" secondItem="SXY-SU-akR" secondAttribute="bottom" constant="8" id="oPP-pl-sEz"/>
                                     <constraint firstAttribute="trailing" secondItem="K3s-J5-Zz6" secondAttribute="trailing" constant="28" id="pHq-7b-LYG"/>
+                                    <constraint firstItem="cXc-8h-tP3" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="sMQ-tv-IJp"/>
+                                    <constraint firstItem="3wu-N3-voZ" firstAttribute="top" secondItem="cdg-kt-WWj" secondAttribute="bottom" constant="8" id="xqq-Vb-wzf"/>
+                                    <constraint firstItem="4Od-fq-lVD" firstAttribute="leading" secondItem="A8k-dl-get" secondAttribute="leading" constant="60" id="zw0-h8-i1i"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -1044,6 +1085,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="kjF-jh-uxz"/>
         <segue reference="xAA-0M-hTn"/>
-        <segue reference="MZX-gR-k2v"/>
+        <segue reference="aS0-JL-Lkj"/>
     </inferredMetricsTieBreakers>
 </document>

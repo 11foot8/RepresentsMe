@@ -20,6 +20,9 @@ class DetailsViewController: UIViewController {
     
     var passedOfficial:Official?
     var officialAddress:Address?
+    var officialPhones:[String] = []
+    var officialUrls:[URL?] = []
+    var officialEmails:[String] = []
     
     override func viewWillAppear(_ animated: Bool) {
         officialName.text = passedOfficial?.name
@@ -39,15 +42,16 @@ class DetailsViewController: UIViewController {
                                   city: address!["city"]!,
                                   state: address!["state"]!,
                                   zipcode: address!["zip"]!)
-        
         setMapView()
+        
+        officialPhones = passedOfficial!.phones
+        officialUrls = passedOfficial!.urls
+        officialEmails = passedOfficial!.emails
     }
     
     // Set the center of the MKMapView to the address of the selected official
     func setMapView() {
         let address = "\(officialAddress!.streetName), \(officialAddress!.city), \(officialAddress!.state) \(officialAddress!.zipcode)"
-        
-        print(address)
         
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(address) { (placemarks, error) in
@@ -70,6 +74,36 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height+100)
+    }
+    
+    // Starts a call with the official based on the phone number provided in the
+    // database
+    @IBAction func callButtonPressed(_ sender: Any) {
+        if officialPhones.count > 0 {
+            guard let number = URL(string: "tel://" + officialPhones[0]) else { return }
+            UIApplication.shared.open(number)
+        }
+    }
+    
+    // Opens up email app when email button is pressed. Does not work on simulator
+    @IBAction func emailButtonPressed(_ sender: Any) {
+        if officialEmails.count > 0 {
+            if let url = URL(string: "mailto:\(officialEmails[0])") {
+                print("made it")
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+    }
+    
+    // Takes user to a safari webpage related to the selected official
+    @IBAction func websiteButtonPressed(_ sender: Any) {
+        if officialUrls.count > 0 {
+            UIApplication.shared.open(officialUrls[0]!, options: [:], completionHandler: nil)
+        }
     }
     
     let contactSegueIdentifier = "contactSegueIdentifier"
