@@ -23,6 +23,9 @@ class DetailsViewController: UIViewController {
     var officialPhones:[String] = []
     var officialUrls:[URL?] = []
     var officialEmails:[String] = []
+    var officialFB = ""
+    var officialTwitter = ""
+    var officialYT = ""
     
     override func viewWillAppear(_ animated: Bool) {
         officialName.text = passedOfficial?.name
@@ -47,6 +50,13 @@ class DetailsViewController: UIViewController {
         officialPhones = passedOfficial!.phones
         officialUrls = passedOfficial!.urls
         officialEmails = passedOfficial!.emails
+        
+        if (passedOfficial?.socialMedia.count)! > 0,
+            let dict = passedOfficial?.socialMedia[0] {
+            officialFB = dict["facebook"] ?? ""
+            officialTwitter = dict["twitter"] ?? ""
+            officialYT = dict["youtube"] ?? ""
+        }
     }
     
     // Set the center of the MKMapView to the address of the selected official
@@ -103,6 +113,27 @@ class DetailsViewController: UIViewController {
     @IBAction func websiteButtonPressed(_ sender: Any) {
         if officialUrls.count > 0 {
             UIApplication.shared.open(officialUrls[0]!, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func facebookButtonPressed(_ sender: Any) {
+        if officialFB != "",
+            let url = URL(string: officialFB) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func twitterButtonPressed(_ sender: Any) {
+        if officialTwitter != "",
+            let url = URL(string: officialFB) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func youtubeButtonPressed(_ sender: Any) {
+        if officialYT != "",
+            let url = URL(string: officialFB) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
