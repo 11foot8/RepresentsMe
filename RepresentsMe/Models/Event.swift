@@ -16,8 +16,8 @@ class Event {
     typealias allCompletionHandler = ([Event], Error?) -> ()
     
     // The Firestore database
-    static let db = Firestore.firestore()
     static let collection = "events"
+    static let db = Firestore.firestore().collection(Event.collection)
 
     var documentID:String?
     var name:String
@@ -85,8 +85,19 @@ class Event {
     /// - Parameter completion:     the completion handler
     func update(completion: @escaping completionHandler) {
         if let documentID = self.documentID {
-            let ref = Event.db.collection(Event.collection).document(documentID)
+            let ref = Event.db.document(documentID)
             ref.updateData(self.data) {(error) in
+                return completion(self, error)
+            }
+        }
+    }
+    
+    /// Deletes this Event
+    ///
+    /// - Parameter completion:     the completion handler
+    func delete(completion: @escaping completionHandler) {
+        if let documentID = self.documentID {
+            Event.db.document(documentID).delete {(error) in
                 return completion(self, error)
             }
         }
@@ -97,8 +108,7 @@ class Event {
     /// - Parameter completion:     the completion handler
     private func add(completion: @escaping completionHandler) {
         var ref:DocumentReference?
-        ref = Event.db.collection(Event.collection).addDocument(
-            data: self.data) {(error) in
+        ref = Event.db.addDocument(data: self.data) {(error) in
             if error == nil {
                 self.documentID = ref!.documentID
             }
@@ -129,7 +139,7 @@ class Event {
     /// - Parameter completion:     the completion handler
     static func allWith(owner:String,
                         completion: @escaping allCompletionHandler) {
-        let ref = Event.db.collection(Event.collection).whereField("owner", isEqualTo: owner)
+        let ref = Event.db.whereField("owner", isEqualTo: owner)
         ref.getDocuments {(data, error) in
             var events:[Event] = []
             if error == nil {

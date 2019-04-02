@@ -60,6 +60,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if errors == nil {
                 for event in events {
                     print(event.documentID, event.name)
+                    event.delete {(event, error) in
+                        if error == nil {
+                            print("deleted \(event.documentID)")
+                        }
+                    }
                 }
             }
         }
