@@ -73,33 +73,24 @@ MapActionButtonsDelegate {
     // MARK: - Actions
     func onSearchQuery(query: String) {
         let address:String = query
-        let geocoder = CLGeocoder()
+        let geocoder = GeocoderWrapper()
 
-        // Convert current mapView region to CLRegion to assist geocoder
-        let region = convertRegion(mk: mapView.region)
-        geocoder.geocodeAddressString(address, in: region, completionHandler: self.asyncGeocodeAddress)
+        geocoder.geocodeAddressString(address, completionHandler: self.geocodeSearchedAddressCompletionHandler)
     }
 
     func onSearchClear() {
         clearPin()
     }
 
-    func asyncGeocodeAddress(placemarks:[CLPlacemark]?, error:Error?) {
-        if let _ = error {
-            // TODO: Show alert informing user
-            return
-        }
-        guard let placemark = placemarks?.first else {
-            // TODO: show alert informing user search failed
-            return
-        }
-        self.workItem = DispatchWorkItem{ self.geocodeAddressCompletionHandler(placemark: placemark)}
-        DispatchQueue.main.async(execute: workItem!)
-    }
-
-    func geocodeAddressCompletionHandler(placemark:CLPlacemark) {
+    func geocodeSearchedAddressCompletionHandler(placemark:CLPlacemark) {
         let coords = placemark.location!.coordinate
         dropPin(coords: coords, title: "Searched Address", replaceSearchedValue: false)
+        self.centerView(on: coords, animated: false)
+    }
+
+    func geocodeHomeAddressCompletionHandler(placemark:CLPlacemark) {
+        let coords = placemark.location!.coordinate
+        dropPin(coords: coords, title: "Home", replaceSearchedValue: true)
         self.centerView(on: coords, animated: false)
     }
 
@@ -120,9 +111,12 @@ MapActionButtonsDelegate {
         }
     }
 
+    /// Move view to user's saved address and drop a pin
     func onHomeTouchUp() {
-        // TODO: Move view to user's saved address and drop pin
-        let address = userAddr.
+        let address = userAddr.description
+        let geocoder = GeocoderWrapper()
+
+        geocoder.geocodeAddressString(address, completionHandler: self.geocodeHomeAddressCompletionHandler)
     }
 
     // MARK: - Methods
