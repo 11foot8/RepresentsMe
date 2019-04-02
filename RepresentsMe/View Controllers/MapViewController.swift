@@ -75,6 +75,7 @@ MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegat
 
     @IBAction func locateTouchUp(_ sender: Any) {
         centerViewOnUserLocation()
+        dropPin(coords: getCenterLocation(for: mapView).coordinate)
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
