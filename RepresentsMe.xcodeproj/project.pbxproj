@@ -26,6 +26,10 @@
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
 		13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
+		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
+		16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */; };
+		16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FCC84D2252B58F008D3991 /* LocationInfo.xib */; };
+		16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84F2252B5CF008D3991 /* LocationInfo.swift */; };
 		34760810FBDB441A2F565AD1 /* Pods_RepresentsMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB88E31673EB3A34EA58700A /* Pods_RepresentsMe.framework */; };
 		3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD53221F06E9003176BF /* AppDelegate.swift */; };
 		3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD57221F06E9003176BF /* Main.storyboard */; };
@@ -82,6 +86,10 @@
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
+		16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoViewController.swift; sourceTree = "<group>"; };
+		16FCC84D2252B58F008D3991 /* LocationInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationInfo.xib; sourceTree = "<group>"; };
+		16FCC84F2252B5CF008D3991 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		2606EAF9AD601CDBDC9B898F /* Pods-RepresentsMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe.debug.xcconfig"; sourceTree = "<group>"; };
 		3B1EFD50221F06E9003176BF /* RepresentsMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepresentsMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD53221F06E9003176BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
+				16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
 			);
 			path = "View Controllers";
@@ -267,8 +276,11 @@
 		3B45F0B72226F1A300FA5B8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				16D0263E2252706A005C86F2 /* DroppedPin.swift */,
 				3B45F0B42222452D00FA5B8B /* OfficialCell.swift */,
 				3B649F042237264800E88430 /* SettingsCell.swift */,
+				16FCC84D2252B58F008D3991 /* LocationInfo.xib */,
+				16FCC84F2252B5CF008D3991 /* LocationInfo.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -414,6 +426,7 @@
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
 				13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */,
 				3B1EFD5E221F06EC003176BF /* Assets.xcassets in Resources */,
+				16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */,
 				3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,12 +609,14 @@
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
+				16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
+				16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */,
 				133BD33B223A76F00069279A /* PoliticalParty.swift in Sources */,
 				13BD31AE223020CD000A6BEE /* Enum.swift in Sources */,
 				0D9449C2223184F30057BAB1 /* DetailsViewController.swift in Sources */,
@@ -610,6 +625,7 @@
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 				13BD31AC22302089000A6BEE /* FontAwesome.swift in Sources */,
+				16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */,
 				3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -791,7 +807,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -807,7 +826,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -824,7 +846,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -842,7 +868,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -859,7 +889,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -876,7 +910,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

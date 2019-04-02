@@ -7,12 +7,13 @@
 
 import UIKit
 import MapKit
+import Foundation
 
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
 class MapViewController: UIViewController, CLLocationManagerDelegate,
-                            MKMapViewDelegate, UISearchBarDelegate {
-    
+MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegate {
+
     // MARK: - Properties
     let locationManager = CLLocationManager()
     
@@ -30,41 +31,86 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
 
     var address:Address?
 
+    var annotation:MKAnnotation?
+
+    var workItem:DispatchWorkItem?
+
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var addressButton: UIButton!
-    @IBOutlet weak var goButton: UIButton!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBarView: UIView!
+    @IBOutlet weak var searchBarTextField: UITextField!
+    @IBOutlet weak var locationInfoView: LocationInfo!
 
     // MARK: - Actions
-    @IBAction func addressButtonTouchUp(_ sender: Any) {
-        let center = getCenterLocation(for: mapView)
-        let time = Date()
-        guard let previousLocation = self.previousLocation else { return }
-        guard let previousGeocodeTime = self.previousGeocodeTime else { return }
+    @IBAction func searchRequested(_ sender: Any) {
+        // Hide keyboard when 'Search' is tapped
+        searchBarTextField.resignFirstResponder()
+        self.view.endEditing(true)
+        let address:String = searchBarTextField.text!
+        let geocoder = CLGeocoder()
 
-        guard center.distance(from: previousLocation) > minimumDistanceForNewGeocode
-            || time.timeIntervalSince(previousGeocodeTime) > minimumTimeForNewGecode else { return }
-
-        getReverseGeocode()
+        // Convert current mapView region to CLRegion to assist geocoder
+        let region = convertRegion(mk: mapView.region)
+        geocoder.geocodeAddressString(address, in: region, completionHandler: self.asyncGeocodeAddress)
     }
 
-    @IBAction func goButtonTouchUp(_ sender: Any) {
-        // TODO: Check address validity - incl. addresses outside of US
-        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+    func asyncGeocodeAddress(placemarks:[CLPlacemark]?, error:Error?) {
+        if let _ = error {
+            // TODO: Show alert informing user
+            return
+        }
+        guard let placemark = placemarks?.first else {
+            // TODO: show alert informing user search failed
+            return
+        }
+        self.workItem = DispatchWorkItem{ self.geocodeAddressCompletionHandler(placemark: placemark)}
+        DispatchQueue.main.async(execute: workItem!)
+    }
+
+    func geocodeAddressCompletionHandler(placemark:CLPlacemark) {
+        let coords = placemark.location!.coordinate
+        dropPin(coords: coords)
+        self.centerView(on: coords, animated: false)
     }
 
     @IBAction func locateTouchUp(_ sender: Any) {
         centerViewOnUserLocation()
     }
 
+    @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.state != .began { return }
+
+        let touchPoint = gestureRecognizer.location(in: mapView)
+        let touchMapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+
+        searchBarTextField.text = "Dropped Pin"
+
+        dropPin(coords: touchMapCoordinate)
+
+    }
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-        addressButton.titleLabel?.lineBreakMode = .byWordWrapping
-        resetButtons()
-        searchBar.delegate = self
+
+        // Set up Location Info View
+        locationInfoView.delegate = self
+
+        // Set up search bar
+        searchBarView.layer.cornerRadius = 8    // round corners
+        searchBarView.clipsToBounds = true
+        searchBarView.layer.borderWidth = 1     // Draw border around entire view
+        searchBarView.layer.borderColor = UIColor.lightGray.cgColor
+        searchBarTextField.clearButtonMode = UITextField.ViewMode.always
+        searchBarTextField.returnKeyType = .search
+        searchBarTextField.delegate = self
+
+
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.handleLongPress))
+        mapView.addGestureRecognizer(longPressRecognizer)
+
+        clearPin()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,19 +125,26 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
     
 
     // MARK: - Methods
-    /// Reset address button and go button to default states.
-    func resetButtons() {
-        addressButton.setTitle(addressMessage, for: .normal)
-        goButton.isUserInteractionEnabled = false
-        goButton.backgroundColor = .gray
+    func clearPin() {
+        if self.annotation != nil {
+            mapView.removeAnnotation(self.annotation!)
+        }
+        locationInfoView.isHidden = true
     }
 
-    /// Enable go button.
-    func enableGoButton() {
-        self.goButton.isUserInteractionEnabled = true
-        self.goButton.backgroundColor = .black
+    func dropPin(coords:CLLocationCoordinate2D) {
+        locationInfoView.isHidden = false
+        if (self.annotation != nil) {
+            mapView.removeAnnotation(self.annotation!)
+            self.annotation = nil
+        }
+        self.annotation = DroppedPin(title: "Dropped Pin", locationName: "", discipline: "", coordinate: coords)
+        mapView.addAnnotation(annotation!)
+        locationInfoView.isHidden = false
+        locationInfoView.updateWithCoordinates(coords: coords)
     }
 
+    // MARK: - Location Utilities
     /// Check that location services are enabled, if so set up services, if not alert user that location services are
     /// not enabled.
     func checkLocationServices() {
@@ -170,39 +223,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         return CLLocation(latitude: latitude, longitude: longitude)
     }
 
-    /// Reverse geocodes the current center location of mapView.
-    /// Attempts to retrieve an address from the current center coordinates of mapView
-    /// Upon successful reverse geocode, sets title of address button to resulting address and enables go button.
-    func getReverseGeocode() {
-        let center = getCenterLocation(for: mapView) // Current coordinates to geocode
-        let geoCoder = CLGeocoder()                  // Geocoder instance to use
-
-        // Reverse geocode 'center'
-        // Request will come back with 'placemarks' and 'error' as parameters
-        geoCoder.reverseGeocodeLocation(center) { (placemarks, error) in
-            // If an error occured, alert user and return immediately
-            if let _ = error {
-                // TODO: Show alert informing the user
-                return
-            }
-
-            // placemark is a list of results, if no results returned, alert user and return immediately
-            guard let placemark = placemarks?.first else {
-                // TODO: Show alert informing the user
-                return
-            }
-
-            // Get address from the placemark
-            self.address = Address(with: placemark)
-            
-            DispatchQueue.main.async {
-                // In UI thread, set title of address button and enable go button
-                self.addressButton.setTitle("\(self.address!)", for: .normal)
-                self.enableGoButton()
-            }
-        }
-    }
-
     /// Convert MKCoordinateRegion to CLCircularRegion.
     func convertRegion(mk:MKCoordinateRegion) -> (CLCircularRegion) {
         // MKCoordinateRegion is a center and span
@@ -227,12 +247,39 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         return region
     }
 
+    // MARK: - Keyboard
+    /// Hide keyboard when tapping out of SearchBar
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Hide keyboard when tapping out of SearchBar
         self.view.endEditing(true)
     }
 
-    // MARK: CLLocationManagerDelegate
+    // MARK: - Searchbar
+    // MARK: UITextFieldDelegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+
+    }
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        textField.text = ""
+        clearPin()
+        textField.resignFirstResponder()
+        return false
+    }
+
+    //
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    // MARK: - LocationInfoDelegate
+    func goButtonPressed(address: Address) {
+        self.address = address
+        // TODO: Check address validity - incl. addresses outside of US
+        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+    }
+
+    // MARK: - CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
@@ -255,45 +302,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,
         // TODO: Handle error
     }
 
-    // MARK: MKMapViewDelegate
+    // MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let center = getCenterLocation(for: mapView)
-        guard let previousLocation = self.previousLocation else { return }
-        
-        if (previousLocation.distance(from: center) > minimumDistanceForNewGeocode) {
-            resetButtons()
-        }
+
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! HomeViewController
             destination.addr = self.address!
-        }
-    }
-
-    // MARK: - UISearchBarDelegate
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // Hide keyboard when 'Search' is tapped
-        self.view.endEditing(true)
-        let address:String = searchBar.text!
-        let geocoder = CLGeocoder()
-
-        // Convert current mapView region to CLRegion to assist geocoder
-        let region = convertRegion(mk: mapView.region)
-        geocoder.geocodeAddressString(address, in: region) { (placemarks, error) in
-            if let _ = error {
-                // TODO: Show alert informing user
-                return
-            }
-            guard let placemark = placemarks?.first else {
-                // TODO: show alert informing user search failed
-                return
-            }
-            DispatchQueue.main.async {
-                self.centerView(on: (placemark.location?.coordinate)!, animated: false)
-                self.getReverseGeocode()
-            }
         }
     }
 }
