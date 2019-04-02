@@ -7,6 +7,8 @@ target 'RepresentsMe' do
 
   # Pods for RepresentsMe
   pod 'NVActivityIndicatorView'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
 
   target 'RepresentsMeTests' do
     inherit! :search_paths

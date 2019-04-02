@@ -43,6 +43,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         checkLocationServices()
         getOfficials(for: addr)
+        
+        // TODO remove
+        let location = CLLocationCoordinate2D(latitude: 30, longitude: 30)
+        Event.create(name: "test", owner: "test", location: location, date: Date()) {(event, error) in
+            if error == nil {
+                event.name = "new name"
+                event.update {(event, error) in
+                    if error == nil {
+                        print("event name: \(event.name)")
+                    }
+                }
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
