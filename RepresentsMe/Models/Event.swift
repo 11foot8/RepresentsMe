@@ -9,6 +9,7 @@
 import MapKit
 import Firebase
 
+/// Manages creating, updating, and deleting events through Firestore
 class Event {
     
     /// The completion handlers for using Firestore
@@ -24,7 +25,7 @@ class Event {
     var owner:String
     var location:CLLocationCoordinate2D
     var date:Date
-    
+
     /// Gets the data formatted for Firestore
     var data:[String: Any] {
         return [
@@ -32,7 +33,7 @@ class Event {
             "owner": owner,
             "location": GeoPoint(latitude: location.latitude,
                                  longitude: location.longitude),
-            "date": date
+            "date": date,
         ]
     }
     
