@@ -91,7 +91,7 @@ MapActionButtonsDelegate {
     func geocodeHomeAddressCompletionHandler(placemark:CLPlacemark) {
         let coords = placemark.location!.coordinate
         dropPin(coords: coords, title: "Home", replaceSearchedValue: true)
-        self.centerView(on: coords, animated: false)
+        self.centerView(on: coords, animated: true)
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
