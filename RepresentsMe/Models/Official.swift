@@ -23,11 +23,13 @@ class Official: Equatable, CustomStringConvertible {
     var photo:UIImage?                  // The cached photo of the official
     var photoURL:URL?                   // The photo url of the official
     var party:PoliticalParty            // The political party of the official
-    var addresses:[[String: String]]    // The addresses for the official
+    var addresses:[Address]    // The addresses for the official
     var phones:[String]                 // The phones for the official
     var urls:[URL?]                     // The urls for the official
     var emails:[String]                 // The emails for the official
-    var socialMedia:[[String: String]]  // The social media profiles
+    var facebookURL:URL?                // The official's Facebook account
+    var twitterURL:URL?                 // The official's Twitter account
+    var youtubeURL:URL?                 // The official's YouTube account
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
 
@@ -39,11 +41,10 @@ class Official: Equatable, CustomStringConvertible {
         self.index = -1
         self.name = ""
         self.party = PoliticalParty.unknown
-        self.addresses = [[:]]
+        self.addresses = []
         self.phones = []
         self.urls = []
         self.emails = []
-        self.socialMedia = [[:]]
         self.office = ""
         self.division = ""
     }
@@ -60,11 +61,19 @@ class Official: Equatable, CustomStringConvertible {
         self.name = official.name
         self.photoURL = URL(string: official.photoUrl)
         self.party = PoliticalParty.determine(for: official.party)
-        self.addresses = official.address
+        self.addresses = official.address.map({Address(with: $0)})
         self.phones = official.phones
         self.urls = official.urls.map{URL(string: $0)}
         self.emails = official.emails
-        self.socialMedia = official.channels
+        for dict in official.channels {
+            if (facebookURL == nil && dict["type"] == "Facebook") {
+                facebookURL = URL(string: "http://www.facebook.com/\(dict["id"]!)")
+            } else if (twitterURL == nil && dict["type"] == "Twitter") {
+                twitterURL = URL(string: "http://www.twitter.com/\(dict["id"]!)")
+            } else if (youtubeURL == nil && dict["type"] == "YouTube") {
+                youtubeURL = URL(string: "http://www.youtube.com/\(dict["id"]!)")
+            }
+        }
         self.office = office.name
         self.division = division.name
         self.photo = DEFAULT_NOT_LOADED
@@ -83,7 +92,9 @@ class Official: Equatable, CustomStringConvertible {
             "\(self.phones)," +
             "\(self.urls)," +
             "\(self.emails)," +
-            "\(self.socialMedia)," +
+            "\(self.facebookURL?.absoluteString ?? "")," +
+            "\(self.twitterURL?.absoluteString ?? "")," +
+            "\(self.youtubeURL?.absoluteString ?? "")," +
             "\(self.office)," +
             "\(self.division)," +
         "/>"
@@ -139,7 +150,9 @@ class Official: Equatable, CustomStringConvertible {
             lhs.phones == rhs.phones &&
             lhs.urls == rhs.urls &&
             lhs.emails == rhs.emails &&
-            lhs.socialMedia == rhs.socialMedia &&
+            lhs.facebookURL == rhs.facebookURL &&
+            lhs.twitterURL == rhs.twitterURL &&
+            lhs.twitterURL == rhs.twitterURL &&
             lhs.office == rhs.office &&
             lhs.division == rhs.division
         )

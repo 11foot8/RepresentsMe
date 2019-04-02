@@ -11,11 +11,11 @@ import UIKit
 import MapKit
 
 class DetailsViewController: UIViewController {
-    @IBOutlet weak var officialName: UILabel!
-    @IBOutlet weak var officialSeat: UILabel!
-    @IBOutlet weak var officialParty: UILabel!
-    @IBOutlet weak var officialPicture: UIImageView!
-    @IBOutlet weak var officialLocation: MKMapView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var seatLabel: UILabel!
+    @IBOutlet weak var partyLabel: UILabel!
+    @IBOutlet weak var portraitImageView: UIImageView!
+    @IBOutlet weak var officeLocationMapView: MKMapView!
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     
     @IBOutlet weak var facebookButton: UIButton!
@@ -27,65 +27,47 @@ class DetailsViewController: UIViewController {
     var officialPhones:[String] = []
     var officialUrls:[URL?] = []
     var officialEmails:[String] = []
-    var officialFB = ""
-    var officialTwitter = ""
-    var officialYT = ""
     
     override func viewWillAppear(_ animated: Bool) {
-        officialName.text = passedOfficial?.name
-        officialSeat.text = passedOfficial?.office
-        officialParty.text = passedOfficial?.party.name
-        if let passedPic = passedOfficial?.photo {
-            officialPicture.image = passedPic
+        nameLabel.text = passedOfficial?.name
+        seatLabel.text = passedOfficial?.office
+        partyLabel.text = passedOfficial?.party.name
+        if let portrait = passedOfficial?.photo {
+            portraitImageView.image = portrait
         }
         
         if (passedOfficial?.addresses.count)! < 1 {
             return
         }
-        let address = passedOfficial?.addresses[0]
-        
-        officialAddress = Address(streetNumber: "",
-                                  streetName: address!["line1"]!,
-                                  city: address!["city"]!,
-                                  state: address!["state"]!,
-                                  zipcode: address!["zip"]!)
+        officialAddress = passedOfficial?.addresses[0]
+
         setMapView()
         
         officialPhones = passedOfficial!.phones
         officialUrls = passedOfficial!.urls
         officialEmails = passedOfficial!.emails
-        
-        if let passedOfficial = passedOfficial {
-            for dict in passedOfficial.socialMedia {
-                if (officialFB == "" && dict["type"] == "Facebook") {
-                    officialFB = dict["id"]!
-                } else if (officialTwitter == "" && dict["type"] == "Twitter") {
-                    officialTwitter = dict["id"]!
-                } else if (officialYT == "" && dict["type"] == "YouTube") {
-                    officialYT = dict["id"]!
-                }
-            }
-        }
 
-        if officialFB == "" {
+        if passedOfficial?.facebookURL == nil {
             facebookButton.setTitleColor(.gray, for: .normal)
-                facebookButton.isUserInteractionEnabled = false
+            facebookButton.isUserInteractionEnabled = false
         }
 
-        if officialTwitter == "" {
+        if passedOfficial?.twitterURL == nil {
             twitterButton.setTitleColor(.gray, for: .normal)
             twitterButton.isUserInteractionEnabled = false
         }
 
-        if officialYT == "" {
+        if passedOfficial?.youtubeURL == nil  {
             youtubeButton.setTitleColor(.gray, for: .normal)
             youtubeButton.isUserInteractionEnabled = false
         }
+
+        // TODO: gray out email, phone, and link buttons like social media buttons
     }
     
     // Set the center of the MKMapView to the address of the selected official
     func setMapView() {
-        let address = "\(officialAddress!.streetName), \(officialAddress!.city), \(officialAddress!.state) \(officialAddress!.zipcode)"
+        let address = officialAddress!.description
         
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(address) { (placemarks, error) in
@@ -101,7 +83,7 @@ class DetailsViewController: UIViewController {
             
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
             
-            self.officialLocation.setRegion(region, animated: true)
+            self.officeLocationMapView.setRegion(region, animated: true)
         }
     }
     
@@ -122,7 +104,6 @@ class DetailsViewController: UIViewController {
     // Opens up email app when email button is pressed. Does not work on simulator
     @IBAction func emailButtonPressed(_ sender: Any) {
         if officialEmails.count > 0 {
-            let email = "mailto:\(officialEmails[0])"
             if let url = URL(string: "mailto:\(officialEmails[0])") {
                 UIApplication.shared.open(url)
             }
@@ -132,30 +113,20 @@ class DetailsViewController: UIViewController {
     // Takes user to a safari webpage related to the selected official
     @IBAction func websiteButtonPressed(_ sender: Any) {
         if officialUrls.count > 0 {
-            UIApplication.shared.open(officialUrls[0]!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(officialUrls[0]!)
         }
     }
     
     @IBAction func facebookButtonPressed(_ sender: Any) {
-        if officialFB != "",
-            let url = URL(string: "http://www.facebook.com/\(officialFB)") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        UIApplication.shared.open(passedOfficial!.facebookURL!)
     }
     
     @IBAction func twitterButtonPressed(_ sender: Any) {
-        if officialTwitter != "",
-            let url = URL(string: "http://www.twitter.com/\(officialTwitter)") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        UIApplication.shared.open(passedOfficial!.twitterURL!)
     }
     
     @IBAction func youtubeButtonPressed(_ sender: Any) {
-        if officialYT != "",
-            let url = URL(string: "http://www.youtube.com/\(officialYT)") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        UIApplication.shared.open(passedOfficial!.youtubeURL!)
     }
     
     let contactSegueIdentifier = "contactSegueIdentifier"
