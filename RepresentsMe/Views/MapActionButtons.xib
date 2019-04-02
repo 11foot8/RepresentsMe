@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Font Awesome 5 Free-Solid-900.otf">
+            <string>FontAwesome5Free-Solid</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionButtons" customModule="RepresentsMe" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="Zlc-hW-s1d"/>
+                <outlet property="homeButton" destination="SxJ-AO-nxC" id="ZQv-8x-O8J"/>
+                <outlet property="locateButton" destination="B0d-Jx-MH6" id="B1B-Ea-7ju"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="40" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CS8-dT-Diw">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="80"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0d-Jx-MH6">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                            <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="18"/>
+                            <state key="normal" title="location-arrow"/>
+                            <connections>
+                                <action selector="locateTouchUp:" destination="-1" eventType="touchUpInside" id="XIc-X5-HvM"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxJ-AO-nxC">
+                            <rect key="frame" x="0.0" y="40" width="40" height="40"/>
+                            <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="18"/>
+                            <state key="normal" title="home"/>
+                            <connections>
+                                <action selector="homeTouchUp:" destination="-1" eventType="touchUpInside" id="9t8-Zt-fD4"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="SxJ-AO-nxC" firstAttribute="leading" secondItem="CS8-dT-Diw" secondAttribute="leading" id="6IX-aY-MPn"/>
+                        <constraint firstAttribute="height" constant="80" id="6Xw-2E-ml2"/>
+                        <constraint firstItem="B0d-Jx-MH6" firstAttribute="height" secondItem="CS8-dT-Diw" secondAttribute="height" multiplier="0.5" id="J9P-TD-6F0"/>
+                        <constraint firstAttribute="width" constant="40" id="MMU-Az-DOa"/>
+                        <constraint firstAttribute="trailing" secondItem="SxJ-AO-nxC" secondAttribute="trailing" id="Mca-Sy-Ki9"/>
+                        <constraint firstItem="SxJ-AO-nxC" firstAttribute="height" secondItem="CS8-dT-Diw" secondAttribute="height" multiplier="0.5" id="fHM-E2-6iu"/>
+                        <constraint firstItem="B0d-Jx-MH6" firstAttribute="leading" secondItem="CS8-dT-Diw" secondAttribute="leading" id="fu5-pC-WOy"/>
+                        <constraint firstAttribute="trailing" secondItem="B0d-Jx-MH6" secondAttribute="trailing" id="lvU-5j-Idi"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="CS8-dT-Diw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="BNL-O3-7x1"/>
+                <constraint firstItem="CS8-dT-Diw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UDp-Ka-0kZ"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-193.59999999999999" y="286.05697151424289"/>
+        </view>
+    </objects>
+</document>

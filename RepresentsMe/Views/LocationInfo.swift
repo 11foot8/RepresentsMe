@@ -70,8 +70,10 @@ class LocationInfo: UIView {
 
     /// Reverse geocodes the given location.
     /// Upon successful reverse geocode, sets locationInfoView correctly
-    func updateWithCoordinates(coords:CLLocationCoordinate2D) {
+    func updateWithCoordinates(coords:CLLocationCoordinate2D, title:String) {
         startLoadingAnimation()
+
+        titleLabel.text = title
 
         let geocoder = CLGeocoder()
 
@@ -108,7 +110,6 @@ class LocationInfo: UIView {
     func geocodeCompletionHandler(address:Address) {
         self.address = address
         // In UI thread, set title of address button and enable go button
-        self.titleLabel.text = "Dropped Pin"
         let streetNo = self.address!.streetNumber
         let streetName = self.address!.streetName
         let city = self.address!.city
