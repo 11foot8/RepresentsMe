@@ -45,14 +45,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         getOfficials(for: addr)
         
         // TODO remove
-        let location = CLLocationCoordinate2D(latitude: 30, longitude: 30)
-        Event.create(name: "test", owner: "test", location: location, date: Date()) {(event, error) in
-            if error == nil {
-                event.name = "new name"
-                event.update {(event, error) in
-                    if error == nil {
-                        print("event name: \(event.name)")
-                    }
+//        let location = CLLocationCoordinate2D(latitude: 30, longitude: 30)
+//        Event.create(name: "test", owner: "test", location: location, date: Date()) {(event, error) in
+//            if error == nil {
+//                event.name = "new name"
+//                event.update {(event, error) in
+//                    if error == nil {
+//                        print("event name: \(event.name)")
+//                    }
+//                }
+//            }
+//        }
+        Event.allWith(owner: "test") {(events, errors) in
+            if errors == nil {
+                for event in events {
+                    print(event.documentID, event.name)
                 }
             }
         }

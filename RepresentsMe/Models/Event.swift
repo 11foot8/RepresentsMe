@@ -11,8 +11,9 @@ import Firebase
 
 class Event {
     
-    /// The completion handler for using Firestore
+    /// The completion handlers for using Firestore
     typealias completionHandler = (Event, Error?) -> ()
+    typealias allCompletionHandler = ([Event], Error?) -> ()
     
     // The Firestore database
     static let db = Firestore.firestore()
@@ -49,6 +50,21 @@ class Event {
         self.owner = owner
         self.location = location
         self.date = date
+    }
+    
+    /// Creates a new Event with the given query document snapshot
+    ///
+    /// - Parameter data:   the QueryDocumentSnapshot
+    init(data:QueryDocumentSnapshot) {
+        self.documentID = data.documentID
+        
+        let data = data.data()
+        self.name = data["name"] as! String
+        self.owner = data["owner"] as! String
+        self.date = (data["date"] as! Timestamp).dateValue()
+        let geopoint = data["location"] as! GeoPoint
+        self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
+                                               longitude: geopoint.longitude)
     }
     
     /// Saves this Event
@@ -105,5 +121,22 @@ class Event {
         let event = Event(name: name, owner: owner, location: location,
                           date: date)
         event.save(completion: completion)
+    }
+    
+    /// Gets all Events with the given owner
+    ///
+    /// - Parameter owner:          the owner to filter by
+    /// - Parameter completion:     the completion handler
+    static func allWith(owner:String,
+                        completion: @escaping allCompletionHandler) {
+        let ref = Event.db.collection(Event.collection).whereField("owner", isEqualTo: owner)
+        ref.getDocuments {(data, error) in
+            var events:[Event] = []
+            if error == nil {
+                events = data!.documents.map {(data) in Event(data: data)}
+            }
+            
+            return completion(events, error)
+        }
     }
 }
