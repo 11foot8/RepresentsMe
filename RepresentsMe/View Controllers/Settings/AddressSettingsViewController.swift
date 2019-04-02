@@ -11,16 +11,14 @@ import CoreData
 
 class AddressSettingsViewController: UIViewController {
 
-    @IBOutlet weak var streetNumberTextField: UITextField!
-    @IBOutlet weak var streetNameTextField: UITextField!
+    @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        streetNumberTextField.text = userAddr.streetNumber
-        streetNameTextField.text = userAddr.streetName
+        streetAddressTextField.text = userAddr.streetAddress
         cityTextField.text = userAddr.city
         stateTextField.text = userAddr.state
         zipcodeTextField.text = userAddr.zipcode
@@ -28,10 +26,8 @@ class AddressSettingsViewController: UIViewController {
 
     @IBAction func saveAddress(_ sender: Any) {
         guard
-            let streetNumber = streetNumberTextField.text,
-            streetNumber.count > 0,
-            let streetName = streetNameTextField.text,
-            streetName.count > 0,
+            let streetAddress = streetAddressTextField.text,
+            streetAddress.count > 0,
             let city = cityTextField.text,
             city.count > 0,
             let state = stateTextField.text,
@@ -49,8 +45,7 @@ class AddressSettingsViewController: UIViewController {
                 return
         }
 
-        userAddr = Address(streetNumber: streetNumberTextField.text!,
-                           streetName: streetNameTextField.text!,
+        userAddr = Address(streetAddress: streetAddressTextField.text!,
                            city: cityTextField.text!,
                            state: stateTextField.text!,
                            zipcode: zipcodeTextField.text!)

@@ -10,16 +10,14 @@ import MapKit
 
 /// Class containing relevant information about an address.
 class Address: Equatable, CustomStringConvertible {
-    var streetNumber:String
-    var streetName:String
+    var streetAddress:String
     var city:String
     var state:String
     var zipcode:String
 
     var description:String {            // Returns textual representation of the
-        return "\(streetNumber) " +      // official. Conforms class to
-            "\(streetName)\n" +         // CustomStringConvertible protocol.
-            "\(city), " +
+        return "\(streetAddress)\n" +   // official. Conforms class to
+            "\(city), " +               // CustomStringConvertible protocol.
             "\(state) " +
         "\(zipcode)"                   
     }
@@ -28,24 +26,32 @@ class Address: Equatable, CustomStringConvertible {
     ///
     /// - Parameter placemark:      Placemark of address
     init(with placemark:CLPlacemark) {
-        self.streetNumber = placemark.subThoroughfare ?? ""
-        self.streetName = placemark.thoroughfare ?? ""
+        let streetNumber = placemark.subThoroughfare != nil ? "\(placemark.subThoroughfare!) " : ""
+        let street = placemark.thoroughfare != nil ? "\(placemark.thoroughfare!)" : ""
+        self.streetAddress = "\(streetNumber)\(street)"
         self.city = placemark.locality ?? ""
         self.state = placemark.administrativeArea ?? ""
         self.zipcode = placemark.postalCode ?? ""
     }
 
+    /// Creates an Address given a dictionary.
+    ///
+    /// - Parameter dictionary:      Dictionary mapping String descriptors to String addresses
+    init(with dictionary:[String:String]) {
+        self.streetAddress = dictionary["line1"] ?? ""
+        self.city = dictionary["city"] ?? ""
+        self.state = dictionary["state"] ?? ""
+        self.zipcode = dictionary["zip"] ?? ""
+    }
+
     /// Creates an Address given the values for each field.
     ///
-    /// - Parameter streetNumber:   The street number of the address
-    /// - Parameter streetName:     The street name of the address
+    /// - Parameter streetAddress:  The number and street of the address
     /// - Parameter city:           The city of the address
     /// - Parameter state:          The state of the address
     /// - Parameter zipcode:        The zipcode of the address
-    init(streetNumber:String, streetName:String, city:String, state:String,
-         zipcode:String) {
-        self.streetNumber = streetNumber
-        self.streetName = streetName
+    init(streetAddress:String, city:String, state:String, zipcode:String) {
+        self.streetAddress = streetAddress
         self.city = city
         self.state = state
         self.zipcode = zipcode
@@ -53,15 +59,10 @@ class Address: Equatable, CustomStringConvertible {
 
     static func == (lhs: Address, rhs: Address) -> Bool {
         return (
-            lhs.streetNumber == rhs.streetNumber &&
-            lhs.streetName == rhs.streetName &&
+            lhs.streetAddress == rhs.streetAddress &&
             lhs.city == rhs.city &&
             lhs.state == rhs.state &&
             lhs.zipcode == rhs.zipcode
         )
-    }
-
-    func streetRepr() -> String {
-        return "\(streetNumber) \(streetName)"
     }
 }
