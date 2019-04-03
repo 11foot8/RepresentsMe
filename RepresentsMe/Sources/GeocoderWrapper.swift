@@ -10,9 +10,8 @@ import Foundation
 import MapKit
 
 class GeocoderWrapper {
-    let geocoder = CLGeocoder()
-    var workItem:DispatchWorkItem? = nil
-    public func geocodeAddressString(_ address:String, completionHandler:@escaping (CLPlacemark) -> Void) {
+    static let geocoder = CLGeocoder()
+    public static func geocodeAddressString(_ address:String, completionHandler:@escaping (CLPlacemark) -> Void) {
         geocoder.geocodeAddressString(address, completionHandler: { (placemarks:[CLPlacemark]?, error:Error?) -> Void in
             if let _ = error {
                 // TODO: Show alert informing user
@@ -22,15 +21,12 @@ class GeocoderWrapper {
                 // TODO: show alert informing user search failed
                 return
             }
-            if self.workItem != nil {
-                self.workItem?.cancel()
-            }
-            self.workItem = DispatchWorkItem{ completionHandler(placemark) }
-            DispatchQueue.main.async(execute: self.workItem!)
-            })
+
+            DispatchQueue.main.async(execute: DispatchWorkItem { completionHandler(placemark) })
+        })
     }
 
-    public func reverseGeocodeCoordinates(_ coords:CLLocationCoordinate2D, completionHandler:@escaping (Address) -> Void) {
+    public static func reverseGeocodeCoordinates(_ coords:CLLocationCoordinate2D, completionHandler:@escaping (Address) -> Void) {
 
         let location = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
 
@@ -50,13 +46,7 @@ class GeocoderWrapper {
             // Get address from the placemark
             let address = Address(with: placemark)
 
-            if self.workItem != nil {
-                self.workItem?.cancel()
-            }
-
-            self.workItem = DispatchWorkItem{ completionHandler(address)}
-            DispatchQueue.main.async(execute: self.workItem!)
-            })
-
+            DispatchQueue.main.async(execute: DispatchWorkItem { completionHandler(address) } )
+        })
     }
 }
