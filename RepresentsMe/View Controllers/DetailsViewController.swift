@@ -18,59 +18,72 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var officeLocationMapView: MKMapView!
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     
+    @IBOutlet weak var phoneButton: UIButton!
+    @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var emailButton: UIButton!
+
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var youtubeButton: UIButton!
 
-    var passedOfficial:Official?
-    var officialAddress:Address?
-    var officialPhones:[String] = []
-    var officialUrls:[URL?] = []
-    var officialEmails:[String] = []
+    var official:Official?
     
     override func viewWillAppear(_ animated: Bool) {
-        nameLabel.text = passedOfficial?.name
-        seatLabel.text = passedOfficial?.office
-        partyLabel.text = passedOfficial?.party.name
-        if let portrait = passedOfficial?.photo {
+        nameLabel.text = official?.name
+        seatLabel.text = official?.office
+        partyLabel.text = official?.party.name
+        if let portrait = official?.photo {
             portraitImageView.image = portrait
         }
         
-        if (passedOfficial?.addresses.count)! < 1 {
+        if (official?.addresses.count)! < 1 {
             return
         }
-        officialAddress = passedOfficial?.addresses[0]
 
         setMapView()
-        
-        officialPhones = passedOfficial!.phones
-        officialUrls = passedOfficial!.urls
-        officialEmails = passedOfficial!.emails
 
-        if passedOfficial?.facebookURL == nil {
+        if official?.facebookURL == nil {
             facebookButton.setTitleColor(.gray, for: .normal)
             facebookButton.isUserInteractionEnabled = false
         }
 
-        if passedOfficial?.twitterURL == nil {
+        if official?.twitterURL == nil {
             twitterButton.setTitleColor(.gray, for: .normal)
             twitterButton.isUserInteractionEnabled = false
         }
 
-        if passedOfficial?.youtubeURL == nil  {
+        if official?.youtubeURL == nil  {
             youtubeButton.setTitleColor(.gray, for: .normal)
             youtubeButton.isUserInteractionEnabled = false
         }
 
-        // TODO: gray out email, phone, and link buttons like social media buttons
+        if official?.phones == nil || official!.phones.count == 0 {
+            phoneButton.setTitleColor(.gray, for: .normal)
+            phoneButton.isUserInteractionEnabled = false
+        }
+
+        if official?.urls == nil || official?.urls.count == 0 {
+            linkButton.setTitleColor(.gray, for: .normal)
+            linkButton.isUserInteractionEnabled = false
+        }
+
+        if official?.emails == nil || official!.emails.count == 0 {
+            emailButton.setTitleColor(.gray, for: .normal)
+            emailButton.isUserInteractionEnabled = false
+        }
     }
     
     // Set the center of the MKMapView to the address of the selected official
     func setMapView() {
-        let address = officialAddress!.description
+        guard let addresses = official?.addresses, addresses.count > 0
+            else {
+                return
+        }
+
+        let address = official!.addresses[0]
         
         let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+        geoCoder.geocodeAddressString(address.description) { (placemarks, error) in
             guard
                 let placemarks = placemarks,
                 let location = placemarks.first?.location
@@ -89,51 +102,48 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height+100)
+        scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height:  self.view.frame.size.height+100)
     }
     
     // Starts a call with the official based on the phone number provided in the
     // database
     @IBAction func callButtonPressed(_ sender: Any) {
-        if officialPhones.count > 0 {
-            guard let number = URL(string: "tel://" + officialPhones[0]) else { return }
-            UIApplication.shared.open(number)
+        if let phoneNumber = URL(string: "tel://\(official!.phones[0])") {
+            UIApplication.shared.open(phoneNumber)
         }
     }
     
     // Opens up email app when email button is pressed. Does not work on simulator
     @IBAction func emailButtonPressed(_ sender: Any) {
-        if officialEmails.count > 0 {
-            if let url = URL(string: "mailto:\(officialEmails[0])") {
-                UIApplication.shared.open(url)
-            }
+        if let email = URL(string: "mailto:\(official!.emails[0])") {
+            UIApplication.shared.open(email)
         }
     }
     
     // Takes user to a safari webpage related to the selected official
     @IBAction func websiteButtonPressed(_ sender: Any) {
-        if officialUrls.count > 0 {
-            UIApplication.shared.open(officialUrls[0]!)
+        if let url = official!.urls[0] {
+            UIApplication.shared.open(url)
         }
     }
     
     @IBAction func facebookButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(passedOfficial!.facebookURL!)
+        UIApplication.shared.open(official!.facebookURL!)
     }
     
     @IBAction func twitterButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(passedOfficial!.twitterURL!)
+        UIApplication.shared.open(official!.twitterURL!)
     }
     
     @IBAction func youtubeButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(passedOfficial!.youtubeURL!)
+        UIApplication.shared.open(official!.youtubeURL!)
     }
     
     let contactSegueIdentifier = "contactSegueIdentifier"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == contactSegueIdentifier,
             let destination = segue.destination as? ContactViewController {
-            destination.passedOfficial = passedOfficial
+            destination.official = official
         }
     }
 }
@@ -142,14 +152,14 @@ class ContactViewController: UIViewController {
     @IBOutlet weak var contactTextView: UITextView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var passedOfficial:Official?
+    var official:Official?
     var phones:[String] = []
     var urls:[URL?] = []
     var emails:[String] = []
     
     // Dynamically generate contact information based on what information is provided by the database
     override func viewWillAppear(_ animated: Bool) {
-        guard let official = passedOfficial  else {
+        guard let official = official else {
             contactTextView.text = "Sorry, this representative does not have any contact information available."
             return
         }

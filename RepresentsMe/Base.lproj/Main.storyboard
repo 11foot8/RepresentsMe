@@ -472,10 +472,13 @@
                         <viewLayoutGuide key="safeArea" id="QNy-pu-XKb"/>
                     </view>
                     <connections>
+                        <outlet property="emailButton" destination="cXc-8h-tP3" id="txq-dr-UML"/>
                         <outlet property="facebookButton" destination="6XR-Ps-ufA" id="a6r-7l-Qhl"/>
+                        <outlet property="linkButton" destination="3wu-N3-voZ" id="Dql-Yr-je9"/>
                         <outlet property="nameLabel" destination="K3s-J5-Zz6" id="UbR-Ma-HRX"/>
                         <outlet property="officeLocationMapView" destination="JLz-iC-oeO" id="fgb-F1-GT1"/>
                         <outlet property="partyLabel" destination="9uj-c0-c1n" id="u1d-Eb-SU6"/>
+                        <outlet property="phoneButton" destination="4Od-fq-lVD" id="hcO-cZ-pR8"/>
                         <outlet property="portraitImageView" destination="cxU-Qv-kIJ" id="gjt-xz-AWS"/>
                         <outlet property="scrollViewOutlet" destination="A8k-dl-get" id="PJx-Ds-djE"/>
                         <outlet property="seatLabel" destination="SXY-SU-akR" id="eAd-ys-mn0"/>
