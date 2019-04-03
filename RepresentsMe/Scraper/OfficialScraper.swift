@@ -31,9 +31,6 @@ class OfficialScraper {
     /// - Parameter apikey:         The apikey to make the request with.
     /// - Parameter completion:     the completion handler to use to return the
     ///                             parsed Officials.
-    ///
-    /// - Throws: ParseError.invalidArgumentError if address cannot be formatted
-    ///           as a URL query argument.
     public static func getForAddress(
         address:Address,
         apikey:String,
@@ -69,6 +66,12 @@ class OfficialScraper {
         }.resume()
     }
     
+    /// Gets an official by their name and division ID
+    ///
+    /// - Parameter with:           the official's name
+    /// - Parameter from:           the division ID
+    /// - Parameter apikey:         the api key
+    /// - Parameter completion:     the completion handler
     public static func getOfficial(
         with name:String,
         from divisionOCID:String,
@@ -83,11 +86,10 @@ class OfficialScraper {
         } catch {
             return completion(nil, nil)
         }
-        
-
         let url = URL(string: urlString!)
         let request:URLRequest = URLRequest(url: url!)
         
+        // Make the request
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 // Error occuroed, abort
@@ -112,10 +114,10 @@ class OfficialScraper {
                 // Error occurred while parsing JSON, return an empty Array
                 return completion(nil, nil)
             }
-            }.resume()
+        }.resume()
     }
 
-    /// Builds the url to use to make the request.
+    /// Builds the url to use to request officials by address.
     ///
     /// - Parameter address: the address to request for
     /// - Parameter apikey:  the apikey to use
@@ -134,6 +136,15 @@ class OfficialScraper {
         return "\(OfficialScraper.url)?address=\(formattedAddress)&key=\(apikey)"
     }
     
+    /// Builds hte url to use to request officials by division.
+    ///
+    /// - Parameter division:   the division to request for
+    /// - Parameter apikey:     the apikey to use
+    ///
+    /// - Returns: the formatted url
+    ///
+    /// - Throws: ParserError.invalidArgumentError if division cannot be
+    ///           formatted for a URL argument
     private static func buildURL(division:String,
                                  apikey:String) throws -> String {
         guard let formattedDivision = formatArg(arg: division) else {

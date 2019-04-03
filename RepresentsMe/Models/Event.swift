@@ -62,16 +62,22 @@ class Event {
     /// Creates a new Event with the given query document snapshot
     ///
     /// - Parameter data:   the QueryDocumentSnapshot
+    /// - Parameter group:  the dispatch group to notify when completed
     init(data:QueryDocumentSnapshot, group:DispatchGroup) {
         self.documentID = data.documentID
         
+        // Set basic data
         let data = data.data()
         self.name = data["name"] as! String
         self.owner = data["owner"] as! String
         self.date = (data["date"] as! Timestamp).dateValue()
+        
+        // Build the location coordinate
         let geopoint = data["location"] as! GeoPoint
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
                                                longitude: geopoint.longitude)
+        
+        // Scrape the official
         self.getOfficial(name: data["officialName"] as! String,
                          division: data["divisionOCDID"] as! String,
                          group: group)
@@ -126,6 +132,11 @@ class Event {
         }
     }
     
+    /// Scrapes the official for this event
+    ///
+    /// - Parameter name:       the name of the official
+    /// - Parameter division:   the division of the official
+    /// - Parameter group:      the dispatch group to leave when completed
     private func getOfficial(name:String,
                              division:String,
                              group:DispatchGroup) {
@@ -133,6 +144,8 @@ class Event {
             with: name,
             from: division,
             apikey: civic_api_key) {(official, error) in
+                
+            // Set the Official and notify the group that scraping completed
             self.official = official
             group.leave()
         }
@@ -168,12 +181,14 @@ class Event {
             let group = DispatchGroup()
             var events:[Event] = []
             if error == nil {
+                // Build each event
                 for data in data!.documents {
                     group.enter()
                     events.append(Event(data: data, group: group))
                 }
             }
             
+            // Wait until all Officials are pulled before returning
             group.notify(queue: .main) {
                 return completion(events, error)
             }
