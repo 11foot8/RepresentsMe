@@ -27,6 +27,11 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var youtubeButton: UIButton!
 
     var official:Official?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height:  self.view.frame.size.height+100)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         nameLabel.text = official?.name
@@ -36,40 +41,32 @@ class DetailsViewController: UIViewController {
             portraitImageView.image = portrait
         }
         
-        if (official?.addresses.count)! < 1 {
-            return
+        if official?.addresses != nil && official!.addresses.count >= 1 {
+            setMapView()
         }
 
-        setMapView()
-
         if official?.facebookURL == nil {
-            facebookButton.setTitleColor(.gray, for: .normal)
-            facebookButton.isUserInteractionEnabled = false
+            disableButton(button: facebookButton)
         }
 
         if official?.twitterURL == nil {
-            twitterButton.setTitleColor(.gray, for: .normal)
-            twitterButton.isUserInteractionEnabled = false
+            disableButton(button: twitterButton)
         }
 
         if official?.youtubeURL == nil  {
-            youtubeButton.setTitleColor(.gray, for: .normal)
-            youtubeButton.isUserInteractionEnabled = false
+            disableButton(button: youtubeButton)
         }
 
-        if official?.phones == nil || official!.phones.count == 0 {
-            phoneButton.setTitleColor(.gray, for: .normal)
-            phoneButton.isUserInteractionEnabled = false
+        if official?.phones.count == nil || official!.phones.count == 0 {
+            disableButton(button: phoneButton)
         }
 
         if official?.urls == nil || official?.urls.count == 0 {
-            linkButton.setTitleColor(.gray, for: .normal)
-            linkButton.isUserInteractionEnabled = false
+            disableButton(button: linkButton)
         }
 
         if official?.emails == nil || official!.emails.count == 0 {
-            emailButton.setTitleColor(.gray, for: .normal)
-            emailButton.isUserInteractionEnabled = false
+            disableButton(button: emailButton)
         }
     }
     
@@ -99,16 +96,19 @@ class DetailsViewController: UIViewController {
             self.officeLocationMapView.setRegion(region, animated: true)
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height:  self.view.frame.size.height+100)
+
+    func disableButton(button: UIButton) {
+        button.setTitleColor(.gray, for: .normal)
+        button.isUserInteractionEnabled = false
     }
     
     // Starts a call with the official based on the phone number provided in the
     // database
     @IBAction func callButtonPressed(_ sender: Any) {
-        if let phoneNumber = URL(string: "tel://\(official!.phones[0])") {
+        let sanitizedPhoneNumber = official!.phones[0]
+            .components(separatedBy: CharacterSet.decimalDigits.inverted)
+            .joined(separator: "")
+        if let phoneNumber = URL(string: "tel://\(sanitizedPhoneNumber)") {
             UIApplication.shared.open(phoneNumber)
         }
     }
@@ -145,55 +145,5 @@ class DetailsViewController: UIViewController {
             let destination = segue.destination as? ContactViewController {
             destination.official = official
         }
-    }
-}
-
-class ContactViewController: UIViewController {
-    @IBOutlet weak var contactTextView: UITextView!
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    var official:Official?
-    var phones:[String] = []
-    var urls:[URL?] = []
-    var emails:[String] = []
-    
-    // Dynamically generate contact information based on what information is provided by the database
-    override func viewWillAppear(_ animated: Bool) {
-        guard let official = official else {
-            contactTextView.text = "Sorry, this representative does not have any contact information available."
-            return
-        }
-        titleLabel.text = "Contact \(official.name)"
-        phones = official.phones
-        urls = official.urls
-        emails = official.emails
-        var contactString = ""
-        if phones.count > 0 {
-            contactString.append("Phone number(s):\n")
-            for phone in phones {
-                contactString.append("\t\(phone)\n")
-            }
-            contactString.append("\n\n")
-        }
-        if emails.count > 0 {
-            contactString.append("Email address(es):\n")
-            for email in emails {
-                contactString.append("\t\(email)\n")
-            }
-            contactString.append("\n\n")
-        }
-        if urls.count > 0 {
-            contactString.append("Relevant Links:\n")
-            for url in urls {
-                if let safeUrl = url {
-                    contactString.append("\t\(safeUrl)\n")
-                }
-            }
-        }
-        contactTextView.text = contactString
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
