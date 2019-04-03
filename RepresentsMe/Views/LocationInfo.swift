@@ -75,21 +75,15 @@ class LocationInfo: UIView {
 
         titleLabel.text = title
 
-        let geocoder = GeocoderWrapper()
-
-        geocoder.reverseGeocodeCoordinates(coords, completionHandler: reverseGeocodeCompletionHandler)
+        GeocoderWrapper.reverseGeocodeCoordinates(coords, completionHandler: reverseGeocodeCompletionHandler)
 
     }
 
     func reverseGeocodeCompletionHandler(address:Address) {
         self.address = address
         // In UI thread, set title of address button and enable go button
-        let streetAddress = self.address!.streetAddress
-        let city = self.address!.city
-        let state = self.address!.state
-        let zip = self.address!.zipcode
-        self.address1Label.text = "\(streetAddress)"
-        self.address2Label.text = "\(city), \(state) \(zip)"
+        self.address1Label.text = address.addressLine1()
+        self.address2Label.text = address.addressLine2()
         self.goButton.isEnabled = true
         stopLoadingAnimation()
     }

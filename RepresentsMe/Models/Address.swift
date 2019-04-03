@@ -29,6 +29,7 @@ class Address: Equatable, CustomStringConvertible {
         let streetNumber = placemark.subThoroughfare != nil ? "\(placemark.subThoroughfare!) " : ""
         let street = placemark.thoroughfare != nil ? "\(placemark.thoroughfare!)" : ""
         self.streetAddress = "\(streetNumber)\(street)"
+
         self.city = placemark.locality ?? ""
         self.state = placemark.administrativeArea ?? ""
         self.zipcode = placemark.postalCode ?? ""
@@ -55,6 +56,14 @@ class Address: Equatable, CustomStringConvertible {
         self.city = city
         self.state = state
         self.zipcode = zipcode
+    }
+
+    func addressLine1() -> String {
+        return streetAddress
+    }
+
+    func addressLine2() -> String {
+        return "\(city), \(state) \(zipcode)"
     }
 
     static func == (lhs: Address, rhs: Address) -> Bool {
