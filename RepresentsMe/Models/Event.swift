@@ -20,11 +20,12 @@ class Event {
     static let collection = "events"
     static let db = Firestore.firestore().collection(Event.collection)
 
-    var documentID:String?
-    var name:String
-    var owner:String
-    var location:CLLocationCoordinate2D
-    var date:Date
+    var documentID:String?                  // The document ID on Firestore
+    var name:String                         // The name of the event
+    var owner:String                        // The owner of the event
+    var location:CLLocationCoordinate2D     // The location of the event
+    var date:Date                           // The date of the event
+    var official:Official?                  // The official related to event
 
     /// Gets the data formatted for Firestore
     var data:[String: Any] {
@@ -34,6 +35,8 @@ class Event {
             "location": GeoPoint(latitude: location.latitude,
                                  longitude: location.longitude),
             "date": date,
+            "officialName": official?.name ?? "",
+            "divisionOCDID": official?.divisionOCDID ?? ""
         ]
     }
     
@@ -43,20 +46,23 @@ class Event {
     /// - Parameter owner:      the owner of the event
     /// - Parameter location:   the location of the event
     /// - Parameter date:       the date of the event
+    /// - Parameter official:   the Official related to the event
     init(name:String,
          owner:String,
          location:CLLocationCoordinate2D,
-         date:Date) {
+         date:Date,
+         official:Official) {
         self.name = name
         self.owner = owner
         self.location = location
         self.date = date
+        self.official = official
     }
     
     /// Creates a new Event with the given query document snapshot
     ///
     /// - Parameter data:   the QueryDocumentSnapshot
-    init(data:QueryDocumentSnapshot) {
+    init(data:QueryDocumentSnapshot, group:DispatchGroup) {
         self.documentID = data.documentID
         
         let data = data.data()
@@ -66,6 +72,9 @@ class Event {
         let geopoint = data["location"] as! GeoPoint
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
                                                longitude: geopoint.longitude)
+        self.getOfficial(name: data["officialName"] as! String,
+                         division: data["divisionOCDID"] as! String,
+                         group: group)
     }
     
     /// Saves this Event
@@ -116,6 +125,18 @@ class Event {
             return completion(self, error)
         }
     }
+    
+    private func getOfficial(name:String,
+                             division:String,
+                             group:DispatchGroup) {
+        OfficialScraper.getOfficial(
+            with: name,
+            from: division,
+            apikey: civic_api_key) {(official, error) in
+            self.official = official
+            group.leave()
+        }
+    }
 
     /// Creates a new Event
     ///
@@ -123,14 +144,16 @@ class Event {
     /// - Parameter owner:      the owner of the event
     /// - Parameter location:   the location of the event
     /// - Parameter date:       the date of the event
+    /// - Parameter official:   the official related to the event
     /// - Parameter completion:     the completion handler
     static func create(name:String,
                        owner:String,
                        location:CLLocationCoordinate2D,
                        date:Date,
+                       official:Official,
                        completion: @escaping completionHandler) {
         let event = Event(name: name, owner: owner, location: location,
-                          date: date)
+                          date: date, official: official)
         event.save(completion: completion)
     }
     
@@ -142,12 +165,18 @@ class Event {
                         completion: @escaping allCompletionHandler) {
         let ref = Event.db.whereField("owner", isEqualTo: owner)
         ref.getDocuments {(data, error) in
+            let group = DispatchGroup()
             var events:[Event] = []
             if error == nil {
-                events = data!.documents.map {(data) in Event(data: data)}
+                for data in data!.documents {
+                    group.enter()
+                    events.append(Event(data: data, group: group))
+                }
             }
             
-            return completion(events, error)
+            group.notify(queue: .main) {
+                return completion(events, error)
+            }
         }
     }
 }

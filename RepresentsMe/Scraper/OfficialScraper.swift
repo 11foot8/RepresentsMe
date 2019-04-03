@@ -42,7 +42,8 @@ class OfficialScraper {
         // Build the request
         var urlString:String? = nil
         do {
-            urlString = try buildURL(address: address.description, apikey: apikey)
+            urlString = try OfficialScraper.buildURL(
+                address: address.description, apikey: apikey)
         } catch {
             // Failed to build the url, return an empty Array
             return completion([], nil)
@@ -68,6 +69,52 @@ class OfficialScraper {
         }.resume()
     }
     
+    public static func getOfficial(
+        with name:String,
+        from divisionOCID:String,
+        apikey:String,
+        completion: @escaping (Official?, ParserError?) -> ()) {
+        
+        // Build the request
+        var urlString:String? = nil
+        do {
+            urlString = try OfficialScraper.buildURL(
+                division: divisionOCID, apikey: apikey)
+        } catch {
+            return completion(nil, nil)
+        }
+        
+
+        let url = URL(string: urlString!)
+        let request:URLRequest = URLRequest(url: url!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
+                // Error occuroed, abort
+                return completion(nil, nil)
+            }
+            
+            do {
+                // Try to parse the JSON
+                let jsonData = try parseJSON(data: data!)
+                let officials = Official.buildOfficials(data: jsonData)
+                
+                // Find the official with the given name
+                for official in officials {
+                    if official.name == name {
+                        return completion(official, nil)
+                    }
+                }
+                
+                // Did not find the official
+                return completion(nil, nil)
+            } catch {
+                // Error occurred while parsing JSON, return an empty Array
+                return completion(nil, nil)
+            }
+            }.resume()
+    }
+
     /// Builds the url to use to make the request.
     ///
     /// - Parameter address: the address to request for
@@ -87,13 +134,23 @@ class OfficialScraper {
         return "\(OfficialScraper.url)?address=\(formattedAddress)&key=\(apikey)"
     }
     
+    private static func buildURL(division:String,
+                                 apikey:String) throws -> String {
+        guard let formattedDivision = formatArg(arg: division) else {
+            throw ParserError.invalidArgumentError(
+                "Invalid argument \(division)")
+        }
+        
+        return "\(OfficialScraper.url)/\(formattedDivision)?key=\(apikey)"
+    }
+    
     /// Formats the given argument to use as a query parameter in the request
     ///
     /// - Parameter arg: The argument to format
     ///
     /// - Returns: the formated argument
     private static func formatArg(arg:String) -> String? {
-        return arg.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        return arg.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
     
     /// Parses the JSON string into a JSONData object.

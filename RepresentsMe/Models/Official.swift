@@ -30,6 +30,7 @@ class Official: Equatable, CustomStringConvertible {
     var socialMedia:[[String: String]]  // The social media profiles
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
+    var divisionOCDID:String            // The ID of the official's division
 
     var description:String {            // Returns textual representation of the
         return repr()                   // official. Conforms class to
@@ -46,6 +47,7 @@ class Official: Equatable, CustomStringConvertible {
         self.socialMedia = [[:]]
         self.office = ""
         self.division = ""
+        self.divisionOCDID = ""
     }
 
     /// Builds an Official
@@ -67,6 +69,7 @@ class Official: Equatable, CustomStringConvertible {
         self.socialMedia = official.channels
         self.office = office.name
         self.division = division.name
+        self.divisionOCDID = office.divisionId
         self.photo = DEFAULT_NOT_LOADED
     }
     
