@@ -24,16 +24,16 @@ var userAddrChanged = false
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
-    // MARK: Properties
+    // MARK: - Properties
     var addr: Address = userAddr
     var officials: [Official] = []
     
-    // MARK: Outlets
+    // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
 
     let locationManager = CLLocationManager()
     
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,7 +95,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.startUpdatingLocation()
-            getReverseGeocode()
+//            getReverseGeocode()
             break
         case .denied:
             // TODO: show alert instructing them how to turn on permissions
@@ -143,7 +143,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == .authorizedAlways || status == .authorizedWhenInUse) {
             locationManager.startUpdatingLocation()
-            getReverseGeocode()
+//            getReverseGeocode()
         }
     }
 
