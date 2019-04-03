@@ -12,8 +12,8 @@ import Foundation
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
 class MapViewController: UIViewController, CLLocationManagerDelegate,
-MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegate {
-
+MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, CustomSearchBarDelegate,
+MapActionButtonsDelegate {
     // MARK: - Properties
     let locationManager = CLLocationManager()
     
@@ -35,61 +35,6 @@ MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegat
 
     var workItem:DispatchWorkItem?
 
-    // MARK: - Outlets
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var searchBarView: UIView!
-    @IBOutlet weak var searchBarTextField: UITextField!
-    @IBOutlet weak var locationInfoView: LocationInfo!
-
-    // MARK: - Actions
-    @IBAction func searchRequested(_ sender: Any) {
-        // Hide keyboard when 'Search' is tapped
-        searchBarTextField.resignFirstResponder()
-        self.view.endEditing(true)
-        let address:String = searchBarTextField.text!
-        let geocoder = CLGeocoder()
-
-        // Convert current mapView region to CLRegion to assist geocoder
-        let region = convertRegion(mk: mapView.region)
-        geocoder.geocodeAddressString(address, in: region, completionHandler: self.asyncGeocodeAddress)
-    }
-
-    func asyncGeocodeAddress(placemarks:[CLPlacemark]?, error:Error?) {
-        if let _ = error {
-            // TODO: Show alert informing user
-            return
-        }
-        guard let placemark = placemarks?.first else {
-            // TODO: show alert informing user search failed
-            return
-        }
-        self.workItem = DispatchWorkItem{ self.geocodeAddressCompletionHandler(placemark: placemark)}
-        DispatchQueue.main.async(execute: workItem!)
-    }
-
-    func geocodeAddressCompletionHandler(placemark:CLPlacemark) {
-        let coords = placemark.location!.coordinate
-        dropPin(coords: coords)
-        self.centerView(on: coords, animated: false)
-    }
-
-    @IBAction func locateTouchUp(_ sender: Any) {
-        centerViewOnUserLocation()
-        dropPin(coords: getCenterLocation(for: mapView).coordinate)
-    }
-
-    @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
-        if gestureRecognizer.state != .began { return }
-
-        let touchPoint = gestureRecognizer.location(in: mapView)
-        let touchMapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-
-        searchBarTextField.text = "Dropped Pin"
-
-        dropPin(coords: touchMapCoordinate)
-
-    }
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,31 +44,80 @@ MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegat
         locationInfoView.delegate = self
 
         // Set up search bar
-        searchBarView.layer.cornerRadius = 8    // round corners
-        searchBarView.clipsToBounds = true
-        searchBarView.layer.borderWidth = 1     // Draw border around entire view
-        searchBarView.layer.borderColor = UIColor.lightGray.cgColor
-        searchBarTextField.clearButtonMode = UITextField.ViewMode.always
-        searchBarTextField.returnKeyType = .search
-        searchBarTextField.delegate = self
+        customSearchBar.delegate = self
 
+        mapActionButtons.delegate = self
 
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.handleLongPress))
         mapView.addGestureRecognizer(longPressRecognizer)
 
         clearPin()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
+
+    // MARK: - Outlets
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var customSearchBar: CustomSearchBar!
+    @IBOutlet weak var locationInfoView: LocationInfo!
+    @IBOutlet weak var mapActionButtons: MapActionButtons!
+
+    // MARK: - Actions
+    func onSearchQuery(query: String) {
+        let address:String = query
+        let geocoder = GeocoderWrapper()
+
+        geocoder.geocodeAddressString(address, completionHandler: self.geocodeSearchedAddressCompletionHandler)
+    }
+
+    func onSearchClear() {
+        clearPin()
+    }
+
+    func geocodeSearchedAddressCompletionHandler(placemark:CLPlacemark) {
+        let coords = placemark.location!.coordinate
+        dropPin(coords: coords, title: "Searched Address", replaceSearchedValue: false)
+        self.centerView(on: coords, animated: false)
+    }
+
+    func geocodeHomeAddressCompletionHandler(placemark:CLPlacemark) {
+        let coords = placemark.location!.coordinate
+        dropPin(coords: coords, title: "Home", replaceSearchedValue: true)
+        self.centerView(on: coords, animated: true)
+    }
+
+    @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.state != .began { return }
+
+        let touchPoint = gestureRecognizer.location(in: mapView)
+        let touchMapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+
+        dropPin(coords: touchMapCoordinate, title: "Dropped pin", replaceSearchedValue: true)
+    }
+
+    // MARK: - MapActionButtonsDelegate
+    func onLocateTouchUp() {
+        if let location = locationManager.location?.coordinate {
+            centerView(on: location,animated: true)
+            dropPin(coords: location, title: "Current Location", replaceSearchedValue: true)
+        }
+    }
+
+    /// Move view to user's saved address and drop a pin
+    func onHomeTouchUp() {
+        let address = userAddr.description
+        let geocoder = GeocoderWrapper()
+
+        geocoder.geocodeAddressString(address, completionHandler: self.geocodeHomeAddressCompletionHandler)
+    }
 
     // MARK: - Methods
     func clearPin() {
@@ -133,16 +127,19 @@ MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegat
         locationInfoView.isHidden = true
     }
 
-    func dropPin(coords:CLLocationCoordinate2D) {
+    func dropPin(coords:CLLocationCoordinate2D, title:String, replaceSearchedValue:Bool) {
+        if replaceSearchedValue {
+            customSearchBar.setQuery(title)
+        }
         locationInfoView.isHidden = false
         if (self.annotation != nil) {
             mapView.removeAnnotation(self.annotation!)
             self.annotation = nil
         }
-        self.annotation = DroppedPin(title: "Dropped Pin", locationName: "", discipline: "", coordinate: coords)
+        self.annotation = DroppedPin(title: title, locationName: "", discipline: "", coordinate: coords)
         mapView.addAnnotation(annotation!)
         locationInfoView.isHidden = false
-        locationInfoView.updateWithCoordinates(coords: coords)
+        locationInfoView.updateWithCoordinates(coords: coords, title: title)
     }
 
     // MARK: - Location Utilities
@@ -253,24 +250,6 @@ MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, UITextFieldDelegat
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Hide keyboard when tapping out of SearchBar
         self.view.endEditing(true)
-    }
-
-    // MARK: - Searchbar
-    // MARK: UITextFieldDelegate
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
-    }
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        textField.text = ""
-        clearPin()
-        textField.resignFirstResponder()
-        return false
-    }
-
-    //
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
 
     // MARK: - LocationInfoDelegate

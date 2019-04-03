@@ -25,6 +25,11 @@
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
 		13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */; };
+		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
+		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
+		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
+		1683D0352253C19800350471 /* CustomSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D0342253C19800350471 /* CustomSearchBar.xib */; };
+		1683D0372253CBC000350471 /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0362253CBC000350471 /* GeocoderWrapper.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
 		16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */; };
@@ -85,6 +90,11 @@
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Solid-900.otf"; sourceTree = "<group>"; };
+		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
+		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
+		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		1683D0342253C19800350471 /* CustomSearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSearchBar.xib; sourceTree = "<group>"; };
+		1683D0362253CBC000350471 /* GeocoderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
 		16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +175,7 @@
 			children = (
 				3B9072C722309B2700B8A2F8 /* Address.swift */,
 				1352711F221F8AA200442AA6 /* Official.swift */,
+				1683D0362253CBC000350471 /* GeocoderWrapper.swift */,
 				13BD31BE223027E1000A6BEE /* FontAwesome */,
 				133BD33A223A76F00069279A /* PoliticalParty.swift */,
 			);
@@ -279,7 +290,11 @@
 				16D0263E2252706A005C86F2 /* DroppedPin.swift */,
 				3B45F0B42222452D00FA5B8B /* OfficialCell.swift */,
 				3B649F042237264800E88430 /* SettingsCell.swift */,
+				1683D0322253C17600350471 /* CustomSearchBar.swift */,
+				1683D0342253C19800350471 /* CustomSearchBar.xib */,
 				16FCC84D2252B58F008D3991 /* LocationInfo.xib */,
+				1683D02E2253B6FF00350471 /* MapActionButtons.xib */,
+				1683D0302253B71F00350471 /* MapActionButtons.swift */,
 				16FCC84F2252B5CF008D3991 /* LocationInfo.swift */,
 			);
 			path = Views;
@@ -421,6 +436,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1683D0352253C19800350471 /* CustomSearchBar.xib in Resources */,
+				1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */,
 				13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
 				3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */,
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
@@ -602,6 +619,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1683D0372253CBC000350471 /* GeocoderWrapper.swift in Sources */,
 				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
@@ -625,7 +643,9 @@
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 				13BD31AC22302089000A6BEE /* FontAwesome.swift in Sources */,
+				1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */,
 				16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */,
+				1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */,
 				3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

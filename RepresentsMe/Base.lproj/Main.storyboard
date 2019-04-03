@@ -1058,55 +1058,26 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                 <color key="backgroundColor" red="0.77620589733123779" green="0.78001105785369873" blue="0.80481857061386108" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHU-bZ-GVU" userLabel="SearchView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHU-bZ-GVU" userLabel="SearchView" customClass="CustomSearchBar" customModule="RepresentsMe" customModuleProvider="target">
                                 <rect key="frame" x="4" y="96" width="367" height="40"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1h-WM-b5i">
-                                        <rect key="frame" x="33" y="0.0" width="326" height="40"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="searchRequested:" destination="XZG-Pc-5F1" eventType="editingDidEnd" id="3Yd-K7-EPE"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L66-Ag-zum">
-                                        <rect key="frame" x="8" y="11.666666666666671" width="17" height="17"/>
-                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="T1h-WM-b5i" secondAttribute="trailing" constant="8" id="532-fU-sol"/>
-                                    <constraint firstItem="L66-Ag-zum" firstAttribute="centerY" secondItem="mHU-bZ-GVU" secondAttribute="centerY" id="HwH-fN-Zr8"/>
-                                    <constraint firstItem="L66-Ag-zum" firstAttribute="leading" secondItem="mHU-bZ-GVU" secondAttribute="leading" constant="8" id="UnV-hC-BIa"/>
                                     <constraint firstAttribute="height" constant="40" id="Vq0-8O-pW2"/>
-                                    <constraint firstAttribute="bottom" secondItem="T1h-WM-b5i" secondAttribute="bottom" id="XDf-Pq-cvv"/>
-                                    <constraint firstItem="T1h-WM-b5i" firstAttribute="top" secondItem="mHU-bZ-GVU" secondAttribute="top" id="Xsw-vd-CtK"/>
-                                    <constraint firstItem="T1h-WM-b5i" firstAttribute="leading" secondItem="L66-Ag-zum" secondAttribute="trailing" constant="8" id="bzp-jF-DEI"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHd-vm-2ew">
-                                <rect key="frame" x="317" y="152" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="atY-e1-gaJ"/>
-                                    <constraint firstAttribute="height" constant="50" id="ycY-co-tAc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="36"/>
-                                <state key="normal" title="location-arrow">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="locateTouchUp:" destination="XZG-Pc-5F1" eventType="touchUpInside" id="cVd-bE-LAW"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
                                 <rect key="frame" x="8" y="621" width="359" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHU-Ts-F5E" customClass="MapActionButtons" customModule="RepresentsMe" customModuleProvider="target">
+                                <rect key="frame" x="327" y="144" width="40" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="57K-43-DmL"/>
+                                    <constraint firstAttribute="height" constant="80" id="PpC-hy-h7d"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1119,10 +1090,10 @@
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="mHU-bZ-GVU" secondAttribute="trailing" constant="4" id="Igx-hU-M5U"/>
                             <constraint firstItem="U8A-4I-nkM" firstAttribute="top" secondItem="sC1-2e-ypV" secondAttribute="top" id="O4D-H6-MH5"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="trailing" secondItem="sC1-2e-ypV" secondAttribute="trailing" id="Pzs-EM-Va4"/>
+                            <constraint firstItem="yHU-Ts-F5E" firstAttribute="top" secondItem="mHU-bZ-GVU" secondAttribute="bottom" constant="8" id="Vt3-tQ-GPA"/>
                             <constraint firstItem="Got-PF-0XK" firstAttribute="leading" secondItem="a2S-4s-mxQ" secondAttribute="leading" constant="8" id="a6p-DZ-4RN"/>
                             <constraint firstAttribute="trailing" secondItem="U8A-4I-nkM" secondAttribute="trailing" id="adn-5g-dUP"/>
-                            <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="EHd-vm-2ew" secondAttribute="trailing" constant="8" id="dbX-NM-5Mf"/>
-                            <constraint firstItem="EHd-vm-2ew" firstAttribute="top" secondItem="T1h-WM-b5i" secondAttribute="bottom" constant="16" id="gky-CF-NgH"/>
+                            <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="yHU-Ts-F5E" secondAttribute="trailing" constant="8" id="gY2-D0-YH1"/>
                             <constraint firstItem="Yw8-0P-Y2x" firstAttribute="top" secondItem="sC1-2e-ypV" secondAttribute="top" id="iKt-By-YVP"/>
                             <constraint firstItem="a2S-4s-mxQ" firstAttribute="trailing" secondItem="Got-PF-0XK" secondAttribute="trailing" constant="8" id="kgG-vT-ph0"/>
                             <constraint firstItem="mHU-bZ-GVU" firstAttribute="leading" secondItem="a2S-4s-mxQ" secondAttribute="leading" constant="4" id="pA1-gK-Iga"/>
@@ -1132,10 +1103,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="sPo-XR-ivW"/>
                     <connections>
+                        <outlet property="customSearchBar" destination="mHU-bZ-GVU" id="t3j-Yz-G2o"/>
                         <outlet property="locationInfoView" destination="Got-PF-0XK" id="5UM-np-VFH"/>
+                        <outlet property="mapActionButtons" destination="yHU-Ts-F5E" id="tVV-ej-l3G"/>
                         <outlet property="mapView" destination="Yw8-0P-Y2x" id="eFZ-Oy-Udb"/>
-                        <outlet property="searchBarTextField" destination="T1h-WM-b5i" id="TBY-iA-n2G"/>
-                        <outlet property="searchBarView" destination="mHU-bZ-GVU" id="R5a-Sr-xc0"/>
                         <outlet property="searchDisplayController" destination="nZe-Oe-lWg" id="Ot6-hl-pw3"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="sandboxOfficials" id="aS0-JL-Lkj"/>
                     </connections>
