@@ -12,8 +12,7 @@ import CoreLocation
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
 
-var userAddr = Address(streetNumber: "110",
-                       streetName: "Inner Campus Drive",
+var userAddr = Address(streetAddress: "110 Inner Campus Drive",
                        city: "Austin",
                        state: "TX",
                        zipcode: "78712") {

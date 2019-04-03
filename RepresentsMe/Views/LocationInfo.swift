@@ -70,51 +70,25 @@ class LocationInfo: UIView {
 
     /// Reverse geocodes the given location.
     /// Upon successful reverse geocode, sets locationInfoView correctly
-    func updateWithCoordinates(coords:CLLocationCoordinate2D) {
+    func updateWithCoordinates(coords:CLLocationCoordinate2D, title:String) {
         startLoadingAnimation()
 
-        let geocoder = CLGeocoder()
+        titleLabel.text = title
 
-        let location = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
+        let geocoder = GeocoderWrapper()
 
-        geocoder.reverseGeocodeLocation(location, completionHandler: asyncGeocode)
+        geocoder.reverseGeocodeCoordinates(coords, completionHandler: reverseGeocodeCompletionHandler)
 
     }
 
-    func asyncGeocode(placemarks:[CLPlacemark]?, error:Error?) {
-        // If an error occured, alert user and return immediately
-        if let _ = error {
-            // TODO: Show alert informing the user
-            return
-        }
-
-        // placemark is a list of results, if no results returned, alert user and return immediately
-        guard let placemark = placemarks?.first else {
-            // TODO: Show alert informing the user
-            return
-        }
-
-        // Get address from the placemark
-        let address = Address(with: placemark)
-
-        if workItem != nil {
-            workItem?.cancel()
-        }
-
-        self.workItem = DispatchWorkItem{ self.geocodeCompletionHandler(address:address)}
-        DispatchQueue.main.async(execute: self.workItem!)
-    }
-
-    func geocodeCompletionHandler(address:Address) {
+    func reverseGeocodeCompletionHandler(address:Address) {
         self.address = address
         // In UI thread, set title of address button and enable go button
-        self.titleLabel.text = "Dropped Pin"
-        let streetNo = self.address!.streetNumber
-        let streetName = self.address!.streetName
+        let streetAddress = self.address!.streetAddress
         let city = self.address!.city
         let state = self.address!.state
         let zip = self.address!.zipcode
-        self.address1Label.text = "\(streetNo) \(streetName)"
+        self.address1Label.text = "\(streetAddress)"
         self.address2Label.text = "\(city), \(state) \(zip)"
         self.goButton.isEnabled = true
         stopLoadingAnimation()
