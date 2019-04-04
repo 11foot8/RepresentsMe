@@ -153,11 +153,11 @@ class Event {
 
     /// Creates a new Event
     ///
-    /// - Parameter name:       the name of the event
-    /// - Parameter owner:      the owner of the event
-    /// - Parameter location:   the location of the event
-    /// - Parameter date:       the date of the event
-    /// - Parameter official:   the official related to the event
+    /// - Parameter name:           the name of the event
+    /// - Parameter owner:          the owner of the event
+    /// - Parameter location:       the location of the event
+    /// - Parameter date:           the date of the event
+    /// - Parameter official:       the official related to the event
     /// - Parameter completion:     the completion handler
     static func create(name:String,
                        owner:String,
