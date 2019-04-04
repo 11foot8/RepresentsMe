@@ -38,9 +38,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
+        navigationController?.title = "Home"
+
         if (LocationManager.shared.checkLocationServices()) {
-            if let userLocation = LocationManager.shared.userLocation {
-                GeocoderWrapper.reverseGeocodeCoordinates(userLocation.coordinate) { (address: Address) in
+            if let userCoordinate = LocationManager.shared.userCoordinate {
+                GeocoderWrapper.reverseGeocodeCoordinates(userCoordinate) { (address: Address) in
                     userAddr = address
                     self.addr = userAddr
                     self.getOfficials(for: userAddr)
@@ -71,7 +73,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if error == nil, let officialList = officialList {
                 self.officials = officialList
                 DispatchQueue.main.async {
-                    self.navigationItem.title = "\(self.addr.city), \(self.addr.state)"
                     self.officialsTableView.reloadData()
                 }
             }

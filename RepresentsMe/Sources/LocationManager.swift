@@ -18,6 +18,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         return locationManager.location
     }
 
+    public var userCoordinate: CLLocationCoordinate2D? {
+        return locationManager.location?.coordinate
+    }
+
     private override init() {
         locationManager = CLLocationManager()
         super.init()

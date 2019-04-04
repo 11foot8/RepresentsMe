@@ -103,9 +103,9 @@ MapActionButtonsDelegate {
 
     // MARK: - MapActionButtonsDelegate
     func onLocateTouchUp() {
-        if let location = LocationManager.shared.userLocation?.coordinate {
-            centerView(on: location,animated: true)
-            dropPin(coords: location, title: "Current Location", replaceSearchedValue: true)
+        if let coordinate = LocationManager.shared.userCoordinate {
+            centerView(on: coordinate,animated: true)
+            dropPin(coords: coordinate, title: "Current Location", replaceSearchedValue: true)
         }
     }
 
@@ -141,8 +141,8 @@ MapActionButtonsDelegate {
     // MARK: - Location Utilities
     /// Center mapView on user location with default zoom level, animate transition.
     func centerViewOnUserLocation() {
-        if let location = LocationManager.shared.userLocation?.coordinate {
-            centerView(on: location,animated: true)
+        if let coordinate = LocationManager.shared.userCoordinate {
+            centerView(on: coordinate, animated: true)
         }
     }
 
