@@ -90,10 +90,10 @@ class Event {
         if self.documentID != nil {
             // This Event has already been saved, update it
             self.update(completion: completion)
+        } else {
+            // This Event has not been saved, add it
+            self.add(completion: completion)
         }
-        
-        // This Event has not been saved, add it
-        self.add(completion: completion)
     }
     
     /// Updates this Event
