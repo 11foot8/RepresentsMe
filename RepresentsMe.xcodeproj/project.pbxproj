@@ -178,7 +178,6 @@
 				1352711F221F8AA200442AA6 /* Official.swift */,
 				3B9072C722309B2700B8A2F8 /* Address.swift */,
 				133BD33A223A76F00069279A /* PoliticalParty.swift */,
-				13BD31BE223027E1000A6BEE /* FontAwesome */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -311,6 +310,7 @@
 				3BE4384222556D4700EC049B /* LocationManager.swift */,
 				1683D0362253CBC000350471 /* GeocoderWrapper.swift */,
 				13287BC22220C09A00622CD4 /* Scraper */,
+				13BD31BE223027E1000A6BEE /* FontAwesome */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
