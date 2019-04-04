@@ -26,6 +26,7 @@ class Event {
     var location:CLLocationCoordinate2D     // The location of the event
     var date:Date                           // The date of the event
     var official:Official?                  // The official related to event
+    var attendees:[EventAttendee] = []      // The attendees for the event
 
     /// Gets the data formatted for Firestore
     var data:[String: Any] {
@@ -114,7 +115,52 @@ class Event {
     func delete(completion: @escaping completionHandler) {
         if let documentID = self.documentID {
             Event.db.document(documentID).delete {(error) in
+                if error == nil {
+                    // Succesfully deleted, delete all attendees
+                    for attendee in self.attendees {
+                        attendee.delete()
+                    }
+                }
                 return completion(self, error)
+            }
+        }
+    }
+    
+    /// Adds an attendee to this Event
+    ///
+    /// - Parameter userID:         the ID of the attendee
+    /// - Parameter status:         the status of the attendee
+    /// - Parameter completion:     the completion handler (default nil)
+    func addAttendee(userID:String,
+                     status:String,
+                     completion:EventAttendee.completionHandler = nil) {
+        if let documentID = self.documentID {
+            EventAttendee.create(eventID: documentID,
+                                 userID: userID,
+                                 status: status) {(attendee, error) in
+                // Add to the list of attendees and return the completion
+                if error == nil {
+                    self.attendees.append(attendee)
+                }
+                completion?(attendee, error)
+            }
+        }
+    }
+    
+    /// Removes the given attendee from this Event
+    ///
+    /// - Parameter userID:         the ID of the attendee
+    /// - Parameter completion:     the completion handler (default nil)
+    func removeAttendee(userID:String,
+                        completion:EventAttendee.completionHandler = nil) {
+        for (index, attendee) in self.attendees.enumerated() {
+            if attendee.userID == userID {
+                // Found the attendee to delete
+                attendee.delete {(attendee, error) in
+                    // Delete from the list of attendees
+                    self.attendees.remove(at: index)
+                    completion?(attendee, error)
+                }
             }
         }
     }
