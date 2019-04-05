@@ -32,6 +32,7 @@ class Official: Equatable, CustomStringConvertible {
     var youtubeURL:URL?                 // The official's YouTube account
     var office:String                   // The name of the official's office
     var division:String                 // The name of the official's division
+    var divisionOCDID:String            // The ID of the official's division
 
     var description:String {            // Returns textual representation of the
         return repr()                   // official. Conforms class to
@@ -47,6 +48,7 @@ class Official: Equatable, CustomStringConvertible {
         self.emails = []
         self.office = ""
         self.division = ""
+        self.divisionOCDID = ""
     }
 
     /// Builds an Official
@@ -76,6 +78,7 @@ class Official: Equatable, CustomStringConvertible {
         }
         self.office = office.name
         self.division = division.name
+        self.divisionOCDID = office.divisionId
         self.photo = DEFAULT_NOT_LOADED
     }
     
@@ -97,7 +100,8 @@ class Official: Equatable, CustomStringConvertible {
             "\(self.youtubeURL?.absoluteString ?? "")," +
             "\(self.office)," +
             "\(self.division)," +
-        "/>"
+            "\(self.divisionOCDID)" +
+            "/>"
     }
     
     /// Factory method to build Officials given the JSON data
@@ -154,7 +158,8 @@ class Official: Equatable, CustomStringConvertible {
             lhs.twitterURL == rhs.twitterURL &&
             lhs.twitterURL == rhs.twitterURL &&
             lhs.office == rhs.office &&
-            lhs.division == rhs.division
+            lhs.division == rhs.division &&
+            lhs.divisionOCDID == rhs.divisionOCDID
         )
     }
 
