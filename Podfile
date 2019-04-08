@@ -12,7 +12,6 @@ target 'RepresentsMe' do
   pod 'Firebase/Auth', :inhibit_warnings => true
   pod 'Firebase/Firestore'
 
-
   target 'RepresentsMeTests' do
     inherit! :search_paths
     # Pods for testing

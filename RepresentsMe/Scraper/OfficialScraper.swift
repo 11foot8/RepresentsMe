@@ -31,9 +31,6 @@ class OfficialScraper {
     /// - Parameter apikey:         The apikey to make the request with.
     /// - Parameter completion:     the completion handler to use to return the
     ///                             parsed Officials.
-    ///
-    /// - Throws: ParseError.invalidArgumentError if address cannot be formatted
-    ///           as a URL query argument.
     public static func getForAddress(
         address:Address,
         apikey:String,
@@ -42,7 +39,8 @@ class OfficialScraper {
         // Build the request
         var urlString:String? = nil
         do {
-            urlString = try buildURL(address: address.description, apikey: apikey)
+            urlString = try OfficialScraper.buildURL(
+                address: address.description, apikey: apikey)
         } catch {
             // Failed to build the url, return an empty Array
             return completion([], nil)
@@ -68,7 +66,58 @@ class OfficialScraper {
         }.resume()
     }
     
-    /// Builds the url to use to make the request.
+    /// Gets an official by their name and division ID
+    ///
+    /// - Parameter with:           the official's name
+    /// - Parameter from:           the division ID
+    /// - Parameter apikey:         the api key
+    /// - Parameter completion:     the completion handler
+    public static func getOfficial(
+        with name:String,
+        from divisionOCID:String,
+        apikey:String,
+        completion: @escaping (Official?, ParserError?) -> ()) {
+        
+        // Build the request
+        var urlString:String? = nil
+        do {
+            urlString = try OfficialScraper.buildURL(
+                division: divisionOCID, apikey: apikey)
+        } catch {
+            return completion(nil, nil)
+        }
+        let url = URL(string: urlString!)
+        let request:URLRequest = URLRequest(url: url!)
+        
+        // Make the request
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
+                // Error occuroed, abort
+                return completion(nil, nil)
+            }
+            
+            do {
+                // Try to parse the JSON
+                let jsonData = try parseJSON(data: data!)
+                let officials = Official.buildOfficials(data: jsonData)
+                
+                // Find the official with the given name
+                for official in officials {
+                    if official.name == name {
+                        return completion(official, nil)
+                    }
+                }
+                
+                // Did not find the official
+                return completion(nil, nil)
+            } catch {
+                // Error occurred while parsing JSON, return an empty Array
+                return completion(nil, nil)
+            }
+        }.resume()
+    }
+
+    /// Builds the url to use to request officials by address.
     ///
     /// - Parameter address: the address to request for
     /// - Parameter apikey:  the apikey to use
@@ -87,13 +136,32 @@ class OfficialScraper {
         return "\(OfficialScraper.url)?address=\(formattedAddress)&key=\(apikey)"
     }
     
+    /// Builds hte url to use to request officials by division.
+    ///
+    /// - Parameter division:   the division to request for
+    /// - Parameter apikey:     the apikey to use
+    ///
+    /// - Returns: the formatted url
+    ///
+    /// - Throws: ParserError.invalidArgumentError if division cannot be
+    ///           formatted for a URL argument
+    private static func buildURL(division:String,
+                                 apikey:String) throws -> String {
+        guard let formattedDivision = formatArg(arg: division) else {
+            throw ParserError.invalidArgumentError(
+                "Invalid argument \(division)")
+        }
+        
+        return "\(OfficialScraper.url)/\(formattedDivision)?key=\(apikey)"
+    }
+    
     /// Formats the given argument to use as a query parameter in the request
     ///
     /// - Parameter arg: The argument to format
     ///
     /// - Returns: the formated argument
     private static func formatArg(arg:String) -> String? {
-        return arg.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        return arg.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
     
     /// Parses the JSON string into a JSONData object.
