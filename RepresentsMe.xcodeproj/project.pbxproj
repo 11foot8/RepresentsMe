@@ -26,7 +26,6 @@
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
 		13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */; };
 		13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCFEF52253B7F9005D6CE1 /* Event.swift */; };
-		13CCFEF82253B9CE005D6CE1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13CCFEF72253B9CE005D6CE1 /* GoogleService-Info.plist */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
@@ -52,6 +51,7 @@
 		3B9072C822309B2700B8A2F8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9072C722309B2700B8A2F8 /* Address.swift */; };
 		3BE4383D2255347800EC049B /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4383C2255347800EC049B /* ContactViewController.swift */; };
 		3BE4384322556D4700EC049B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4384222556D4700EC049B /* LocationManager.swift */; };
+		3BE43884225BC01800EC049B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BE43883225BC01800EC049B /* GoogleService-Info.plist */; };
 		6BE9F221BD96A6B132935898 /* Pods_RepresentsMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A72F30EFDD0573F09FBBD /* Pods_RepresentsMeUITests.framework */; };
 		CA1BA638C8785963478F014B /* Pods_RepresentsMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E2677B4E123D27EE7A3BCA /* Pods_RepresentsMeTests.framework */; };
 /* End PBXBuildFile section */
@@ -94,7 +94,6 @@
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		13CCFEF52253B7F9005D6CE1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		13CCFEF72253B9CE005D6CE1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -126,6 +125,7 @@
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		3BE43883225BC01800EC049B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61D34301053EDA13ECA7BD01 /* Pods-RepresentsMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe.release.xcconfig"; sourceTree = "<group>"; };
 		83035DBA5681A172F48C943D /* Pods-RepresentsMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMeUITests/Pods-RepresentsMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A592B515327B0F6F432C5D60 /* Pods-RepresentsMeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMeUITests/Pods-RepresentsMeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -241,7 +241,7 @@
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
 				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
-				13CCFEF72253B9CE005D6CE1 /* GoogleService-Info.plist */,
+				3BE43883225BC01800EC049B /* GoogleService-Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
 			);
 			path = RepresentsMe;
@@ -368,6 +368,7 @@
 				3B1EFD4D221F06E9003176BF /* Frameworks */,
 				3B1EFD4E221F06E9003176BF /* Resources */,
 				30D106DE8C76D94FE1571820 /* [CP] Embed Pods Frameworks */,
+				EA8CB805BB598C5DB44DF356 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -386,6 +387,8 @@
 				3B1EFD63221F06EC003176BF /* Sources */,
 				3B1EFD64221F06EC003176BF /* Frameworks */,
 				3B1EFD65221F06EC003176BF /* Resources */,
+				75608937F179E2A0B31E06B0 /* [CP] Embed Pods Frameworks */,
+				045FDA2BF0B32AC8AC4B5BDB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -405,6 +408,8 @@
 				3B1EFD6E221F06EC003176BF /* Sources */,
 				3B1EFD6F221F06EC003176BF /* Frameworks */,
 				3B1EFD70221F06EC003176BF /* Resources */,
+				175DA4B9343A9BDD946EBE9E /* [CP] Embed Pods Frameworks */,
+				DF76CB1E3BF82889079C02FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -467,11 +472,11 @@
 				1683D0352253C19800350471 /* CustomSearchBar.xib in Resources */,
 				1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */,
 				13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
-				13CCFEF82253B9CE005D6CE1 /* GoogleService-Info.plist in Resources */,
 				3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */,
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
 				13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */,
 				3B1EFD5E221F06EC003176BF /* Assets.xcassets in Resources */,
+				3BE43884225BC01800EC049B /* GoogleService-Info.plist in Resources */,
 				16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */,
 				3B1EFD59221F06E9003176BF /* Main.storyboard in Resources */,
 			);
@@ -494,6 +499,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		045FDA2BF0B32AC8AC4B5BDB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMeTests/Pods-RepresentsMeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		10FA9F39D82E097AF6ABEE3E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -510,6 +530,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		175DA4B9343A9BDD946EBE9E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMeUITests/Pods-RepresentsMeUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		30D106DE8C76D94FE1571820 /* [CP] Embed Pods Frameworks */ = {
@@ -560,6 +595,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75608937F179E2A0B31E06B0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMeTests/Pods-RepresentsMeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF76CB1E3BF82889079C02FE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMeUITests/Pods-RepresentsMeUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA8CB805BB598C5DB44DF356 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCA6253E359D7FF89B88E6BF /* [CP] Check Pods Manifest.lock */ = {
@@ -797,7 +877,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -813,7 +896,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RepresentsMe/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -830,7 +916,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -848,7 +938,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -865,7 +959,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -882,7 +980,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N7792P6G3G;
 				INFOPLIST_FILE = RepresentsMeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ElevenFootEight.RepresentsMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
