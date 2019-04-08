@@ -18,10 +18,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // [("Section Name", [("Setting", "Image Name")]), ...]
 
     // Full Settings data for Beta release
-    // let data:[(String, [(String, String)])] = [("User", [("Username", "user"), ("Password", "key")]),
-    //                                           ("", [("Address","home")]),
-    //                                           ("", [("Notifications", "bell")])]
-    let data:[(String, [(String, String)])] = [("", [("Address","home")])]
+     let data:[(String, [(String, String)])] = [("User", [("Username", "user"), ("Password", "key")]),
+                                               ("", [("Address","home")]),
+                                               ("", [("Notifications", "bell")]),
+                                               ("", [("Logout","sign-out-alt")])]
+//    let data:[(String, [(String, String)])] = [("", [("Address","home")])]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: Alter when Settings table expands
+        
         tableView.deselectRow(at: indexPath, animated: false)
         performSegue(withIdentifier: "addressSegue", sender: self)
     }

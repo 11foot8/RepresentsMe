@@ -13,6 +13,8 @@ class EntryViewController: UIViewController {
     // MARK: - Properties
     let signupSegueIdentifier = "SignupSegue"
     let loginSegueIdentifier = "LoginSegue"
+    let signupUnwindSegueIdentifier = "SignupUnwindSegue"
+    let loginUnwindSegueIdentifier = "LoginUnwindSegue"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -24,7 +26,7 @@ class EntryViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func signupTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: signupSegueIdentifier, sender: <#T##Any?#>)
+        performSegue(withIdentifier: signupSegueIdentifier, sender: nil)
     }
 
     @IBAction func loginTouchUp(_ sender: Any) {
@@ -36,6 +38,10 @@ class EntryViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    }
+
+    @IBAction func unwindToVC(segue:UIStoryboardSegue) {
+
     }
 
 }
