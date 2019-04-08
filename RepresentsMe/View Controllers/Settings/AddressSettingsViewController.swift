@@ -9,21 +9,45 @@
 import UIKit
 import CoreData
 
-class AddressSettingsViewController: UIViewController {
+class AddressSettingsViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
 
+    // MARK: - Properties
+    let usersDB = UsersDatabase.getInstance()
+    let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
+
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
+        cityTextField.clearButtonMode = UITextField.ViewMode.always
+        zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
+
+        usersDB.getCurrentUserAddress { (address, error) in
+            if let _ = error {
+                // TODO: Handle error
+                print("Error fetching address: \(error.debugDescription)")
+            } else {
+                if let address = address {
+                    self.streetAddressTextField.text = address.streetAddress
+                    self.cityTextField.text = address.city
+                    self.stateTextField.text = address.state
+                    self.zipcodeTextField.text = address.zipcode
+                } else {
+                    // TODO: Handle nil address
+                    print("Address field nil")
+                }
+            }
+        }
+    }
+
+    // MARK: - Outlets
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        streetAddressTextField.text = userAddr.streetAddress
-        cityTextField.text = userAddr.city
-        stateTextField.text = userAddr.state
-        zipcodeTextField.text = userAddr.zipcode
-    }
-
+    // MARK: - Actions
     @IBAction func saveAddress(_ sender: Any) {
         guard
             let streetAddress = streetAddressTextField.text,
@@ -45,17 +69,50 @@ class AddressSettingsViewController: UIViewController {
                 return
         }
 
-        userAddr = Address(streetAddress: streetAddressTextField.text!,
+        let address = Address(streetAddress: streetAddressTextField.text!,
                            city: cityTextField.text!,
                            state: stateTextField.text!,
                            zipcode: zipcodeTextField.text!)
 
-        let alert = UIAlertController(
-            title: "Saved",
-            message: nil,
-            preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        // TODO: Start loading animation
+        usersDB.setUserAddress(uid: usersDB.getCurrentUserUID() ?? "", address: address) { (error) in
+            if let _ = error {
+                // TODO: Handle error
+                // TODO: Stop loading animation
+            } else {
+                // TODO: Stop loading animation
+                let alert = UIAlertController(
+                    title: "Saved",
+                    message: nil,
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
 
-        self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+
+
+    }
+
+    func pickerDoneTouchUp(selection: String) {
+        stateTextField.text = selection
+    }
+
+    // MARK: - Segue functions
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == popoverSegueIdentifier {
+            let popoverViewController = segue.destination as! PickerPopoverViewController
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+            popoverViewController.popoverPresentationController?.delegate=self
+            popoverViewController.delegate = self
+            popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
+            popoverViewController.popoverPresentationController?.sourceView = view
+            popoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverViewController.selectedValue = stateTextField.text!
+
+        }
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

@@ -12,7 +12,7 @@ import Firebase
 class SignupViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Properties
-    let popoverSegueIdentifier = "PickerPopoverSegue"
+    let popoverSegueIdentifier = "SignupPickerPopoverSegue"
 
     let usersDB = UsersDatabase.getInstance()
 
@@ -43,7 +43,7 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
     @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
-    // MARK: - Action
+    // MARK: - Actions
     @IBAction func signUpDidTouch(_ sender: Any) {
         attemptCreateUser()
     }
@@ -108,11 +108,18 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
 
         // TODO: Check address validity
 
-        usersDB.createUser(email: email, password: password, displayName:displayName, streetAddress: streetAddress, city: city, state: state, zipcode: zipcode) { error in
+        let address = Address(streetAddress: streetAddress, city: city, state: state, zipcode: zipcode)
+
+        // TODO: Display loading animation
+        usersDB.createUser(email: email, password: password, displayName:displayName, address:address) { error in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)
+
+                // TODO: end loading animation
+                // TODO: display error alert
             } else {
+                // TODO: end loading animation
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")
                 self.present(tabBarViewController, animated: true, completion: {})
