@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MapKit
 
+let CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
+
 class DetailsViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var seatLabel: UILabel!
@@ -138,10 +140,9 @@ class DetailsViewController: UIViewController {
     @IBAction func youtubeButtonPressed(_ sender: Any) {
         UIApplication.shared.open(official!.youtubeURL!)
     }
-    
-    let contactSegueIdentifier = "contactSegueIdentifier"
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == contactSegueIdentifier,
+        if segue.identifier == CONTACT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? ContactViewController {
             destination.official = official
         }

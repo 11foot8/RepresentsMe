@@ -38,17 +38,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        navigationController?.title = "Home"
-
-        if (LocationManager.shared.checkLocationServices()) {
-            if let userCoordinate = LocationManager.shared.userCoordinate {
-                GeocoderWrapper.reverseGeocodeCoordinates(userCoordinate) { (address: Address) in
-                    userAddr = address
-                    self.addr = userAddr
-                    self.getOfficials(for: userAddr)
+        if (addr == userAddr) {
+            self.navigationItem.title = "Home"
+            if (LocationManager.shared.checkLocationServices()) {
+                if let userCoordinate = LocationManager.shared.userCoordinate {
+                    GeocoderWrapper.reverseGeocodeCoordinates(userCoordinate) { (address: Address) in
+                        userAddr = address
+                        self.addr = userAddr
+                        self.getOfficials(for: userAddr)
+                    }
                 }
+            } else {
+                getOfficials(for: addr)
             }
         } else {
+            self.navigationItem.title = addr.addressCityState()
             getOfficials(for: addr)
         }
     }

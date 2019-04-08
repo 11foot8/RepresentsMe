@@ -24,33 +24,24 @@ class ContactViewController: UIViewController {
             return
         }
         titleLabel.text = "Contact \(official.name)"
-        phones = official.phones
-        urls = official.urls
-        emails = official.emails
-        var contactString = ""
-        if phones.count > 0 {
-            contactString.append("Phone number(s):\n")
-            for phone in phones {
-                contactString.append("\t\(phone)\n")
-            }
-            contactString.append("\n\n")
-        }
-        if emails.count > 0 {
-            contactString.append("Email address(es):\n")
-            for email in emails {
-                contactString.append("\t\(email)\n")
-            }
-            contactString.append("\n\n")
-        }
-        if urls.count > 0 {
-            contactString.append("Relevant Links:\n")
-            for url in urls {
-                if let safeUrl = url {
-                    contactString.append("\t\(safeUrl)\n")
-                }
-            }
-        }
+
+        let contactString = buildContactString(title: "Phone number(s)", contacts: official.phones) +
+            buildContactString(title: "Email address(es)", contacts: official.emails) +
+            buildContactString(title: "Relevant Links", contacts: official.urls.map({ $0!.absoluteString }))
+
         contactTextView.text = contactString
+    }
+
+    func buildContactString(title: String, contacts:[String]) -> String {
+        var contactString = ""
+        if contacts.count > 0 {
+            contactString.append("\(title):\n")
+            for contact in contacts {
+                contactString.append("\t\(contact)\n")
+            }
+            contactString.append("\n\n")
+        }
+        return contactString
     }
 
     override func viewDidLoad() {

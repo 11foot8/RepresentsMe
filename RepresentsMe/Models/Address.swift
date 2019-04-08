@@ -58,12 +58,19 @@ class Address: Equatable, CustomStringConvertible {
         self.zipcode = zipcode
     }
 
+    /// Returns a String representation of the first line of the address.
     func addressLine1() -> String {
         return streetAddress
     }
 
+    /// Returns a String representation of the second line of the address.
     func addressLine2() -> String {
         return "\(city), \(state) \(zipcode)"
+    }
+
+    /// Returns a String representation of the city and state of the address.
+    func addressCityState() -> String {
+        return "\(city), \(state)"
     }
 
     static func == (lhs: Address, rhs: Address) -> Bool {

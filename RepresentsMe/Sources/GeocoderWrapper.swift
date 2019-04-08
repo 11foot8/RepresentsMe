@@ -10,7 +10,8 @@ import Foundation
 import MapKit
 
 class GeocoderWrapper {
-    static let geocoder = CLGeocoder()
+    private static let geocoder = CLGeocoder()
+
     public static func geocodeAddressString(_ address:String, completionHandler:@escaping (CLPlacemark) -> Void) {
         geocoder.geocodeAddressString(address, completionHandler: { (placemarks:[CLPlacemark]?, error:Error?) -> Void in
             if let _ = error {
@@ -44,9 +45,9 @@ class GeocoderWrapper {
             }
 
             // Get address from the placemark
-            let address = Address(with: placemark)
-
-            DispatchQueue.main.async(execute: DispatchWorkItem { completionHandler(address) } )
+            DispatchQueue.main.async(execute: DispatchWorkItem {
+                completionHandler(Address(with: placemark))
+            } )
         })
     }
 }
