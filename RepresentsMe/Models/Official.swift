@@ -100,7 +100,8 @@ class Official: Equatable, CustomStringConvertible {
             "\(self.youtubeURL?.absoluteString ?? "")," +
             "\(self.office)," +
             "\(self.division)," +
-        "/>"
+            "\(self.divisionOCDID)" +
+            "/>"
     }
     
     /// Factory method to build Officials given the JSON data
@@ -157,7 +158,8 @@ class Official: Equatable, CustomStringConvertible {
             lhs.twitterURL == rhs.twitterURL &&
             lhs.twitterURL == rhs.twitterURL &&
             lhs.office == rhs.office &&
-            lhs.division == rhs.division
+            lhs.division == rhs.division &&
+            lhs.divisionOCDID == rhs.divisionOCDID
         )
     }
 
