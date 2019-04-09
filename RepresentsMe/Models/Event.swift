@@ -265,14 +265,13 @@ class Event {
         event.save(completion: completion)
     }
     
-    /// Gets all Events with the given owner
+    /// Gets all Events with the given query
     ///
-    /// - Parameter owner:          the owner to filter by
+    /// - Parameter query:          the Query
     /// - Parameter completion:     the completion handler
-    static func allWith(owner:String,
+    static func allWith(query:Query,
                         completion: @escaping allCompletionHandler) {
-        let ref = Event.db.whereField("owner", isEqualTo: owner)
-        ref.getDocuments {(data, error) in
+        query.getDocuments {(data, error) in
             let group = DispatchGroup()
             var events:[Event] = []
             if error == nil {
@@ -288,7 +287,29 @@ class Event {
             }
         }
     }
+
+    /// Gets all Events with the given owner
+    ///
+    /// - Parameter owner:          the owner to filter by
+    /// - Parameter completion:     the completion handler
+    static func allWith(owner:String,
+                        completion: @escaping allCompletionHandler) {
+        let query = Event.db.whereField("owner", isEqualTo: owner)
+        Event.allWith(query: query, completion: completion)
+    }
     
+    /// Gets all Events for the given official
+    ///
+    /// - Parameter official:       the Official
+    /// - Parameter completion:     the completion handler
+    static func allWith(official:Official,
+                        completion: @escaping allCompletionHandler) {
+        let query = Event.db
+            .whereField("divisionOCDID", isEqualTo: official.divisionOCDID)
+            .whereField("officialName", isEqualTo: official.name)
+        Event.allWith(query: query, completion: completion)
+    }
+
     /// Finds an event by its ID
     ///
     /// - Parameter eventID:        the document ID of the event
