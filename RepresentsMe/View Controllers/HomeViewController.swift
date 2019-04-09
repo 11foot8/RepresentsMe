@@ -12,16 +12,6 @@ import CoreLocation
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
 
-var userAddr = Address(streetAddress: "110 Inner Campus Drive",
-                       city: "Austin",
-                       state: "TX",
-                       zipcode: "78712") {
-                didSet {
-                    userAddrChanged = true
-                }
-}
-var userAddrChanged = false
-
 enum TableViewModes {
     case HomeMode // Home mode, uses current user's address
     case SandboxMode // Sandbox mode, uses address from mapview
@@ -30,11 +20,15 @@ enum TableViewModes {
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     // MARK: - Properties
-    var address: Address?
-    var officials: [Official] = []
+    var address: Address? {
+        didSet {
+            needToPull = true
+        }
+    }
     let locationManager = CLLocationManager()
     let usersDB = UsersDatabase.getInstance()
     var mode:TableViewModes = TableViewModes.HomeMode
+    var needToPull:Bool = false
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -46,23 +40,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        switch mode {
-        case .HomeMode:
-            // TODO: Get current user address
-            usersDB.getCurrentUserAddress { (address, error) in
-                if let _ = error {
-                    // TODO: Handle error
-                    print(error.debugDescription)
-                } else {
-                    self.address = address
-                    self.getOfficials(for: self.address!)
+        if self.address == nil || self.needToPull {
+            switch mode {
+            case .HomeMode:
+                // TODO: Get current user address
+                usersDB.getCurrentUserAddress { (address, error) in
+                    if let _ = error {
+                        // TODO: Handle error
+                        print(error.debugDescription)
+                    } else {
+                        self.address = address
+                        self.getOfficials(for: self.address!)
+                    }
                 }
+                break
+            case .SandboxMode:
+                // TODO: Use current address
+                self.getOfficials(for: self.address!)
+                break
             }
-            break
-        case .SandboxMode:
-            // TODO: Use current address
-            self.getOfficials(for: self.address!)
-            break
         }
     }
 
@@ -74,8 +70,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
-                self.officials = officialList
+                switch self.mode {
+                case .HomeMode:
+                    AppState.homeOfficials = officialList
+                    break
+                case .SandboxMode:
+                    AppState.sandboxOfficials = officialList
+                    break
+                }
+                
                 DispatchQueue.main.async {
+                    self.needToPull = false
                     self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
                     self.officialsTableView.reloadData()
                 }
@@ -85,17 +90,32 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return officials.count
+        switch self.mode {
+        case .HomeMode:
+            return AppState.homeOfficials.count
+        case .SandboxMode:
+            return AppState.sandboxOfficials.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OFFICIAL_CELL_IDENTIFIER,
-                                                 for: indexPath) as! OfficialCell
-        cell.official = officials[indexPath.row]
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: OFFICIAL_CELL_IDENTIFIER,
+            for: indexPath) as! OfficialCell
+        
+        switch self.mode {
+        case .HomeMode:
+            cell.official = AppState.homeOfficials[indexPath.row]
+            break
+        case .SandboxMode:
+            cell.official = AppState.sandboxOfficials[indexPath.row]
+        }
+        
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
@@ -104,7 +124,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.passedOfficial = officials[officialsIndex]
+            
+            switch self.mode {
+            case .HomeMode:
+                destination.passedOfficial = AppState.homeOfficials[officialsIndex]
+            case .SandboxMode:
+                destination.passedOfficial = AppState.sandboxOfficials[officialsIndex]
+            }
         }
     }
 }
