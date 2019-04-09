@@ -40,6 +40,7 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
 
     @IBAction func useCurrentLocationTouchUp(_ sender: Any) {
         // TODO: Reverse Geocode user location and fill address
+        // TODO: Enable User Current Location Button
     }
 
     @IBAction func cancelTouchUp(_ sender: Any) {
@@ -98,9 +99,11 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
                 // TODO: display error alert
             } else {
                 // TODO: end loading animation
+                self.view.endEditing(true)
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")
-                self.present(tabBarViewController, animated: true, completion: {})
+                guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
+                appDel.window?.rootViewController = tabBarViewController
             }
         }
     }

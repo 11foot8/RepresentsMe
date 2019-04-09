@@ -16,6 +16,23 @@ class SignupViewController: UIViewController {
 
     let usersDB = UsersDatabase.getInstance()
 
+    let validFontAwesomeString = "check-circle"
+    let invalidFontAwesomeString = "times-circle"
+    let defaultFontAwesomeString = "minus-circle"
+
+    let validEmailMessage = ""
+    let invalidEmailMessage = "Invalid Email"
+    let defaultEmailMessage = ""
+
+    let validPasswordMessage = ""
+    let invalidPasswordMessage = "InvalidPassword"
+    let defaultPasswordMessage = ""
+
+    let validConfirmPasswordMessage = ""
+    let invalidConfirmPasswordMessage = "Does not match password"
+    let defaultConfirmPasswordMessage = ""
+
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +41,10 @@ class SignupViewController: UIViewController {
         passwordTextField.clearButtonMode = UITextField.ViewMode.always
         confirmPasswordTextField.clearButtonMode = UITextField.ViewMode.always
         displayNameTextField.clearButtonMode = UITextField.ViewMode.always
+
+        setEmailMessage()
+        setPasswordMessage()
+        setConfirmPasswordMessage()
     }
 
     // MARK: - Outlets
@@ -31,18 +52,38 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var displayNameTextField: UITextField!
+    @IBOutlet weak var validEmailLabel: UILabel!
+    @IBOutlet weak var validPasswordLabel: UILabel!
+    @IBOutlet weak var validConfirmPasswordLabel: UILabel!
+    @IBOutlet weak var emailMessageLabel: UILabel!
+    @IBOutlet weak var passwordMessageLabel: UILabel!
+    @IBOutlet weak var confirmPasswordMessageLabel: UILabel!
 
     // MARK: - Actions
     @IBAction func signUpDidTouch(_ sender: Any) {
         attemptCreateUser()
     }
+
     @IBAction func cancelTouchUp(_ sender: Any) {
         performSegue(withIdentifier: "SignupUnwindSegue", sender: self)
     }
 
+    @IBAction func emailFieldEditingChanged(_ sender: Any) {
+        setEmailMessage()
+    }
+
+    @IBAction func passwordFieldEditingChanged(_ sender: Any) {
+        setPasswordMessage()
+    }
+
+    @IBAction func confirmPasswordFieldEditingChanged(_ sender: Any) {
+        setConfirmPasswordMessage()
+    }
+
+
     func attemptCreateUser() {
         // Check all values are valid
-        guard let email = emailTextField.text else {
+        guard let email = emailTextField.text, isValidEmail(testStr: email) else {
             // TODO: Handle Error
             return
         }
@@ -66,6 +107,99 @@ class SignupViewController: UIViewController {
             // TODO: Alert users passwords dont match
             return
         }
+    }
+
+    // MARK: - Email Message
+    func setEmailMessage() {
+        if let email = emailTextField.text {
+            if isValidEmail(testStr: email) {
+                setEmailMessageValid()
+            } else {
+                setEmailMessageInvalid()
+            }
+        } else {
+            setEmailMessageDefault()
+        }
+    }
+
+    func setEmailMessageValid() {
+        validEmailLabel.textColor = UIColor.green
+        validEmailLabel.text = validFontAwesomeString
+        emailMessageLabel.text = validEmailMessage
+    }
+
+    func setEmailMessageInvalid() {
+        validEmailLabel.textColor = UIColor.red
+        validEmailLabel.text = invalidFontAwesomeString
+        emailMessageLabel.text = invalidEmailMessage
+    }
+
+    func setEmailMessageDefault() {
+        validEmailLabel.textColor = UIColor.black
+        validEmailLabel.text = defaultFontAwesomeString
+        emailMessageLabel.text = defaultEmailMessage
+    }
+
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+
+    // MARK: - Password Message
+    func setPasswordMessage() {
+        setConfirmPasswordMessage()
+        setPasswordMessageDefault()
+    }
+
+    func setPasswordMessageValid() {
+        validPasswordLabel.textColor = UIColor.green
+        validPasswordLabel.text = validFontAwesomeString
+        passwordMessageLabel.text = validPasswordMessage
+    }
+
+    func setPasswordMessageInvalid() {
+        validPasswordLabel.textColor = UIColor.red
+        validPasswordLabel.text = invalidFontAwesomeString
+        passwordMessageLabel.text = invalidPasswordMessage
+    }
+
+    func setPasswordMessageDefault() {
+        validPasswordLabel.textColor = UIColor.black
+        validPasswordLabel.text = ""
+        passwordMessageLabel.text = defaultPasswordMessage
+    }
+
+    // MARK: - Confirm Password Message
+    func setConfirmPasswordMessage() {
+        if let confirmPassword = confirmPasswordTextField.text, let password = passwordTextField.text {
+            if (confirmPassword == password) {
+                setConfirmPasswordMessageValid()
+            } else {
+                setConfirmPasswordMessageInvalid()
+            }
+        } else {
+            setConfirmPasswordMessageDefault()
+        }
+    }
+
+    func setConfirmPasswordMessageValid() {
+        validConfirmPasswordLabel.textColor = UIColor.green
+        validConfirmPasswordLabel.text = validFontAwesomeString
+        confirmPasswordMessageLabel.text = validConfirmPasswordMessage
+    }
+
+    func setConfirmPasswordMessageInvalid() {
+        validConfirmPasswordLabel.textColor = UIColor.red
+        validConfirmPasswordLabel.text = invalidFontAwesomeString
+        confirmPasswordMessageLabel.text = invalidConfirmPasswordMessage
+    }
+
+    func setConfirmPasswordMessageDefault() {
+        validConfirmPasswordLabel.textColor = UIColor.black
+        validConfirmPasswordLabel.text = defaultFontAwesomeString
+        confirmPasswordMessageLabel.text = defaultConfirmPasswordMessage
     }
 
     // MARK: Segue functions

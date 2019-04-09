@@ -16,6 +16,9 @@ class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        emailTextField.clearButtonMode = UITextField.ViewMode.always
+        passwordTextField.clearButtonMode = UITextField.ViewMode.always
     }
 
     // MARK: - Outlets
@@ -43,9 +46,11 @@ class LoginViewController: UIViewController {
                 // TODO: Handle error
                 print(error.debugDescription)
             } else {
+                self.view.endEditing(true)
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")
-                self.present(tabBarViewController, animated: true, completion: {})
+                guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
+                appDel.window?.rootViewController = tabBarViewController
             }
         }
         
