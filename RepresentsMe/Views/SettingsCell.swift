@@ -11,4 +11,5 @@ import UIKit
 class SettingsCell: UITableViewCell {
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
 }

@@ -7,7 +7,9 @@ target 'RepresentsMe' do
 
   # Pods for RepresentsMe
   pod 'NVActivityIndicatorView'
-  pod 'Firebase/Core'
+  pod 'Firebase/Core', :inhibit_warnings => true
+  pod 'Firebase/Database', :inhibit_warnings => true
+  pod 'Firebase/Auth', :inhibit_warnings => true
   pod 'Firebase/Firestore'
 
   target 'RepresentsMeTests' do

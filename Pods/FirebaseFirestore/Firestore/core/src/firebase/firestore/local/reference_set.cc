@@ -15,9 +15,8 @@
  */
 
 #include "Firestore/core/src/firebase/firestore/local/reference_set.h"
-
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_set.h"
-#include "Firestore/core/src/firebase/firestore/local/document_key_reference.h"
+#include "Firestore/core/src/firebase/firestore/local/document_reference.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 
 namespace firebase {
@@ -28,7 +27,7 @@ using model::DocumentKey;
 using model::DocumentKeySet;
 
 void ReferenceSet::AddReference(const DocumentKey& key, int id) {
-  DocumentKeyReference reference{key, id};
+  DocumentReference reference{key, id};
   by_key_ = by_key_.insert(reference);
   by_id_ = by_id_.insert(reference);
 }
@@ -40,7 +39,7 @@ void ReferenceSet::AddReferences(const DocumentKeySet& keys, int id) {
 }
 
 void ReferenceSet::RemoveReference(const DocumentKey& key, int id) {
-  RemoveReference(DocumentKeyReference{key, id});
+  RemoveReference(DocumentReference{key, id});
 }
 
 void ReferenceSet::RemoveReferences(
@@ -51,8 +50,8 @@ void ReferenceSet::RemoveReferences(
 }
 
 DocumentKeySet ReferenceSet::RemoveReferences(int id) {
-  DocumentKeyReference start{DocumentKey::Empty(), id};
-  DocumentKeyReference end{DocumentKey::Empty(), id + 1};
+  DocumentReference start{DocumentKey::Empty(), id};
+  DocumentReference end{DocumentKey::Empty(), id + 1};
 
   DocumentKeySet removed{};
 
@@ -66,19 +65,19 @@ DocumentKeySet ReferenceSet::RemoveReferences(int id) {
 
 void ReferenceSet::RemoveAllReferences() {
   auto initial = by_key_;
-  for (const DocumentKeyReference& reference : initial) {
+  for (const DocumentReference& reference : initial) {
     RemoveReference(reference);
   }
 }
 
-void ReferenceSet::RemoveReference(const DocumentKeyReference& reference) {
+void ReferenceSet::RemoveReference(const DocumentReference& reference) {
   by_key_ = by_key_.erase(reference);
   by_id_ = by_id_.erase(reference);
 }
 
 DocumentKeySet ReferenceSet::ReferencedKeys(int id) {
-  DocumentKeyReference start{DocumentKey::Empty(), id};
-  DocumentKeyReference end{DocumentKey::Empty(), id + 1};
+  DocumentReference start{DocumentKey::Empty(), id};
+  DocumentReference end{DocumentKey::Empty(), id + 1};
 
   DocumentKeySet keys;
   for (const auto& reference : by_id_.values_in(start, end)) {
@@ -90,7 +89,7 @@ DocumentKeySet ReferenceSet::ReferencedKeys(int id) {
 bool ReferenceSet::ContainsKey(const DocumentKey& key) {
   // Create a reference with a zero ID as the start position to find any
   // document reference with this key.
-  DocumentKeyReference start{key, 0};
+  DocumentReference start{key, 0};
 
   auto range = by_key_.values_from(start);
   auto begin = range.begin();

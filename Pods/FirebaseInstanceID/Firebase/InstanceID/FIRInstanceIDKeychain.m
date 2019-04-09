@@ -60,9 +60,10 @@ static const NSUInteger kRSA2048KeyPairSize = 2048;
       if (keyRef) {
         CFRelease(keyRef);
       }
-      FIRInstanceIDLoggerDebug(kFIRInstanceIDKeychainReadItemError,
-                               @"Info is not found in Keychain. OSStatus: %d. Keychain query: %@",
-                               (int)status, keychainQuery);
+      FIRInstanceIDLoggerDebug(
+          kFIRInstanceIDKeychainReadItemError,
+          @"No info is retrieved from Keychain OSStatus: %d with the keychain query %@",
+          (int)status, keychainQuery);
     }
   });
   return keyRef;

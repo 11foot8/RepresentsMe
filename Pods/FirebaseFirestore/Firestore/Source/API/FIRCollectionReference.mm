@@ -15,13 +15,11 @@
  */
 
 #import "FIRCollectionReference.h"
-
-#include <utility>
+#import "FIRFirestore.h"
 
 #include "Firestore/core/src/firebase/firestore/util/autoid.h"
 
 #import "Firestore/Source/API/FIRDocumentReference+Internal.h"
-#import "Firestore/Source/API/FIRFirestore+Internal.h"
 #import "Firestore/Source/API/FIRQuery+Internal.h"
 #import "Firestore/Source/API/FIRQuery_Init.h"
 #import "Firestore/Source/Core/FSTQuery.h"
@@ -101,8 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
     return nil;
   } else {
     DocumentKey key{parentPath};
-    return [[FIRDocumentReference alloc] initWithKey:std::move(key)
-                                           firestore:self.firestore.wrapped];
+    return [FIRDocumentReference referenceWithKey:key firestore:self.firestore];
   }
 }
 
@@ -115,9 +112,8 @@ NS_ASSUME_NONNULL_BEGIN
     FSTThrowInvalidArgument(@"Document path cannot be nil.");
   }
   const ResourcePath subPath = ResourcePath::FromString(util::MakeString(documentPath));
-  ResourcePath path = self.query.path.Append(subPath);
-  return [[FIRDocumentReference alloc] initWithPath:std::move(path)
-                                          firestore:self.firestore.wrapped];
+  const ResourcePath path = self.query.path.Append(subPath);
+  return [FIRDocumentReference referenceWithPath:path firestore:self.firestore];
 }
 
 - (FIRDocumentReference *)addDocumentWithData:(NSDictionary<NSString *, id> *)data {
@@ -133,8 +129,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (FIRDocumentReference *)documentWithAutoID {
-  DocumentKey key{self.query.path.Append(CreateAutoId())};
-  return [[FIRDocumentReference alloc] initWithKey:std::move(key) firestore:self.firestore.wrapped];
+  const DocumentKey key{self.query.path.Append(CreateAutoId())};
+  return [FIRDocumentReference referenceWithKey:key firestore:self.firestore];
 }
 
 @end

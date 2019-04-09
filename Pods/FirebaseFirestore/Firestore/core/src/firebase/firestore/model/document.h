@@ -50,14 +50,14 @@ enum class DocumentState {
 class Document : public MaybeDocument {
  public:
   /**
-   * Construct a document. ObjectValue must be passed by rvalue.
+   * Construct a document. FieldValue must be passed by rvalue.
    */
-  Document(ObjectValue&& data,
+  Document(FieldValue&& data,
            DocumentKey key,
            SnapshotVersion version,
            DocumentState document_state);
 
-  const ObjectValue& data() const {
+  const FieldValue& data() const {
     return data_;
   }
 
@@ -81,7 +81,7 @@ class Document : public MaybeDocument {
   bool Equals(const MaybeDocument& other) const override;
 
  private:
-  ObjectValue data_;
+  FieldValue data_;  // This is of type Object.
   DocumentState document_state_;
 };
 

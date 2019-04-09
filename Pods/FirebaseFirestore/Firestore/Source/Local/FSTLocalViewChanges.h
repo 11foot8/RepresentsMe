@@ -20,6 +20,7 @@
 #include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
 
+@class FSTDocumentSet;
 @class FSTMutation;
 @class FSTQuery;
 

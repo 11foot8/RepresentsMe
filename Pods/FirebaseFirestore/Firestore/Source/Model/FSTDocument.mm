@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (bool)hasPendingWrites {
+- (BOOL)hasPendingWrites {
   @throw FSTAbstractMethodException();  // NOLINT
 }
 
@@ -127,15 +127,15 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (bool)hasLocalMutations {
+- (BOOL)hasLocalMutations {
   return _documentState == FSTDocumentStateLocalMutations;
 }
 
-- (bool)hasCommittedMutations {
+- (BOOL)hasCommittedMutations {
   return _documentState == FSTDocumentStateCommittedMutations;
 }
 
-- (bool)hasPendingWrites {
+- (BOOL)hasPendingWrites {
   return self.hasLocalMutations || self.hasCommittedMutations;
 }
 
@@ -174,12 +174,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation FSTDeletedDocument {
-  bool _hasCommittedMutations;
+  BOOL _hasCommittedMutations;
 }
 
 + (instancetype)documentWithKey:(DocumentKey)key
                         version:(SnapshotVersion)version
-          hasCommittedMutations:(bool)committedMutations {
+          hasCommittedMutations:(BOOL)committedMutations {
   FSTDeletedDocument *deletedDocument = [[FSTDeletedDocument alloc] initWithKey:std::move(key)
                                                                         version:std::move(version)];
 
@@ -190,11 +190,11 @@ NS_ASSUME_NONNULL_BEGIN
   return deletedDocument;
 }
 
-- (bool)hasCommittedMutations {
+- (BOOL)hasCommittedMutations {
   return _hasCommittedMutations;
 }
 
-- (bool)hasPendingWrites {
+- (BOOL)hasPendingWrites {
   return self.hasCommittedMutations;
 }
 
@@ -233,8 +233,8 @@ NS_ASSUME_NONNULL_BEGIN
   return [[FSTUnknownDocument alloc] initWithKey:std::move(key) version:std::move(version)];
 }
 
-- (bool)hasPendingWrites {
-  return true;
+- (BOOL)hasPendingWrites {
+  return YES;
 }
 
 - (BOOL)isEqual:(id)other {
