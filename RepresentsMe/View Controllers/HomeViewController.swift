@@ -31,7 +31,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Properties
     var address: Address?
-    var officials: [Official] = []
+    static var officials: [Official] = []
     let locationManager = CLLocationManager()
     let usersDB = UsersDatabase.getInstance()
     var mode:TableViewModes = TableViewModes.HomeMode
@@ -74,7 +74,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
-                self.officials = officialList
+                HomeViewController.officials = officialList
                 DispatchQueue.main.async {
                     self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
                     self.officialsTableView.reloadData()
@@ -85,13 +85,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return officials.count
+        return HomeViewController.officials.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: OFFICIAL_CELL_IDENTIFIER,
                                                  for: indexPath) as! OfficialCell
-        cell.official = officials[indexPath.row]
+        cell.official = HomeViewController.officials[indexPath.row]
         return cell
     }
 
@@ -104,7 +104,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.passedOfficial = officials[officialsIndex]
+            destination.passedOfficial = HomeViewController.officials[officialsIndex]
         }
     }
 }

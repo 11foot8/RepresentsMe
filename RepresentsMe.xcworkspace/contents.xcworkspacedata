@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/varunadiga/Documents/371L/RepresentsMe/RepresentsMe/Views/EventCell.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/varunadiga/Documents/371L/RepresentsMe/RepresentsMe/View Controllers/EventListViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:RepresentsMe.xcodeproj">
    </FileRef>
    <FileRef
