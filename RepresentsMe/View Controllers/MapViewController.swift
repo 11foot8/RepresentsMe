@@ -228,6 +228,7 @@ MapActionButtonsDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! HomeViewController
+            AppState.sandboxAddress = self.address
             destination.address = self.address!
             destination.mode = TableViewModes.SandboxMode
         }
