@@ -118,6 +118,7 @@ class UsersDatabase {
         }
     }
 
+    // MARK: - Set user info
     func setUserAddress(uid:String, address:Address, completion:@escaping (Error?) -> Void) {
         let userData = ["uid":uid,
                         "streetAddress":address.streetAddress,
@@ -125,6 +126,66 @@ class UsersDatabase {
                         "state":address.state,
                         "zipcode":address.zipcode]
         UsersDatabase.db.document(uid).updateData(userData, completion: completion)
+    }
+
+    func changeUserEmail(currentEmail:String, password:String, newEmail:String, completion: @escaping (Error?) -> Void) {
+        Auth.auth().signIn(withEmail: currentEmail, password: password) { (user, error) in
+            if let _ = error {
+                // TODO: Handle error
+                completion(error)
+            } else {
+                if let user = user {
+                    user.user.updateEmail(to: newEmail, completion: { (error) in
+                        if let _ = error {
+                            // TODO: Handle error
+                            completion(error)
+                        } else {
+                            completion(nil)
+                        }
+                    })
+                } else {
+                    // TODO: Handle nil user
+                    completion(NilValueError.runtimeError("Nil user"))
+                }
+            }
+        }
+    }
+
+    func changeUserPassword(email:String, currentPassword:String, newPassword:String, completion: @escaping (Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: currentPassword) { (user, error) in
+            if let _ = error {
+                // TODO: Handle error
+                completion(error)
+            } else {
+                if let user = user {
+                    user.user.updatePassword(to: newPassword, completion: { (error) in
+                        if let _ = error {
+                            // TODO: Handle error
+                            completion(error)
+                        } else {
+                            completion(nil)
+                        }
+                    })
+                } else {
+                    // TODO: Handle nil user
+                    completion(NilValueError.runtimeError("Nil user"))
+                }
+            }
+        }
+    }
+
+    func changeUserDisplayName(newDisplayName:String, completion: @escaping (Error?) -> Void) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = newDisplayName
+        changeRequest?.commitChanges(completion: { (error) in
+            if let _ = error {
+                // TODO: Handle error
+                completion(error)
+                return
+            } else {
+                completion(nil)
+            }
+        })
     }
 
     // MARK: - Login/Logout
@@ -161,4 +222,8 @@ enum NoCurrentUserError:Error,LocalizedError {
             return NSLocalizedString("No Current User", comment: "No Current User")
         }
     }
+}
+
+enum NilValueError: Error {
+    case runtimeError(String)
 }

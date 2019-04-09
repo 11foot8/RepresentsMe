@@ -36,6 +36,9 @@
 		1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03A2253D2A300350471 /* SignupViewController.swift */; };
 		1683D03D2253D35500350471 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03C2253D35500350471 /* EntryViewController.swift */; };
 		169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BD225D015200090CDA /* GeocoderWrapper.swift */; };
+		169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */; };
+		169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */; };
+		169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
 		16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */; };
@@ -115,6 +118,9 @@
 		1683D03A2253D2A300350471 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		1683D03C2253D35500350471 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		169EB6BD225D015200090CDA /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
+		169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
+		169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
+		169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNameSettingsViewController.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
 		16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
@@ -343,6 +349,9 @@
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
+				169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */,
+				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
+				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -675,9 +684,12 @@
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				3BE43886225C061C00EC049B /* CreateEventViewController.swift in Sources */,
+				169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */,
+				169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */,
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
+				169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
