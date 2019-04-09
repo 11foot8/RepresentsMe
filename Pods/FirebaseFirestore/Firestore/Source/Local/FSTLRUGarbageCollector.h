@@ -21,8 +21,6 @@
 
 #import "FIRFirestoreSettings.h"
 #import "Firestore/Source/Local/FSTQueryData.h"
-
-#include "Firestore/core/src/firebase/firestore/local/query_cache.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
 
@@ -81,13 +79,15 @@ struct LruResults {
  * Enumerates all the targets that the delegate is aware of. This is typically all of the targets in
  * an FSTQueryCache.
  */
-- (void)enumerateTargetsUsingCallback:(const firebase::firestore::local::TargetCallback &)callback;
+- (void)enumerateTargetsUsingBlock:(void (^)(FSTQueryData *queryData, BOOL *stop))block;
 
 /**
  * Enumerates all of the outstanding mutations.
  */
-- (void)enumerateMutationsUsingCallback:
-    (const firebase::firestore::local::OrphanedDocumentCallback &)callback;
+- (void)enumerateMutationsUsingBlock:
+    (void (^)(const firebase::firestore::model::DocumentKey &key,
+              firebase::firestore::model::ListenSequenceNumber sequenceNumber,
+              BOOL *stop))block;
 
 /**
  * Removes all unreferenced documents from the cache that have a sequence number less than or equal

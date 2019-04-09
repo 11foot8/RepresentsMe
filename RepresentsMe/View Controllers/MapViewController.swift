@@ -41,6 +41,10 @@ MapActionButtonsDelegate {
 
     var delegate: LocationSelectionDelegate?
 
+    var workItem:DispatchWorkItem?
+
+    let usersDB = UsersDatabase.getInstance()
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,8 +130,18 @@ MapActionButtonsDelegate {
 
     /// Move view to user's saved address and drop a pin
     func onHomeTouchUp() {
-        let address = userAddr.description
-        GeocoderWrapper.geocodeAddressString(address, completionHandler: self.geocodeHomeAddressCompletionHandler)
+        usersDB.getCurrentUserAddress { (address, error) in
+            if let _ = error {
+                // TODO: Handle error
+                print(error.debugDescription)
+            } else {
+                if let addressStr = address?.description {
+                    GeocoderWrapper.geocodeAddressString(addressStr, completionHandler: self.geocodeHomeAddressCompletionHandler)
+                } else {
+                    // TODO: Handle nil address error
+                }
+            }
+        }
     }
 
     // MARK: - Methods
@@ -236,7 +250,7 @@ MapActionButtonsDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! HomeViewController
-            destination.addr = self.address!
+            destination.address = self.address!
             destination.reachType = .map
         }
     }

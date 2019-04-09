@@ -16,49 +16,53 @@
 
 #import "FIRSnapshotMetadata.h"
 
-#include <utility>
-
 #import "Firestore/Source/API/FIRSnapshotMetadata+Internal.h"
-
-#include "Firestore/core/src/firebase/firestore/api/snapshot_metadata.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation FIRSnapshotMetadata {
-  SnapshotMetadata _metadata;
+@interface FIRSnapshotMetadata ()
+
+- (instancetype)initWithPendingWrites:(BOOL)pendingWrites fromCache:(BOOL)fromCache;
+
+@end
+
+@implementation FIRSnapshotMetadata (Internal)
+
++ (instancetype)snapshotMetadataWithPendingWrites:(BOOL)pendingWrites fromCache:(BOOL)fromCache {
+  return [[FIRSnapshotMetadata alloc] initWithPendingWrites:pendingWrites fromCache:fromCache];
 }
 
-- (instancetype)initWithMetadata:(SnapshotMetadata)metadata {
+@end
+
+@implementation FIRSnapshotMetadata
+
+- (instancetype)initWithPendingWrites:(BOOL)pendingWrites fromCache:(BOOL)fromCache {
   if (self = [super init]) {
-    _metadata = std::move(metadata);
+    _pendingWrites = pendingWrites;
+    _fromCache = fromCache;
   }
   return self;
-}
-
-- (instancetype)initWithPendingWrites:(bool)pendingWrites fromCache:(bool)fromCache {
-  SnapshotMetadata wrapped(pendingWrites, fromCache);
-  return [self initWithMetadata:std::move(wrapped)];
 }
 
 // NSObject Methods
 - (BOOL)isEqual:(nullable id)other {
   if (other == self) return YES;
-  if (![other isKindOfClass:[FIRSnapshotMetadata class]]) return NO;
+  if (![[other class] isEqual:[self class]]) return NO;
 
-  FIRSnapshotMetadata *otherMetadata = other;
-  return _metadata == otherMetadata->_metadata;
+  return [self isEqualToMetadata:other];
+}
+
+- (BOOL)isEqualToMetadata:(nullable FIRSnapshotMetadata *)metadata {
+  if (self == metadata) return YES;
+  if (metadata == nil) return NO;
+
+  return self.pendingWrites == metadata.pendingWrites && self.fromCache == metadata.fromCache;
 }
 
 - (NSUInteger)hash {
-  return _metadata.Hash();
-}
-
-- (BOOL)hasPendingWrites {
-  return _metadata.pending_writes();
-}
-
-- (BOOL)isFromCache {
-  return _metadata.from_cache();
+  NSUInteger hash = self.pendingWrites ? 1 : 0;
+  hash = hash * 31u + (self.fromCache ? 1 : 0);
+  return hash;
 }
 
 @end

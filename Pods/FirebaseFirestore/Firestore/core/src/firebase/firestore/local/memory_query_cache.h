@@ -32,7 +32,6 @@
 #include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
 #include "Firestore/core/src/firebase/firestore/model/snapshot_version.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
-#include "Firestore/core/src/firebase/firestore/util/objc_compatibility.h"
 
 @class FSTLocalSerializer;
 @class FSTMemoryPersistence;
@@ -58,7 +57,7 @@ class MemoryQueryCache : public QueryCache {
 
   FSTQueryData* _Nullable GetTarget(FSTQuery* query) override;
 
-  void EnumerateTargets(const TargetCallback& callback) override;
+  void EnumerateTargets(TargetEnumerator block) override;
 
   int RemoveTargets(model::ListenSequenceNumber upper_bound,
                     const std::unordered_map<model::TargetId, FSTQueryData*>&
@@ -79,7 +78,7 @@ class MemoryQueryCache : public QueryCache {
   size_t CalculateByteSize(FSTLocalSerializer* serializer);
 
   size_t size() const override {
-    return queries_.size();
+    return [queries_ count];
   }
 
   model::ListenSequenceNumber highest_listen_sequence_number() const override {
@@ -95,9 +94,7 @@ class MemoryQueryCache : public QueryCache {
   void SetLastRemoteSnapshotVersion(model::SnapshotVersion version) override;
 
  private:
-  // This instance is owned by FSTMemoryPersistence; avoid a retain cycle.
-  __weak FSTMemoryPersistence* persistence_;
-
+  FSTMemoryPersistence* persistence_;
   /** The highest sequence number encountered */
   model::ListenSequenceNumber highest_listen_sequence_number_;
   /** The highest numbered target ID encountered. */
@@ -106,12 +103,9 @@ class MemoryQueryCache : public QueryCache {
   model::SnapshotVersion last_remote_snapshot_version_;
 
   /** Maps a query to the data about that query. */
-  util::objc::unordered_map<FSTQuery*, FSTQueryData*> queries_;
-
-  /**
-   * A ordered bidirectional mapping between documents and the remote target
-   * IDs.
-   */
+  NSMutableDictionary<FSTQuery*, FSTQueryData*>* queries_;
+  /** A ordered bidirectional mapping between documents and the remote target
+   * IDs. */
   ReferenceSet references_;
 };
 

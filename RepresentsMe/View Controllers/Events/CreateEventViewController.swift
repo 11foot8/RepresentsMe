@@ -64,7 +64,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
 
         let event = Event(name: name, owner: "NaWmU1Bp6Md1JiTCRv0oBHQqCRY2", location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
 
-        event.save { (event: Event, error: Error?) in
+        event.save { (event: Event?, error: Error?) in
             if (error != nil) {
                 print(error.debugDescription)
             } else {

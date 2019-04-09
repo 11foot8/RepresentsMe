@@ -14,29 +14,44 @@
  * limitations under the License.
  */
 
-#include <memory>
-
 #import "Firestore/Source/API/FIRListenerRegistration+Internal.h"
 
-#include "Firestore/core/src/firebase/firestore/util/delayed_constructor.h"
+#import "Firestore/Source/Core/FSTFirestoreClient.h"
+#import "Firestore/Source/Util/FSTAsyncQueryListener.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-using firebase::firestore::util::DelayedConstructor;
+@interface FSTListenerRegistration ()
 
-@implementation FSTListenerRegistration {
-  DelayedConstructor<ListenerRegistration> _registration;
-}
+/** The client that was used to register this listen. */
+@property(nonatomic, strong, readonly) FSTFirestoreClient *client;
 
-- (instancetype)initWithRegistration:(ListenerRegistration &&)registration {
+/** The async listener that is used to mute events synchronously. */
+@property(nonatomic, strong, readonly, nullable) FSTAsyncQueryListener *asyncListener;
+
+/** The internal FSTQueryListener that can be used to unlisten the query. */
+@property(nonatomic, strong, readwrite, nullable) FSTQueryListener *internalListener;
+
+@end
+
+@implementation FSTListenerRegistration
+
+- (instancetype)initWithClient:(FSTFirestoreClient *)client
+                 asyncListener:(FSTAsyncQueryListener *)asyncListener
+              internalListener:(FSTQueryListener *)internalListener {
   if (self = [super init]) {
-    _registration.Init(std::move(registration));
+    _client = client;
+    _asyncListener = asyncListener;
+    _internalListener = internalListener;
   }
   return self;
 }
 
 - (void)remove {
-  _registration->Remove();
+  [self.asyncListener mute];
+  [self.client removeListener:self.internalListener];
+  _internalListener = nil;
+  _asyncListener = nil;
 }
 
 @end

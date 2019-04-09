@@ -17,18 +17,15 @@
 #import "FIRDocumentChange.h"
 
 #import "Firestore/Source/API/FIRDocumentSnapshot+Internal.h"
-#import "Firestore/Source/API/FIRFirestore+Internal.h"
 #import "Firestore/Source/Core/FSTQuery.h"
 #import "Firestore/Source/Model/FSTDocument.h"
+#import "Firestore/Source/Model/FSTDocumentSet.h"
 
 #include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
-#include "Firestore/core/src/firebase/firestore/model/document_set.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
-using firebase::firestore::api::Firestore;
 using firebase::firestore::core::DocumentViewChange;
 using firebase::firestore::core::ViewSnapshot;
-using firebase::firestore::model::DocumentSet;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -58,21 +55,21 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (NSArray<FIRDocumentChange *> *)documentChangesForSnapshot:(const ViewSnapshot &)snapshot
-                                      includeMetadataChanges:(bool)includeMetadataChanges
-                                                   firestore:(Firestore *)firestore {
-  if (snapshot.old_documents().empty()) {
+                                      includeMetadataChanges:(BOOL)includeMetadataChanges
+                                                   firestore:(FIRFirestore *)firestore {
+  if (snapshot.old_documents().isEmpty) {
     // Special case the first snapshot because index calculation is easy and fast. Also all changes
     // on the first snapshot are adds so there are also no metadata-only changes to filter out.
     FSTDocument *_Nullable lastDocument = nil;
     NSUInteger index = 0;
     NSMutableArray<FIRDocumentChange *> *changes = [NSMutableArray array];
     for (const DocumentViewChange &change : snapshot.document_changes()) {
-      FIRQueryDocumentSnapshot *document = [[FIRQueryDocumentSnapshot alloc]
-          initWithFirestore:firestore
-                documentKey:change.document().key
-                   document:change.document()
-                  fromCache:snapshot.from_cache()
-           hasPendingWrites:snapshot.mutated_keys().contains(change.document().key)];
+      FIRQueryDocumentSnapshot *document = [FIRQueryDocumentSnapshot
+          snapshotWithFirestore:firestore
+                    documentKey:change.document().key
+                       document:change.document()
+                      fromCache:snapshot.from_cache()
+               hasPendingWrites:snapshot.mutated_keys().contains(change.document().key)];
       HARD_ASSERT(change.type() == DocumentViewChange::Type::kAdded,
                   "Invalid event type for first snapshot");
       HARD_ASSERT(!lastDocument || snapshot.query().comparator(lastDocument, change.document()) ==
@@ -87,30 +84,30 @@ NS_ASSUME_NONNULL_BEGIN
   } else {
     // A DocumentSet that is updated incrementally as changes are applied to use to lookup the index
     // of a document.
-    DocumentSet indexTracker = snapshot.old_documents();
+    FSTDocumentSet *indexTracker = snapshot.old_documents();
     NSMutableArray<FIRDocumentChange *> *changes = [NSMutableArray array];
     for (const DocumentViewChange &change : snapshot.document_changes()) {
       if (!includeMetadataChanges && change.type() == DocumentViewChange::Type::kMetadata) {
         continue;
       }
 
-      FIRQueryDocumentSnapshot *document = [[FIRQueryDocumentSnapshot alloc]
-          initWithFirestore:firestore
-                documentKey:change.document().key
-                   document:change.document()
-                  fromCache:snapshot.from_cache()
-           hasPendingWrites:snapshot.mutated_keys().contains(change.document().key)];
+      FIRQueryDocumentSnapshot *document = [FIRQueryDocumentSnapshot
+          snapshotWithFirestore:firestore
+                    documentKey:change.document().key
+                       document:change.document()
+                      fromCache:snapshot.from_cache()
+               hasPendingWrites:snapshot.mutated_keys().contains(change.document().key)];
 
-      size_t oldIndex = DocumentSet::npos;
-      size_t newIndex = DocumentSet::npos;
+      NSUInteger oldIndex = NSNotFound;
+      NSUInteger newIndex = NSNotFound;
       if (change.type() != DocumentViewChange::Type::kAdded) {
-        oldIndex = indexTracker.IndexOf(change.document().key);
-        HARD_ASSERT(oldIndex != DocumentSet::npos, "Index for document not found");
-        indexTracker = indexTracker.erase(change.document().key);
+        oldIndex = [indexTracker indexOfKey:change.document().key];
+        HARD_ASSERT(oldIndex != NSNotFound, "Index for document not found");
+        indexTracker = [indexTracker documentSetByRemovingKey:change.document().key];
       }
       if (change.type() != DocumentViewChange::Type::kRemoved) {
-        indexTracker = indexTracker.insert(change.document());
-        newIndex = indexTracker.IndexOf(change.document().key);
+        indexTracker = [indexTracker documentSetByAddingDocument:change.document()];
+        newIndex = [indexTracker indexOfKey:change.document().key];
       }
       [FIRDocumentChange documentChangeTypeForChange:change];
       FIRDocumentChangeType type = [FIRDocumentChange documentChangeTypeForChange:change];

@@ -170,15 +170,16 @@ FSTQueryData* _Nullable LevelDbQueryCache::GetTarget(FSTQuery* query) {
   return nil;
 }
 
-void LevelDbQueryCache::EnumerateTargets(const TargetCallback& callback) {
+void LevelDbQueryCache::EnumerateTargets(TargetEnumerator block) {
   // Enumerate all targets, give their sequence numbers.
   std::string target_prefix = LevelDbTargetKey::KeyPrefix();
   auto it = db_.currentTransaction->NewIterator();
   it->Seek(target_prefix);
-  for (; it->Valid() && absl::StartsWith(it->key(), target_prefix);
+  BOOL stop = NO;
+  for (; !stop && it->Valid() && absl::StartsWith(it->key(), target_prefix);
        it->Next()) {
     FSTQueryData* target = DecodeTarget(it->value());
-    callback(target);
+    block(target, &stop);
   }
 }
 
@@ -305,22 +306,23 @@ void LevelDbQueryCache::SetLastRemoteSnapshotVersion(SnapshotVersion version) {
 }
 
 void LevelDbQueryCache::EnumerateOrphanedDocuments(
-    const OrphanedDocumentCallback& callback) {
+    OrphanedDocumentEnumerator block) {
   std::string document_target_prefix = LevelDbDocumentTargetKey::KeyPrefix();
   auto it = db_.currentTransaction->NewIterator();
   it->Seek(document_target_prefix);
   ListenSequenceNumber next_to_report = 0;
   DocumentKey key_to_report;
   LevelDbDocumentTargetKey key;
-
-  for (; it->Valid() && absl::StartsWith(it->key(), document_target_prefix);
+  BOOL stop = NO;
+  for (; !stop && it->Valid() &&
+         absl::StartsWith(it->key(), document_target_prefix);
        it->Next()) {
     HARD_ASSERT(key.Decode(it->key()), "Failed to decode DocumentTarget key");
     if (key.IsSentinel()) {
       // if next_to_report is non-zero, report it, this is a new key so the last
       // one must be not be a member of any targets.
       if (next_to_report != 0) {
-        callback(key_to_report, next_to_report);
+        block(key_to_report, next_to_report, &stop);
       }
       // set next_to_report to be this sequence number. It's the next one we
       // might report, if we don't find any targets for this document.
@@ -333,10 +335,10 @@ void LevelDbQueryCache::EnumerateOrphanedDocuments(
       next_to_report = 0;
     }
   }
-  // if next_to_report is non-zero, report it. We didn't find any targets for
-  // that document, and we weren't asked to stop.
-  if (next_to_report != 0) {
-    callback(key_to_report, next_to_report);
+  // if not stop and next_to_report is non-zero, report it. We didn't find any
+  // targets for that document, and we weren't asked to stop.
+  if (!stop && next_to_report != 0) {
+    block(key_to_report, next_to_report, &stop);
   }
 }
 

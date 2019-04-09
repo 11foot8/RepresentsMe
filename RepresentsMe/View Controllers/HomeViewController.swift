@@ -33,17 +33,21 @@ enum HomeViewControllerReachType {
     case event
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+
     
     // MARK: - Properties
-    var addr: Address = userAddr
+    var address: Address?
     var officials: [Official] = []
+
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
+    let locationManager = CLLocationManager()
+    let usersDB = UsersDatabase.getInstance()
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,38 +55,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        if (reachType == .home || reachType == .event) {
-            self.navigationItem.title = "Home"
-            if (LocationManager.shared.checkLocationServices()) {
-                if (LocationManager.shared.userCoordinate == nil) {
-                    print("USER COORD IS NIL")
+        switch reachType {
+        case .home, .event:
+            // TODO: Get current user address
+            usersDB.getCurrentUserAddress { (address, error) in
+                if let _ = error {
+                    // TODO: Handle error
+                    print(error.debugDescription)
+                } else {
+                    self.address = address
+                    self.getOfficials(for: self.address!)
                 }
-                if let userCoordinate = LocationManager.shared.userCoordinate {
-                    GeocoderWrapper.reverseGeocodeCoordinates(userCoordinate) { (address: Address) in
-                        userAddr = address
-                        self.addr = userAddr
-                        self.getOfficials(for: userAddr)
-                    }
-                }
-            } else {
-                getOfficials(for: addr)
             }
-        } else {
-            self.navigationItem.title = addr.addressCityState()
-            getOfficials(for: addr)
+            break
+        case .map:
+            // TODO: Use current address
+            self.getOfficials(for: self.address!)
+            break
         }
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        // If the user changed the address in Settings or
-        // we haven't been passed an address by the MapViewController,
-        // get Officials with the user-specificed address
         if userAddrChanged {
-            addr = userAddr
+            address = userAddr
             userAddrChanged = false
-            getOfficials(for: addr)
+            getOfficials(for: address!)
         }
     }
 
@@ -99,6 +96,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if error == nil, let officialList = officialList {
                 self.officials = officialList
                 DispatchQueue.main.async {
+                    self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
                     self.officialsTableView.reloadData()
                 }
             }
@@ -118,9 +116,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (reachType == .home || reachType == .map) {
+        switch reachType {
+        case .home, .map:
             performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
-        } else if reachType == .event {
+            break
+        case .event:
             delegate?.didSelectOfficial(official: officials[indexPath.row])
             navigationController?.popViewController(animated: true)
         }

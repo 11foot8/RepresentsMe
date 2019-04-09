@@ -47,6 +47,11 @@ namespace local {
 /** Cached Queries backed by LevelDB. */
 class LevelDbQueryCache : public QueryCache {
  public:
+  /** Enumerator callback type for orphaned documents */
+  typedef void (^OrphanedDocumentEnumerator)(const model::DocumentKey&,
+                                             model::ListenSequenceNumber,
+                                             BOOL*);
+
   /**
    * Retrieves the global singleton metadata row from the given database, if it
    * exists.
@@ -70,7 +75,7 @@ class LevelDbQueryCache : public QueryCache {
 
   FSTQueryData* _Nullable GetTarget(FSTQuery* query) override;
 
-  void EnumerateTargets(const TargetCallback& callback) override;
+  void EnumerateTargets(TargetEnumerator block) override;
 
   int RemoveTargets(model::ListenSequenceNumber upper_bound,
                     const std::unordered_map<model::TargetId, FSTQueryData*>&
@@ -118,7 +123,7 @@ class LevelDbQueryCache : public QueryCache {
   // Non-interface methods
   void Start();
 
-  void EnumerateOrphanedDocuments(const OrphanedDocumentCallback& callback);
+  void EnumerateOrphanedDocuments(OrphanedDocumentEnumerator block);
 
  private:
   void Save(FSTQueryData* query_data);
