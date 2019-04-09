@@ -170,7 +170,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
             break
         case .event:
-            delegate?.didSelectOfficial(official: officials[indexPath.row])
+            delegate?.didSelectOfficial(official: AppState.homeOfficials[indexPath.row])
             navigationController?.popViewController(animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
@@ -182,7 +182,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let destination = segue.destination as? DetailsViewController,
             let indexPath = officialsTableView.indexPathForSelectedRow {
             officialsTableView.deselectRow(at: indexPath, animated: false)
-            destination.official = officials[indexPath.row]
             switch self.reachType {
             case .home, .event:
                 destination.official = AppState.homeOfficials[indexPath.row]
