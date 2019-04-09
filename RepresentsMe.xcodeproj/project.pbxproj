@@ -342,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
+				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -355,7 +356,6 @@
 				1683D0382253D27600350471 /* LoginViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				165B7F65225BE1800095D9E1 /* Sign Up */,
-				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
 				3BE43885225C061C00EC049B /* CreateEventViewController.swift */,
