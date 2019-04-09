@@ -821,15 +821,6 @@
                                             <constraint firstAttribute="height" constant="150" id="Xtv-eu-dfW"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c4z-MA-OVZ">
-                                        <rect key="frame" x="166" y="68" width="200" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="gd0-LC-wPb"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9N-Mm-ocg">
                                         <rect key="frame" x="35" y="140" width="96" height="30"/>
                                         <state key="normal" title="Select Official"/>
@@ -849,18 +840,29 @@
                                             </segue>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIR-X0-ob9">
+                                        <rect key="frame" x="166" y="68" width="201" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="201" id="gjv-VH-dmM"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="201" id="qRG-BV-Xfy"/>
+                                        </constraints>
+                                        <state key="normal" title="Select Location"/>
+                                        <connections>
+                                            <segue destination="XZG-Pc-5F1" kind="show" identifier="selectLocationSegue" id="9lc-06-wM7"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="c4z-MA-OVZ" firstAttribute="leading" secondItem="Wu6-M7-tSp" secondAttribute="leading" id="22l-An-jep"/>
+                                    <constraint firstItem="N6K-pl-ThN" firstAttribute="top" secondItem="VIR-X0-ob9" secondAttribute="bottom" constant="30" id="6oH-1S-dOB"/>
                                     <constraint firstItem="J9N-Mm-ocg" firstAttribute="top" secondItem="90L-He-FCX" secondAttribute="bottom" constant="-18" id="IuY-Z9-JiZ"/>
-                                    <constraint firstItem="N6K-pl-ThN" firstAttribute="top" secondItem="c4z-MA-OVZ" secondAttribute="bottom" constant="30" id="IzA-8L-giK"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="leading" secondItem="9c8-nu-EK4" secondAttribute="leading" constant="8" id="ME0-DX-sXq"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="N55-F3-lrD"/>
-                                    <constraint firstItem="c4z-MA-OVZ" firstAttribute="top" secondItem="Wu6-M7-tSp" secondAttribute="bottom" constant="30" id="TDf-46-lEc"/>
                                     <constraint firstItem="J9N-Mm-ocg" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="-123" id="X1e-De-Bvi"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="Xur-0n-GEE"/>
+                                    <constraint firstItem="VIR-X0-ob9" firstAttribute="top" secondItem="Wu6-M7-tSp" secondAttribute="bottom" constant="30" id="dLJ-Yn-yJh"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="gU3-Uf-pHM"/>
+                                    <constraint firstItem="VIR-X0-ob9" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="nam-Ec-uAS"/>
                                     <constraint firstItem="N6K-pl-ThN" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="ue3-Xx-NM1"/>
                                 </constraints>
                             </view>
@@ -888,9 +890,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="eventImageView" destination="90L-He-FCX" id="x4Q-aP-cgL"/>
-                        <outlet property="eventLocationTextField" destination="c4z-MA-OVZ" id="MMp-NO-7nH"/>
                         <outlet property="eventNameTextField" destination="Wu6-M7-tSp" id="adA-mT-aOI"/>
                         <outlet property="selectDateButton" destination="N6K-pl-ThN" id="ucA-HA-Qze"/>
+                        <outlet property="selectLocationButton" destination="VIR-X0-ob9" id="eZ3-wy-aEu"/>
                         <outlet property="selectOfficialButton" destination="J9N-Mm-ocg" id="MIa-BL-15g"/>
                     </connections>
                 </viewController>
@@ -1175,7 +1177,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="621" width="359" height="100"/>
+                                <rect key="frame" x="8" y="670" width="359" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
@@ -1309,6 +1311,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="9lc-06-wM7"/>
         <segue reference="kjF-jh-uxz"/>
         <segue reference="xAA-0M-hTn"/>
         <segue reference="Nd6-Uh-RhS"/>

@@ -10,18 +10,20 @@ import UIKit
 import MapKit
 
 let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
+let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
-class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, DatePopoverViewControllerDelegate {
+class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, LocationSelectionDelegate, DatePopoverViewControllerDelegate {
 
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventNameTextField: UITextField!
-    @IBOutlet weak var eventLocationTextField: UITextField!
     @IBOutlet weak var selectOfficialButton: UIButton!
+    @IBOutlet weak var selectLocationButton: UIButton!
     @IBOutlet weak var selectDateButton: UIButton!
 
     var selectedDate: Date?
-    var selectedOfficial:Official?
+    var selectedOfficial: Official?
+    var selectedLocation: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,12 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         eventImageView.image = official.photo
     }
 
+    /// LocationSelectionDelegate
+    func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
+        selectedLocation = location
+        selectLocationButton.setTitle(address.addressLine1(), for: .normal)
+    }
+
     /// DatePopoverViewControllerDelegate
     func didSelectDate(date: Date) {
         selectedDate = date
@@ -46,18 +54,15 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     }
 
     @IBAction func saveTapped(_ sender: Any) {
-        if selectedOfficial == nil || selectedOfficial == nil {
+        if selectedOfficial == nil || selectedOfficial == nil || selectedLocation == nil {
             return
         }
-        
-        GeocoderWrapper.geocodeAddressString(eventLocationTextField.text!) { (placemark: CLPlacemark) in
-            let coordinate = placemark.location!.coordinate
-            let name = self.eventNameTextField.text!
 
-            let event = Event(name: name, owner: "", location: coordinate, date: self.selectedDate!, official: self.selectedOfficial!)
+        let name = self.eventNameTextField.text!
 
-            print(event.data)
-        }
+        let event = Event(name: name, owner: "", location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
+
+        print(event.data)
 
         dismiss(animated: true, completion: nil)
     }
@@ -79,6 +84,10 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
             let destination = segue.destination as! HomeViewController
+            destination.reachType = .event
+            destination.delegate = self
+        } else if (segue.identifier == SELECT_LOCATION_SEGUE) {
+            let destination = segue.destination as! MapViewController
             destination.reachType = .event
             destination.delegate = self
         } else if (segue.identifier == DATE_POPOVER_SEGUE) {
