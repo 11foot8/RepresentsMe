@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+class AppState {
+    
+    static var homeOfficials:[Official] = []
+    
+    static var sandboxOfficials:[Official] = []
+}

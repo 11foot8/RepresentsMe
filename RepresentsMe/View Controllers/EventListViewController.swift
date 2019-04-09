@@ -23,7 +23,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         eventTableView.delegate = self
         eventTableView.dataSource = self
         
-        for official in HomeViewController.officials {
+        for official in AppState.sandboxOfficials {
             Event.allWith(official: official) {(events, error) in
                 if error == nil {
                     self.events += events
