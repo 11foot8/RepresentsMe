@@ -49,6 +49,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
 
     // MARK: - Actions
     @IBAction func saveAddress(_ sender: Any) {
+        self.view.endEditing(true)
         guard
             let streetAddress = streetAddressTextField.text,
             streetAddress.count > 0,

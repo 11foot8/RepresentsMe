@@ -35,9 +35,7 @@ enum HomeViewControllerReachType {
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
 
-    
     // MARK: - Properties
-    var address: Address?
     var officials: [Official] = []
 
     var reachType: HomeViewControllerReachType = .home
@@ -47,6 +45,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
+    var address: Address? {
+        didSet {
+            needToPull = true
+        }
+    }
+    var needToPull:Bool = false
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -67,11 +71,32 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.getOfficials(for: self.address!)
                 }
             }
-            break
         case .map:
-            // TODO: Use current address
             self.getOfficials(for: self.address!)
-            break
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.address == nil || self.needToPull {
+            switch reachType {
+            case .home, .event:
+                // TODO: Get current user address
+                usersDB.getCurrentUserAddress { (address, error) in
+                    if let _ = error {
+                        // TODO: Handle error
+                        print(error.debugDescription)
+                    } else {
+                        self.address = address
+                        self.getOfficials(for: self.address!)
+                    }
+                }
+                break
+            case .map:
+                // TODO: Use current address
+                self.getOfficials(for: self.address!)
+                break
+            }
         }
     }
 
@@ -94,8 +119,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
-                self.officials = officialList
+                switch self.reachType {
+                case .home, .event:
+                    AppState.homeOfficials = officialList
+                    break
+                case .map:
+                    AppState.sandboxOfficials = officialList
+                    break
+                }
+                
                 DispatchQueue.main.async {
+                    self.needToPull = false
                     self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
                     self.officialsTableView.reloadData()
                 }
@@ -105,15 +139,30 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return officials.count
+        switch self.reachType {
+        case .home, .event:
+            return AppState.homeOfficials.count
+        case .map:
+            return AppState.sandboxOfficials.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OFFICIAL_CELL_IDENTIFIER,
-                                                 for: indexPath) as! OfficialCell
-        cell.official = officials[indexPath.row]
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: OFFICIAL_CELL_IDENTIFIER,
+            for: indexPath) as! OfficialCell
+        
+        switch reachType {
+        case .home, .event:
+            cell.official = AppState.homeOfficials[indexPath.row]
+            break
+        case .map:
+            cell.official = AppState.sandboxOfficials[indexPath.row]
+        }
+        
         return cell
     }
+
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch reachType {
@@ -124,16 +173,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             delegate?.didSelectOfficial(official: officials[indexPath.row])
             navigationController?.popViewController(animated: true)
         }
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 
     // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? DetailsViewController,
-            let indexPath = officialsTableView.indexPathForSelectedRow
-        {
+            let indexPath = officialsTableView.indexPathForSelectedRow {
             officialsTableView.deselectRow(at: indexPath, animated: false)
             destination.official = officials[indexPath.row]
+            switch self.reachType {
+            case .home, .event:
+                destination.official = AppState.homeOfficials[indexPath.row]
+            case .map:
+                destination.official = AppState.sandboxOfficials[indexPath.row]
+            }
         }
     }
 }
