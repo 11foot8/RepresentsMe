@@ -29,6 +29,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         super.viewDidLoad()
 
         eventImageView.layer.cornerRadius = 5.0
+        eventImageView.clipsToBounds = true
         eventImageView.image = DEFAULT_NOT_LOADED
     }
 
@@ -36,6 +37,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     func didSelectOfficial(official: Official) {
         selectedOfficial = official
         eventImageView.image = official.photo
+        selectOfficialButton.setTitle(official.name, for: .normal)
     }
 
     /// LocationSelectionDelegate
@@ -60,20 +62,21 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
 
         let name = self.eventNameTextField.text!
 
-        let event = Event(name: name, owner: "", location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
+        let event = Event(name: name, owner: "NaWmU1Bp6Md1JiTCRv0oBHQqCRY2", location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
 
-        print(event.data)
+        event.save { (event: Event, error: Error?) in
+            if (error != nil) {
+                print(error.debugDescription)
+            } else {
+                print("Saved event.")
+            }
+        }
 
         dismiss(animated: true, completion: nil)
     }
 
     @IBAction func cancelTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }
-
-    @IBAction func unwindToCreateEventViewController(segue: UIStoryboardSegue) {
-        selectOfficialButton.isHidden = true
-        selectOfficialButton.isUserInteractionEnabled = false
     }
 
     /// UIPopoverPresentationControllerDelegate

@@ -122,7 +122,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
         } else if reachType == .event {
             delegate?.didSelectOfficial(official: officials[indexPath.row])
-            performSegue(withIdentifier: UNWIND_TO_CREATE_EVENT_SEGUE, sender: self)
+            navigationController?.popViewController(animated: true)
         }
     }
 

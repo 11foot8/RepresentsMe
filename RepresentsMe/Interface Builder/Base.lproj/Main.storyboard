@@ -119,11 +119,9 @@
                     <connections>
                         <outlet property="officialsTableView" destination="GQ8-gi-0eO" id="14a-Uz-oe1"/>
                         <segue destination="V5Z-GW-aU6" kind="show" identifier="detailsViewSegue" id="cCF-pq-xy3"/>
-                        <segue destination="vsM-Lm-4r9" kind="unwind" identifier="unwindToCreateEventViewController" unwindAction="unwindToCreateEventViewControllerWithSegue:" id="31r-du-5LC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <exit id="vsM-Lm-4r9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2015.2" y="133.00492610837438"/>
         </scene>
@@ -821,13 +819,6 @@
                                             <constraint firstAttribute="height" constant="150" id="Xtv-eu-dfW"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9N-Mm-ocg">
-                                        <rect key="frame" x="35" y="140" width="96" height="30"/>
-                                        <state key="normal" title="Select Official"/>
-                                        <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="selectOfficialSegue" id="Nd6-Uh-RhS"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-pl-ThN">
                                         <rect key="frame" x="166" y="128" width="201" height="30"/>
                                         <constraints>
@@ -851,18 +842,28 @@
                                             <segue destination="XZG-Pc-5F1" kind="show" identifier="selectLocationSegue" id="9lc-06-wM7"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9N-Mm-ocg">
+                                        <rect key="frame" x="8" y="162" width="150" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="9k6-eL-Mfy"/>
+                                        </constraints>
+                                        <state key="normal" title="Select Official"/>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="selectOfficialSegue" id="Nd6-Uh-RhS"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="N6K-pl-ThN" firstAttribute="top" secondItem="VIR-X0-ob9" secondAttribute="bottom" constant="30" id="6oH-1S-dOB"/>
-                                    <constraint firstItem="J9N-Mm-ocg" firstAttribute="top" secondItem="90L-He-FCX" secondAttribute="bottom" constant="-18" id="IuY-Z9-JiZ"/>
+                                    <constraint firstItem="J9N-Mm-ocg" firstAttribute="top" secondItem="90L-He-FCX" secondAttribute="bottom" constant="4" id="IuY-Z9-JiZ"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="leading" secondItem="9c8-nu-EK4" secondAttribute="leading" constant="8" id="ME0-DX-sXq"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="N55-F3-lrD"/>
-                                    <constraint firstItem="J9N-Mm-ocg" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="-123" id="X1e-De-Bvi"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="Xur-0n-GEE"/>
                                     <constraint firstItem="VIR-X0-ob9" firstAttribute="top" secondItem="Wu6-M7-tSp" secondAttribute="bottom" constant="30" id="dLJ-Yn-yJh"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="gU3-Uf-pHM"/>
                                     <constraint firstItem="VIR-X0-ob9" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="nam-Ec-uAS"/>
+                                    <constraint firstItem="J9N-Mm-ocg" firstAttribute="leading" secondItem="9c8-nu-EK4" secondAttribute="leading" constant="8" id="ox2-ij-Nyp"/>
                                     <constraint firstItem="N6K-pl-ThN" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="ue3-Xx-NM1"/>
                                 </constraints>
                             </view>
