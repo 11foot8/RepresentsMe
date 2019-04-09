@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, FSTDocumentState) {
 /**
  * Whether this document has a local mutation applied that has not yet been acknowledged by Watch.
  */
-- (bool)hasPendingWrites;
+- (BOOL)hasPendingWrites;
 
 @end
 
@@ -65,8 +65,8 @@ typedef NS_ENUM(NSInteger, FSTDocumentState) {
                            proto:(GCFSDocument *)proto;
 
 - (nullable FSTFieldValue *)fieldForPath:(const firebase::firestore::model::FieldPath &)path;
-- (bool)hasLocalMutations;
-- (bool)hasCommittedMutations;
+- (BOOL)hasLocalMutations;
+- (BOOL)hasCommittedMutations;
 
 @property(nonatomic, strong, readonly) FSTObjectValue *data;
 
@@ -81,9 +81,9 @@ typedef NS_ENUM(NSInteger, FSTDocumentState) {
 @interface FSTDeletedDocument : FSTMaybeDocument
 + (instancetype)documentWithKey:(firebase::firestore::model::DocumentKey)key
                         version:(firebase::firestore::model::SnapshotVersion)version
-          hasCommittedMutations:(bool)committedMutations;
+          hasCommittedMutations:(BOOL)committedMutations;
 
-- (bool)hasCommittedMutations;
+- (BOOL)hasCommittedMutations;
 
 @end
 

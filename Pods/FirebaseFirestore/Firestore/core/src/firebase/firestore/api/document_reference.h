@@ -29,38 +29,35 @@
 
 #import "FIRDocumentReference.h"
 #import "FIRFirestoreSource.h"
+#import "FIRListenerRegistration.h"
 
-#include "Firestore/core/src/firebase/firestore/api/document_snapshot.h"
-#include "Firestore/core/src/firebase/firestore/api/listener_registration.h"
-#include "Firestore/core/src/firebase/firestore/core/listen_options.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
-#include "Firestore/core/src/firebase/firestore/model/resource_path.h"
-#include "Firestore/core/src/firebase/firestore/util/statusor_callback.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class FIRCollectionReference;
 @class FIRFirestore;
+@class FSTListenOptions;
 @class FSTMutation;
 
 namespace firebase {
 namespace firestore {
 namespace api {
 
-class Firestore;
-
 class DocumentReference {
  public:
   using Completion = void (^)(NSError* _Nullable error) _Nullable;
+  using DocumentCompletion = void (^)(FIRDocumentSnapshot* _Nullable document,
+                                      NSError* _Nullable error) _Nullable;
 
   DocumentReference() = default;
-  DocumentReference(model::ResourcePath path, Firestore* firestore);
-  DocumentReference(model::DocumentKey document_key, Firestore* firestore)
+  DocumentReference(FIRFirestore* firestore, model::DocumentKey document_key)
       : firestore_{firestore}, key_{std::move(document_key)} {
   }
 
   size_t Hash() const;
 
-  Firestore* firestore() const {
+  FIRFirestore* firestore() const {
     return firestore_;
   }
   const model::DocumentKey& key() const {
@@ -69,14 +66,12 @@ class DocumentReference {
 
   const std::string& document_id() const;
 
-  // TODO(varconst) uncomment when core API CollectionReference is implemented.
-  // CollectionReference Parent() const;
+  FIRCollectionReference* Parent() const;
 
   std::string Path() const;
 
-  // TODO(varconst) uncomment when core API CollectionReference is implemented.
-  // CollectionReference GetCollectionReference(
-  //     const std::string& collection_path) const;
+  FIRCollectionReference* GetCollectionReference(
+      const std::string& collection_path) const;
 
   void SetData(std::vector<FSTMutation*>&& mutations, Completion completion);
 
@@ -84,14 +79,13 @@ class DocumentReference {
 
   void DeleteDocument(Completion completion);
 
-  void GetDocument(FIRFirestoreSource source,
-                   DocumentSnapshot::Listener&& completion);
+  void GetDocument(FIRFirestoreSource source, DocumentCompletion completion);
 
-  ListenerRegistration AddSnapshotListener(
-      core::ListenOptions options, DocumentSnapshot::Listener&& listener);
+  id<FIRListenerRegistration> AddSnapshotListener(
+      FIRDocumentSnapshotBlock listener, FSTListenOptions* options);
 
  private:
-  Firestore* firestore_ = nullptr;
+  FIRFirestore* firestore_ = nil;
   model::DocumentKey key_;
 };
 

@@ -35,6 +35,12 @@
  */
 - (void)start;
 
+/**
+ *  Without checking any caches etc, always attempts to fetch the default token (unless a fetch
+ *  is already in progress.
+ */
+- (void)fetchDefaultToken;
+
 + (int64_t)maxRetryCountForDefaultToken;
 + (int64_t)minIntervalForDefaultTokenRetry;
 + (int64_t)maxRetryIntervalForDefaultTokenInSeconds;

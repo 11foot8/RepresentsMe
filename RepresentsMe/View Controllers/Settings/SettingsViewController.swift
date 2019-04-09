@@ -10,23 +10,35 @@ import UIKit
 
 let SETTINGS_CELL_IDENTIFIER = "settingsCell"
 
+enum SettingsOptions {
+    case email
+    case displayName
+    case password
+    case address
+    case notifications
+    case logout
+}
+
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var tableView: UITableView!
-
+    // MARK: - Properties
     // Data for Settings table view
-    // [("Section Name", [("Setting", "Image Name")]), ...]
+    // [("Section Name", [(identifier,"Setting", "Image Name")]), ...]
+    let data:[(String, [(SettingsOptions,String, String)])] =
+        [("User", [(.email,"Email","envelope"),
+                   (.displayName,"Username", "user"),
+                   (.password,"Password", "key")]),
+         ("", [(.address,"Address","home")]),
+         ("", [(.notifications,"Notifications", "bell")]),
+         ("", [(.logout,"Logout","sign-out-alt")])]
+    let usersDB = UsersDatabase.getInstance()
 
-    // Full Settings data for Beta release
-    // let data:[(String, [(String, String)])] = [("User", [("Username", "user"), ("Password", "key")]),
-    //                                           ("", [("Address","home")]),
-    //                                           ("", [("Notifications", "bell")])]
-    let data:[(String, [(String, String)])] = [("", [("Address","home")])]
-
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -36,7 +48,27 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
     }
+    // MARK: - Outlets
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var currentUserLabel: UILabel!
 
+    // MARK: - Actions
+
+    // MARK: - Methods
+    func logout() {
+        usersDB.logoutUser { (error) in
+            if let _ = error {
+                // TODO: Handle error
+                print("Error while logging out: \(error.debugDescription)")
+            } else {
+                let storyBoard = UIStoryboard(name:"Main", bundle:nil)
+                let entryViewController = storyBoard.instantiateViewController(withIdentifier: "entryViewController")
+                self.present(entryViewController, animated: false, completion: {})
+            }
+        }
+    }
+
+    // MARK: - UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SETTINGS_CELL_IDENTIFIER) as! SettingsCell
 
@@ -44,8 +76,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let settingsForSection = section.1
         let settingForRow = settingsForSection[indexPath.row]
 
-        cell.imageLabel.text = settingForRow.1
-        cell.titleLabel.text = settingForRow.0
+        cell.imageLabel.text = settingForRow.2
+        cell.titleLabel.text = settingForRow.1
+        cell.subtitleLabel.text = ""
+
+        switch settingForRow.0 {
+        case .email:
+            cell.subtitleLabel.text = usersDB.getCurrentUserEmail()
+            break
+        case .displayName:
+            cell.subtitleLabel.text = usersDB.getCurrentUserDisplayName()
+            break
+        case .password:
+            break
+        case .address:
+            break
+        case .notifications:
+            break
+        case .logout:
+            break
+        }
         return cell
     }
 
@@ -69,7 +119,25 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: Alter when Settings table expands
+        let selectedRowSection = indexPath.section
+        let selectedRow = indexPath.row
         tableView.deselectRow(at: indexPath, animated: false)
-        performSegue(withIdentifier: "addressSegue", sender: self)
+        switch (data[selectedRowSection].1)[selectedRow].0 {
+        case .email:
+            break
+        case .displayName:
+            break
+        case .password:
+            break
+        case .address:
+            performSegue(withIdentifier: "addressSegue", sender: self)
+            break
+        case .notifications:
+            break
+        case .logout:
+            // TODO: Logout
+            logout()
+            break
+        }
     }
 }

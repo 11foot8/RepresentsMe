@@ -57,8 +57,7 @@ class LevelDbRemoteDocumentCache : public RemoteDocumentCache {
   FSTMaybeDocument* DecodeMaybeDocument(absl::string_view encoded,
                                         const model::DocumentKey& key);
 
-  // This instance is owned by FSTLevelDB; avoid a retain cycle.
-  __weak FSTLevelDB* db_;
+  FSTLevelDB* db_;
   FSTLocalSerializer* serializer_;
 };
 

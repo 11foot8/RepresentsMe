@@ -21,7 +21,6 @@
 
 #include "Firestore/core/src/firebase/firestore/model/document.h"
 #include "Firestore/core/src/firebase/firestore/model/field_path.h"
-#include "Firestore/core/src/firebase/firestore/model/field_value.h"
 #include "Firestore/core/src/firebase/firestore/model/no_document.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
@@ -55,10 +54,12 @@ bool Mutation::equal_to(const Mutation& other) const {
 }
 
 SetMutation::SetMutation(DocumentKey&& key,
-                         ObjectValue&& value,
+                         FieldValue&& value,
                          Precondition&& precondition)
     : Mutation(std::move(key), std::move(precondition)),
       value_(std::move(value)) {
+  // TODO(rsgowman): convert param to ObjectValue instead of FieldValue?
+  HARD_ASSERT(value_.type() == FieldValue::Type::Object);
 }
 
 MaybeDocumentPtr SetMutation::ApplyToRemoteDocument(
@@ -73,7 +74,7 @@ MaybeDocumentPtr SetMutation::ApplyToRemoteDocument(
   // the server has accepted the mutation so the precondition must have held.
 
   const SnapshotVersion& version = mutation_result.version();
-  return absl::make_unique<Document>(ObjectValue(value_), key(), version,
+  return absl::make_unique<Document>(FieldValue(value_), key(), version,
                                      DocumentState::kCommittedMutations);
 }
 
@@ -88,7 +89,7 @@ MaybeDocumentPtr SetMutation::ApplyToLocalView(
   }
 
   SnapshotVersion version = GetPostMutationVersion(maybe_doc.get());
-  return absl::make_unique<Document>(ObjectValue(value_), key(), version,
+  return absl::make_unique<Document>(FieldValue(value_), key(), version,
                                      DocumentState::kLocalMutations);
 }
 
@@ -98,12 +99,14 @@ bool SetMutation::equal_to(const Mutation& other) const {
 }
 
 PatchMutation::PatchMutation(DocumentKey&& key,
-                             ObjectValue&& value,
+                             FieldValue&& value,
                              FieldMask&& mask,
                              Precondition&& precondition)
     : Mutation(std::move(key), std::move(precondition)),
       value_(std::move(value)),
       mask_(std::move(mask)) {
+  // TODO(rsgowman): convert param to ObjectValue instead of FieldValue?
+  HARD_ASSERT(value_.type() == FieldValue::Type::Object);
 }
 
 MaybeDocumentPtr PatchMutation::ApplyToRemoteDocument(
@@ -128,7 +131,7 @@ MaybeDocumentPtr PatchMutation::ApplyToRemoteDocument(
   }
 
   const SnapshotVersion& version = mutation_result.version();
-  ObjectValue new_data = PatchDocument(maybe_doc.get());
+  FieldValue new_data = PatchDocument(maybe_doc.get());
   return absl::make_unique<Document>(std::move(new_data), key(), version,
                                      DocumentState::kCommittedMutations);
 }
@@ -144,20 +147,21 @@ MaybeDocumentPtr PatchMutation::ApplyToLocalView(
   }
 
   SnapshotVersion version = GetPostMutationVersion(maybe_doc.get());
-  ObjectValue new_data = PatchDocument(maybe_doc.get());
+  FieldValue new_data = PatchDocument(maybe_doc.get());
   return absl::make_unique<Document>(std::move(new_data), key(), version,
                                      DocumentState::kLocalMutations);
 }
 
-ObjectValue PatchMutation::PatchDocument(const MaybeDocument* maybe_doc) const {
+FieldValue PatchMutation::PatchDocument(const MaybeDocument* maybe_doc) const {
   if (maybe_doc && maybe_doc->type() == MaybeDocument::Type::Document) {
     return PatchObject(static_cast<const Document*>(maybe_doc)->data());
   } else {
-    return PatchObject(ObjectValue::Empty());
+    return PatchObject(FieldValue::EmptyObject());
   }
 }
 
-ObjectValue PatchMutation::PatchObject(ObjectValue obj) const {
+FieldValue PatchMutation::PatchObject(FieldValue obj) const {
+  HARD_ASSERT(obj.type() == FieldValue::Type::Object);
   for (const FieldPath& path : mask_) {
     if (!path.empty()) {
       absl::optional<FieldValue> new_value = value_.Get(path);

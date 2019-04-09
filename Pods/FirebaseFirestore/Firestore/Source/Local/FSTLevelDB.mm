@@ -73,10 +73,8 @@ using firebase::firestore::local::LevelDbRemoteDocumentCache;
 using firebase::firestore::local::LevelDbTransaction;
 using firebase::firestore::local::ListenSequence;
 using firebase::firestore::local::LruParams;
-using firebase::firestore::local::OrphanedDocumentCallback;
 using firebase::firestore::local::ReferenceSet;
 using firebase::firestore::local::RemoteDocumentCache;
-using firebase::firestore::local::TargetCallback;
 using firebase::firestore::model::DatabaseId;
 using firebase::firestore::model::DocumentKey;
 using firebase::firestore::model::ListenSequenceNumber;
@@ -212,18 +210,19 @@ static const char *kReservedPathComponent = "firestore";
   return NO;
 }
 
-- (void)enumerateTargetsUsingCallback:(const TargetCallback &)callback {
-  _db.queryCache->EnumerateTargets(callback);
+- (void)enumerateTargetsUsingBlock:(void (^)(FSTQueryData *queryData, BOOL *stop))block {
+  _db.queryCache->EnumerateTargets(block);
 }
 
-- (void)enumerateMutationsUsingCallback:(const OrphanedDocumentCallback &)callback {
-  _db.queryCache->EnumerateOrphanedDocuments(callback);
+- (void)enumerateMutationsUsingBlock:
+    (void (^)(const DocumentKey &key, ListenSequenceNumber sequenceNumber, BOOL *stop))block {
+  _db.queryCache->EnumerateOrphanedDocuments(block);
 }
 
 - (int)removeOrphanedDocumentsThroughSequenceNumber:(ListenSequenceNumber)upperBound {
-  int count = 0;
+  __block int count = 0;
   _db.queryCache->EnumerateOrphanedDocuments(
-      [&count, self, upperBound](const DocumentKey &docKey, ListenSequenceNumber sequenceNumber) {
+      ^(const DocumentKey &docKey, ListenSequenceNumber sequenceNumber, BOOL *stop) {
         if (sequenceNumber <= upperBound) {
           if (![self isPinned:docKey]) {
             count++;
@@ -246,9 +245,9 @@ static const char *kReservedPathComponent = "firestore";
 }
 
 - (size_t)sequenceNumberCount {
-  size_t totalCount = _db.queryCache->size();
-  [self enumerateMutationsUsingCallback:[&totalCount](const DocumentKey &key,
-                                                      ListenSequenceNumber sequenceNumber) {
+  __block size_t totalCount = _db.queryCache->size();
+  [self enumerateMutationsUsingBlock:^(const DocumentKey &key, ListenSequenceNumber sequenceNumber,
+                                       BOOL *stop) {
     totalCount++;
   }];
   return totalCount;

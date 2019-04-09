@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 NS_SWIFT_NAME(SnapshotMetadata)
 @interface FIRSnapshotMetadata : NSObject
 
-/** :nodoc: */
 - (instancetype)init NS_UNAVAILABLE;
 
 /**

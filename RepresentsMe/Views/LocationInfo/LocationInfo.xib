@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="NbV-tv-PVJ" id="1I4-TB-le1"/>
+                <outlet property="address1Label" destination="tBM-po-pGD" id="yvN-Kf-meW"/>
+                <outlet property="address2Label" destination="Bsw-xD-TFA" id="Fgy-7e-fl1"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="dnq-nW-A1N"/>
+                <outlet property="goButton" destination="gZS-bh-Prn" id="5hc-gb-0wH"/>
+                <outlet property="titleLabel" destination="L5N-yK-25j" id="BeS-fb-6wl"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gZS-bh-Prn">
+                    <rect key="frame" x="322" y="8" width="84" height="84"/>
+                    <color key="backgroundColor" red="0.0" green="0.4793452024" blue="0.99908632040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="gZS-bh-Prn" secondAttribute="height" multiplier="1:1" id="G0R-bN-usa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                    <state key="normal" title="Go">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="goButtonTouchUp:" destination="-1" eventType="touchUpInside" id="khh-DR-4CL"/>
+                    </connections>
+                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W8q-uV-X5h">
+                    <rect key="frame" x="8" y="8" width="306" height="84"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dropped Pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5N-yK-25j">
+                            <rect key="frame" x="0.0" y="0.0" width="306" height="27.666666666666668"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="110 Inner Campus Drive" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBM-po-pGD">
+                            <rect key="frame" x="0.0" y="27.666666666666664" width="306" height="27.666666666666664"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Austin, TX 78705" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsw-xD-TFA">
+                            <rect key="frame" x="0.0" y="55.333333333333336" width="306" height="28.666666666666664"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="L5N-yK-25j" firstAttribute="height" secondItem="W8q-uV-X5h" secondAttribute="height" multiplier="0.33" id="0DT-cB-SLV"/>
+                        <constraint firstItem="L5N-yK-25j" firstAttribute="top" secondItem="W8q-uV-X5h" secondAttribute="top" id="F70-yY-jp1"/>
+                        <constraint firstItem="tBM-po-pGD" firstAttribute="height" secondItem="W8q-uV-X5h" secondAttribute="height" multiplier="0.33" id="WoT-F6-4JU"/>
+                        <constraint firstAttribute="bottom" secondItem="Bsw-xD-TFA" secondAttribute="bottom" id="pd5-QJ-LF2"/>
+                    </constraints>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NbV-tv-PVJ" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballPulse"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="color">
+                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="gZS-bh-Prn" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="0za-Aw-PKj"/>
+                <constraint firstItem="NbV-tv-PVJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="BEZ-hv-xhe"/>
+                <constraint firstItem="NbV-tv-PVJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="N0S-EB-Qof"/>
+                <constraint firstItem="gZS-bh-Prn" firstAttribute="leading" secondItem="W8q-uV-X5h" secondAttribute="trailing" constant="8" id="SX5-u9-pmC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="NbV-tv-PVJ" secondAttribute="bottom" id="VD3-Nc-xUZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="NbV-tv-PVJ" secondAttribute="trailing" id="aOe-SJ-dyD"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gZS-bh-Prn" secondAttribute="trailing" constant="8" id="dcr-Y9-fWr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="W8q-uV-X5h" secondAttribute="bottom" constant="8" id="kcz-PJ-7K3"/>
+                <constraint firstItem="W8q-uV-X5h" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="ovd-oT-mt2"/>
+                <constraint firstItem="W8q-uV-X5h" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="pg7-mC-jcE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gZS-bh-Prn" secondAttribute="bottom" constant="8" id="zCR-Mk-iUy"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="167" y="228"/>
+        </view>
+        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bXr-90-e6Z">
+            <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" red="0.0" green="0.4793452024" blue="0.99908632040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+            <state key="normal" title="Go">
+                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            </state>
+            <connections>
+                <action selector="goButtonTouchUp:" destination="iN0-l3-epB" eventType="touchUpInside" id="Kae-k1-Ndi"/>
+            </connections>
+            <point key="canvasLocation" x="512" y="83"/>
+        </button>
+    </objects>
+</document>

@@ -31,7 +31,6 @@
 #import "Firestore/Source/API/FIRFirestore+Internal.h"
 #import "Firestore/Source/Util/FSTUsageValidation.h"
 #include "Firestore/core/include/firebase/firestore/firestore_version.h"
-#include "Firestore/core/src/firebase/firestore/api/firestore.h"
 #include "Firestore/core/src/firebase/firestore/auth/credentials_provider.h"
 #include "Firestore/core/src/firebase/firestore/auth/firebase_credentials_provider_apple.h"
 #include "Firestore/core/src/firebase/firestore/util/async_queue.h"
@@ -40,7 +39,6 @@
 #include "absl/memory/memory.h"
 
 namespace util = firebase::firestore::util;
-using firebase::firestore::api::Firestore;
 using firebase::firestore::auth::CredentialsProvider;
 using firebase::firestore::auth::FirebaseCredentialsProvider;
 using util::AsyncQueue;
@@ -92,14 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
       auto workerQueue = absl::make_unique<AsyncQueue>(std::move(executor));
 
       id<FIRAuthInterop> auth = FIR_COMPONENT(FIRAuthInterop, self.app.container);
-      auto credentialsProvider = absl::make_unique<FirebaseCredentialsProvider>(self.app, auth);
+      std::unique_ptr<CredentialsProvider> credentials_provider =
+          absl::make_unique<FirebaseCredentialsProvider>(self.app, auth);
 
-      std::string projectID = util::MakeString(self.app.options.projectID);
-      std::string persistenceKey = util::MakeString(self.app.name);
-      firestore = [[FIRFirestore alloc] initWithProjectID:std::move(projectID)
+      NSString *persistenceKey = self.app.name;
+      NSString *projectID = self.app.options.projectID;
+      firestore = [[FIRFirestore alloc] initWithProjectID:util::MakeString(projectID)
                                                  database:util::MakeString(database)
-                                           persistenceKey:std::move(persistenceKey)
-                                      credentialsProvider:std::move(credentialsProvider)
+                                           persistenceKey:persistenceKey
+                                      credentialsProvider:std::move(credentials_provider)
                                               workerQueue:std::move(workerQueue)
                                               firebaseApp:self.app];
       _instances[key] = firestore;
