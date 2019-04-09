@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zsX-O5-swd">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
@@ -1035,7 +1034,7 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Event List View Controller-->
+        <!--Events-->
         <scene sceneID="gQH-TK-svZ">
             <objects>
                 <viewController id="bJG-fH-d8a" customClass="EventListViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -1123,7 +1122,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="4C5-x2-rPe"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VMj-x0-7e5">
+                    <navigationItem key="navigationItem" title="Events" id="VMj-x0-7e5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="faG-7q-37o">
                             <connections>
                                 <segue destination="M5n-RI-0op" kind="presentation" id="phY-id-JBv"/>
@@ -1644,7 +1643,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11foot8" width="983" height="979"/>
+        <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7wb-vX-DZx"/>

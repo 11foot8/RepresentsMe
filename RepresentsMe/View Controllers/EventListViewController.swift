@@ -21,6 +21,14 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         eventTableView.delegate = self
         eventTableView.dataSource = self
+        
+        for official in HomeViewController.officials {
+            Event.allWith(official: official) {(events, error) in
+                if error == nil {
+                    self.events = events
+                }
+            }
+        }
     }
     
     // MARK: UITableViewDelegate
