@@ -9,26 +9,35 @@
 import UIKit
 import MapKit
 
-class CreateEventViewController: UIViewController {
+let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
+
+class CreateEventViewController: UIViewController, OfficialSelectionDelegate {
 
     @IBOutlet weak var eventImageView: UIImageView!
-
     @IBOutlet weak var eventNameTextField: UITextField!
-
     @IBOutlet weak var eventLocationTextField: UITextField!
-
     @IBOutlet weak var eventDateTextField: UITextField!
+    @IBOutlet weak var selectOfficialButton: UIButton!
 
-    @IBOutlet weak var eventDescriptionTextView: UITextView!
-
+    var selectedOfficial:Official?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        eventImageView.layer.cornerRadius = 5.0
+        eventImageView.image = DEFAULT_NOT_LOADED
+    }
+
+    func didSelectOfficial(official: Official) {
+        selectedOfficial = official
+        eventImageView.image = official.photo
     }
 
     @IBAction func saveTapped(_ sender: Any) {
+        if selectedOfficial == nil {
+            return
+        }
+        
         GeocoderWrapper.geocodeAddressString(eventLocationTextField.text!) { (placemark: CLPlacemark) in
             let coordinate = placemark.location!.coordinate
             let name = self.eventNameTextField.text!
@@ -37,13 +46,9 @@ class CreateEventViewController: UIViewController {
             dateFormatter.dateFormat = "MM/dd/yyyy"
             let date = dateFormatter.date(from: self.eventDateTextField.text!)
 
-            let event = Event(name: name, owner: "SELF", location: coordinate, date: date!, official: Official())
+            let event = Event(name: name, owner: "SELF", location: coordinate, date: date!, official: self.selectedOfficial!)
 
             print(event.data)
-
-//            event.save(completion: { (event: Event, error: Error?) in
-//
-//            })
         }
 
         dismiss(animated: true, completion: nil)
@@ -53,4 +58,16 @@ class CreateEventViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func unwindToCreateEventViewController(segue: UIStoryboardSegue) {
+        selectOfficialButton.isHidden = true
+        selectOfficialButton.isUserInteractionEnabled = false
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
+            let destination = segue.destination as! HomeViewController
+            destination.reachType = .event
+            destination.delegate = self
+        }
+    }
 }

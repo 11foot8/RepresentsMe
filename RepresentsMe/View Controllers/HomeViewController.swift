@@ -10,7 +10,12 @@ import UIKit
 import CoreLocation
 
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
-let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
+let DETAILS_VIEW_SEGUE = "detailsViewSegue"
+let UNWIND_TO_CREATE_EVENT_SEGUE = "unwindToCreateEventViewController"
+
+protocol OfficialSelectionDelegate {
+    func didSelectOfficial(official: Official)
+}
 
 var userAddr = Address(streetAddress: "110 Inner Campus Drive",
                        city: "Austin",
@@ -22,11 +27,19 @@ var userAddr = Address(streetAddress: "110 Inner Campus Drive",
 }
 var userAddrChanged = false
 
+enum HomeViewControllerReachType {
+    case home
+    case map
+    case event
+}
+
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Properties
     var addr: Address = userAddr
     var officials: [Official] = []
+    var reachType: HomeViewControllerReachType = .home
+    var delegate: OfficialSelectionDelegate?
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
@@ -38,7 +51,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        if (addr == userAddr) {
+        if (reachType == .home || reachType == .event) {
             self.navigationItem.title = "Home"
             if (LocationManager.shared.checkLocationServices()) {
                 if let userCoordinate = LocationManager.shared.userCoordinate {
@@ -70,6 +83,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate = nil
+        reachType = .home
+    }
+
     // MARK: User Location
     func getOfficials(for address: Address) {
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
@@ -96,15 +115,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        if (reachType == .home || reachType == .map) {
+            performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
+        } else if reachType == .event {
+            delegate?.didSelectOfficial(official: officials[indexPath.row])
+            performSegue(withIdentifier: UNWIND_TO_CREATE_EVENT_SEGUE, sender: self)
+        }
     }
 
     // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
+        if segue.identifier == DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? DetailsViewController,
-            let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.official = officials[officialsIndex]
+            let indexPath = officialsTableView.indexPathForSelectedRow
+        {
+            officialsTableView.deselectRow(at: indexPath, animated: false)
+            destination.official = officials[indexPath.row]
         }
     }
 }
