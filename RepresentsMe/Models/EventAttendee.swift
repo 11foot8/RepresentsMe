@@ -59,10 +59,32 @@ class EventAttendee {
         self.status = status
     }
     
+    /// Builds the given EventAttendee and inserts it into the given Array
+    ///
+    /// - Parameter into:   the Array to insert into
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the dispatch group to leave
+    static func insert(into attendees: inout [EventAttendee],
+                       data:DocumentSnapshot,
+                       group:DispatchGroup) {
+        if let attendee = EventAttendee.attendees[data.documentID] {
+            attendees.append(attendee)
+            group.leave()
+        } else {
+            // Build the attendee
+            let attendee = EventAttendee(data: data)
+            attendees.append(attendee)
+            
+            // Scrape the Event
+            attendee.getEvent(eventID: data["eventID"] as! String,
+                              group: group)
+        }
+    }
+    
     /// Creates a new attendee from the given document snapshot
     ///
     /// - Parameter data:   the DocumentSnapshot
-    init(data:DocumentSnapshot, group:DispatchGroup) {
+    private init(data:DocumentSnapshot) {
         self.documentID = data.documentID
         
         // Set the basic data
@@ -72,16 +94,27 @@ class EventAttendee {
         
         // Add to list of attendees
         EventAttendee.attendees[self.documentID!] = self
-        
-        // Scrape the Event
-        self.getEvent(eventID: data["eventID"] as! String, group: group)
     }
     
-    /// Creates a new attendee from the given query document snapshot
+    /// Creates a new attendee from the given document snapshot
     ///
     /// - Parameter data:   the QueryDocumentSnapshot
     /// - Parameter event:  the Event
-    init(data:DocumentSnapshot, event:Event) {
+    ///
+    /// - Returns: the EventAttendee
+    static func new(data:DocumentSnapshot, event:Event) -> EventAttendee {
+        if let attendee = EventAttendee.attendees[data.documentID] {
+            return attendee
+        }
+        
+        return EventAttendee(data: data, event: event)
+    }
+    
+    /// Creates a new attendee from the given document snapshot
+    ///
+    /// - Parameter data:   the QueryDocumentSnapshot
+    /// - Parameter event:  the Event
+    private init(data:DocumentSnapshot, event:Event) {
         self.documentID = data.documentID
         
         // Set the basic data
@@ -184,6 +217,7 @@ class EventAttendee {
     /// - Parameter eventID:    the event document ID
     /// - Parameter group:      the dispatch group to notify
     private func getEvent(eventID:String, group:DispatchGroup) {
+        group.enter()
         Event.find_by(eventID: eventID) {(event, error) in
             self.event = event
             group.leave()
@@ -219,17 +253,13 @@ class EventAttendee {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    if let at = EventAttendee.attendees[data.documentID] {
-                        attendees.append(at)
-                    } else {
-                        group.enter()
-                        attendees.append(EventAttendee(data: data,
-                                                       group: group))
-                    }
+                    EventAttendee.insert(into: &attendees,
+                                         data: data,
+                                         group: group)
                 }
             }
             
-            // Wait until all Officials are pulled before returning
+            // Wait until all Events are pulled before returning
             group.notify(queue: .main) {
                 return completion(attendees, error)
             }

@@ -146,12 +146,8 @@ class Event {
                     
                     // Build and add each attendee
                     for data in data!.documents {
-                        if let at = EventAttendee.attendees[data.documentID] {
-                            self.attendees.append(at)
-                        } else {
-                            self.attendees.append(EventAttendee(data: data,
+                        self.attendees.append(EventAttendee.new(data: data,
                                                                 event: self))
-                        }
                     }
                 }
                 
