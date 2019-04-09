@@ -15,6 +15,8 @@ class EmailSettingsViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        dividerView.layer.cornerRadius = 2.0
+        dividerView.clipsToBounds = true
 
         // Do any additional setup after loading the view.
     }
@@ -23,8 +25,10 @@ class EmailSettingsViewController: UIViewController {
     @IBOutlet weak var currentEmailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var newEmailTextField: UITextField!
+    @IBOutlet weak var dividerView: UIView!
 
     // MARK: - Actions
+    // TODO: Disable save button until all fields are valid
     @IBAction func saveTouchUp(_ sender: Any) {
         self.view.endEditing(true)
         // TODO: Start loading animation

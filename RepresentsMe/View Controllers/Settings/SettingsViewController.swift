@@ -38,15 +38,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
+
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.frame = CGRect(x: tableView.frame.origin.x,
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
+        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
+        tableView.reloadData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -125,10 +131,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: false)
         switch (data[selectedRowSection].1)[selectedRow].0 {
         case .email:
+            performSegue(withIdentifier: "emailSegue", sender: self)
             break
         case .displayName:
+            performSegue(withIdentifier: "displayNameSegue", sender: self)
             break
         case .password:
+            performSegue(withIdentifier: "passwordSegue", sender: self)
             break
         case .address:
             performSegue(withIdentifier: "addressSegue", sender: self)
