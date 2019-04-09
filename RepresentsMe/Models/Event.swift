@@ -62,12 +62,34 @@ class Event {
         self.date = date
         self.official = official
     }
+    
+    /// Builds the given Event and inserts it into the given Array
+    ///
+    /// - Parameter into:   the Array to insert into
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the dispatch group to leave
+    static func insert(into events: inout [Event],
+                       data:DocumentSnapshot,
+                       group:DispatchGroup) {
+        if let event = Event.events[data.documentID] {
+            // Already have built the event, append it
+            events.append(event)
+        } else {
+            // Build the event
+            let event = Event(data: data)
+            events.append(event)
+            
+            // Scrape the official
+            event.getOfficial(name: data["officialName"] as! String,
+                              division: data["divisionOCDID"] as! String,
+                              group: group)
+        }
+    }
 
     /// Creates a new Event with the given document snapshot
     ///
     /// - Parameter data:   the DocumentSnapshot
-    /// - Parameter group:  the dispatch group to notify when completed
-    private init(data:DocumentSnapshot, group:DispatchGroup) {
+    private init(data:DocumentSnapshot) {
         self.documentID = data.documentID
         
         // Set basic data
@@ -83,11 +105,6 @@ class Event {
         
         // Add to the list of events
         Event.events[self.documentID!] = self
-
-        // Scrape the official
-        self.getOfficial(name: data["officialName"] as! String,
-                         division: data["divisionOCDID"] as! String,
-                         group: group)
     }
     
     /// Saves this Event
@@ -217,6 +234,7 @@ class Event {
     private func getOfficial(name:String,
                              division:String,
                              group:DispatchGroup) {
+        group.enter()
         OfficialScraper.getOfficial(
             with: name,
             from: division,
@@ -260,12 +278,7 @@ class Event {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    if let event = Event.events[data.documentID] {
-                        events.append(event)
-                    } else {
-                        group.enter()
-                        events.append(Event(data: data, group: group))
-                    }
+                    Event.insert(into: &events, data: data, group: group)
                 }
             }
             
@@ -286,7 +299,6 @@ class Event {
             // Already have built the Event, return it
             return completion(event, nil)
         }
-        
 
         // Need to build the event
         let ref = Event.db.document(eventID)
@@ -294,8 +306,12 @@ class Event {
             if error == nil {
                 // Build the event
                 let group = DispatchGroup()
-                group.enter()
-                let event = Event(data: data!, group: group)
+                let event = Event(data: data!)
+                
+                // Get the official
+                event.getOfficial(name: data!["officialName"] as! String,
+                                  division: data!["divisionOCDID"] as! String,
+                                  group: group)
 
                 // Wait until the Official is pulled before returning
                 group.notify(queue: .main) {

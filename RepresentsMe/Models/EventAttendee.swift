@@ -69,7 +69,6 @@ class EventAttendee {
                        group:DispatchGroup) {
         if let attendee = EventAttendee.attendees[data.documentID] {
             attendees.append(attendee)
-            group.leave()
         } else {
             // Build the attendee
             let attendee = EventAttendee(data: data)
