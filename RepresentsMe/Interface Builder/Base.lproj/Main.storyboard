@@ -596,6 +596,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnF-Zo-W3v">
                                 <rect key="frame" x="170.66666666666666" y="219" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveTouchUp:" destination="laI-Ip-7e7" eventType="touchUpInside" id="Pcw-KR-Q6l"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -612,6 +615,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mqt-s4-UPU"/>
                     </view>
+                    <connections>
+                        <outlet property="displayNameTextField" destination="fwo-Jv-vet" id="rng-CO-Kyh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WxP-ce-sWp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
