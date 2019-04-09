@@ -25,17 +25,17 @@
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
 		13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */; };
 		13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCFEF52253B7F9005D6CE1 /* Event.swift */; };
-		165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */; };
 		13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF422225CED0D008E3D32 /* FontAwesome.swift */; };
 		13DDF425225CED0D008E3D32 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF423225CED0D008E3D32 /* Enum.swift */; };
+		165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
 		1683D0352253C19800350471 /* CustomSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D0342253C19800350471 /* CustomSearchBar.xib */; };
-		1683D0372253CBC000350471 /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0362253CBC000350471 /* GeocoderWrapper.swift */; };
 		1683D0392253D27600350471 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0382253D27600350471 /* LoginViewController.swift */; };
 		1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03A2253D2A300350471 /* SignupViewController.swift */; };
 		1683D03D2253D35500350471 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03C2253D35500350471 /* EntryViewController.swift */; };
+		169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BD225D015200090CDA /* GeocoderWrapper.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
 		16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */; };
@@ -104,10 +104,9 @@
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		13CCFEF52253B7F9005D6CE1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewController.swift; sourceTree = "<group>"; };
-		13DDF418225CEC25008E3D32 /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
 		13DDF422225CED0D008E3D32 /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
 		13DDF423225CED0D008E3D32 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		1683D0382253D27600350471 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1683D03A2253D2A300350471 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		1683D03C2253D35500350471 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		169EB6BD225D015200090CDA /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
 		16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
@@ -392,8 +392,8 @@
 			isa = PBXGroup;
 			children = (
 				13DDF421225CED0D008E3D32 /* FontAwesome */,
-				13DDF418225CEC25008E3D32 /* GeocoderWrapper.swift */,
 				3BE4384222556D4700EC049B /* LocationManager.swift */,
+				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
 				13287BC22220C09A00622CD4 /* Scraper */,
 			);
 			path = Sources;
@@ -674,7 +674,6 @@
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
-				13DDF41A225CEC25008E3D32 /* GeocoderWrapper.swift in Sources */,
 				3BE43886225C061C00EC049B /* CreateEventViewController.swift in Sources */,
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */,
@@ -683,6 +682,7 @@
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
+				169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */,
 				13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */,
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
 				165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */,
