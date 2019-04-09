@@ -126,6 +126,26 @@ class Event {
         }
     }
     
+    /// Loads in the attendees for this Event
+    ///
+    /// - Parameter completion:     the completion handler
+    func loadAttendees(completion: @escaping completionHandler) {
+        if let documentID = self.documentID {
+            let ref = EventAttendee.db.whereField("eventID",
+                                                  isEqualTo: documentID)
+            ref.getDocuments {(data, error) in
+                if error == nil {
+                    // Build and add each attendee
+                    for data in data!.documents {
+                        self.attendees.append(EventAttendee(data: data))
+                    }
+                }
+                
+                return completion(self, error)
+            }
+        }
+    }
+    
     /// Adds an attendee to this Event
     ///
     /// - Parameter userID:         the ID of the attendee
