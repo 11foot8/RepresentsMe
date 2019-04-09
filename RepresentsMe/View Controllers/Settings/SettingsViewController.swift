@@ -63,7 +63,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let entryViewController = storyBoard.instantiateViewController(withIdentifier: "entryViewController")
-                self.present(entryViewController, animated: false, completion: {})
+                guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
+                appDel.window?.rootViewController = entryViewController
             }
         }
     }
