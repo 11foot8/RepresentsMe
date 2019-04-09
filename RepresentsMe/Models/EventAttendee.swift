@@ -17,10 +17,12 @@ class EventAttendee {
     static let collection = "event_attendees"
     static let db = Firestore.firestore().collection(EventAttendee.collection)
     
+    static var attendees:[String: EventAttendee] = [:]
+    
     var documentID:String?  // The document ID on Firestore
     var userID:String       // The ID of the attendee
     var status:String       // The status of the attendee
-    var event:Event?
+    var event:Event?        // The event
     
     /// Gets the data formatted for Firestore
     var data:[String: Any] {
@@ -68,6 +70,9 @@ class EventAttendee {
         self.userID = data["userID"] as! String
         self.status = data["status"] as! String
         
+        // Add to list of attendees
+        EventAttendee.attendees[self.documentID!] = self
+        
         // Scrape the Event
         self.getEvent(eventID: data["eventID"] as! String, group: group)
     }
@@ -76,14 +81,17 @@ class EventAttendee {
     ///
     /// - Parameter data:   the QueryDocumentSnapshot
     /// - Parameter event:  the Event
-    init(data:QueryDocumentSnapshot, event:Event) {
+    init(data:DocumentSnapshot, event:Event) {
         self.documentID = data.documentID
         
         // Set the basic data
-        let data = data.data()
+        let data = data.data()!
         self.userID = data["userID"] as! String
         self.status = data["status"] as! String
         self.event = event
+        
+        // Add to list of attendees
+        EventAttendee.attendees[self.documentID!] = self
     }
     
     /// Saves this EventAttendee
@@ -211,8 +219,13 @@ class EventAttendee {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    group.enter()
-                    attendees.append(EventAttendee(data: data, group: group))
+                    if let at = EventAttendee.attendees[data.documentID] {
+                        attendees.append(at)
+                    } else {
+                        group.enter()
+                        attendees.append(EventAttendee(data: data,
+                                                       group: group))
+                    }
                 }
             }
             

@@ -19,6 +19,9 @@ class Event {
     // The Firestore database
     static let collection = "events"
     static let db = Firestore.firestore().collection(Event.collection)
+    
+    // Caches single instances of each Event
+    static var events:[String: Event] = [:]
 
     var documentID:String?                  // The document ID on Firestore
     var name:String                         // The name of the event
@@ -40,7 +43,7 @@ class Event {
             "divisionOCDID": official?.divisionOCDID ?? ""
         ]
     }
-    
+
     /// Creates a new Event given its attributes
     ///
     /// - Parameter name:       the name of the event
@@ -59,12 +62,12 @@ class Event {
         self.date = date
         self.official = official
     }
-    
+
     /// Creates a new Event with the given document snapshot
     ///
     /// - Parameter data:   the DocumentSnapshot
     /// - Parameter group:  the dispatch group to notify when completed
-    init(data:DocumentSnapshot, group:DispatchGroup) {
+    private init(data:DocumentSnapshot, group:DispatchGroup) {
         self.documentID = data.documentID
         
         // Set basic data
@@ -78,6 +81,9 @@ class Event {
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
                                                longitude: geopoint.longitude)
         
+        // Add to the list of events
+        Event.events[self.documentID!] = self
+
         // Scrape the official
         self.getOfficial(name: data["officialName"] as! String,
                          division: data["divisionOCDID"] as! String,
@@ -135,10 +141,17 @@ class Event {
                                                   isEqualTo: documentID)
             ref.getDocuments {(data, error) in
                 if error == nil {
+                    // Clear the attendees
+                    self.attendees.removeAll()
+                    
                     // Build and add each attendee
                     for data in data!.documents {
-                        self.attendees.append(EventAttendee(data: data,
-                                                            event: self))
+                        if let at = EventAttendee.attendees[data.documentID] {
+                            self.attendees.append(at)
+                        } else {
+                            self.attendees.append(EventAttendee(data: data,
+                                                                event: self))
+                        }
                     }
                 }
                 
@@ -194,6 +207,7 @@ class Event {
         ref = Event.db.addDocument(data: self.data) {(error) in
             if error == nil {
                 self.documentID = ref!.documentID
+                Event.events[self.documentID!] = self
             }
             return completion(self, error)
         }
@@ -250,8 +264,12 @@ class Event {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    group.enter()
-                    events.append(Event(data: data, group: group))
+                    if let event = Event.events[data.documentID] {
+                        events.append(event)
+                    } else {
+                        group.enter()
+                        events.append(Event(data: data, group: group))
+                    }
                 }
             }
             
@@ -268,6 +286,13 @@ class Event {
     /// - Parameter completion:     the completion handler
     static func find_by(eventID:String,
                         completion: @escaping completionHandler) {
+        if let event = Event.events[eventID] {
+            // Already have built the Event, return it
+            return completion(event, nil)
+        }
+        
+
+        // Need to build the event
         let ref = Event.db.document(eventID)
         ref.getDocument {(data, error) in
             if error == nil {
@@ -275,8 +300,8 @@ class Event {
                 let group = DispatchGroup()
                 group.enter()
                 let event = Event(data: data!, group: group)
-                
-                // Wait until all Officials are pulled before returning
+
+                // Wait until the Official is pulled before returning
                 group.notify(queue: .main) {
                     return completion(event, error)
                 }
