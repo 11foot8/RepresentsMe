@@ -11,6 +11,15 @@ import Foundation
 
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
+enum MapViewControllerReachType {
+    case map
+    case event
+}
+
+protocol LocationSelectionDelegate {
+    func didSelectLocation(location: CLLocationCoordinate2D, address: Address)
+}
+
 class MapViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, CustomSearchBarDelegate,
 MapActionButtonsDelegate {
     // MARK: - Properties
@@ -27,6 +36,10 @@ MapActionButtonsDelegate {
     var address:Address?
 
     var annotation:MKAnnotation?
+
+    var reachType: MapViewControllerReachType = .map
+
+    var delegate: LocationSelectionDelegate?
 
     var workItem:DispatchWorkItem?
 
@@ -66,6 +79,8 @@ MapActionButtonsDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        delegate = nil
+        reachType = .map
     }
 
     // MARK: - Outlets
@@ -215,9 +230,16 @@ MapActionButtonsDelegate {
 
     // MARK: - LocationInfoDelegate
     func goButtonPressed(address: Address) {
-        self.address = address
-        // TODO: Check address validity - incl. addresses outside of US
-        performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+        switch reachType {
+        case .map:
+            self.address = address
+            // TODO: Check address validity - incl. addresses outside of US
+            performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+            break
+        case.event:
+            delegate?.didSelectLocation(location: self.annotation!.coordinate, address: address)
+            navigationController?.popViewController(animated: true)
+        }
     }
 
     // MARK: - MKMapViewDelegate
@@ -230,7 +252,7 @@ MapActionButtonsDelegate {
             let destination = segue.destination as! HomeViewController
             AppState.sandboxAddress = self.address
             destination.address = self.address!
-            destination.mode = TableViewModes.SandboxMode
+            destination.reachType = .map
         }
     }
 }
