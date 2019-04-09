@@ -10,24 +10,46 @@ import UIKit
 import CoreLocation
 
 let OFFICIAL_CELL_IDENTIFIER = "officialCell"
-let DETAILS_SEGUE_IDENTIFIER = "detailsSegueIdentifier"
+let DETAILS_VIEW_SEGUE = "detailsViewSegue"
+let UNWIND_TO_CREATE_EVENT_SEGUE = "unwindToCreateEventViewController"
 
-enum TableViewModes {
-    case HomeMode // Home mode, uses current user's address
-    case SandboxMode // Sandbox mode, uses address from mapview
+protocol OfficialSelectionDelegate {
+    func didSelectOfficial(official: Official)
+}
+
+var userAddr = Address(streetAddress: "110 Inner Campus Drive",
+                       city: "Austin",
+                       state: "TX",
+                       zipcode: "78712") {
+                didSet {
+                    userAddrChanged = true
+                }
+}
+var userAddrChanged = false
+
+enum HomeViewControllerReachType {
+    case home
+    case map
+    case event
 }
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
-    
+
     // MARK: - Properties
+    var officials: [Official] = []
+
+    var reachType: HomeViewControllerReachType = .home
+    var delegate: OfficialSelectionDelegate?
+    let locationManager = CLLocationManager()
+    let usersDB = UsersDatabase.getInstance()
+    
+    // MARK: - Outlets
+    @IBOutlet weak var officialsTableView: UITableView!
     var address: Address? {
         didSet {
             needToPull = true
         }
     }
-    let locationManager = CLLocationManager()
-    let usersDB = UsersDatabase.getInstance()
-    var mode:TableViewModes = TableViewModes.HomeMode
     var needToPull:Bool = false
 
     // MARK: - Lifecycle
@@ -36,13 +58,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
+
+        switch reachType {
+        case .home, .event:
+            // TODO: Get current user address
+            usersDB.getCurrentUserAddress { (address, error) in
+                if let _ = error {
+                    // TODO: Handle error
+                    print(error.debugDescription)
+                } else {
+                    self.address = address
+                    self.getOfficials(for: self.address!)
+                }
+            }
+        case .map:
+            self.getOfficials(for: self.address!)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.address == nil || self.needToPull {
-            switch mode {
-            case .HomeMode:
+            switch reachType {
+            case .home, .event:
                 // TODO: Get current user address
                 usersDB.getCurrentUserAddress { (address, error) in
                     if let _ = error {
@@ -54,7 +92,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
                 break
-            case .SandboxMode:
+            case .map:
                 // TODO: Use current address
                 self.getOfficials(for: self.address!)
                 break
@@ -62,19 +100,30 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: - Outlets
-    @IBOutlet weak var officialsTableView: UITableView!
+    override func viewDidAppear(_ animated: Bool) {
+        if userAddrChanged {
+            address = userAddr
+            userAddrChanged = false
+            getOfficials(for: address!)
+        }
+    }
 
-    // MARK: - User Location
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate = nil
+        reachType = .home
+    }
+
+    // MARK: User Location
     func getOfficials(for address: Address) {
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
-                switch self.mode {
-                case .HomeMode:
+                switch self.reachType {
+                case .home, .event:
                     AppState.homeOfficials = officialList
                     break
-                case .SandboxMode:
+                case .map:
                     AppState.sandboxOfficials = officialList
                     break
                 }
@@ -90,10 +139,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch self.mode {
-        case .HomeMode:
+        switch self.reachType {
+        case .home, .event:
             return AppState.homeOfficials.count
-        case .SandboxMode:
+        case .map:
             return AppState.sandboxOfficials.count
         }
     }
@@ -103,33 +152,41 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             withIdentifier: OFFICIAL_CELL_IDENTIFIER,
             for: indexPath) as! OfficialCell
         
-        switch self.mode {
-        case .HomeMode:
+        switch reachType {
+        case .home, .event:
             cell.official = AppState.homeOfficials[indexPath.row]
             break
-        case .SandboxMode:
+        case .map:
             cell.official = AppState.sandboxOfficials[indexPath.row]
         }
         
         return cell
     }
 
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch reachType {
+        case .home, .map:
+            performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
+            break
+        case .event:
+            delegate?.didSelectOfficial(official: AppState.homeOfficials[indexPath.row])
+            navigationController?.popViewController(animated: true)
+        }
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
     // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
+        if segue.identifier == DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? DetailsViewController,
-            let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            
-            switch self.mode {
-            case .HomeMode:
-                destination.passedOfficial = AppState.homeOfficials[officialsIndex]
-            case .SandboxMode:
-                destination.passedOfficial = AppState.sandboxOfficials[officialsIndex]
+            let indexPath = officialsTableView.indexPathForSelectedRow {
+            officialsTableView.deselectRow(at: indexPath, animated: false)
+            switch self.reachType {
+            case .home, .event:
+                destination.official = AppState.homeOfficials[indexPath.row]
+            case .map:
+                destination.official = AppState.sandboxOfficials[indexPath.row]
             }
         }
     }
