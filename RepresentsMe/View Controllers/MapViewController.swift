@@ -11,12 +11,9 @@ import Foundation
 
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
-class MapViewController: UIViewController, CLLocationManagerDelegate,
-MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, CustomSearchBarDelegate,
+class MapViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, CustomSearchBarDelegate,
 MapActionButtonsDelegate {
     // MARK: - Properties
-    let locationManager = CLLocationManager()
-    
     let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
 
     var previousLocation:CLLocation?                         // Save previous location to limit
@@ -26,8 +23,6 @@ MapActionButtonsDelegate {
     let minimumDistanceForNewGeocode:CLLocationDistance = 50 // Only request new geocodes when
                                                              // pin is moved 50+ meters
     let minimumTimeForNewGecode:TimeInterval = 1             // Only request new geocode once per second
-    
-    let addressMessage = "Tap here to update address"
 
     var address:Address?
 
@@ -40,7 +35,14 @@ MapActionButtonsDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkLocationServices()
+
+        previousLocation = getCenterLocation(for: mapView)
+        previousGeocodeTime = Date()
+
+        if LocationManager.shared.checkLocationServices() {
+            mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+        }
 
         // Set up Location Info View
         locationInfoView.delegate = self
@@ -75,9 +77,7 @@ MapActionButtonsDelegate {
     // MARK: - Actions
     func onSearchQuery(query: String) {
         let address:String = query
-        let geocoder = GeocoderWrapper()
-
-        geocoder.geocodeAddressString(address, completionHandler: self.geocodeSearchedAddressCompletionHandler)
+        GeocoderWrapper.geocodeAddressString(address, completionHandler: self.geocodeSearchedAddressCompletionHandler)
     }
 
     func onSearchClear() {
@@ -107,9 +107,9 @@ MapActionButtonsDelegate {
 
     // MARK: - MapActionButtonsDelegate
     func onLocateTouchUp() {
-        if let location = locationManager.location?.coordinate {
-            centerView(on: location,animated: true)
-            dropPin(coords: location, title: "Current Location", replaceSearchedValue: true)
+        if let coordinate = LocationManager.shared.userCoordinate {
+            centerView(on: coordinate,animated: true)
+            dropPin(coords: coordinate, title: "Current Location", replaceSearchedValue: true)
         }
     }
 
@@ -154,59 +154,10 @@ MapActionButtonsDelegate {
     }
 
     // MARK: - Location Utilities
-    /// Check that location services are enabled, if so set up services, if not alert user that location services are
-    /// not enabled.
-    func checkLocationServices() {
-        // Check if Location Services are enabled globally
-        if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager()
-            checkLocationAuthorization()
-        } else {
-            // TODO: show alert for letting user know they have to turn this on
-        }
-
-        previousLocation = getCenterLocation(for: mapView)
-        previousGeocodeTime = Date()
-    }
-
-    /// Do setup for locationManager.
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-
-    /// Check what location authorization the application has, and alert user if they need to take action to enable
-    /// locaiton authorization.
-    func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse, .authorizedAlways:
-            startTrackingUserLocation()
-            break
-        case .denied:
-            // TODO: show alert instructing them how to turn on permissions
-            break
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            break
-        case .restricted:
-            // TODO: show an alert letting them know whats up
-            break
-        }
-    }
-
-    /// Show user location on map, begin updating user location, and center mapView on user location.
-    func startTrackingUserLocation() {
-        mapView.showsUserLocation = true
-        locationManager.startUpdatingLocation()
-        centerViewOnUserLocation()
-        previousLocation = getCenterLocation(for: mapView)
-        previousGeocodeTime = Date()
-    }
-
     /// Center mapView on user location with default zoom level, animate transition.
     func centerViewOnUserLocation() {
-        if let location = locationManager.location?.coordinate {
-            centerView(on: location,animated: true)
+        if let coordinate = LocationManager.shared.userCoordinate {
+            centerView(on: coordinate, animated: true)
         }
     }
 
@@ -268,29 +219,6 @@ MapActionButtonsDelegate {
         self.address = address
         // TODO: Check address validity - incl. addresses outside of US
         performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
-    }
-
-    // MARK: - CLLocationManagerDelegate
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedWhenInUse, .authorizedAlways:
-            locationManager.requestLocation()
-            startTrackingUserLocation()
-            break
-        default:
-            // TODO: Alert user that location is no longer authorized
-            break
-
-        }
-        if status == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // TODO: Handle error
     }
 
     // MARK: - MKMapViewDelegate

@@ -36,7 +36,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let usersDB = UsersDatabase.getInstance()
     var mode:TableViewModes = TableViewModes.HomeMode
 
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +104,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.passedOfficial = officials[officialsIndex]
+            destination.official = officials[officialsIndex]
         }
     }
 }
