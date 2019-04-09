@@ -16,6 +16,9 @@ class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        emailTextField.clearButtonMode = UITextField.ViewMode.always
+        passwordTextField.clearButtonMode = UITextField.ViewMode.always
     }
 
     // MARK: - Outlets

@@ -40,6 +40,7 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
 
     @IBAction func useCurrentLocationTouchUp(_ sender: Any) {
         // TODO: Reverse Geocode user location and fill address
+        // TODO: Enable User Current Location Button
     }
 
     @IBAction func cancelTouchUp(_ sender: Any) {
