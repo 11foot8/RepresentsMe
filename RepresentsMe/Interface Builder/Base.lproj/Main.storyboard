@@ -715,7 +715,8 @@
                     <connections>
                         <segue destination="cfR-IA-rLJ" kind="relationship" relationship="viewControllers" id="ZH4-ze-G8p"/>
                         <segue destination="jGO-i0-7IK" kind="relationship" relationship="viewControllers" id="CUI-8K-ZrR"/>
-                        <segue destination="eF5-1y-pET" kind="relationship" relationship="viewControllers" id="nrz-ht-OpS"/>
+                        <segue destination="a0U-DL-GGk" kind="relationship" relationship="viewControllers" id="rIN-20-v2X"/>
+                        <segue destination="eF5-1y-pET" kind="relationship" relationship="viewControllers" id="lyw-zd-w0o"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxS-U9-n5K" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -791,56 +792,113 @@
             </objects>
             <point key="canvasLocation" x="2018.4000000000001" y="-548.27586206896558"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Event View Controller-->
         <scene sceneID="UpX-HT-6zK">
             <objects>
-                <viewController id="20P-NJ-ljF" sceneMemberID="viewController">
+                <viewController id="20P-NJ-ljF" customClass="CreateEventViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cJg-Vl-gQl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mEY-K6-igF">
-                                <rect key="frame" x="0.0" y="88" width="375" height="144"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9c8-nu-EK4">
-                                <rect key="frame" x="0.0" y="232" width="375" height="142"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9c8-nu-EK4">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Event Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wu6-M7-tSp">
-                                        <rect key="frame" x="87" y="83" width="201" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wu6-M7-tSp">
+                                        <rect key="frame" x="166" y="8" width="200" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="9aV-bG-bT8"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yYL-ty-se5">
+                                        <rect key="frame" x="166" y="128" width="200" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="msg-Yk-yLI"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="90L-He-FCX">
+                                        <rect key="frame" x="8" y="8" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="GwX-zf-wTc"/>
+                                            <constraint firstAttribute="height" constant="150" id="Xtv-eu-dfW"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c4z-MA-OVZ">
+                                        <rect key="frame" x="166" y="68" width="200" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="gd0-LC-wPb"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ct-xi-heY">
+                                        <rect key="frame" x="137.66666666666666" y="178" width="100" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="c4z-MA-OVZ" firstAttribute="leading" secondItem="Wu6-M7-tSp" secondAttribute="leading" id="22l-An-jep"/>
+                                    <constraint firstItem="90L-He-FCX" firstAttribute="leading" secondItem="9c8-nu-EK4" secondAttribute="leading" constant="8" id="ME0-DX-sXq"/>
+                                    <constraint firstItem="90L-He-FCX" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="N55-F3-lrD"/>
+                                    <constraint firstItem="c4z-MA-OVZ" firstAttribute="top" secondItem="Wu6-M7-tSp" secondAttribute="bottom" constant="30" id="TDf-46-lEc"/>
+                                    <constraint firstItem="5Ct-xi-heY" firstAttribute="centerX" secondItem="9c8-nu-EK4" secondAttribute="centerX" id="Wrk-5t-iUr"/>
+                                    <constraint firstItem="Wu6-M7-tSp" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="Xur-0n-GEE"/>
+                                    <constraint firstItem="Wu6-M7-tSp" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="gU3-Uf-pHM"/>
+                                    <constraint firstItem="yYL-ty-se5" firstAttribute="leading" secondItem="Wu6-M7-tSp" secondAttribute="leading" id="jAJ-Y3-cpa"/>
+                                    <constraint firstItem="5Ct-xi-heY" firstAttribute="top" secondItem="yYL-ty-se5" secondAttribute="bottom" constant="20" id="jY5-66-y1M"/>
+                                    <constraint firstItem="yYL-ty-se5" firstAttribute="top" secondItem="c4z-MA-OVZ" secondAttribute="bottom" constant="30" id="rEs-go-PwH"/>
+                                </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="90L-He-FCX">
-                                <rect key="frame" x="112" y="123" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Add event details, including speakers, location details, and attendee logistics" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VPX-QI-Mko">
-                                <rect key="frame" x="0.0" y="382" width="375" height="232"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Describe your event (including speakers, location details, and attendee logistics)" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VPX-QI-Mko">
+                                <rect key="frame" x="0.0" y="299" width="375" height="115"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="N8K-80-81j"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIk-5o-i28">
-                                <rect key="frame" x="157" y="622" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Set Date"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="VPX-QI-Mko" firstAttribute="trailing" secondItem="G6j-BD-fLQ" secondAttribute="trailing" id="5N0-lC-pSh"/>
+                            <constraint firstAttribute="bottom" secondItem="9c8-nu-EK4" secondAttribute="bottom" id="6pB-9w-RGk"/>
+                            <constraint firstItem="9c8-nu-EK4" firstAttribute="top" secondItem="G6j-BD-fLQ" secondAttribute="top" id="IUW-Hp-fZb"/>
+                            <constraint firstItem="9c8-nu-EK4" firstAttribute="leading" secondItem="G6j-BD-fLQ" secondAttribute="leading" id="Iv2-20-R0E"/>
+                            <constraint firstItem="VPX-QI-Mko" firstAttribute="leading" secondItem="G6j-BD-fLQ" secondAttribute="leading" id="KLf-V9-Ld0"/>
+                            <constraint firstItem="VPX-QI-Mko" firstAttribute="top" secondItem="G6j-BD-fLQ" secondAttribute="top" constant="211" id="Zv4-5D-B94"/>
+                            <constraint firstItem="9c8-nu-EK4" firstAttribute="trailing" secondItem="G6j-BD-fLQ" secondAttribute="trailing" id="nf4-Ok-NA1"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="G6j-BD-fLQ"/>
                     </view>
                     <navigationItem key="navigationItem" id="nkX-ed-Ule">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Jl9-Dr-Wrd"/>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="E8o-uF-hYG"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Jl9-Dr-Wrd">
+                            <connections>
+                                <action selector="cancelTapped:" destination="20P-NJ-ljF" id="g6p-nE-ra2"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="E8o-uF-hYG">
+                            <connections>
+                                <action selector="saveTapped:" destination="20P-NJ-ljF" id="t5X-vM-Q6n"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="eventDateTextField" destination="yYL-ty-se5" id="bY8-JO-fzR"/>
+                        <outlet property="eventDescriptionTextView" destination="VPX-QI-Mko" id="iTW-gt-W1Q"/>
+                        <outlet property="eventImageView" destination="90L-He-FCX" id="x4Q-aP-cgL"/>
+                        <outlet property="eventLocationTextField" destination="c4z-MA-OVZ" id="MMp-NO-7nH"/>
+                        <outlet property="eventNameTextField" destination="Wu6-M7-tSp" id="adA-mT-aOI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgb-1E-547" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1126,11 +1184,11 @@
             </objects>
             <point key="canvasLocation" x="1079.2" y="912.5615763546798"/>
         </scene>
-        <!--Item-->
+        <!--Events-->
         <scene sceneID="fiH-Yc-1ML">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a0U-DL-GGk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Gme-gq-9w5"/>
+                    <tabBarItem key="tabBarItem" title="Events" id="Gme-gq-9w5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L8v-mc-CxM">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
