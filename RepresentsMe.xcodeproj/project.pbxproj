@@ -49,6 +49,7 @@
 		3B649F052237264800E88430 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F042237264800E88430 /* SettingsCell.swift */; };
 		3B649F072237274100E88430 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F062237274100E88430 /* SettingsViewController.swift */; };
 		3B9072C822309B2700B8A2F8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9072C722309B2700B8A2F8 /* Address.swift */; };
+		3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */; };
 		3BE4383D2255347800EC049B /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4383C2255347800EC049B /* ContactViewController.swift */; };
 		3BE4384322556D4700EC049B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4384222556D4700EC049B /* LocationManager.swift */; };
 		3BE43884225BC01800EC049B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BE43883225BC01800EC049B /* GoogleService-Info.plist */; };
@@ -124,6 +125,7 @@
 		3B649F042237264800E88430 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		3B649F062237274100E88430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopoverViewController.swift; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		3BE43883225BC01800EC049B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -281,11 +283,11 @@
 		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3BE43885225C061C00EC049B /* CreateEventViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
-				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3BE4383B2255345B00EC049B /* Details */,
+				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
+				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
 			);
 			path = "View Controllers";
@@ -302,6 +304,15 @@
 				16FCC84F2252B5CF008D3991 /* LocationInfo.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3BCC1665225CF5FA0088D757 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
+				3BE43885225C061C00EC049B /* CreateEventViewController.swift */,
+			);
+			path = Events;
 			sourceTree = "<group>";
 		};
 		3BE4383B2255345B00EC049B /* Details */ = {
@@ -672,6 +683,7 @@
 			files = (
 				1683D0372253CBC000350471 /* GeocoderWrapper.swift in Sources */,
 				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
+				3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */,
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,

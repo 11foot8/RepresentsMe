@@ -10,15 +10,17 @@ import UIKit
 import MapKit
 
 let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
+let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
-class CreateEventViewController: UIViewController, OfficialSelectionDelegate {
+class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, DatePopoverViewControllerDelegate {
 
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventNameTextField: UITextField!
     @IBOutlet weak var eventLocationTextField: UITextField!
-    @IBOutlet weak var eventDateTextField: UITextField!
     @IBOutlet weak var selectOfficialButton: UIButton!
+    @IBOutlet weak var selectDateButton: UIButton!
 
+    var selectedDate: Date?
     var selectedOfficial:Official?
 
     override func viewDidLoad() {
@@ -28,13 +30,23 @@ class CreateEventViewController: UIViewController, OfficialSelectionDelegate {
         eventImageView.image = DEFAULT_NOT_LOADED
     }
 
+    /// OfficialSelectionDelegate
     func didSelectOfficial(official: Official) {
         selectedOfficial = official
         eventImageView.image = official.photo
     }
 
+    /// DatePopoverViewControllerDelegate
+    func didSelectDate(date: Date) {
+        selectedDate = date
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM d, h:mm a"
+        selectDateButton.setTitle(dateFormatter.string(from: date), for: .normal)
+    }
+
     @IBAction func saveTapped(_ sender: Any) {
-        if selectedOfficial == nil {
+        if selectedOfficial == nil || selectedOfficial == nil {
             return
         }
         
@@ -42,11 +54,7 @@ class CreateEventViewController: UIViewController, OfficialSelectionDelegate {
             let coordinate = placemark.location!.coordinate
             let name = self.eventNameTextField.text!
 
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            let date = dateFormatter.date(from: self.eventDateTextField.text!)
-
-            let event = Event(name: name, owner: "SELF", location: coordinate, date: date!, official: self.selectedOfficial!)
+            let event = Event(name: name, owner: "", location: coordinate, date: self.selectedDate!, official: self.selectedOfficial!)
 
             print(event.data)
         }
@@ -63,11 +71,25 @@ class CreateEventViewController: UIViewController, OfficialSelectionDelegate {
         selectOfficialButton.isUserInteractionEnabled = false
     }
 
+    /// UIPopoverPresentationControllerDelegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
             let destination = segue.destination as! HomeViewController
             destination.reachType = .event
             destination.delegate = self
+        } else if (segue.identifier == DATE_POPOVER_SEGUE) {
+            let datePopoverViewController = segue.destination as! DatePopoverViewController
+            datePopoverViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+            datePopoverViewController.popoverPresentationController?.delegate = self
+                datePopoverViewController.delegate = self
+            datePopoverViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
+            datePopoverViewController.popoverPresentationController?.sourceView = view
+            datePopoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         }
     }
+
 }

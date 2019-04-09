@@ -54,6 +54,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (reachType == .home || reachType == .event) {
             self.navigationItem.title = "Home"
             if (LocationManager.shared.checkLocationServices()) {
+                if (LocationManager.shared.userCoordinate == nil) {
+                    print("USER COORD IS NIL")
+                }
                 if let userCoordinate = LocationManager.shared.userCoordinate {
                     GeocoderWrapper.reverseGeocodeCoordinates(userCoordinate) { (address: Address) in
                         userAddr = address

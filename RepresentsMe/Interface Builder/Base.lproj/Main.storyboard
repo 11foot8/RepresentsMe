@@ -327,7 +327,7 @@
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8k-dl-get">
-                                <rect key="frame" x="-12" y="274" width="399" height="504"/>
+                                <rect key="frame" x="-12" y="274" width="399" height="455"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXY-SU-akR">
                                         <rect key="frame" x="182.33333333333334" y="49" width="34.666666666666657" height="21"/>
@@ -507,7 +507,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-4C-tLE">
-                                <rect key="frame" x="16" y="142" width="343" height="636"/>
+                                <rect key="frame" x="16" y="142" width="343" height="587"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -725,10 +725,10 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Event View Controller-->
         <scene sceneID="gQH-TK-svZ">
             <objects>
-                <viewController id="bJG-fH-d8a" sceneMemberID="viewController">
+                <viewController id="bJG-fH-d8a" customClass="EventViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0HA-OE-ZSU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -785,7 +785,7 @@
                     <navigationItem key="navigationItem" id="VMj-x0-7e5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="faG-7q-37o">
                             <connections>
-                                <segue destination="M5n-RI-0op" kind="presentation" id="phY-id-JBv"/>
+                                <segue destination="M5n-RI-0op" kind="presentation" id="QjR-X4-9MZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -814,15 +814,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yYL-ty-se5">
-                                        <rect key="frame" x="166" y="128" width="200" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="msg-Yk-yLI"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="90L-He-FCX">
                                         <rect key="frame" x="8" y="8" width="150" height="150"/>
                                         <constraints>
@@ -846,19 +837,31 @@
                                             <segue destination="BYZ-38-t0r" kind="show" identifier="selectOfficialSegue" id="Nd6-Uh-RhS"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-pl-ThN">
+                                        <rect key="frame" x="166" y="128" width="201" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="201" id="6BQ-pE-7pW"/>
+                                        </constraints>
+                                        <state key="normal" title="Select Date"/>
+                                        <connections>
+                                            <segue destination="svf-Li-Meo" kind="popoverPresentation" identifier="datePopoverSegue" popoverAnchorView="N6K-pl-ThN" id="avN-Dg-HNF">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="c4z-MA-OVZ" firstAttribute="leading" secondItem="Wu6-M7-tSp" secondAttribute="leading" id="22l-An-jep"/>
                                     <constraint firstItem="J9N-Mm-ocg" firstAttribute="top" secondItem="90L-He-FCX" secondAttribute="bottom" constant="-18" id="IuY-Z9-JiZ"/>
+                                    <constraint firstItem="N6K-pl-ThN" firstAttribute="top" secondItem="c4z-MA-OVZ" secondAttribute="bottom" constant="30" id="IzA-8L-giK"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="leading" secondItem="9c8-nu-EK4" secondAttribute="leading" constant="8" id="ME0-DX-sXq"/>
                                     <constraint firstItem="90L-He-FCX" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="N55-F3-lrD"/>
                                     <constraint firstItem="c4z-MA-OVZ" firstAttribute="top" secondItem="Wu6-M7-tSp" secondAttribute="bottom" constant="30" id="TDf-46-lEc"/>
                                     <constraint firstItem="J9N-Mm-ocg" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="-123" id="X1e-De-Bvi"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="Xur-0n-GEE"/>
                                     <constraint firstItem="Wu6-M7-tSp" firstAttribute="top" secondItem="9c8-nu-EK4" secondAttribute="top" constant="8" id="gU3-Uf-pHM"/>
-                                    <constraint firstItem="yYL-ty-se5" firstAttribute="leading" secondItem="Wu6-M7-tSp" secondAttribute="leading" id="jAJ-Y3-cpa"/>
-                                    <constraint firstItem="yYL-ty-se5" firstAttribute="top" secondItem="c4z-MA-OVZ" secondAttribute="bottom" constant="30" id="rEs-go-PwH"/>
+                                    <constraint firstItem="N6K-pl-ThN" firstAttribute="leading" secondItem="90L-He-FCX" secondAttribute="trailing" constant="8" id="ue3-Xx-NM1"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -879,21 +882,75 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="E8o-uF-hYG">
                             <connections>
-                                <action selector="saveTapped:" destination="20P-NJ-ljF" id="t5X-vM-Q6n"/>
+                                <action selector="saveTapped:" destination="20P-NJ-ljF" id="vOF-EW-1hn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="eventDateTextField" destination="yYL-ty-se5" id="bY8-JO-fzR"/>
                         <outlet property="eventImageView" destination="90L-He-FCX" id="x4Q-aP-cgL"/>
                         <outlet property="eventLocationTextField" destination="c4z-MA-OVZ" id="MMp-NO-7nH"/>
                         <outlet property="eventNameTextField" destination="Wu6-M7-tSp" id="adA-mT-aOI"/>
+                        <outlet property="selectDateButton" destination="N6K-pl-ThN" id="ucA-HA-Qze"/>
                         <outlet property="selectOfficialButton" destination="J9N-Mm-ocg" id="MIa-BL-15g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgb-1E-547" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3738.4000000000001" y="-1238.423645320197"/>
+        </scene>
+        <!--Date Popover View Controller-->
+        <scene sceneID="1M8-rR-PP0">
+            <objects>
+                <viewController id="svf-Li-Meo" customClass="DatePopoverViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sjy-BL-WRJ">
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="206"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYc-uM-WaD">
+                                <rect key="frame" x="0.0" y="0.0" width="326" height="44"/>
+                                <items>
+                                    <navigationItem title="Event Date" id="miK-a7-Bgk">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="o1F-b5-fPU">
+                                            <connections>
+                                                <action selector="cancelTapped:" destination="svf-Li-Meo" id="2go-Lm-sZi"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vCc-Bq-ECl">
+                                            <connections>
+                                                <action selector="saveTapped:" destination="svf-Li-Meo" id="Hgr-kh-T90"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="99p-yG-ZQl">
+                                <rect key="frame" x="0.0" y="44" width="326" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="576473566.36562097">
+                                    <!--2019-04-09 03:32:46 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="99p-yG-ZQl" firstAttribute="leading" secondItem="9YZ-il-VPl" secondAttribute="leading" id="9b1-g1-yYH"/>
+                            <constraint firstItem="MYc-uM-WaD" firstAttribute="top" secondItem="sjy-BL-WRJ" secondAttribute="top" id="Lwv-H4-Fir"/>
+                            <constraint firstAttribute="bottom" secondItem="99p-yG-ZQl" secondAttribute="bottom" id="cLQ-mK-nxx"/>
+                            <constraint firstItem="99p-yG-ZQl" firstAttribute="top" secondItem="MYc-uM-WaD" secondAttribute="bottom" id="fQh-ML-FjN"/>
+                            <constraint firstAttribute="trailing" secondItem="MYc-uM-WaD" secondAttribute="trailing" id="lc9-Hv-dwE"/>
+                            <constraint firstItem="MYc-uM-WaD" firstAttribute="leading" secondItem="sjy-BL-WRJ" secondAttribute="leading" id="mff-17-nFg"/>
+                            <constraint firstItem="99p-yG-ZQl" firstAttribute="trailing" secondItem="9YZ-il-VPl" secondAttribute="trailing" id="mfx-nl-mxY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9YZ-il-VPl"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="326" height="206"/>
+                    <size key="freeformSize" width="326" height="206"/>
+                    <connections>
+                        <outlet property="datePicker" destination="99p-yG-ZQl" id="KSr-E1-YmD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Bz-uF-CBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4451" y="-1238"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="roA-XU-gpR">
@@ -1253,7 +1310,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="kjF-jh-uxz"/>
-        <segue reference="cCF-pq-xy3"/>
+        <segue reference="xAA-0M-hTn"/>
         <segue reference="Nd6-Uh-RhS"/>
     </inferredMetricsTieBreakers>
 </document>
