@@ -393,7 +393,7 @@
                                             <segue destination="5VN-HP-B4K" kind="show" identifier="contactSegueIdentifier" id="jfA-UK-ZVE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Od-fq-lVD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Od-fq-lVD" userLabel="Phone Button">
                                         <rect key="frame" x="60" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="phone">
@@ -403,7 +403,7 @@
                                             <action selector="callButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="QA4-2q-JXE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3" userLabel="Email Button">
                                         <rect key="frame" x="309" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="envelope">
@@ -413,7 +413,7 @@
                                             <action selector="emailButtonPressed:" destination="V5Z-GW-aU6" eventType="touchUpInside" id="3O3-wc-XS0"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wu-N3-voZ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wu-N3-voZ" userLabel="Link Button">
                                         <rect key="frame" x="184.66666666666666" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="external-link-alt">
@@ -504,13 +504,10 @@
                         <viewLayoutGuide key="safeArea" id="QNy-pu-XKb"/>
                     </view>
                     <connections>
-                        <outlet property="emailButton" destination="cXc-8h-tP3" id="txq-dr-UML"/>
                         <outlet property="facebookButton" destination="6XR-Ps-ufA" id="a6r-7l-Qhl"/>
-                        <outlet property="linkButton" destination="3wu-N3-voZ" id="Dql-Yr-je9"/>
                         <outlet property="nameLabel" destination="K3s-J5-Zz6" id="UbR-Ma-HRX"/>
                         <outlet property="officeLocationMapView" destination="JLz-iC-oeO" id="fgb-F1-GT1"/>
                         <outlet property="partyLabel" destination="9uj-c0-c1n" id="u1d-Eb-SU6"/>
-                        <outlet property="phoneButton" destination="4Od-fq-lVD" id="hcO-cZ-pR8"/>
                         <outlet property="portraitImageView" destination="cxU-Qv-kIJ" id="gjt-xz-AWS"/>
                         <outlet property="scrollViewOutlet" destination="A8k-dl-get" id="PJx-Ds-djE"/>
                         <outlet property="seatLabel" destination="SXY-SU-akR" id="eAd-ys-mn0"/>
@@ -1609,7 +1606,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11foot8" width="983" height="979"/>
+        <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7wb-vX-DZx"/>
