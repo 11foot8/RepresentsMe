@@ -30,6 +30,21 @@ class EventAttendee {
         ]
     }
     
+    /// Gets if the attendee is going to the Event
+    var isGoing:Bool {
+        return status == "going"
+    }
+    
+    /// Gets is the attendee is maybe going to the Event
+    var isMaybeGoing:Bool {
+        return status == "maybe"
+    }
+    
+    /// Gets is the attendee is not going to the Event
+    var isNotGoing:Bool {
+        return status == "not_going"
+    }
+    
     /// Creates a new attendee for an event
     ///
     /// - Parameter eventID:    the Firestore document ID for the Event
@@ -79,6 +94,42 @@ class EventAttendee {
         }
     }
     
+    /// Sets the attendee to going
+    ///
+    /// - Parameter completion:     the completion handler (default nil)
+    func setIsGoing(completion:completionHandler = nil) {
+        self.setStatus(to: "going", completion: completion)
+    }
+    
+    /// Sets the attendee to maybe going
+    ///
+    /// - Parameter completion:     the completion handler (default nil)
+    func setIsMaybeGoing(completion:completionHandler = nil) {
+        self.setStatus(to: "maybe", completion: completion)
+    }
+
+    /// Sets the attendee to not going
+    ///
+    /// - Parameter completion:     the completion handler (default nil)
+    func setIsNotGoing(completion:completionHandler = nil) {
+        self.setStatus(to: "not_going", completion: completion)
+    }
+    
+    /// Updates the status of the attendee.
+    /// If the status changed, updates the Firestore record, otherwise returns
+    /// immediately
+    ///
+    /// - Parameter to:             the status to set to
+    /// - Parameter completion:     the completion handler (default nil)
+    func setStatus(to status:String, completion:completionHandler = nil) {
+        if status != self.status {
+            self.status = status
+            self.update(completion: completion)
+        } else {
+            completion?(self, nil)
+        }
+    }
+
     /// Deletes this EventAttendee
     ///
     /// - Parameter completion:     the completion handler (default nil)
