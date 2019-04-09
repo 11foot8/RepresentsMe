@@ -121,8 +121,7 @@ MapActionButtonsDelegate {
                 print(error.debugDescription)
             } else {
                 if let addressStr = address?.description {
-                    let geocoder = GeocoderWrapper()
-                    geocoder.geocodeAddressString(addressStr, completionHandler: self.geocodeHomeAddressCompletionHandler)
+                    GeocoderWrapper.geocodeAddressString(addressStr, completionHandler: self.geocodeHomeAddressCompletionHandler)
                 } else {
                     // TODO: Handle nil address error
                 }

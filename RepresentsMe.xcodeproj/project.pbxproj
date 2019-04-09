@@ -43,7 +43,6 @@
 		16ECF8072255103B003DEA68 /* PickerPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16ECF8062255103B003DEA68 /* PickerPopup.xib */; };
 		16ECF809225510D5003DEA68 /* PickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF808225510D5003DEA68 /* PickerPopup.swift */; };
 		16ECF811225516C9003DEA68 /* PickerPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */; };
-		16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */; };
 		16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FCC84D2252B58F008D3991 /* LocationInfo.xib */; };
 		16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84F2252B5CF008D3991 /* LocationInfo.swift */; };
 		34760810FBDB441A2F565AD1 /* Pods_RepresentsMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB88E31673EB3A34EA58700A /* Pods_RepresentsMe.framework */; };
@@ -122,7 +121,6 @@
 		16ECF8062255103B003DEA68 /* PickerPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerPopup.xib; sourceTree = "<group>"; };
 		16ECF808225510D5003DEA68 /* PickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPopup.swift; sourceTree = "<group>"; };
 		16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPopoverViewController.swift; sourceTree = "<group>"; };
-		16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoViewController.swift; sourceTree = "<group>"; };
 		16FCC84D2252B58F008D3991 /* LocationInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationInfo.xib; sourceTree = "<group>"; };
 		16FCC84F2252B5CF008D3991 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		2606EAF9AD601CDBDC9B898F /* Pods-RepresentsMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -356,7 +354,6 @@
 				165B7F65225BE1800095D9E1 /* Sign Up */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
 				3BE43885225C061C00EC049B /* CreateEventViewController.swift */,
 				3BE4383B2255345B00EC049B /* Details */,
@@ -687,7 +684,6 @@
 				165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
-				16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */,
 				16ECF805225508B8003DEA68 /* FirebaseWrapper.swift in Sources */,
 				16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */,
 				133BD33B223A76F00069279A /* PoliticalParty.swift in Sources */,

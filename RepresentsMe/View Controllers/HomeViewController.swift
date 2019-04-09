@@ -104,7 +104,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == DETAILS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? DetailsViewController,
             let officialsIndex = officialsTableView.indexPathForSelectedRow?.row {
-            destination.official = officials[officialsIndex]
+            destination.passedOfficial = officials[officialsIndex]
         }
     }
 }
