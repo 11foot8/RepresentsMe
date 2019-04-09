@@ -19,16 +19,23 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         eventTableView.delegate = self
         eventTableView.dataSource = self
         
         for official in HomeViewController.officials {
             Event.allWith(official: official) {(events, error) in
                 if error == nil {
-                    self.events = events
+                    self.events += events
+                    self.eventTableView.reloadData()
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.eventTableView.reloadData()
     }
     
     // MARK: UITableViewDelegate
