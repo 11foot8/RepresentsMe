@@ -10,9 +10,12 @@ import Foundation
 import UIKit
 
 let EVENT_CELL_IDENTIFIER = "eventCell"
+let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 
 class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var eventTableView: UITableView!
+    
+    var events: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +23,28 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         eventTableView.dataSource = self
     }
     
+    // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: EVENT_CELL_IDENTIFIER,
+                                                 for: indexPath) as! EventCell
+        cell.event = events[indexPath.row]
+        return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
     
+    // MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == EVENT_SEGUE_IDENTIFIER,
+            let destination = segue.destination as? EventDetailsViewController,
+            let eventIndex = eventTableView.indexPathForSelectedRow?.row {
+            destination.event = events[eventIndex]
+        }
+    }
 }

@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
+class EventDetailsViewController: UIViewController {
+    var event:Event?
+}
