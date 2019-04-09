@@ -15,6 +15,7 @@ class EntryViewController: UIViewController {
     let loginSegueIdentifier = "LoginSegue"
     let signupUnwindSegueIdentifier = "SignupUnwindSegue"
     let loginUnwindSegueIdentifier = "LoginUnwindSegue"
+    let signupAddressUnwindSegueIdentifier = "SignupAddressUnwindSegue"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {

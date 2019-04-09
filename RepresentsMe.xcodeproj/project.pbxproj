@@ -27,6 +27,7 @@
 		13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */; };
 		13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCFEF52253B7F9005D6CE1 /* Event.swift */; };
 		13CCFEF82253B9CE005D6CE1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13CCFEF72253B9CE005D6CE1 /* GoogleService-Info.plist */; };
+		165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
@@ -103,6 +104,7 @@
 		13BD31B9223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		13CCFEF52253B7F9005D6CE1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		13CCFEF72253B9CE005D6CE1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -225,6 +227,15 @@
 			path = FontAwesome;
 			sourceTree = "<group>";
 		};
+		165B7F65225BE1800095D9E1 /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				1683D03A2253D2A300350471 /* SignupViewController.swift */,
+				165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */,
+			);
+			path = "Sign Up";
+			sourceTree = "<group>";
+		};
 		16ECF80A225510E3003DEA68 /* PickerPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
-				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -341,7 +351,8 @@
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				1683D0382253D27600350471 /* LoginViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
-				1683D03A2253D2A300350471 /* SignupViewController.swift */,
+				165B7F65225BE1800095D9E1 /* Sign Up */,
+				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16FCC84B2252ABB6008D3991 /* LocationInfoViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
@@ -640,6 +651,7 @@
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
+				165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				16FCC84C2252ABB6008D3991 /* LocationInfoViewController.swift in Sources */,

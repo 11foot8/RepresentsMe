@@ -90,10 +90,10 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
                 self.present(alert, animated: true, completion: nil)
             }
         }
-
-
     }
-
+    @IBAction func selectStateTouchUp(_ sender: Any) {
+        self.view.endEditing(true)
+    }
     func pickerDoneTouchUp(selection: String) {
         stateTextField.text = selection
     }
@@ -114,5 +114,9 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
     }
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

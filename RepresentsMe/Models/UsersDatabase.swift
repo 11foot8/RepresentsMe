@@ -52,7 +52,7 @@ class UsersDatabase {
                                             // TODO: Handle error
                                             completion(error)
                                         } else {
-                                            self.setUserAddress(uid:uid, address:address, completion: completion)
+                                            self.setUserAddress(uid: uid, address: address, completion: completion)
                                         }
                                     })
                                 } else {

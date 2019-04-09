@@ -1,42 +1,32 @@
 //
-//  SignupViewController.swift
+//  EnterAddressViewController.swift
 //  RepresentsMe
 //
-//  Created by Jacob Hausmann on 4/2/19.
+//  Created by Jacob Hausmann on 4/8/19.
 //  Copyright © 2019 11foot8. All rights reserved.
 //
 
 import UIKit
-import Firebase
 
-class SignupViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
-
+class EnterAddressViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
     // MARK: - Properties
-    let popoverSegueIdentifier = "SignupPickerPopoverSegue"
-
+    var email:String?
+    var password:String?
+    var displayName:String?
     let usersDB = UsersDatabase.getInstance()
-
-
+    let popoverSegueIdentifier = "SignupPickerPopoverSegue"
     var pickerData: [String] = [String]()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        emailTextField.clearButtonMode = UITextField.ViewMode.always
-        passwordTextField.clearButtonMode = UITextField.ViewMode.always
-        confirmPasswordTextField.clearButtonMode = UITextField.ViewMode.always
-        displayNameTextField.clearButtonMode = UITextField.ViewMode.always
         streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
         cityTextField.clearButtonMode = UITextField.ViewMode.always
         zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
+        // Do any additional setup after loading the view.
     }
 
     // MARK: - Outlets
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var displayNameTextField: UITextField!
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateButton: UIButton!
@@ -44,37 +34,30 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
     @IBOutlet weak var zipcodeTextField: UITextField!
 
     // MARK: - Actions
-    @IBAction func signUpDidTouch(_ sender: Any) {
+    @IBAction func createAccountTouchUp(_ sender: Any) {
         attemptCreateUser()
-    }
-    @IBAction func cancelTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: "SignupUnwindSegue", sender: self)
     }
 
     @IBAction func useCurrentLocationTouchUp(_ sender: Any) {
         // TODO: Reverse Geocode user location and fill address
     }
 
-    func pickerDoneTouchUp(selection: String) {
-        stateTextField.text = selection
+    @IBAction func cancelTouchUp(_ sender: Any) {
+        performSegue(withIdentifier: "SignupAddressUnwindSegue", sender: self)
     }
 
     func attemptCreateUser() {
         // Check all values are valid
-        guard let email = emailTextField.text else {
+        guard let email = email else {
             // TODO: Handle Error
             return
         }
-        guard let password = passwordTextField.text else {
-            // TODO: Handle Error
-            return
-        }
-        guard let confirmPassword = confirmPasswordTextField.text else {
+        guard let password = password else {
             // TODO: Handle Error
             return
         }
 
-        guard let displayName = displayNameTextField.text else {
+        guard let displayName = displayName else {
             // TODO: Handle Error
             return
         }
@@ -101,11 +84,6 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
 
         // TODO: Check that email is in correct form
 
-        guard password == confirmPassword else {
-            // TODO: Alert users passwords dont match
-            return
-        }
-
         // TODO: Check address validity
 
         let address = Address(streetAddress: streetAddress, city: city, state: state, zipcode: zipcode)
@@ -127,7 +105,11 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
         }
     }
 
-    // MARK: Segue functions
+    func pickerDoneTouchUp(selection: String) {
+        stateTextField.text = selection
+    }
+
+    // MARK: - Segue functions
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == popoverSegueIdentifier {
             let popoverViewController = segue.destination as! PickerPopoverViewController
@@ -138,10 +120,14 @@ class SignupViewController: UIViewController, PickerPopoverViewControllerDelegat
             popoverViewController.popoverPresentationController?.sourceView = view
             popoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
             popoverViewController.selectedValue = stateTextField.text!
-            
         }
     }
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+
     }
 }
