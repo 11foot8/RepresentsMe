@@ -32,7 +32,9 @@ class EventListViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.address == nil || self.address != AppState.sandboxAddress {
+        if self.shouldUpdate() {
+            self.address = AppState.sandboxAddress
+
             // Clear current events
             self.events.removeAll()
             
@@ -47,6 +49,7 @@ class EventListViewController: UIViewController,
                 Event.allWith(official: official) {(events, error) in
                     if error == nil {
                         self.events += events
+                        self.events.sort()
                         self.eventTableView.reloadData()
                     }
                 }
@@ -91,5 +94,14 @@ class EventListViewController: UIViewController,
             
             destination.event = events[eventIndex]
         }
+    }
+    
+    /// Gets whether or not should update the Events being displayed
+    ///
+    /// - Returns: true if should update, false otherwise
+    private func shouldUpdate() -> Bool {
+        return self.events.isEmpty ||
+            (AppState.sandboxAddress != nil &&
+                self.address != AppState.sandboxAddress)
     }
 }

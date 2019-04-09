@@ -10,7 +10,7 @@ import MapKit
 import Firebase
 
 /// Manages creating, updating, and deleting events through Firestore
-class Event {
+class Event: Comparable {
     
     /// The completion handlers for using Firestore
     typealias completionHandler = (Event?, Error?) -> ()
@@ -70,7 +70,8 @@ class Event {
     /// - Parameter group:  the dispatch group to leave
     static func insert(into events: inout [Event],
                        data:DocumentSnapshot,
-                       group:DispatchGroup) {
+                       group:DispatchGroup,
+                       official:Official? = nil) {
         if let event = Event.events[data.documentID] {
             // Already have built the event, append it
             events.append(event)
@@ -79,10 +80,15 @@ class Event {
             let event = Event(data: data)
             events.append(event)
             
-            // Scrape the official
-            event.getOfficial(name: data["officialName"] as! String,
-                              division: data["divisionOCDID"] as! String,
-                              group: group)
+            if let official = official {
+                // Already have the official, do not scrape
+                event.official = official
+            } else {
+                // Need to get the official
+                event.getOfficial(name: data["officialName"] as! String,
+                                  division: data["divisionOCDID"] as! String,
+                                  group: group)
+            }
         }
     }
 
@@ -307,7 +313,24 @@ class Event {
         let query = Event.db
             .whereField("divisionOCDID", isEqualTo: official.divisionOCDID)
             .whereField("officialName", isEqualTo: official.name)
-        Event.allWith(query: query, completion: completion)
+        query.getDocuments {(data, error) in
+            let group = DispatchGroup()
+            var events:[Event] = []
+            if error == nil {
+                // Build each event
+                for data in data!.documents {
+                    Event.insert(into: &events,
+                                 data: data,
+                                 group: group,
+                                 official: official)
+                }
+            }
+            
+            // Wait until all Officials are pulled before returning
+            group.notify(queue: .main) {
+                return completion(events, error)
+            }
+        }
     }
 
     /// Finds an event by its ID
@@ -343,5 +366,59 @@ class Event {
                 return completion(nil, nil)
             }
         }
+    }
+    
+    /// Compares two Events
+    ///
+    /// - Parameter lhs:    the first Event
+    /// - Parameter rhs:    the second Event
+    ///
+    /// - Returns: true if lhs < rhs, false otherwise
+    static func <(lhs:Event, rhs:Event) -> Bool {
+        if lhs.official == nil && rhs.official == nil {
+            // Neither Event has an official, compare based on name
+            return lhs.name < rhs.name
+        }
+        
+        if rhs.official == nil {
+            // rhs does not have an official, lhs should come before it
+            return true
+        }
+        
+        if lhs.official == nil {
+            // lhs does not have an official, rhs should come before it
+            return false
+        }
+        
+        if lhs.official != rhs.official {
+            // The events are for two different officials, sort based on the
+            // official's index
+            return lhs.official!.index < rhs.official!.index
+        }
+
+        if lhs.date != rhs.date {
+            // The events are for the same official on two different days,
+            // the earlier event should come first
+            return lhs.date < rhs.date
+        }
+        
+        // The events are for the same official on the same day, sort based
+        // on the event name
+        return lhs.name < rhs.name
+    }
+
+    /// Compares two Events for equality
+    ///
+    /// - Parameter lhs:    the first Event
+    /// - Parameter rhs:    the second Event
+    ///
+    /// - Returns: true if lhs == rhs, false otherwise
+    static func ==(lhs:Event, rhs:Event) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.owner == rhs.owner &&
+            lhs.location.latitude == rhs.location.latitude &&
+            lhs.location.longitude == rhs.location.longitude &&
+            lhs.date == rhs.date &&
+            lhs.official == rhs.official
     }
 }
