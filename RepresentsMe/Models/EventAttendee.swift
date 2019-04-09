@@ -11,6 +11,7 @@ import Firebase
 class EventAttendee {
     
     typealias completionHandler = ((EventAttendee, Error?) -> ())?
+    typealias allCompletionHandler = ([EventAttendee], Error?) -> ()
     
     // The Firestore database
     static let collection = "event_attendees"
@@ -18,14 +19,14 @@ class EventAttendee {
     
     var documentID:String?  // The document ID on Firestore
     var userID:String       // The ID of the attendee
-    var eventID:String      // The Event this attendee is for
     var status:String       // The status of the attendee
+    var event:Event?
     
     /// Gets the data formatted for Firestore
     var data:[String: Any] {
         return [
             "userID": self.userID,
-            "eventID": self.eventID,
+            "eventID": self.event?.documentID ?? "",
             "status": self.status
         ]
     }
@@ -47,26 +48,42 @@ class EventAttendee {
     
     /// Creates a new attendee for an event
     ///
-    /// - Parameter eventID:    the Firestore document ID for the Event
+    /// - Parameter event:      the Event
     /// - Parameter userID:     the ID of the attendee
     /// - Parameter status:     the attendee's status
-    init(eventID:String, userID:String, status:String) {
-        self.eventID = eventID
+    init(event:Event, userID:String, status:String) {
+        self.event = event
         self.userID = userID
         self.status = status
+    }
+    
+    /// Creates a new attendee from the given document snapshot
+    ///
+    /// - Parameter data:   the DocumentSnapshot
+    init(data:DocumentSnapshot, group:DispatchGroup) {
+        self.documentID = data.documentID
+        
+        // Set the basic data
+        let data = data.data()!
+        self.userID = data["userID"] as! String
+        self.status = data["status"] as! String
+        
+        // Scrape the Event
+        self.getEvent(eventID: data["eventID"] as! String, group: group)
     }
     
     /// Creates a new attendee from the given query document snapshot
     ///
     /// - Parameter data:   the QueryDocumentSnapshot
-    init(data:QueryDocumentSnapshot) {
+    /// - Parameter event:  the Event
+    init(data:QueryDocumentSnapshot, event:Event) {
         self.documentID = data.documentID
         
         // Set the basic data
         let data = data.data()
         self.userID = data["userID"] as! String
-        self.eventID = data["eventID"] as! String
         self.status = data["status"] as! String
+        self.event = event
     }
     
     /// Saves this EventAttendee
@@ -154,18 +171,55 @@ class EventAttendee {
         }
     }
     
+    /// Loads the Event for this attendee
+    ///
+    /// - Parameter eventID:    the event document ID
+    /// - Parameter group:      the dispatch group to notify
+    private func getEvent(eventID:String, group:DispatchGroup) {
+        Event.find_by(eventID: eventID) {(event, error) in
+            self.event = event
+            group.leave()
+        }
+    }
+    
     /// Creates a new EventAttendee
     ///
-    /// - Parameter eventID:        the Firestore document ID for the Event
+    /// - Parameter event:          the Event
     /// - Parameter userID:         the ID of the attendee
     /// - Parameter status:         the attendee's status
     /// - Parameter completion:     the completion handler (default nil)
-    static func create(eventID:String,
+    static func create(event:Event,
                        userID:String,
                        status:String,
                        completion:completionHandler = nil) {
-        let attendee = EventAttendee(eventID: eventID, userID: userID,
+        let attendee = EventAttendee(event: event,
+                                     userID: userID,
                                      status: status)
         attendee.save(completion: completion)
+    }
+    
+    /// Gets all EventAttendees with the given userID
+    ///
+    /// - Parameter userID:         the user to filter by
+    /// - Parameter completion:     the completion handler
+    static func allWith(userID:String,
+                        completion: @escaping allCompletionHandler) {
+        let ref = EventAttendee.db.whereField("userID", isEqualTo: userID)
+        ref.getDocuments {(data, error) in
+            let group = DispatchGroup()
+            var attendees:[EventAttendee] = []
+            if error == nil {
+                // Build each event
+                for data in data!.documents {
+                    group.enter()
+                    attendees.append(EventAttendee(data: data, group: group))
+                }
+            }
+            
+            // Wait until all Officials are pulled before returning
+            group.notify(queue: .main) {
+                return completion(attendees, error)
+            }
+        }
     }
 }

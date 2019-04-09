@@ -13,7 +13,7 @@ import Firebase
 class Event {
     
     /// The completion handlers for using Firestore
-    typealias completionHandler = (Event, Error?) -> ()
+    typealias completionHandler = (Event?, Error?) -> ()
     typealias allCompletionHandler = ([Event], Error?) -> ()
     
     // The Firestore database
@@ -60,15 +60,15 @@ class Event {
         self.official = official
     }
     
-    /// Creates a new Event with the given query document snapshot
+    /// Creates a new Event with the given document snapshot
     ///
-    /// - Parameter data:   the QueryDocumentSnapshot
+    /// - Parameter data:   the DocumentSnapshot
     /// - Parameter group:  the dispatch group to notify when completed
-    init(data:QueryDocumentSnapshot, group:DispatchGroup) {
+    init(data:DocumentSnapshot, group:DispatchGroup) {
         self.documentID = data.documentID
         
         // Set basic data
-        let data = data.data()
+        let data = data.data()!
         self.name = data["name"] as! String
         self.owner = data["owner"] as! String
         self.date = (data["date"] as! Timestamp).dateValue()
@@ -137,7 +137,8 @@ class Event {
                 if error == nil {
                     // Build and add each attendee
                     for data in data!.documents {
-                        self.attendees.append(EventAttendee(data: data))
+                        self.attendees.append(EventAttendee(data: data,
+                                                            event: self))
                     }
                 }
                 
@@ -154,8 +155,8 @@ class Event {
     func addAttendee(userID:String,
                      status:String,
                      completion:EventAttendee.completionHandler = nil) {
-        if let documentID = self.documentID {
-            EventAttendee.create(eventID: documentID,
+        if self.documentID != nil {
+            EventAttendee.create(event: self,
                                  userID: userID,
                                  status: status) {(attendee, error) in
                 // Add to the list of attendees and return the completion
@@ -257,6 +258,31 @@ class Event {
             // Wait until all Officials are pulled before returning
             group.notify(queue: .main) {
                 return completion(events, error)
+            }
+        }
+    }
+    
+    /// Finds an event by its ID
+    ///
+    /// - Parameter eventID:        the document ID of the event
+    /// - Parameter completion:     the completion handler
+    static func find_by(eventID:String,
+                        completion: @escaping completionHandler) {
+        let ref = Event.db.document(eventID)
+        ref.getDocument {(data, error) in
+            if error == nil {
+                // Build the event
+                let group = DispatchGroup()
+                group.enter()
+                let event = Event(data: data!, group: group)
+                
+                // Wait until all Officials are pulled before returning
+                group.notify(queue: .main) {
+                    return completion(event, error)
+                }
+            } else {
+                // The document does not exist
+                return completion(nil, nil)
             }
         }
     }
