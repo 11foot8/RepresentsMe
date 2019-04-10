@@ -27,7 +27,7 @@ class EventDetailsViewController: UIViewController {
 
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
-        if let event = self.event {
+        if event != nil {
             // Set the labels
             self.setLabels()
 
@@ -67,14 +67,16 @@ class EventDetailsViewController: UIViewController {
     
     /// Sets the labels for the Event
     private func setLabels() {
-        eventNameLabel.text = event.name
-        eventDateLabel.text = event.formattedDate
-        
-        // Set the location
-        self.eventLocationLabel.text = ""
-        GeocoderWrapper.reverseGeocodeCoordinates(event.location) {(address) in
-            self.eventLocationLabel.text = address.description
-        }
+        if let event = self.event {
+            eventNameLabel.text = event.name
+            eventDateLabel.text = event.formattedDate
+    
+            // Set the location
+            self.eventLocationLabel.text = ""
+            GeocoderWrapper.reverseGeocodeCoordinates(event.location) {(address) in
+                self.eventLocationLabel.text = address.description
+            }
+        }t
     }
     
     /// Sets the photo for the Event
