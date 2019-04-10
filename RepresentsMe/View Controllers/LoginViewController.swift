@@ -11,7 +11,6 @@ import Firebase
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
-    let usersDB = UsersDatabase.getInstance()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -41,7 +40,7 @@ class LoginViewController: UIViewController {
             return
         }
 
-        usersDB.loginUser(withEmail: email, password: password) { (uid, error) in
+        UsersDatabase.shared.loginUser(withEmail: email, password: password) { (uid, error) in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)

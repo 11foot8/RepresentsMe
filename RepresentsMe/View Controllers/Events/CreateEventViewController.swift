@@ -13,6 +13,10 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
+protocol CreateEventsDelegate {
+    func eventCreatedDelegate(event:Event)
+}
+
 class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, LocationSelectionDelegate, DatePopoverViewControllerDelegate {
 
     @IBOutlet weak var eventImageView: UIImageView!
@@ -26,6 +30,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     var selectedDate: Date?
     var selectedOfficial: Official?
     var selectedLocation: CLLocationCoordinate2D?
+    var delegate:CreateEventsDelegate? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +114,11 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         }
 
         navigationController?.popViewController(animated: true)
+        if delegate != nil {
+            delegate!.eventCreatedDelegate(event: event)
+        }
+
+        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func cancelTapped(_ sender: Any) {

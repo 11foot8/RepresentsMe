@@ -12,7 +12,6 @@ import CoreData
 class AddressSettingsViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Properties
-    let usersDB = UsersDatabase.getInstance()
     let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
 
     // MARK: - Lifecycle
@@ -26,7 +25,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
         // Start loading animation
         self.navigationItem.hidesBackButton = true
         let hud = LoadingHUD(self.view)
-        usersDB.getCurrentUserAddress { (address, error) in
+        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
             if let _ = error {
                 // End loading animation
                 hud.end()
@@ -86,7 +85,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
 
         // TODO: Start loading animation
         let hud = LoadingHUD(self.view)
-        usersDB.setUserAddress(uid: usersDB.getCurrentUserUID() ?? "", address: address) { (error) in
+        UsersDatabase.shared.setUserAddress(uid: UsersDatabase.shared.getCurrentUserUID() ?? "", address: address) { (error) in
             if let _ = error {
                 // TODO: Handle error
                 // End loading animation

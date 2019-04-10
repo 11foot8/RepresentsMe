@@ -13,7 +13,6 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
     var email:String?
     var password:String?
     var displayName:String?
-    let usersDB = UsersDatabase.getInstance()
     let popoverSegueIdentifier = "SignupPickerPopoverSegue"
     var pickerData: [String] = [String]()
 
@@ -91,7 +90,7 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
 
         // Display loading animation
         let hud = LoadingHUD(self.view)
-        usersDB.createUser(email: email, password: password, displayName:displayName, address:address) { error in
+        UsersDatabase.shared.createUser(email: email, password: password, displayName:displayName, address:address) { error in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)

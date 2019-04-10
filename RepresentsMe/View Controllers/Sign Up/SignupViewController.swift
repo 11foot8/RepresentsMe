@@ -14,8 +14,6 @@ class SignupViewController: UIViewController {
     // MARK: - Properties
     let addressSegueIdentifier = "CreateAccountAddressSegue"
 
-    let usersDB = UsersDatabase.getInstance()
-
     let validFontAwesomeString = "check-circle"
     let invalidFontAwesomeString = "times-circle"
     let defaultFontAwesomeString = "minus-circle"
