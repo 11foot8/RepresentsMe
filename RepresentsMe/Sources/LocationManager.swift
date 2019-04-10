@@ -19,12 +19,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     public var userCoordinate: CLLocationCoordinate2D? {
-        print(locationManager)
-        print(locationManager.location)
-        print(locationManager.location?.coordinate)
-        if (locationManager.location?.coordinate == nil) {
-            print("here")
-        }
         return locationManager.location?.coordinate
     }
 
