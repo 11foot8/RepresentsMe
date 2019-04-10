@@ -147,6 +147,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             break
         case .map:
             cell.official = AppState.sandboxOfficials[indexPath.row]
+            break
+        }
+
+        switch reachType {
+        case .home, .map:
+            cell.accessoryType = .disclosureIndicator
+            break
+        case .event:
+            cell.accessoryType = .none
+            break
         }
         
         return cell
