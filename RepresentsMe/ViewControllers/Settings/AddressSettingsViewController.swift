@@ -100,6 +100,8 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
 
                 self.present(alert, animated: true, completion: nil)
+
+                AppState.homeAddress = address
             }
         }
     }

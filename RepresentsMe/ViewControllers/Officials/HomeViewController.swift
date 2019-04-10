@@ -23,11 +23,8 @@ enum HomeViewControllerReachType {
     case event
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AppStateListener {
     // MARK: - Properties
-    var officials: [Official] = []
-
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
     
@@ -47,6 +44,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
+        switch reachType {
+        case .home, .event:
+            AppState.addListener(listener: self)
+            break
+        case .map:
+            break
+        }
+
         loadOfficials()
     }
 
@@ -58,25 +63,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         delegate = nil
-        reachType = .home
+    }
+
+    func appStateReceivedHomeOfficials(officials: [Official]) {
+        self.address = AppState.homeAddress
+        DispatchQueue.main.async {
+            self.officialsTableView.reloadData()
+        }
     }
 
     func loadOfficials() {
         switch reachType {
         case .home, .event:
-            // TODO: Get current user address
-            UsersDatabase.getCurrentUserAddress { (address, error) in
-                if let _ = error {
-                    // TODO: Handle error
-                    print(error.debugDescription)
-                } else {
-                    if self.address == nil || self.address != address || self.needToPull {
-
-                        self.address = address
-                        self.getOfficials(for: address!)
-                    }
-                }
-            }
+            self.navigationItem.title = "Home"
             break
         case .map:
             // TODO: Use current address
