@@ -89,16 +89,18 @@ class EnterAddressViewController: UIViewController, PickerPopoverViewControllerD
 
         let address = Address(streetAddress: streetAddress, city: city, state: state, zipcode: zipcode)
 
-        // TODO: Display loading animation
+        // Display loading animation
+        let hud = LoadingHUD(self.view)
         usersDB.createUser(email: email, password: password, displayName:displayName, address:address) { error in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)
-
-                // TODO: end loading animation
+                // End loading animation
+                hud.end()
                 // TODO: display error alert
             } else {
-                // TODO: end loading animation
+                // End loading animation
+                hud.end()
                 self.view.endEditing(true)
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")

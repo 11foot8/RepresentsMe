@@ -1670,7 +1670,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Boe-4Q-4dT">
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Boe-4Q-4dT">
                                 <rect key="frame" x="8" y="173" width="359" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1942,7 +1942,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7Am-r7-zXQ"/>
-        <segue reference="7wb-vX-DZx"/>
+        <segue reference="a5r-sA-Txs"/>
         <segue reference="EnH-nx-c8p"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>

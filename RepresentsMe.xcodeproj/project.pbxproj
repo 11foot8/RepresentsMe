@@ -46,6 +46,7 @@
 		169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */; };
 		16A6535F225D6D4300E13856 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A6535E225D6D4300E13856 /* Util.swift */; };
 		16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */; };
+		16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65362225D80C500E13856 /* LoadingHUD.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
 		16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */; };
@@ -135,6 +136,7 @@
 		169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNameSettingsViewController.swift; sourceTree = "<group>"; };
 		16A6535E225D6D4300E13856 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = ../AddressSettingsViewController.swift; sourceTree = "<group>"; };
+		16A65362225D80C500E13856 /* LoadingHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
 		16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				1371C080225D1F1500FA0CCB /* EventCell.swift */,
+				16A65362225D80C500E13856 /* LoadingHUD.swift */,
 				16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */,
 				16D0263E2252706A005C86F2 /* DroppedPin.swift */,
 				3B45F0B42222452D00FA5B8B /* OfficialCell.swift */,
@@ -634,6 +637,7 @@
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -646,6 +650,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -741,6 +746,7 @@
 				0D9449C2223184F30057BAB1 /* DetailsViewController.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
 				16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */,
+				16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */,
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 				1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */,

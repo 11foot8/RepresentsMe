@@ -23,11 +23,20 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
         cityTextField.clearButtonMode = UITextField.ViewMode.always
         zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
 
+        // Start loading animation
+        self.navigationItem.hidesBackButton = true
+        let hud = LoadingHUD(self.view)
         usersDB.getCurrentUserAddress { (address, error) in
             if let _ = error {
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 // TODO: Handle error
                 print("Error fetching address: \(error.debugDescription)")
             } else {
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 if let address = address {
                     self.streetAddressTextField.text = address.streetAddress
                     self.cityTextField.text = address.city
@@ -76,12 +85,15 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
                            zipcode: zipcodeTextField.text!)
 
         // TODO: Start loading animation
+        let hud = LoadingHUD(self.view)
         usersDB.setUserAddress(uid: usersDB.getCurrentUserUID() ?? "", address: address) { (error) in
             if let _ = error {
                 // TODO: Handle error
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
             } else {
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
                 let alert = UIAlertController(
                     title: "Saved",
                     message: nil,

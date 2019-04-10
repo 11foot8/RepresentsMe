@@ -18,6 +18,8 @@ class EmailSettingsViewController: UIViewController {
         dividerView.layer.cornerRadius = 2.0
         dividerView.clipsToBounds = true
 
+        currentEmailTextField.text = usersDB.getCurrentUserEmail()
+
         // Do any additional setup after loading the view.
     }
 
@@ -31,7 +33,9 @@ class EmailSettingsViewController: UIViewController {
     // TODO: Disable save button until all fields are valid
     @IBAction func saveTouchUp(_ sender: Any) {
         self.view.endEditing(true)
-        // TODO: Start loading animation
+        // Start loading animation
+        self.navigationItem.hidesBackButton = true
+        let hud = LoadingHUD(self.view)
         guard let currentEmail = currentEmailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let newEmail = newEmailTextField.text else { return }
@@ -39,7 +43,9 @@ class EmailSettingsViewController: UIViewController {
         usersDB.changeUserEmail(currentEmail: currentEmail, password: password, newEmail: newEmail, completion: { (error) in
             if let _ = error {
                 // TODO: Handle error
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Error",
                     message: "\(error.debugDescription)",
@@ -47,7 +53,9 @@ class EmailSettingsViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Saved",
                     message: nil,

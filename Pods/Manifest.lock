@@ -102,6 +102,7 @@ PODS:
   - gRPC-Core/Interface (1.17.0)
   - GTMSessionFetcher/Core (1.2.1)
   - leveldb-library (1.20)
+  - MBProgressHUD (1.1.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -117,6 +118,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Firestore
+  - MBProgressHUD (~> 1.1.0)
   - NVActivityIndicatorView
 
 SPEC REPOS:
@@ -136,6 +138,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - leveldb-library
+    - MBProgressHUD
     - nanopb
     - NVActivityIndicatorView
     - Protobuf
@@ -156,10 +159,11 @@ SPEC CHECKSUMS:
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
 
-PODFILE CHECKSUM: b0058723d90a808e26eb02c1154d29659ca10dc8
+PODFILE CHECKSUM: 68fc80457407394343c81e6fa7d6e660a6098b06
 
 COCOAPODS: 1.6.1
