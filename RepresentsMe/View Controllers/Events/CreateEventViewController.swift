@@ -72,11 +72,11 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
             }
         }
 
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 
     @IBAction func cancelTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 
     /// UIPopoverPresentationControllerDelegate
