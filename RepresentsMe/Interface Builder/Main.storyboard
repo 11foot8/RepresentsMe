@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -284,7 +284,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3">
-                                        <rect key="frame" x="309" y="135" width="30" height="29"/>
+                                        <rect key="frame" x="270" y="135" width="69" height="32"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="envelope">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1175,6 +1175,15 @@
                                     <constraint firstAttribute="height" constant="150" id="w8m-I3-k4m"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
+                                <rect key="frame" x="144" y="454" width="87" height="30"/>
+                                <state key="normal" title="Delete Event">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtonTapped:" destination="egU-99-xc4" eventType="touchUpInside" id="9jZ-e8-Qtw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1186,16 +1195,28 @@
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" id="adi-rk-2bd"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="fAQ-fj-TOL"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="fqv-zW-6a8"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="bottom" constant="40" id="hVs-dA-ewM"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="u7Y-wh-CuP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ND4-xx-3xZ"/>
                     </view>
+                    <navigationItem key="navigationItem" id="bgm-Ze-5P5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="4bk-0q-wm3">
+                            <connections>
+                                <action selector="editButtonTapped:" destination="egU-99-xc4" id="2S7-k9-0Rk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="deleteEventButton" destination="waI-wd-V1n" id="9CR-wb-GEz"/>
+                        <outlet property="editButton" destination="4bk-0q-wm3" id="qYb-Dv-bvz"/>
                         <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
                         <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>
                         <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
                         <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
                         <segue destination="V5Z-GW-aU6" kind="show" id="xAA-0M-hTn"/>
+                        <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="di1-Ze-rRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1934,9 +1955,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11foot8" width="983" height="979"/>
+        <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Yh7-ve-cIi"/>
         <segue reference="7Am-r7-zXQ"/>
         <segue reference="7wb-vX-DZx"/>
         <segue reference="xAA-0M-hTn"/>

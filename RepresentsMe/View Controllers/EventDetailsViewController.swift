@@ -10,14 +10,19 @@ import Foundation
 import UIKit
 import MapKit
 
+let EDIT_EVENT_SEGUE = "editEventSegue"
+
 class EventDetailsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var deleteEventButton: UIButton!
 
     var event:Event?
+    var delegate:CreateEventsDelegate?
 
     override func viewWillAppear(_ animated: Bool) {
         if event == nil {
@@ -46,5 +51,37 @@ class EventDetailsViewController: UIViewController {
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
 
         self.mapView.setRegion(region, animated: true)
+
+        editButton.isEnabled = false
+        deleteEventButton.isHidden = true
+        deleteEventButton.isEnabled = false
+        if (UsersDatabase.shared.getCurrentUserUID() == event?.owner) {
+            editButton.isEnabled = true
+            deleteEventButton.isEnabled = true
+            deleteEventButton.isHidden = false
+        }
+    }
+
+    @IBAction func editButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: EDIT_EVENT_SEGUE, sender: self)
+    }
+
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        event?.delete(completion: { (event: Event?, error: Error?) in
+            if (error != nil) {
+                print(error.debugDescription)
+            } else {
+                self.delegate?.eventDeletedDelegate(event: event!)
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == EDIT_EVENT_SEGUE {
+            let destination = segue.destination as! CreateEventViewController
+            destination.event = event
+            destination.delegate = delegate
+        }
     }
 }

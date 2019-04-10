@@ -11,11 +11,13 @@ import UIKit
 
 let EVENT_CELL_IDENTIFIER = "eventCell"
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
+let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
 class EventListViewController: UIViewController,
                                UITableViewDelegate,
                                UITableViewDataSource,
-                               UISearchBarDelegate {
+                               UISearchBarDelegate,
+                               CreateEventsDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
@@ -66,7 +68,7 @@ class EventListViewController: UIViewController,
         self.events = self.filterEvents(by: textDidChange)
         self.eventTableView.reloadData()
     }
-
+    
     // MARK: UITableViewDelegate
     
     /// The number of rows is the number of events
@@ -93,13 +95,42 @@ class EventListViewController: UIViewController,
     
     // MARK: Segue
     
+    func eventCreatedDelegate(event: Event) {
+        eventsSource.append(event)
+        eventsSource.sort()
+        if event.matches(eventSearchBar.text!) {
+            events.append(event)
+            events.sort()
+            eventTableView.reloadData()
+        }
+    }
+
+    func eventUpdatedDelegate(event: Event) {
+        eventTableView.reloadData()
+    }
+
+    func eventDeletedDelegate(event: Event) {
+        events.removeAll { (tableEvent: Event) -> Bool in
+            tableEvent == event
+        }
+
+        eventsSource.removeAll { (tableEvent: Event) -> Bool in
+            tableEvent == event
+        }
+        
+        eventTableView.reloadData()
+    }
+
     /// Segue to the event details view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EVENT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? EventDetailsViewController,
             let eventIndex = eventTableView.indexPathForSelectedRow?.row {
-            
             destination.event = events[eventIndex]
+            destination.delegate = self
+        } else if segue.identifier == CREATE_EVENT_SEGUE_IDENTIFIER,
+            let destination = segue.destination as? CreateEventViewController {
+            destination.delegate = self
         }
     }
     
