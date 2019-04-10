@@ -41,7 +41,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
     let locationManager = CLLocationManager()
-    let usersDB = UsersDatabase.getInstance()
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
@@ -62,7 +61,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch reachType {
         case .home, .event:
             // TODO: Get current user address
-            usersDB.getCurrentUserAddress { (address, error) in
+            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
                 if let _ = error {
                     // TODO: Handle error
                     print(error.debugDescription)
@@ -82,7 +81,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch reachType {
             case .home, .event:
                 // TODO: Get current user address
-                usersDB.getCurrentUserAddress { (address, error) in
+                UsersDatabase.shared.getCurrentUserAddress { (address, error) in
                     if let _ = error {
                         // TODO: Handle error
                         print(error.debugDescription)

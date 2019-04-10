@@ -10,7 +10,6 @@ import UIKit
 
 class PasswordSettingsViewController: UIViewController {
     // MARK: - Properties
-    let usersDB = UsersDatabase.getInstance()
     let validFontAwesomeString = "check-circle"
     let invalidFontAwesomeString = "times-circle"
     let defaultFontAwesomeString = "minus-circle"
@@ -43,9 +42,9 @@ class PasswordSettingsViewController: UIViewController {
         let hud = LoadingHUD(self.view)
         guard let currentPassword = currentPasswordTextField.text else { return }
         guard let newPassword = newPasswordTextField.text else { return }
-        guard let email = usersDB.getCurrentUserEmail() else { return }
+        guard let email = UsersDatabase.shared.getCurrentUserEmail() else { return }
 
-        usersDB.changeUserPassword(email: email, currentPassword: currentPassword, newPassword: newPassword, completion: { (error) in
+        UsersDatabase.shared.changeUserPassword(email: email, currentPassword: currentPassword, newPassword: newPassword, completion: { (error) in
             if let _ = error {
                 // TODO: Handle error
                 // End loading animation

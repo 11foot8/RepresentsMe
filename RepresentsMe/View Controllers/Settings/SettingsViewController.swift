@@ -31,7 +31,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
          ("", [(.address,"Address","home")]),
          ("", [(.logout,"Logout","sign-out-alt")])]
     //("", [(.notifications,"Notifications", "bell")]),
-    let usersDB = UsersDatabase.getInstance()
 
     let addressSegueIdentifier = "AddressSettingsSegue"
     let emailSegueIdentifier = "EmailSettingsSegue"
@@ -52,7 +51,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
-        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
+        currentUserLabel.text = "Logged in as \(UsersDatabase.shared.getCurrentUserEmail () ?? "N/A")"
         tableView.reloadData()
     }
 
@@ -67,7 +66,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Methods
     func logout() {
-        usersDB.logoutUser { (error) in
+        UsersDatabase.shared.logoutUser { (error) in
             if let _ = error {
                 // TODO: Handle error
                 print("Error while logging out: \(error.debugDescription)")
@@ -94,10 +93,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         switch settingForRow.0 {
         case .email:
-            cell.subtitleLabel.text = usersDB.getCurrentUserEmail()
+            cell.subtitleLabel.text = UsersDatabase.shared.getCurrentUserEmail()
             break
         case .displayName:
-            cell.subtitleLabel.text = usersDB.getCurrentUserDisplayName()
+            cell.subtitleLabel.text = UsersDatabase.shared.getCurrentUserDisplayName()
             break
         case .password:
             break

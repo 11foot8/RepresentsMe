@@ -10,12 +10,11 @@ import UIKit
 
 class DisplayNameSettingsViewController: UIViewController {
     // MARK: - Properties
-    let usersDB = UsersDatabase.getInstance()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayNameTextField.text = usersDB.getCurrentUserDisplayName()
+        displayNameTextField.text = UsersDatabase.shared.getCurrentUserDisplayName()
         // Do any additional setup after loading the view.
     }
 
@@ -31,7 +30,7 @@ class DisplayNameSettingsViewController: UIViewController {
         let hud = LoadingHUD(self.view)
         guard let displayName = displayNameTextField.text else { return }
 
-        usersDB.changeUserDisplayName(newDisplayName: displayName) { (error) in
+        UsersDatabase.shared.changeUserDisplayName(newDisplayName: displayName) { (error) in
             if let _ = error {
                 // TODO: Handle error
                 // End loading animation
