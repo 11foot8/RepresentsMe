@@ -14,9 +14,11 @@ let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 
 class EventListViewController: UIViewController,
                                UITableViewDelegate,
-                               UITableViewDataSource {
+                               UITableViewDataSource,
+                               UISearchBarDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
+    @IBOutlet weak var eventSearchBar: UISearchBar!
     
     var events:[Event] = []     // The events being displayed
     var address:Address?        // The current address for officials for events
@@ -26,6 +28,7 @@ class EventListViewController: UIViewController,
         super.viewDidLoad()
         eventTableView.delegate = self
         eventTableView.dataSource = self
+        eventSearchBar.delegate = self
     }
     
     /// If the address or is nil, update the events being displayed
@@ -54,6 +57,10 @@ class EventListViewController: UIViewController,
         }
     }
     
+    func searchBar(_ searchBar:UISearchBar, textDidChange:String) {
+        
+    }
+
     // MARK: UITableViewDelegate
     
     /// The number of rows is the number of events
