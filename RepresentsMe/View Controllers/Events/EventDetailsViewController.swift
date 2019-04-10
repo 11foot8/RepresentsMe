@@ -76,7 +76,7 @@ class EventDetailsViewController: UIViewController {
             GeocoderWrapper.reverseGeocodeCoordinates(event.location) {(address) in
                 self.eventLocationLabel.text = address.description
             }
-        }t
+        }
     }
     
     /// Sets the photo for the Event
