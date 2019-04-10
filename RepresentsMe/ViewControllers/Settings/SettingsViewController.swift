@@ -51,13 +51,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
-        currentUserLabel.text = "Logged in as \(UsersDatabase.shared.getCurrentUserEmail () ?? "N/A")"
+        tableView.backgroundColor = .groupTableViewBackground
+        currentUserLabel.text = "Logged in as \(UsersDatabase.currentUserEmail ?? "N/A")"
         tableView.reloadData()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentUserLabel: UILabel!
@@ -93,10 +91,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         switch settingForRow.0 {
         case .email:
-            cell.subtitleLabel.text = UsersDatabase.shared.getCurrentUserEmail()
+            cell.subtitleLabel.text = UsersDatabase.currentUserEmail
             break
         case .displayName:
-            cell.subtitleLabel.text = UsersDatabase.shared.getCurrentUserDisplayName()
+            cell.subtitleLabel.text = UsersDatabase.currentUserDisplayName
             break
         case .password:
             break
