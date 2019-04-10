@@ -15,6 +15,8 @@ let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
 protocol CreateEventsDelegate {
     func eventCreatedDelegate(event:Event)
+    func eventUpdatedDelegate(event:Event)
+    func eventDeletedDelegate(event:Event)
 }
 
 class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, LocationSelectionDelegate, DatePopoverViewControllerDelegate {
@@ -24,6 +26,8 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     @IBOutlet weak var selectOfficialButton: UIButton!
     @IBOutlet weak var selectLocationButton: UIButton!
     @IBOutlet weak var selectDateButton: UIButton!
+
+    var event: Event?
 
     var selectedDate: Date?
     var selectedOfficial: Official?
@@ -36,6 +40,25 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         eventImageView.layer.cornerRadius = 5.0
         eventImageView.clipsToBounds = true
         eventImageView.image = DEFAULT_NOT_LOADED
+
+        if (event != nil) {
+            eventImageView.image = event!.official?.photo
+            eventNameTextField.text = event!.name
+            selectOfficialButton.setTitle(event!.official?.name, for: .normal)
+
+            selectLocationButton.setTitle("", for: .normal)
+            GeocoderWrapper.reverseGeocodeCoordinates(event!.location) { (address: Address) in
+                self.selectLocationButton.setTitle(address.addressLine1(), for: .normal)
+            }
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM d, h:mm a"
+            selectDateButton.setTitle(dateFormatter.string(from: event!.date), for: .normal)
+
+            selectedOfficial = event!.official
+            selectedDate = event!.date
+            selectedLocation = event!.location
+        }
     }
 
     /// OfficialSelectionDelegate
@@ -65,24 +88,39 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
             return
         }
 
-        let name = self.eventNameTextField.text!
+        if (event != nil) {
+            event!.name = eventNameTextField.text!
+            event!.location = selectedLocation!
+            event!.date = selectedDate!
+            event!.official = selectedOfficial!
 
-        let event = Event(name: name, owner: "NaWmU1Bp6Md1JiTCRv0oBHQqCRY2", location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
+            event!.save { (event: Event?, error: Error?) in
+                if (error != nil) {
+                    print(error.debugDescription)
+                } else {
+                    print("Saved event.")
+                }
+            }
 
-        event.save { (event: Event?, error: Error?) in
-            if (error != nil) {
-                print(error.debugDescription)
-            } else {
-                print("Saved event.")
+            delegate?.eventUpdatedDelegate(event: event!)
+        } else {
+            let name = self.eventNameTextField.text!
+
+            let newEvent = Event(name: name, owner: UsersDatabase.shared.getCurrentUserUID()!, location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
+
+            newEvent.save { (event: Event?, error: Error?) in
+                if (error != nil) {
+                    print(error.debugDescription)
+                } else {
+                    print("Saved event.")
+                }
+            }
+
+            if delegate != nil {
+                delegate!.eventCreatedDelegate(event: newEvent)
             }
         }
-
         navigationController?.popViewController(animated: true)
-        if delegate != nil {
-            delegate!.eventCreatedDelegate(event: event)
-        }
-
-        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func cancelTapped(_ sender: Any) {
