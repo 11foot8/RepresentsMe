@@ -30,8 +30,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
-
-    var previousAddress:Address?
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
@@ -66,39 +64,28 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if self.address == nil || self.needToPull {
-            switch reachType {
-            case .home, .event:
-                // TODO: Get current user address
-                UsersDatabase.shared.getCurrentUserAddress { (address, error) in
-                    if let _ = error {
-                        // TODO: Handle error
-                        print(error.debugDescription)
-                    } else {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        switch reachType {
+        case .home, .event:
+            // TODO: Get current user address
+            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+                if let _ = error {
+                    // TODO: Handle error
+                    print(error.debugDescription)
+                } else {
+                    if self.address == nil || self.address != address || self.needToPull {
+
                         self.address = address
-                        self.getOfficials(for: self.address!)
+                        self.getOfficials(for: address!)
                     }
                 }
-                break
-            case .map:
-                // TODO: Use current address
-                self.getOfficials(for: self.address!)
-                break
             }
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
-            if let _ = error {
-                // TODO: Handle error
-            } else {
-                if self.previousAddress == nil || self.previousAddress != address {
-                    self.getOfficials(for: address!)
-                }
-            }
+            break
+        case .map:
+            // TODO: Use current address
+            self.getOfficials(for: self.address!)
+            break
         }
     }
 
@@ -110,7 +97,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: User Location
     func getOfficials(for address: Address) {
-        previousAddress = address
+        self.address = address
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
