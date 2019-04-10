@@ -30,7 +30,6 @@ class SignupViewController: UIViewController {
     let invalidConfirmPasswordMessage = "Does not match password"
     let defaultConfirmPasswordMessage = ""
 
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +39,7 @@ class SignupViewController: UIViewController {
         confirmPasswordTextField.clearButtonMode = UITextField.ViewMode.always
         displayNameTextField.clearButtonMode = UITextField.ViewMode.always
 
-        setEmailMessage()
-        setPasswordMessage()
-        setConfirmPasswordMessage()
+        checkFields()
     }
 
     // MARK: - Outlets
@@ -56,6 +53,8 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var emailMessageLabel: UILabel!
     @IBOutlet weak var passwordMessageLabel: UILabel!
     @IBOutlet weak var confirmPasswordMessageLabel: UILabel!
+    @IBOutlet weak var continueButton: UIButton!
+
 
     // MARK: - Actions
     @IBAction func signUpDidTouch(_ sender: Any) {
@@ -67,15 +66,15 @@ class SignupViewController: UIViewController {
     }
 
     @IBAction func emailFieldEditingChanged(_ sender: Any) {
-        setEmailMessage()
+        checkFields()
     }
 
     @IBAction func passwordFieldEditingChanged(_ sender: Any) {
-        setPasswordMessage()
+        checkFields()
     }
 
     @IBAction func confirmPasswordFieldEditingChanged(_ sender: Any) {
-        setConfirmPasswordMessage()
+        checkFields()
     }
 
     func attemptCreateUser() {
@@ -106,16 +105,28 @@ class SignupViewController: UIViewController {
         }
     }
 
+    func checkFields() {
+        if setEmailMessage() && setPasswordMessage() && setConfirmPasswordMessage() {
+            continueButton.isEnabled = true
+            
+        } else {
+            continueButton.isEnabled = false
+        }
+    }
+
     // MARK: - Email Message
-    func setEmailMessage() {
+    func setEmailMessage() -> Bool {
         if let email = emailTextField.text {
             if Util.isValidEmail(testStr: email) {
                 setEmailMessageValid()
+                return true
             } else {
                 setEmailMessageInvalid()
+                return false
             }
         } else {
             setEmailMessageDefault()
+            return false
         }
     }
 
@@ -138,9 +149,9 @@ class SignupViewController: UIViewController {
     }
 
     // MARK: - Password Message
-    func setPasswordMessage() {
-        setConfirmPasswordMessage()
+    func setPasswordMessage() -> Bool {
         setPasswordMessageDefault()
+        return setConfirmPasswordMessage()
     }
 
     func setPasswordMessageValid() {
@@ -162,15 +173,18 @@ class SignupViewController: UIViewController {
     }
 
     // MARK: - Confirm Password Message
-    func setConfirmPasswordMessage() {
+    func setConfirmPasswordMessage() -> Bool {
         if let confirmPassword = confirmPasswordTextField.text, let password = passwordTextField.text {
             if (confirmPassword == password) {
                 setConfirmPasswordMessageValid()
+                return true
             } else {
                 setConfirmPasswordMessageInvalid()
+                return false
             }
         } else {
             setConfirmPasswordMessageDefault()
+            return false
         }
     }
 
