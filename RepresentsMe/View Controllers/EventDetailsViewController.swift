@@ -21,6 +21,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
 
     var event:Event?
+    var delegate:CreateEventsDelegate?
 
     override func viewWillAppear(_ animated: Bool) {
         if event == nil {
@@ -64,6 +65,7 @@ class EventDetailsViewController: UIViewController {
         if segue.identifier == EDIT_EVENT_SEGUE {
             let destination = segue.destination as! CreateEventViewController
             destination.event = event
+            destination.delegate = delegate
         }
     }
 }

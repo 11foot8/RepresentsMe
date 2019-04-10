@@ -104,6 +104,10 @@ class EventListViewController: UIViewController,
             eventTableView.reloadData()
         }
     }
+
+    func eventUpdatedDelegate(event: Event) {
+        eventTableView.reloadData()
+    }
     
     /// Segue to the event details view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -111,6 +115,7 @@ class EventListViewController: UIViewController,
             let destination = segue.destination as? EventDetailsViewController,
             let eventIndex = eventTableView.indexPathForSelectedRow?.row {
             destination.event = events[eventIndex]
+            destination.delegate = self
         } else if segue.identifier == CREATE_EVENT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? CreateEventViewController {
             destination.delegate = self
