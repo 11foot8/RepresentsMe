@@ -9,81 +9,85 @@
 import UIKit
 import MBProgressHUD
 
+let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
+let TAB_BAR_VIEW_CONTROLLER_NAME = "mainTabBarViewController"
 
+/// The view controller to handle logging in to the app.
 class EntryViewController: UIViewController {
-    // MARK: - Properties
-    let signupSegueIdentifier = "SignupSegue"
-    let loginSegueIdentifier = "LoginSegue"
-    let signupUnwindSegueIdentifier = "SignupUnwindSegue"
-    let loginUnwindSegueIdentifier = "LoginUnwindSegue"
-    let signupAddressUnwindSegueIdentifier = "SignupAddressUnwindSegue"
+    
+    // MARK: - Outlets
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
 
     // MARK: - Lifecycle
+    
+    /// Set the properties for text fields
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.clearButtonMode = UITextField.ViewMode.always
         passwordTextField.clearButtonMode = UITextField.ViewMode.always
     }
 
-    // MARK: - Outlets
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-
     // MARK: - Actions
+    
+    /// Segue to the view for the user to create an account
     @IBAction func signupTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: signupSegueIdentifier, sender: nil)
+        performSegue(withIdentifier: SIGNUP_SEGUE_IDENTIFIER, sender: nil)
     }
 
+    /// Handle user request to login.
+    /// If request is valid, log the user in and segue to show the user's home
+    /// Officials, otherwise prompt the user to fix login errors.
     @IBAction func loginTouchUp(_ sender: Any) {
-        guard let email = emailTextField.text else {
-            // TODO: Handle nil email
-            return
-        }
-        guard let password = passwordTextField.text else {
-            // TODO: Handle nil password
-            return
-        }
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
 
         // TODO: Show loading animation
         let hud = LoadingHUD(self.view)
-        UsersDatabase.shared.loginUser(withEmail: email, password: password) { (uid, error) in
-            if let _ = error {
-                // TODO: Handle error
-                print(error.debugDescription)
-                // TODO: End loading animation
-                hud.end()
-                let alert = UIAlertController(
-                    title: "Error",
-                    message: error?.localizedDescription,
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-                self.present(alert, animated: true, completion: nil)
+        
+        // Log the user in
+        UsersDatabase.shared.loginUser(withEmail: email,
+                                       password: password) {(uid, error) in
+            // Stop the loading animation
+            hud.end()
+                                        
+            if let error = error {
+                self.loginFailed(with: error)
             } else {
-                // TODO: End loading animation
-                hud.end()
-                self.view.endEditing(true)
-                let storyBoard = UIStoryboard(name:"Main", bundle:nil)
-                let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")
-                guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
-                appDel.window?.rootViewController = tabBarViewController
+                self.loginSucceeded()
             }
         }
     }
 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-
-    @IBAction func unwindToVC(segue:UIStoryboardSegue) {
-
-    }
+    /// Stop editing when the user touches outside of the text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
+    /// Displays that the login failed to the user
+    ///
+    /// - Parameter with:   the error that occurred
+    private func loginFailed(with error:Error) {
+        // Display the error to the user
+        let alert = UIAlertController(
+            title: "Error",
+            message: error.localizedDescription,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /// If the login succeeds segue to the entry point of the app
+    private func loginSucceeded() {
+        // Stop editing
+        self.view.endEditing(true)
+        
+        // Segue to the tab bar view controller
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarViewController = storyBoard.instantiateViewController(
+            withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
+        if let appDel = UIApplication.shared.delegate as? AppDelegate {
+            appDel.window?.rootViewController = tabBarViewController
+        }
+    }
 }

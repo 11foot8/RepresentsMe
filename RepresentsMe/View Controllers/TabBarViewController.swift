@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// Sets up the icons for the tab bar when it is loaded in
 class TabBarViewController: UITabBarController {
     
+    // The icons to use
     static let icons:[String: (FontAwesome, FontAwesomeStyle)] = [
         "Officials": (.thList, .solid),
         "Settings": (.cog, .solid),
@@ -17,6 +19,7 @@ class TabBarViewController: UITabBarController {
         "Events": (.calendarWeek, .solid)
     ]
     
+    /// When the tab bar loads, set the icons
     override func viewDidLoad() {
         if let tabItems = self.tabBar.items {
             for tabItem in tabItems {
