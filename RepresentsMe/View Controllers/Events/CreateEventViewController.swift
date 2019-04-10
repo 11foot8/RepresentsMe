@@ -61,49 +61,36 @@ class CreateEventViewController: UIViewController,
         self.set(location: location, address: address)
     }
 
-    /// DatePopoverViewControllerDelegate
+    /// Update the views when a date is selected
+    /// Implements DatePopoverViewControllerDelegate
+    ///
+    /// - Parameter date:   the selected date
     func didSelectDate(date: Date) {
         self.set(date: date)
     }
 
+    /// Creates or updates the Event when the save button is pressed.
+    /// If successfully saves, segues back a view controller
     @IBAction func saveTapped(_ sender: Any) {
-        if selectedOfficial == nil || selectedOfficial == nil || selectedLocation == nil {
-            return
-        }
+        // Ensure selected attributes are valid
+        guard let official = selectedOfficial else {return}
+        guard let location = selectedLocation else {return}
+        guard let date = selectedDate else {return}
+        let name = self.eventNameTextField.text!
 
-        if (event != nil) {
-            event!.name = eventNameTextField.text!
-            event!.location = selectedLocation!
-            event!.date = selectedDate!
-            event!.official = selectedOfficial!
-
-            event!.save { (event: Event?, error: Error?) in
-                if (error != nil) {
-                    print(error.debugDescription)
-                } else {
-                    print("Saved event.")
-                }
-            }
-
-            delegate?.eventUpdatedDelegate()
+        if event != nil {
+            // Editing an Event, update it
+            self.updateEvent(name: name,
+                             official: official,
+                             location: location,
+                             date: date)
         } else {
-            let name = self.eventNameTextField.text!
-
-            let newEvent = Event(name: name, owner: UsersDatabase.shared.getCurrentUserUID()!, location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
-
-            newEvent.save { (event: Event?, error: Error?) in
-                if (error != nil) {
-                    print(error.debugDescription)
-                } else {
-                    print("Saved event.")
-                }
-            }
-
-            if delegate != nil {
-                delegate!.eventCreatedDelegate(event: newEvent)
-            }
+            // Not editing an Event, create a new Event
+            self.createEvent(name: name,
+                             official: official,
+                             location: location,
+                             date: date)
         }
-        navigationController?.popViewController(animated: true)
     }
 
     @IBAction func cancelTapped(_ sender: Any) {
@@ -195,5 +182,65 @@ class CreateEventViewController: UIViewController,
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, h:mm a"
         selectDateButton.setTitle(formatter.string(from: date), for: .normal)
+    }
+    
+    /// Updates the Event.
+    /// Segues back a view controller if successfully updates
+    ///
+    /// - Parameter name:       the new name
+    /// - Parameter official:   the new Official
+    /// - Parameter location:   the new location
+    /// - Parameter date:       the new date
+    private func updateEvent(name:String,
+                             official:Official,
+                             location:CLLocationCoordinate2D,
+                             date:Date) {
+        if let event = event {
+            event.name = name
+            event.location = location
+            event.date = date
+            event.official = official
+    
+            // Save the changes
+            event.save {(event, error) in
+                if (error != nil) {
+                    // TODO: handle error
+                } else {
+                    self.delegate?.eventUpdatedDelegate()
+    
+                    // Navigate back
+                    self.navigationController?.popViewController(
+                        animated: true)
+                }
+            }
+        }
+    }
+    
+    /// Creates a new Event.
+    /// Segues back a view controller if successfully creates
+    ///
+    /// - Parameter name:       the name for the Event
+    /// - Parameter official:   the Official for the Event
+    /// - Parameter location:   the location for the Event
+    /// - Parameter date:       the date for the Event
+    private func createEvent(name:String,
+                             official:Official,
+                             location:CLLocationCoordinate2D,
+                             date:Date) {
+        Event.create(name: name,
+                     owner: UsersDatabase.shared.getCurrentUserUID()!,
+                     location: location,
+                     date: date,
+                     official: official) {(event, error) in
+            if (error != nil) {
+                // TODO: handle error
+            } else {
+                self.delegate?.eventCreatedDelegate(event: event!)
+
+                // Navigate back
+                self.navigationController?.popViewController(
+                    animated: true)
+            }
+        }
     }
 }
