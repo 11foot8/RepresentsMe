@@ -80,7 +80,6 @@ class SignupViewController: UIViewController {
         setConfirmPasswordMessage()
     }
 
-
     func attemptCreateUser() {
         // Check all values are valid
         guard let email = emailTextField.text, Util.isValidEmail(testStr: email) else {
