@@ -23,6 +23,7 @@
 		13527120221F8AA200442AA6 /* Official.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711F221F8AA200442AA6 /* Official.swift */; };
 		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
+		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
 		137B65B7225D1A24007800C6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137B65B6225D1A24007800C6 /* AppState.swift */; };
 		13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD31B5223021F1000A6BEE /* TabBarViewController.swift */; };
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
@@ -65,7 +66,6 @@
 		3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */; };
 		3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1668225D06E30088D757 /* CreateEventViewController.swift */; };
 		3BCC166B225D0A140088D757 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC166A225D0A140088D757 /* Main.storyboard */; };
-		3BCC166D225D4DCF0088D757 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC166C225D4DCF0088D757 /* GoogleService-Info.plist */; };
 		3BE4383D2255347800EC049B /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4383C2255347800EC049B /* ContactViewController.swift */; };
 		3BE4384322556D4700EC049B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4384222556D4700EC049B /* LocationManager.swift */; };
 		6BE9F221BD96A6B132935898 /* Pods_RepresentsMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A72F30EFDD0573F09FBBD /* Pods_RepresentsMeUITests.framework */; };
@@ -107,6 +107,7 @@
 		1352711F221F8AA200442AA6 /* Official.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Official.swift; sourceTree = "<group>"; };
 		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		137B65B6225D1A24007800C6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		13BD31B5223021F1000A6BEE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopoverViewController.swift; sourceTree = "<group>"; };
 		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateEventViewController.swift; path = Events/CreateEventViewController.swift; sourceTree = "<group>"; };
 		3BCC166A225D0A140088D757 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		3BCC166C225D4DCF0088D757 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		61D34301053EDA13ECA7BD01 /* Pods-RepresentsMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe.release.xcconfig"; sourceTree = "<group>"; };
@@ -311,6 +311,7 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
+				1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3BE4384122556ADB00EC049B /* Interface Builder */,
 				3BE4383E22555B5B00EC049B /* Sources */,
@@ -319,7 +320,6 @@
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
-				3BCC166C225D4DCF0088D757 /* GoogleService-Info.plist */,
 				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
@@ -351,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
-				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -362,7 +361,6 @@
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */,
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				1683D0382253D27600350471 /* LoginViewController.swift */,
@@ -570,7 +568,7 @@
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
 				13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */,
 				3B1EFD5E221F06EC003176BF /* Assets.xcassets in Resources */,
-				3BCC166D225D4DCF0088D757 /* GoogleService-Info.plist in Resources */,
+				1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */,
 				16ECF8072255103B003DEA68 /* PickerPopup.xib in Resources */,
 				16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */,
 			);

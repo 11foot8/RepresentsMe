@@ -37,15 +37,9 @@ class EventListViewController: UIViewController,
 
             // Clear current events
             self.events.removeAll()
-            
-            // Use sandbox officials unless it is empty
-            var officials = AppState.sandboxOfficials
-            if officials.isEmpty {
-                officials = AppState.homeOfficials
-            }
-            
+
             // Pull the new events
-            for official in officials {
+            for official in AppState.homeOfficials {
                 Event.allWith(official: official) {(events, error) in
                     if error == nil {
                         self.events += events
