@@ -83,7 +83,7 @@ class SignupViewController: UIViewController {
 
     func attemptCreateUser() {
         // Check all values are valid
-        guard let email = emailTextField.text, isValidEmail(testStr: email) else {
+        guard let email = emailTextField.text, Util.isValidEmail(testStr: email) else {
             // TODO: Handle Error
             return
         }
@@ -112,7 +112,7 @@ class SignupViewController: UIViewController {
     // MARK: - Email Message
     func setEmailMessage() {
         if let email = emailTextField.text {
-            if isValidEmail(testStr: email) {
+            if Util.isValidEmail(testStr: email) {
                 setEmailMessageValid()
             } else {
                 setEmailMessageInvalid()
@@ -138,13 +138,6 @@ class SignupViewController: UIViewController {
         validEmailLabel.textColor = UIColor.black
         validEmailLabel.text = defaultFontAwesomeString
         emailMessageLabel.text = defaultEmailMessage
-    }
-
-    func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
     }
 
     // MARK: - Password Message

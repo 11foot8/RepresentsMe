@@ -29,24 +29,35 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                    (.displayName,"Username", "user"),
                    (.password,"Password", "key")]),
          ("", [(.address,"Address","home")]),
-         ("", [(.notifications,"Notifications", "bell")]),
          ("", [(.logout,"Logout","sign-out-alt")])]
+    //("", [(.notifications,"Notifications", "bell")]),
     let usersDB = UsersDatabase.getInstance()
+
+    let addressSegueIdentifier = "AddressSettingsSegue"
+    let emailSegueIdentifier = "EmailSettingsSegue"
+    let passwordSegueIdentifier = "PasswordSettingsSegue"
+    let displayNameSegueIdentifier = "DisplayNameSettingsSegue"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
+
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.frame = CGRect(x: tableView.frame.origin.x,
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
+        currentUserLabel.text = "Logged in as \(usersDB.getCurrentUserEmail () ?? "N/A")"
+        tableView.reloadData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -125,13 +136,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: false)
         switch (data[selectedRowSection].1)[selectedRow].0 {
         case .email:
+            performSegue(withIdentifier: emailSegueIdentifier, sender: self)
             break
         case .displayName:
+            performSegue(withIdentifier: displayNameSegueIdentifier, sender: self)
             break
         case .password:
+            performSegue(withIdentifier: passwordSegueIdentifier, sender: self)
             break
         case .address:
-            performSegue(withIdentifier: "addressSegue", sender: self)
+            performSegue(withIdentifier: addressSegueIdentifier, sender: self)
             break
         case .notifications:
             break
