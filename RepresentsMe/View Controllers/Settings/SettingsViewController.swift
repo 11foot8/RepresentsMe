@@ -29,9 +29,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                    (.displayName,"Username", "user"),
                    (.password,"Password", "key")]),
          ("", [(.address,"Address","home")]),
-         ("", [(.notifications,"Notifications", "bell")]),
          ("", [(.logout,"Logout","sign-out-alt")])]
+    //("", [(.notifications,"Notifications", "bell")]),
     let usersDB = UsersDatabase.getInstance()
+
+    let addressSegueIdentifier = "AddressSettingsSegue"
+    let emailSegueIdentifier = "EmailSettingsSegue"
+    let passwordSegueIdentifier = "PasswordSettingsSegue"
+    let displayNameSegueIdentifier = "DisplayNameSettingsSegue"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -131,16 +136,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: false)
         switch (data[selectedRowSection].1)[selectedRow].0 {
         case .email:
-            performSegue(withIdentifier: "emailSegue", sender: self)
+            performSegue(withIdentifier: emailSegueIdentifier, sender: self)
             break
         case .displayName:
-            performSegue(withIdentifier: "displayNameSegue", sender: self)
+            performSegue(withIdentifier: displayNameSegueIdentifier, sender: self)
             break
         case .password:
-            performSegue(withIdentifier: "passwordSegue", sender: self)
+            performSegue(withIdentifier: passwordSegueIdentifier, sender: self)
             break
         case .address:
-            performSegue(withIdentifier: "addressSegue", sender: self)
+            performSegue(withIdentifier: addressSegueIdentifier, sender: self)
             break
         case .notifications:
             break

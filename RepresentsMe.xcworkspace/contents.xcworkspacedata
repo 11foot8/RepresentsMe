@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/jacob/Developer/RepresentsMe/RepresentsMe/Sources/Util.swift">
-   </FileRef>
-   <FileRef
       location = "group:RepresentsMe.xcodeproj">
    </FileRef>
    <FileRef
