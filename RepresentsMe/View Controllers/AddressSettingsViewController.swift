@@ -105,6 +105,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
     }
     @IBAction func selectStateTouchUp(_ sender: Any) {
         self.view.endEditing(true)
+        performSegue(withIdentifier: popoverSegueIdentifier, sender: self)
     }
     func pickerDoneTouchUp(selection: String) {
         stateTextField.text = selection
