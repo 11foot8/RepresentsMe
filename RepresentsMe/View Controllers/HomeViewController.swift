@@ -17,30 +17,21 @@ protocol OfficialSelectionDelegate {
     func didSelectOfficial(official: Official)
 }
 
-var userAddr = Address(streetAddress: "110 Inner Campus Drive",
-                       city: "Austin",
-                       state: "TX",
-                       zipcode: "78712") {
-                didSet {
-                    userAddrChanged = true
-                }
-}
-var userAddrChanged = false
-
 enum HomeViewControllerReachType {
     case home
     case map
     case event
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Properties
     var officials: [Official] = []
 
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
-    let locationManager = CLLocationManager()
+
+    var previousAddress:Address?
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
@@ -100,10 +91,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        if userAddrChanged {
-            address = userAddr
-            userAddrChanged = false
-            getOfficials(for: address!)
+        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+            if let _ = error {
+                // TODO: Handle error
+            } else {
+                if self.previousAddress == nil || self.previousAddress != address {
+                    self.getOfficials(for: address!)
+                }
+            }
         }
     }
 
@@ -115,6 +110,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: User Location
     func getOfficials(for address: Address) {
+        previousAddress = address
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
             (officialList: [Official]?, error: ParserError?) in
             if error == nil, let officialList = officialList {
