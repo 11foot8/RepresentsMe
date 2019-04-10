@@ -20,66 +20,29 @@ protocol LocationSelectionDelegate {
     func didSelectLocation(location: CLLocationCoordinate2D, address: Address)
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, LocationInfoDelegate, CustomSearchBarDelegate,
+class MapViewController: UIViewController,
+                         MKMapViewDelegate,
+                         UISearchBarDelegate,
+                         LocationInfoDelegate,
+                         CustomSearchBarDelegate,
 MapActionButtonsDelegate {
+
     // MARK: - Properties
-    let regionInMeters:CLLocationDistance = 10000            // Regions will be 10 km across
-
-    var previousLocation:CLLocation?                         // Save previous location to limit
-                                                             // geocode frequency
+    
+    // Make regions 10km across
+    let regionInMeters:CLLocationDistance = 10000
+    // Only request new geocodes when the pin has moved at least 50m
+    let minimumDistanceForNewGeocode:CLLocationDistance = 50
+    // Only request new geocode once per second
+    let minimumTimeForNewGecode:TimeInterval = 1
+    
+    var previousLocation:CLLocation?
     var previousGeocodeTime:Date?
-
-    let minimumDistanceForNewGeocode:CLLocationDistance = 50 // Only request new geocodes when
-                                                             // pin is moved 50+ meters
-    let minimumTimeForNewGecode:TimeInterval = 1             // Only request new geocode once per second
-
     var address:Address?
-
     var annotation:MKAnnotation?
-
     var reachType: MapViewControllerReachType = .map
-
     var delegate: LocationSelectionDelegate?
-
     var workItem:DispatchWorkItem?
-
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        previousLocation = getCenterLocation(for: mapView)
-        previousGeocodeTime = Date()
-
-        if LocationManager.shared.checkLocationServices() {
-            mapView.showsUserLocation = true
-            centerViewOnUserLocation()
-        }
-
-        // Set up Location Info View
-        locationInfoView.delegate = self
-
-        // Set up search bar
-        customSearchBar.delegate = self
-
-        mapActionButtons.delegate = self
-
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.handleLongPress))
-        mapView.addGestureRecognizer(longPressRecognizer)
-
-        clearPin()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        delegate = nil
-        reachType = .map
-    }
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -87,42 +50,78 @@ MapActionButtonsDelegate {
     @IBOutlet weak var locationInfoView: LocationInfo!
     @IBOutlet weak var mapActionButtons: MapActionButtons!
 
-    // MARK: - Actions
-    func onSearchQuery(query: String) {
-        let address:String = query
-        GeocoderWrapper.geocodeAddressString(address, completionHandler: self.geocodeSearchedAddressCompletionHandler)
+    // MARK: - Lifecycle
+    
+    /// Sets up the map view and delegates
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Setup the map view
+        self.setupMapView()
+        
+        // Setup delegates
+        locationInfoView.delegate = self
+        customSearchBar.delegate = self
+        mapActionButtons.delegate = self
+    }
+    
+    /// Hide the navigation bar when the view appears
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    /// Show the navigation bar when the view disappears
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        delegate = nil
+        reachType = .map
     }
 
+    // MARK: - Actions
+    
+    /// Geocode the address given when search started and drop an pin on the
+    /// location if one is found.k
+    ///
+    /// - Parameter query:  the entered address
+    func onSearchQuery(query: String) {
+        GeocoderWrapper.geocodeAddressString(query) {(placemark) in
+            let coords = placemark.location!.coordinate
+            self.dropPin(coords: coords,
+                         title: "Searched Address",
+                         replaceSearchedValue: false)
+            self.centerView(on: coords, animated: false)
+        }
+    }
+
+    /// Clear any pins when the search bar is cleared
     func onSearchClear() {
         clearPin()
     }
 
-    func geocodeSearchedAddressCompletionHandler(placemark:CLPlacemark) {
-        let coords = placemark.location!.coordinate
-        dropPin(coords: coords, title: "Searched Address", replaceSearchedValue: false)
-        self.centerView(on: coords, animated: false)
-    }
-
-    func geocodeHomeAddressCompletionHandler(placemark:CLPlacemark) {
-        let coords = placemark.location!.coordinate
-        dropPin(coords: coords, title: "Home", replaceSearchedValue: true)
-        self.centerView(on: coords, animated: true)
-    }
-
+    /// Drops a pin on the selected location when a user long presses the map
     @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
-        if gestureRecognizer.state != .began { return }
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let touchMapCoordinate = mapView.convert(touchPoint,
+                                                     toCoordinateFrom: mapView)
 
-        let touchPoint = gestureRecognizer.location(in: mapView)
-        let touchMapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-
-        dropPin(coords: touchMapCoordinate, title: "Dropped pin", replaceSearchedValue: true)
+            dropPin(coords: touchMapCoordinate,
+                    title: "Dropped pin",
+                    replaceSearchedValue: true)
+        }
     }
 
     // MARK: - MapActionButtonsDelegate
+    
+    /// Centers the map on the user's current location
     func onLocateTouchUp() {
         if let coordinate = LocationManager.shared.userCoordinate {
             centerView(on: coordinate,animated: true)
-            dropPin(coords: coordinate, title: "Current Location", replaceSearchedValue: true)
+            dropPin(coords: coordinate,
+                    title: "Current Location",
+                    replaceSearchedValue: true)
         }
     }
 
@@ -134,7 +133,13 @@ MapActionButtonsDelegate {
                 print(error.debugDescription)
             } else {
                 if let addressStr = address?.description {
-                    GeocoderWrapper.geocodeAddressString(addressStr, completionHandler: self.geocodeHomeAddressCompletionHandler)
+                    GeocoderWrapper.geocodeAddressString(addressStr) {(placemark) in
+                        let coords = placemark.location!.coordinate
+                        self.dropPin(coords: coords,
+                                     title: "Home",
+                                     replaceSearchedValue: true)
+                        self.centerView(on: coords, animated: true)
+                    }
                 } else {
                     // TODO: Handle nil address error
                 }
@@ -251,5 +256,27 @@ MapActionButtonsDelegate {
             destination.address = self.address!
             destination.reachType = .map
         }
+    }
+    
+    /// Sets up the map view
+    private func setupMapView() {
+        // Default location to the center of the map
+        previousLocation = getCenterLocation(for: mapView)
+        previousGeocodeTime = Date()
+        
+        // Center the map on the user if they allowed location services
+        if LocationManager.shared.checkLocationServices() {
+            mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+        }
+        
+        // Setup long press gesture recognizer to drop pins
+        let longPressRecognizer = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(MapViewController.handleLongPress))
+        mapView.addGestureRecognizer(longPressRecognizer)
+        
+        // Clear any previous pins
+        clearPin()
     }
 }
