@@ -41,7 +41,6 @@
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
 		1683D0352253C19800350471 /* CustomSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D0342253C19800350471 /* CustomSearchBar.xib */; };
-		1683D0392253D27600350471 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0382253D27600350471 /* LoginViewController.swift */; };
 		1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03A2253D2A300350471 /* SignupViewController.swift */; };
 		1683D03D2253D35500350471 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03C2253D35500350471 /* EntryViewController.swift */; };
 		169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BD225D015200090CDA /* GeocoderWrapper.swift */; };
@@ -135,7 +134,6 @@
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		1683D0342253C19800350471 /* CustomSearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSearchBar.xib; sourceTree = "<group>"; };
-		1683D0382253D27600350471 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1683D03A2253D2A300350471 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		1683D03C2253D35500350471 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		169EB6BD225D015200090CDA /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
@@ -404,7 +402,6 @@
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
-				1683D0382253D27600350471 /* LoginViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
@@ -740,7 +737,6 @@
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,
-				1683D0392253D27600350471 /* LoginViewController.swift in Sources */,
 				16ECF811225516C9003DEA68 /* PickerPopoverViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
