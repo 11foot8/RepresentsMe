@@ -47,25 +47,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
 
-        switch reachType {
-        case .home, .event:
-            // TODO: Get current user address
-            UsersDatabase.getCurrentUserAddress { (address, error) in
-                if let _ = error {
-                    // TODO: Handle error
-                    print(error.debugDescription)
-                } else {
-                    self.address = address
-                    self.getOfficials(for: self.address!)
-                }
-            }
-        case .map:
-            self.getOfficials(for: self.address!)
-        }
+        loadOfficials()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        loadOfficials()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate = nil
+        reachType = .home
+    }
+
+    func loadOfficials() {
         switch reachType {
         case .home, .event:
             // TODO: Get current user address
@@ -87,12 +83,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.getOfficials(for: self.address!)
             break
         }
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate = nil
-        reachType = .home
     }
 
     // MARK: User Location
