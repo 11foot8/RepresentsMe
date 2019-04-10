@@ -348,17 +348,17 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
-				1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */,
-				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				3BE4384122556ADB00EC049B /* Interface Builder */,
 				3BE4383E22555B5B00EC049B /* Sources */,
 				13BD31AA22302078000A6BEE /* Models */,
 				3B45F0B62226F15B00FA5B8B /* View Controllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
-				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
 				13BD31BD22302605000A6BEE /* Fonts */,
+				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
+				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
+				1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
 			);
 			path = RepresentsMe;
