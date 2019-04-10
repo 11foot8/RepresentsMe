@@ -14,10 +14,13 @@ let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 
 class EventListViewController: UIViewController,
                                UITableViewDelegate,
-                               UITableViewDataSource {
+                               UITableViewDataSource,
+                               UISearchBarDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
+    @IBOutlet weak var eventSearchBar: UISearchBar!
     
+    var eventsSource:[Event] = []
     var events:[Event] = []     // The events being displayed
     var address:Address?        // The current address for officials for events
     
@@ -26,6 +29,7 @@ class EventListViewController: UIViewController,
         super.viewDidLoad()
         eventTableView.delegate = self
         eventTableView.dataSource = self
+        eventSearchBar.delegate = self
     }
     
     /// If the address or is nil, update the events being displayed
@@ -37,11 +41,14 @@ class EventListViewController: UIViewController,
 
             // Clear current events
             self.events.removeAll()
+            self.eventsSource.removeAll()
 
             // Pull the new events
             for official in AppState.homeOfficials {
                 Event.allWith(official: official) {(events, error) in
                     if error == nil {
+                        self.eventsSource += events
+                        self.eventsSource.sort()
                         self.events += events
                         self.events.sort()
                         self.eventTableView.reloadData()
@@ -54,6 +61,12 @@ class EventListViewController: UIViewController,
         }
     }
     
+    /// When the search text changes, filter the events
+    func searchBar(_ searchBar:UISearchBar, textDidChange:String) {
+        self.events = self.filterEvents(by: textDidChange)
+        self.eventTableView.reloadData()
+    }
+
     // MARK: UITableViewDelegate
     
     /// The number of rows is the number of events
@@ -105,6 +118,6 @@ class EventListViewController: UIViewController,
     ///
     /// - Returns: the Array of filtered Events
     private func filterEvents(by query:String) -> [Event] {
-        return self.events.filter {(event) in event.matches(query)}
+        return self.eventsSource.filter {(event) in event.matches(query)}
     }
 }
