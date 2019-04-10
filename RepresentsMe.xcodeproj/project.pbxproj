@@ -45,7 +45,6 @@
 		169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */; };
 		169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */; };
 		16A6535F225D6D4300E13856 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A6535E225D6D4300E13856 /* Util.swift */; };
-		16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */; };
 		16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65362225D80C500E13856 /* LoadingHUD.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
@@ -96,7 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D9449C1223184F30057BAB1 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		0D9449C1223184F30057BAB1 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = ../DetailsViewController.swift; sourceTree = "<group>"; };
 		0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		106FE128867F4D9B064C11E3 /* Pods-RepresentsMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMeTests/Pods-RepresentsMeTests.release.xcconfig"; sourceTree = "<group>"; };
 		13287BB82220479B00622CD4 /* OfficialScraperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialScraperTests.swift; sourceTree = "<group>"; };
@@ -135,7 +134,6 @@
 		169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
 		169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNameSettingsViewController.swift; sourceTree = "<group>"; };
 		16A6535E225D6D4300E13856 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = ../AddressSettingsViewController.swift; sourceTree = "<group>"; };
 		16A65362225D80C500E13856 /* LoadingHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
@@ -166,7 +164,7 @@
 		3B649F062237274100E88430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopoverViewController.swift; sourceTree = "<group>"; };
-		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateEventViewController.swift; path = Events/CreateEventViewController.swift; sourceTree = "<group>"; };
+		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		3BCC166A225D0A140088D757 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -253,13 +251,15 @@
 			path = FontAwesome;
 			sourceTree = "<group>";
 		};
-		165B7F65225BE1800095D9E1 /* Sign Up */ = {
+		165B7F65225BE1800095D9E1 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				1683D0382253D27600350471 /* LoginViewController.swift */,
 				1683D03A2253D2A300350471 /* SignupViewController.swift */,
+				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */,
 			);
-			path = "Sign Up";
+			path = Entry;
 			sourceTree = "<group>";
 		};
 		16ECF80A225510E3003DEA68 /* PickerPopup */ = {
@@ -362,10 +362,11 @@
 			isa = PBXGroup;
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
-				16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */,
+				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
 				169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
-				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
+				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
+				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -373,18 +374,9 @@
 		3B45F0B62226F15B00FA5B8B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */,
-				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
-				1683D03C2253D35500350471 /* EntryViewController.swift */,
-				1683D0382253D27600350471 /* LoginViewController.swift */,
-				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
-				165B7F65225BE1800095D9E1 /* Sign Up */,
-				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
-				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
-				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
-				3BE4383B2255345B00EC049B /* Details */,
+				3BE4383B2255345B00EC049B /* Officials */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
@@ -412,6 +404,9 @@
 		3BCC1665225CF5FA0088D757 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
+				1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */,
+				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
 				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
 			);
 			path = Events;
@@ -436,12 +431,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		3BE4383B2255345B00EC049B /* Details */ = {
+		3BE4383B2255345B00EC049B /* Officials */ = {
 			isa = PBXGroup;
 			children = (
+				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
+				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				3BE4383C2255347800EC049B /* ContactViewController.swift */,
 			);
-			path = Details;
+			path = Officials;
 			sourceTree = "<group>";
 		};
 		3BE4383E22555B5B00EC049B /* Sources */ = {
@@ -740,7 +737,6 @@
 				169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
-				16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */,
 				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
