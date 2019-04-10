@@ -414,7 +414,7 @@ class Event: Comparable {
         if lhs.official != rhs.official {
             // The events are for two different officials, sort based on the
             // official's index
-            return lhs.official!.index < rhs.official!.index
+            return lhs.official!.index > rhs.official!.index
         }
 
         if lhs.date != rhs.date {
