@@ -13,6 +13,7 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
+/// The view controller to handle creating and updating Events
 class CreateEventViewController: UIViewController,
                                  UIPopoverPresentationControllerDelegate,
                                  OfficialSelectionDelegate,
@@ -25,12 +26,13 @@ class CreateEventViewController: UIViewController,
     @IBOutlet weak var selectLocationButton: UIButton!
     @IBOutlet weak var selectDateButton: UIButton!
 
-    var event: Event?
-    var selectedDate: Date?
-    var selectedOfficial: Official?
-    var selectedLocation: CLLocationCoordinate2D?
-    var delegate:EventListDelegate?
+    var event: Event?                               // The Event if editing
+    var selectedDate: Date?                         // The selected date
+    var selectedOfficial: Official?                 // The selected Official
+    var selectedLocation: CLLocationCoordinate2D?   // The selected location
+    var delegate:EventListDelegate?                 // The delegate to update
 
+    /// Sets up the view for the Event if editing an Event
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,32 +95,41 @@ class CreateEventViewController: UIViewController,
         }
     }
 
+    /// Discard changes and segue back a view controller
     @IBAction func cancelTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
 
     /// UIPopoverPresentationControllerDelegate
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 
+    /// Prepare for segues to select the Official, location, and date
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
+            // Seguing to select an Official
             let destination = segue.destination as! HomeViewController
             destination.reachType = .event
             destination.delegate = self
         } else if (segue.identifier == SELECT_LOCATION_SEGUE) {
+            // Seguing to select a location
             let destination = segue.destination as! MapViewController
             destination.reachType = .event
             destination.delegate = self
         } else if (segue.identifier == DATE_POPOVER_SEGUE) {
-            let datePopoverViewController = segue.destination as! DatePopoverViewController
-            datePopoverViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-            datePopoverViewController.popoverPresentationController?.delegate = self
-                datePopoverViewController.delegate = self
-            datePopoverViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
-            datePopoverViewController.popoverPresentationController?.sourceView = view
-            datePopoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            // Seguing to select a date
+            let destination = segue.destination as! DatePopoverViewController
+            destination.popoverPresentationController?.delegate = self
+            destination.delegate = self
+            
+            // Present the view controller as a popover
+            destination.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+            destination.popoverPresentationController?.sourceRect = CGRect(
+                x: view.center.x, y: view.center.y, width: 0, height: 0)
+            destination.popoverPresentationController?.sourceView = view
+            destination.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         }
     }
 
