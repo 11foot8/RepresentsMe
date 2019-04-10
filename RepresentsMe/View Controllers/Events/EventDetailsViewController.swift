@@ -12,6 +12,8 @@ import MapKit
 
 let EDIT_EVENT_SEGUE = "editEventSegue"
 
+/// The view controller to display the details for an Event and allow the
+/// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
@@ -42,14 +44,16 @@ class EventDetailsViewController: UIViewController {
         }
     }
 
+    /// Segue to edit the Event
     @IBAction func editButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: EDIT_EVENT_SEGUE, sender: self)
     }
 
+    /// Delete the Event and segue back to the Events list
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        event?.delete(completion: { (event: Event?, error: Error?) in
+        self.event?.delete(completion: {(event, error) in
             if (error != nil) {
-                print(error.debugDescription)
+                // TODO: handle error
             } else {
                 self.delegate?.eventDeletedDelegate(event: event!)
                 self.navigationController?.popViewController(animated: true)
@@ -57,6 +61,7 @@ class EventDetailsViewController: UIViewController {
         })
     }
 
+    /// Prepare to segue to edit the Event
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EDIT_EVENT_SEGUE {
             let destination = segue.destination as! CreateEventViewController
