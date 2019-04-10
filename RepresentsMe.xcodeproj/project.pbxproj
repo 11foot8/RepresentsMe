@@ -170,7 +170,7 @@
 		3B649F062237274100E88430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopoverViewController.swift; sourceTree = "<group>"; };
-		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateEventViewController.swift; path = Events/CreateEventViewController.swift; sourceTree = "<group>"; };
+		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		3BCC166A225D0A140088D757 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -387,9 +387,7 @@
 		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				134F9224225E5EBC00B797B4 /* Events Table View */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
 				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				1683D0382253D27600350471 /* LoginViewController.swift */,
@@ -397,12 +395,10 @@
 				165B7F65225BE1800095D9E1 /* Sign Up */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
-				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
 				3BE4383B2255345B00EC049B /* Details */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
-				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -427,6 +423,10 @@
 		3BCC1665225CF5FA0088D757 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				134F9224225E5EBC00B797B4 /* Events Table View */,
+				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
+				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
+				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
 				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
 			);
 			path = Events;
