@@ -15,10 +15,6 @@ class UsersDatabase {
 
     static let shared = UsersDatabase()
 
-    static func getInstance() -> UsersDatabase {
-        return UsersDatabase.shared
-    }
-
     private init() {
 
     }
@@ -194,6 +190,7 @@ class UsersDatabase {
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)
+                completion(nil,error)
             } else {
                 // TODO: Handle successful login
                 completion(user?.user.uid,nil)

@@ -43,8 +43,6 @@ MapActionButtonsDelegate {
 
     var workItem:DispatchWorkItem?
 
-    let usersDB = UsersDatabase.getInstance()
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +128,7 @@ MapActionButtonsDelegate {
 
     /// Move view to user's saved address and drop a pin
     func onHomeTouchUp() {
-        usersDB.getCurrentUserAddress { (address, error) in
+        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)

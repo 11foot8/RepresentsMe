@@ -10,7 +10,6 @@ import UIKit
 
 class EmailSettingsViewController: UIViewController {
     // MARK: - Properties
-    let usersDB = UsersDatabase.getInstance()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -18,7 +17,7 @@ class EmailSettingsViewController: UIViewController {
         dividerView.layer.cornerRadius = 2.0
         dividerView.clipsToBounds = true
 
-        currentEmailTextField.text = usersDB.getCurrentUserEmail()
+        currentEmailTextField.text = UsersDatabase.shared.getCurrentUserEmail()
 
         // Do any additional setup after loading the view.
     }
@@ -40,7 +39,7 @@ class EmailSettingsViewController: UIViewController {
         guard let password = passwordTextField.text else { return }
         guard let newEmail = newEmailTextField.text else { return }
 
-        usersDB.changeUserEmail(currentEmail: currentEmail, password: password, newEmail: newEmail, completion: { (error) in
+        UsersDatabase.shared.changeUserEmail(currentEmail: currentEmail, password: password, newEmail: newEmail, completion: { (error) in
             if let _ = error {
                 // TODO: Handle error
                 // End loading animation

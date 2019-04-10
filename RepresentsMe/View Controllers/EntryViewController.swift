@@ -17,7 +17,6 @@ class EntryViewController: UIViewController {
     let signupUnwindSegueIdentifier = "SignupUnwindSegue"
     let loginUnwindSegueIdentifier = "LoginUnwindSegue"
     let signupAddressUnwindSegueIdentifier = "SignupAddressUnwindSegue"
-    let usersDB = UsersDatabase.getInstance()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -47,12 +46,19 @@ class EntryViewController: UIViewController {
 
         // TODO: Show loading animation
         let hud = LoadingHUD(self.view)
-        usersDB.loginUser(withEmail: email, password: password) { (uid, error) in
+        UsersDatabase.shared.loginUser(withEmail: email, password: password) { (uid, error) in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)
                 // TODO: End loading animation
                 hud.end()
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: error?.localizedDescription,
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+                self.present(alert, animated: true, completion: nil)
             } else {
                 // TODO: End loading animation
                 hud.end()
