@@ -16,6 +16,7 @@ let DATE_POPOVER_SEGUE = "datePopoverSegue"
 protocol CreateEventsDelegate {
     func eventCreatedDelegate(event:Event)
     func eventUpdatedDelegate(event:Event)
+    func eventDeletedDelegate(event:Event)
 }
 
 class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, LocationSelectionDelegate, DatePopoverViewControllerDelegate {
@@ -116,7 +117,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
             }
 
             if delegate != nil {
-                delegate!.eventCreatedDelegate(event: event!)
+                delegate!.eventCreatedDelegate(event: newEvent)
             }
         }
         navigationController?.popViewController(animated: true)

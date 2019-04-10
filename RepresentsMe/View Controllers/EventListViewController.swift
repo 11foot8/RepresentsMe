@@ -108,7 +108,19 @@ class EventListViewController: UIViewController,
     func eventUpdatedDelegate(event: Event) {
         eventTableView.reloadData()
     }
-    
+
+    func eventDeletedDelegate(event: Event) {
+        events.removeAll { (tableEvent: Event) -> Bool in
+            tableEvent == event
+        }
+
+        eventsSource.removeAll { (tableEvent: Event) -> Bool in
+            tableEvent == event
+        }
+        
+        eventTableView.reloadData()
+    }
+
     /// Segue to the event details view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EVENT_SEGUE_IDENTIFIER,

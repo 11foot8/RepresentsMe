@@ -19,6 +19,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var deleteEventButton: UIButton!
 
     var event:Event?
     var delegate:CreateEventsDelegate?
@@ -52,13 +53,28 @@ class EventDetailsViewController: UIViewController {
         self.mapView.setRegion(region, animated: true)
 
         editButton.isEnabled = false
+        deleteEventButton.isHidden = true
+        deleteEventButton.isEnabled = false
         if (UsersDatabase.shared.getCurrentUserUID() == event?.owner) {
             editButton.isEnabled = true
+            deleteEventButton.isEnabled = true
+            deleteEventButton.isHidden = false
         }
     }
 
     @IBAction func editButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: EDIT_EVENT_SEGUE, sender: self)
+    }
+
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        event?.delete(completion: { (event: Event?, error: Error?) in
+            if (error != nil) {
+                print(error.debugDescription)
+            } else {
+                self.delegate?.eventDeletedDelegate(event: event!)
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
