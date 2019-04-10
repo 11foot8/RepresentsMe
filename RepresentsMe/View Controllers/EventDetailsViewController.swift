@@ -8,7 +8,16 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class EventDetailsViewController: UIViewController {
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var portraitImageView: UIImageView!
+    @IBOutlet weak var eventNameLabel: UILabel!
+    @IBOutlet weak var eventDateLabel: UILabel!
+    @IBOutlet weak var eventLocationLabel: UILabel!
+
     var event:Event?
+
+
 }
