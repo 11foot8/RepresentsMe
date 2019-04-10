@@ -15,7 +15,7 @@ let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
 protocol CreateEventsDelegate {
     func eventCreatedDelegate(event:Event)
-    func eventUpdatedDelegate(event:Event)
+    func eventUpdatedDelegate()
     func eventDeletedDelegate(event:Event)
 }
 
@@ -102,7 +102,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
                 }
             }
 
-            delegate?.eventUpdatedDelegate(event: event!)
+            delegate?.eventUpdatedDelegate()
         } else {
             let name = self.eventNameTextField.text!
 

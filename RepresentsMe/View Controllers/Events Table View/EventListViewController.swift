@@ -9,30 +9,38 @@
 import Foundation
 import UIKit
 
-let EVENT_CELL_IDENTIFIER = "eventCell"
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
 class EventListViewController: UIViewController,
-                               UITableViewDelegate,
-                               UITableViewDataSource,
                                UISearchBarDelegate,
                                CreateEventsDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
     
+    var tableViewDelegate:EventsTableViewDelegate!
+    var tableViewDataSource:EventsTableViewDataSource!
+    
     var officials:[Official] = []   // The officials for the events
     var address:Address?            // The current address being displayed
-    var eventsSource:[Event] = []   // All pulled events
-    var events:[Event] = []         // The events being displayed
+    var events:[Event] = []         // All pulled events
 
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
-        eventTableView.delegate = self
-        eventTableView.dataSource = self
-        eventSearchBar.delegate = self
+        
+        // Set table view delegate
+        self.tableViewDelegate = EventsTableViewDelegate()
+        self.eventTableView.delegate = self.tableViewDelegate
+        
+        // Set table view data source
+        self.tableViewDataSource = EventsTableViewDataSource(
+            for: self.eventTableView)
+        self.eventTableView.dataSource = self.tableViewDataSource
+        
+        // Set search bar delegate
+        self.eventSearchBar.delegate = self
     }
     
     /// Update the events being displayed if the user's address changed
@@ -71,97 +79,70 @@ class EventListViewController: UIViewController,
     /// events table view
     func getEvents() {
         // Clear current events
+        self.tableViewDataSource.deleteAll()
         self.events.removeAll()
-        self.eventsSource.removeAll()
 
         // Pull the new events
         for official in self.officials {
             Event.allWith(official: official) {(events, error) in
                 if error == nil {
                     // Add to the source
-                    self.eventsSource += events
-                    self.eventsSource.sort()
+                    self.events += events
+                    self.events.sort()
                     
                     // Add to the list being displayed
-                    self.events += events.filter {(event) in
-                        event.matches(self.eventSearchBar.text ?? "")
-                    }
-                    self.events.sort()
-
-                    // Update the table view
-                    self.updateTableData()
+                    self.tableViewDataSource.add(
+                        events: events,
+                        filter: self.eventSearchBar.text ?? "")
                 }
             }
         }
-
-        // Update the table view
-        self.updateTableData()
     }
     
     /// When the search text changes, filter the events
     func searchBar(_ searchBar:UISearchBar, textDidChange:String) {
-        self.events = self.filterEvents(by: textDidChange)
-        self.eventTableView.reloadData()
+        self.tableViewDataSource.set(events: self.events,
+                                     filter: textDidChange)
     }
-    
-    // MARK: UITableViewDelegate
-    
-    /// The number of rows is the number of events
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        return events.count
-    }
-    
-    /// Sets the event for the given cell
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: EVENT_CELL_IDENTIFIER,
-            for: indexPath) as! EventCell
-        cell.event = events[indexPath.row]
-        return cell
-    }
-    
-    /// Deselect a cell after it is selected
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
-    
-    // MARK: Segue
-    
+   
+    /// Adds in a newly created event
+    ///
+    /// - Parameter event:  the Event that was created
     func eventCreatedDelegate(event: Event) {
-        eventsSource.append(event)
-        eventsSource.sort()
-        if event.matches(eventSearchBar.text!) {
-            events.append(event)
-            events.sort()
-            eventTableView.reloadData()
-        }
-    }
-
-    func eventUpdatedDelegate(event: Event) {
-        eventTableView.reloadData()
-    }
-
-    func eventDeletedDelegate(event: Event) {
-        events.removeAll { (tableEvent: Event) -> Bool in
-            tableEvent == event
-        }
-
-        eventsSource.removeAll { (tableEvent: Event) -> Bool in
-            tableEvent == event
-        }
+        // Add to the events source
+        events.append(event)
+        events.sort()
         
-        eventTableView.reloadData()
+        // Add to the displayed events
+        self.tableViewDataSource.add(event: event,
+                                     filter: self.eventSearchBar.text ?? "")
     }
 
-    /// Segue to the event details view
+    /// Reloads the table view when an event is updated
+    func eventUpdatedDelegate() {
+        self.tableViewDataSource.updateTableData()
+    }
+
+    /// Removes the given event from the Arrays of Events
+    ///
+    /// - Parameter event:  the Event to delete
+    func eventDeletedDelegate(event:Event) {
+        // Remove from the displayed events
+        self.tableViewDataSource.delete(event: event)
+
+        // Remove from the events source
+        if let index = self.events.index(of: event) {
+            self.events.remove(at: index)
+        }
+    }
+
+    /// Segue to the event details view or the events create view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EVENT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? EventDetailsViewController,
             let eventIndex = eventTableView.indexPathForSelectedRow?.row {
-            destination.event = events[eventIndex]
+            destination.event = self.tableViewDataSource.getEvent(
+                at: eventIndex)
             destination.delegate = self
         } else if segue.identifier == CREATE_EVENT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? CreateEventViewController {
@@ -176,21 +157,5 @@ class EventListViewController: UIViewController,
     /// - Returns: true if should update, false otherwise
     private func shouldUpdate(address:Address?) -> Bool {
         return self.address == nil || self.address != address
-    }
-    
-    /// Filters the Events based on the given query
-    ///
-    /// - Parameter by:     the query to filter by
-    ///
-    /// - Returns: the Array of filtered Events
-    private func filterEvents(by query:String) -> [Event] {
-        return self.eventsSource.filter {(event) in event.matches(query)}
-    }
-    
-    /// Updates the event table view
-    private func updateTableData() {
-        DispatchQueue.main.async {
-            self.eventTableView.reloadData()
-        }
     }
 }
