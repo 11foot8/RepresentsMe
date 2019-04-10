@@ -99,7 +99,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D9449C1223184F30057BAB1 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		0D9449C1223184F30057BAB1 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = "RepresentsMe/View Controllers/DetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		106FE128867F4D9B064C11E3 /* Pods-RepresentsMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMeTests/Pods-RepresentsMeTests.release.xcconfig"; sourceTree = "<group>"; };
 		13287BB82220479B00622CD4 /* OfficialScraperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialScraperTests.swift; sourceTree = "<group>"; };
@@ -402,7 +402,6 @@
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
-				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
 				134F922B225E8F2200B797B4 /* Home */,
@@ -446,6 +445,7 @@
 		3BE4383B2255345B00EC049B /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
 				3BE4383C2255347800EC049B /* ContactViewController.swift */,
 			);
 			path = Details;
