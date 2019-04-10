@@ -106,7 +106,7 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         } else {
             let name = self.eventNameTextField.text!
 
-            let newEvent = Event(name: name, owner: UsersDatabase.shared.getCurrentUserUID()!, location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
+            let newEvent = Event(name: name, owner: UsersDatabase.currentUserUID!, location: self.selectedLocation!, date: self.selectedDate!, official: self.selectedOfficial!)
 
             newEvent.save { (event: Event?, error: Error?) in
                 if (error != nil) {

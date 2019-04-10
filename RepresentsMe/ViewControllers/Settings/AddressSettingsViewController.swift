@@ -25,7 +25,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
         // Start loading animation
         self.navigationItem.hidesBackButton = true
         let hud = LoadingHUD(self.view)
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+        UsersDatabase.getCurrentUserAddress { (address, error) in
             if let _ = error {
                 // End loading animation
                 hud.end()
@@ -85,7 +85,7 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
 
         // TODO: Start loading animation
         let hud = LoadingHUD(self.view)
-        UsersDatabase.shared.setUserAddress(uid: UsersDatabase.shared.getCurrentUserUID() ?? "", address: address) { (error) in
+        UsersDatabase.shared.setUserAddress(uid: UsersDatabase.currentUserUID ?? "", address: address) { (error) in
             if let _ = error {
                 // TODO: Handle error
                 // End loading animation

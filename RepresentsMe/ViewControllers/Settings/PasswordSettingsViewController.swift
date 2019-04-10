@@ -42,7 +42,7 @@ class PasswordSettingsViewController: UIViewController {
         let hud = LoadingHUD(self.view)
         guard let currentPassword = currentPasswordTextField.text else { return }
         guard let newPassword = newPasswordTextField.text else { return }
-        guard let email = UsersDatabase.shared.getCurrentUserEmail() else { return }
+        guard let email = UsersDatabase.currentUserEmail else { return }
 
         UsersDatabase.shared.changeUserPassword(email: email, currentPassword: currentPassword, newPassword: newPassword, completion: { (error) in
             if let _ = error {

@@ -58,7 +58,7 @@ class EventDetailsViewController: UIViewController {
         editButton.isEnabled = false
         deleteEventButton.isHidden = true
         deleteEventButton.isEnabled = false
-        if (UsersDatabase.shared.getCurrentUserUID() == event?.owner) {
+        if (UsersDatabase.currentUserUID == event?.owner) {
             editButton.isEnabled = true
             deleteEventButton.isEnabled = true
             deleteEventButton.isHidden = false

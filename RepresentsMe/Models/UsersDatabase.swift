@@ -14,12 +14,65 @@ class UsersDatabase {
     static let db = Firestore.firestore().collection(UsersDatabase.collection)
 
     static let shared = UsersDatabase()
+    private init() { }
 
-    private init() {
-
+    // MARK: - Current User Info
+    static var currentUser: User? {
+        return Auth.auth().currentUser
     }
 
-    // MARK: - Create User
+    static var currentUserDisplayName: String? {
+        return currentUser?.displayName
+    }
+
+    static var currentUserUID: String? {
+        return currentUser?.uid
+    }
+
+    static var currentUserEmail: String? {
+        return currentUser?.email
+    }
+
+
+    // MARK: - General User Info
+    static func getCurrentUserAddress(completion:@escaping (Address?, Error?)->Void) {
+        if let uid = currentUserUID {
+            getUserAddress(uid: uid, completion: completion)
+        } else {
+            // TODO: Handle no current user error
+        }
+    }
+
+    static func getUserAddress(uid:String,completion:@escaping (Address?, Error?)->Void) {
+        UsersDatabase.db.document(uid).getDocument { (document, error) in
+            if let _ = error {
+                // TODO: Handle error
+                print(error.debugDescription)
+                completion(nil, error)
+            } else {
+                if let data = document?.data() {
+                    let address = Address(streetAddress: data["streetAddress"]  as! String,
+                                          city: data["city"]                    as! String,
+                                          state: data["state"]                  as! String,
+                                          zipcode: data["zipcode"]              as! String)
+                    completion(address, nil)
+                } else {
+                    // TODO: Handle nil data
+                }
+            }
+        }
+    }
+
+    // MARK: Create User
+
+    /// Builds a User
+    ///
+    /// - Parameter email:          the user's email address
+    /// - Parameter password:       the user's password
+    /// - Parameter displayName:    the user's chosen display name
+    /// - Parameter address:        the user's home address
+    /// - Parameter completion:     the completion handler to run after
+    ///                             receive server response
     func createUser(email:String, password:String, displayName:String, address:Address, completion:@escaping (Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let _ = error {
@@ -67,51 +120,6 @@ class UsersDatabase {
 
     func createDocumentForUser(uid:String) {
 
-    }
-
-    // MARK: - Current User Info
-    func getCurrentUser() -> User? {
-        return Auth.auth().currentUser
-    }
-
-    func getCurrentUserDisplayName() -> String? {
-        return getCurrentUser()?.displayName
-    }
-
-    func getCurrentUserUID() -> String? {
-        return getCurrentUser()?.uid
-    }
-    func getCurrentUserAddress(completion:@escaping (Address?, Error?)->Void) {
-        if let uid = getCurrentUserUID() {
-            getUserAddress(uid: uid, completion: completion)
-        } else {
-            // TODO: Handle no current user error
-        }
-    }
-
-    func getCurrentUserEmail() -> String? {
-        return getCurrentUser()?.email
-    }
-
-    // MARK: - General User Info
-    func getUserAddress(uid:String,completion:@escaping (Address?, Error?)->Void) {
-        UsersDatabase.db.document(uid).getDocument { (document, error) in
-            if let _ = error {
-                // TODO: Handle error
-                print(error.debugDescription)
-                completion(nil, error)
-            } else {
-                if let data = document?.data() {
-                    let address = Address(streetAddress: data["streetAddress"]  as! String,
-                                          city: data["city"]                    as! String,
-                                          state: data["state"]                  as! String,
-                                          zipcode: data["zipcode"]              as! String)
-                    completion(address, nil)
-                } else {
-                    // TODO: Handle nil data
-                }
-            }
-        }
     }
 
     // MARK: - Set user info

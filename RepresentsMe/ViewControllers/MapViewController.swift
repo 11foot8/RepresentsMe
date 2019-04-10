@@ -128,7 +128,7 @@ MapActionButtonsDelegate {
 
     /// Move view to user's saved address and drop a pin
     func onHomeTouchUp() {
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+        UsersDatabase.getCurrentUserAddress { (address, error) in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)

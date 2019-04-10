@@ -38,7 +38,7 @@ class EventListViewController: UIViewController,
     /// If the address or is nil, update the events being displayed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+        UsersDatabase.getCurrentUserAddress { (address, error) in
             if let _ = error {
                 // TODO: Handle error
             } else {

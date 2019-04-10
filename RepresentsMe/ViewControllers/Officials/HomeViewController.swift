@@ -50,7 +50,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch reachType {
         case .home, .event:
             // TODO: Get current user address
-            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+            UsersDatabase.getCurrentUserAddress { (address, error) in
                 if let _ = error {
                     // TODO: Handle error
                     print(error.debugDescription)
@@ -69,7 +69,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch reachType {
         case .home, .event:
             // TODO: Get current user address
-            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+            UsersDatabase.getCurrentUserAddress { (address, error) in
                 if let _ = error {
                     // TODO: Handle error
                     print(error.debugDescription)

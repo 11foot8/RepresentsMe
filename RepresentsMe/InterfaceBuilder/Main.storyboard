@@ -1226,7 +1226,6 @@
                         <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
                         <outlet property="officialNameLabel" destination="rTn-YH-UMt" id="IZi-Ty-MdD"/>
                         <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
-                        <segue destination="V5Z-GW-aU6" kind="show" id="xAA-0M-hTn"/>
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
                     </connections>
                 </viewController>
@@ -1972,7 +1971,6 @@
         <segue reference="fZv-Vr-KZp"/>
         <segue reference="7Am-r7-zXQ"/>
         <segue reference="JrQ-Sz-hlR"/>
-        <segue reference="xAA-0M-hTn"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>
 </document>
