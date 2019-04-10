@@ -229,7 +229,7 @@
                                     <constraint firstAttribute="height" constant="144" id="ogt-Hp-hKB"/>
                                 </constraints>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cxU-Qv-kIJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cxU-Qv-kIJ">
                                 <rect key="frame" x="112.66666666666669" y="128" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Upf-uZ-uMd"/>
@@ -1008,14 +1008,14 @@
                                 <rect key="frame" x="0.0" y="144" width="375" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="130" id="fYP-9H-zhh" customClass="EventCell" customModule="RepresentsMe" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="130" id="fYP-9H-zhh" customClass="EventCell" customModule="RepresentsMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fYP-9H-zhh" id="rMi-Vi-b0s">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="129.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="129.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yxn-lc-O9B">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yxn-lc-O9B">
                                                     <rect key="frame" x="15" y="18" width="77" height="77"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="77" id="HcW-V4-AT9"/>
@@ -1023,19 +1023,19 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYJ-NB-kws">
-                                                    <rect key="frame" x="108" y="51.333333333333336" width="252" height="20.000000000000007"/>
+                                                    <rect key="frame" x="108" y="51.333333333333336" width="226" height="20.000000000000007"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Short Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkV-BH-WKr">
-                                                    <rect key="frame" x="108" y="79.333333333333329" width="252" height="20"/>
+                                                    <rect key="frame" x="108" y="79.333333333333329" width="226" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUT-bg-tur">
-                                                    <rect key="frame" x="108" y="18" width="244" height="25.333333333333329"/>
+                                                    <rect key="frame" x="108" y="18" width="218" height="25.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1076,7 +1076,7 @@
                                             <outlet property="eventImageView" destination="Yxn-lc-O9B" id="tim-w3-n3b"/>
                                             <outlet property="loadingIndicator" destination="LET-km-fHi" id="nRn-Fg-eub"/>
                                             <outlet property="nameLabel" destination="uUT-bg-tur" id="ndf-3C-h4M"/>
-                                            <segue destination="egU-99-xc4" kind="show" id="dla-CR-CGj"/>
+                                            <segue destination="egU-99-xc4" kind="show" identifier="eventSegueIdentifier" id="dla-CR-CGj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1129,7 +1129,7 @@
                                 </constraints>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="232" width="375" height="171"/>
+                                <rect key="frame" x="0.0" y="232" width="375" height="182"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
                                         <rect key="frame" x="0.0" y="64" width="375" height="29"/>
@@ -1143,8 +1143,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-dm-V8w">
-                                        <rect key="frame" x="0.0" y="130" width="375" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-dm-V8w">
+                                        <rect key="frame" x="0.0" y="130" width="375" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1162,12 +1162,12 @@
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="gGd-Dn-rxp"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="nTs-Vv-4ME"/>
                                     <constraint firstAttribute="trailing" secondItem="Ge3-dm-V8w" secondAttribute="trailing" id="oMY-r6-JP3"/>
-                                    <constraint firstAttribute="height" constant="171" id="pdp-uu-lUc"/>
+                                    <constraint firstAttribute="height" constant="182" id="pdp-uu-lUc"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="q29-H3-7N2"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="wV1-Zk-22C"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vdf-XQ-iMh">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vdf-XQ-iMh">
                                 <rect key="frame" x="112.66666666666669" y="124" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="57J-Y5-qmj"/>
