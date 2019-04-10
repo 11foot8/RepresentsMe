@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -237,7 +237,7 @@
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8k-dl-get">
-                                <rect key="frame" x="-12" y="274" width="399" height="504"/>
+                                <rect key="frame" x="-12" y="274" width="399" height="455"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXY-SU-akR">
                                         <rect key="frame" x="182.33333333333334" y="49" width="34.666666666666657" height="21"/>
@@ -417,7 +417,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-4C-tLE">
-                                <rect key="frame" x="16" y="142" width="343" height="636"/>
+                                <rect key="frame" x="16" y="142" width="343" height="587"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1114,10 +1114,10 @@
             </objects>
             <point key="canvasLocation" x="2018.4000000000001" y="-548.27586206896558"/>
         </scene>
-        <!--View Controller-->
+        <!--Event Details View Controller-->
         <scene sceneID="roA-XU-gpR">
             <objects>
-                <viewController id="egU-99-xc4" sceneMemberID="viewController">
+                <viewController id="egU-99-xc4" customClass="EventDetailsViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oaX-xy-IAX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1189,6 +1189,11 @@
                         <viewLayoutGuide key="safeArea" id="ND4-xx-3xZ"/>
                     </view>
                     <connections>
+                        <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
+                        <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
+                        <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>
+                        <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
+                        <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
                         <segue destination="V5Z-GW-aU6" kind="show" id="xAA-0M-hTn"/>
                     </connections>
                 </viewController>
@@ -1946,12 +1951,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11foot8" width="983" height="979"/>
+        <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7Am-r7-zXQ"/>
         <segue reference="7wb-vX-DZx"/>
-        <segue reference="EnH-nx-c8p"/>
+        <segue reference="xAA-0M-hTn"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>
 </document>
