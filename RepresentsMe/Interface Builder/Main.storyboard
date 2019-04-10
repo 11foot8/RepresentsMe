@@ -750,6 +750,7 @@
                     <connections>
                         <outlet property="confirmPasswordMessageLabel" destination="anM-yK-34J" id="77f-lw-es5"/>
                         <outlet property="confirmPasswordTextField" destination="S9Z-HM-a7l" id="5U1-af-BIl"/>
+                        <outlet property="continueButton" destination="Moq-tB-zpM" id="ojN-rz-vq3"/>
                         <outlet property="displayNameTextField" destination="0uC-Da-1Qc" id="bBw-LM-g6n"/>
                         <outlet property="emailMessageLabel" destination="8im-Lx-TU4" id="Fjo-ZP-eVm"/>
                         <outlet property="emailTextField" destination="Er3-6V-ur1" id="EKZ-lb-oWz"/>
