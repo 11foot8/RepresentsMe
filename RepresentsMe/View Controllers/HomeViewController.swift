@@ -23,68 +23,53 @@ enum HomeViewControllerReachType {
     case event
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController,
+                          UITableViewDelegate,
+                          UITableViewDataSource {
 
     // MARK: - Properties
-    var officials: [Official] = []
-
     var reachType: HomeViewControllerReachType = .home
     var delegate: OfficialSelectionDelegate?
+    var officials:[Official] = []
+    var address:Address? {
+        didSet {
+            addressChanged = true
+        }
+    }
+    var addressChanged:Bool = false
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
-    var address: Address? {
-        didSet {
-            needToPull = true
-        }
-    }
-    var needToPull:Bool = false
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         officialsTableView.delegate = self
         officialsTableView.dataSource = self
-
-        switch reachType {
-        case .home, .event:
-            // TODO: Get current user address
-            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
-                if let _ = error {
-                    // TODO: Handle error
-                    print(error.debugDescription)
-                } else {
-                    self.address = address
-                    self.getOfficials(for: self.address!)
-                }
-            }
-        case .map:
-            self.getOfficials(for: self.address!)
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         switch reachType {
         case .home, .event:
-            // TODO: Get current user address
-            UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+            // Get the user's current home address and check if need to update
+            // the officials
+            UsersDatabase.shared.getCurrentUserAddress {(address, error) in
                 if let _ = error {
                     // TODO: Handle error
                     print(error.debugDescription)
                 } else {
-                    if self.address == nil || self.address != address || self.needToPull {
-
-                        self.address = address
+                    if self.address == nil || self.address != address {
                         self.getOfficials(for: address!)
                     }
                 }
             }
             break
         case .map:
-            // TODO: Use current address
-            self.getOfficials(for: self.address!)
+            // Update the officials if the sandbox address has changed
+            if self.addressChanged {
+                self.getOfficials(for: self.address!)
+            }
             break
         }
     }
@@ -96,44 +81,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: User Location
+    
+    /// Updates the officials for the given address.
+    /// Scrapes the officials and reloads the table data if successfully pulls
+    /// officials.
+    ///
+    /// - Parameter for:    the address to pull for
     func getOfficials(for address: Address) {
+        // Update the address
         self.address = address
-        OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
-            (officialList: [Official]?, error: ParserError?) in
-            if error == nil, let officialList = officialList {
-                switch self.reachType {
-                case .home, .event:
-                    AppState.homeOfficials = officialList
-                    break
-                case .map:
-                    AppState.sandboxOfficials = officialList
-                    break
-                }
-                
-                DispatchQueue.main.async {
-                    self.needToPull = false
-                    switch self.reachType {
-                    case .home, .event:
-                        self.navigationItem.title = "Home"
-                        break
-                    case .map:
-                        self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
-                    }
+        self.addressChanged = false
 
-                    self.officialsTableView.reloadData()
-                }
+        // Scrape the new Officials
+        OfficialScraper.getForAddress(
+            address: address, apikey: civic_api_key) {(officials, error) in
+            
+            if error == nil {
+                // Store the officials
+                self.officials = officials
+
+                // Update the view
+                self.updateTableData()
             }
         }
     }
 
     // MARK: UITableViewDelegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch self.reachType {
-        case .home, .event:
-            return AppState.homeOfficials.count
-        case .map:
-            return AppState.sandboxOfficials.count
-        }
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        return self.officials.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,13 +117,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             withIdentifier: OFFICIAL_CELL_IDENTIFIER,
             for: indexPath) as! OfficialCell
         
-        switch reachType {
-        case .home, .event:
-            cell.official = AppState.homeOfficials[indexPath.row]
-            break
-        case .map:
-            cell.official = AppState.sandboxOfficials[indexPath.row]
-        }
+        cell.official = self.officials[indexPath.row]
         
         return cell
     }
@@ -159,7 +129,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
             break
         case .event:
-            delegate?.didSelectOfficial(official: AppState.homeOfficials[indexPath.row])
+            delegate?.didSelectOfficial(official: self.officials[indexPath.row])
             navigationController?.popViewController(animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
@@ -170,13 +140,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? DetailsViewController,
             let indexPath = officialsTableView.indexPathForSelectedRow {
+            
             officialsTableView.deselectRow(at: indexPath, animated: false)
+            destination.official = self.officials[indexPath.row]
+        }
+    }
+
+
+    /// Updates the table view with the new officials
+    private func updateTableData() {
+        DispatchQueue.main.async {
             switch self.reachType {
             case .home, .event:
-                destination.official = AppState.homeOfficials[indexPath.row]
+                self.navigationItem.title = "Home"
+                break
             case .map:
-                destination.official = AppState.sandboxOfficials[indexPath.row]
+                self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
+                break
             }
+            
+            self.officialsTableView.reloadData()
         }
     }
 }

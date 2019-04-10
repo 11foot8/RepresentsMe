@@ -22,11 +22,11 @@ class EventListViewController: UIViewController,
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
     
-    var eventsSource:[Event] = []
-    var events:[Event] = []     // The events being displayed
-    var address:Address?        // The current address for officials for events
-    var previousAddress:Address?
-    
+    var officials:[Official] = []   // The officials for the events
+    var address:Address?            // The current address being displayed
+    var eventsSource:[Event] = []   // All pulled events
+    var events:[Event] = []         // The events being displayed
+
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,56 +35,67 @@ class EventListViewController: UIViewController,
         eventSearchBar.delegate = self
     }
     
-    /// If the address or is nil, update the events being displayed
+    /// Update the events being displayed if the user's address changed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+
+        // Check if the user's home address has changed and update events if
+        // it did change
+        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
             if let _ = error {
                 // TODO: Handle error
             } else {
-                if self.previousAddress == nil || self.previousAddress != address {
+                if self.shouldUpdate(address: address) {
                     self.getOfficials(for: address!)
                 }
             }
         }
     }
 
+    /// Gets the Officials for the given address and updates the Events
+    ///
+    /// - Parameter for:    the address to get for
     func getOfficials(for address: Address) {
-        previousAddress = address
-        OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
-            (officialList: [Official]?, error: ParserError?) in
-            if error == nil, let officialList = officialList {
-                AppState.homeOfficials = officialList
-                self.reloadEvents()
+        self.address = address
+        OfficialScraper.getForAddress(
+            address: address, apikey: civic_api_key) {(officials, error) in
+                
+            if error == nil {
+                self.officials = officials
+                self.getEvents()
             }
         }
     }
 
-    func reloadEvents() {
+    /// Gets the Events for the current list of Officials and updates the
+    /// events table view
+    func getEvents() {
         // Clear current events
         self.events.removeAll()
         self.eventsSource.removeAll()
 
         // Pull the new events
-        for official in AppState.homeOfficials {
+        for official in self.officials {
             Event.allWith(official: official) {(events, error) in
                 if error == nil {
+                    // Add to the source
                     self.eventsSource += events
                     self.eventsSource.sort()
-                    self.events += events
+                    
+                    // Add to the list being displayed
+                    self.events += events.filter {(event) in
+                        event.matches(self.eventSearchBar.text ?? "")
+                    }
                     self.events.sort()
 
-                    DispatchQueue.main.async {
-                        self.eventTableView.reloadData()
-                    }
+                    // Update the table view
+                    self.updateTableData()
                 }
             }
         }
 
         // Update the table view
-        DispatchQueue.main.async {
-            self.eventTableView.reloadData()
-        }
+        self.updateTableData()
     }
     
     /// When the search text changes, filter the events
@@ -160,9 +171,11 @@ class EventListViewController: UIViewController,
     
     /// Gets whether or not should update the Events being displayed
     ///
+    /// - Parameter address:    the user's set address
+    ///
     /// - Returns: true if should update, false otherwise
-    private func shouldUpdate() -> Bool {
-        return self.events.isEmpty
+    private func shouldUpdate(address:Address?) -> Bool {
+        return self.address == nil || self.address != address
     }
     
     /// Filters the Events based on the given query
@@ -172,5 +185,12 @@ class EventListViewController: UIViewController,
     /// - Returns: the Array of filtered Events
     private func filterEvents(by query:String) -> [Event] {
         return self.eventsSource.filter {(event) in event.matches(query)}
+    }
+    
+    /// Updates the event table view
+    private func updateTableData() {
+        DispatchQueue.main.async {
+            self.eventTableView.reloadData()
+        }
     }
 }

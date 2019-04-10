@@ -24,7 +24,6 @@
 		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
-		137B65B7225D1A24007800C6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137B65B6225D1A24007800C6 /* AppState.swift */; };
 		13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD31B5223021F1000A6BEE /* TabBarViewController.swift */; };
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
@@ -114,7 +113,6 @@
 		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		137B65B6225D1A24007800C6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		13BD31B5223021F1000A6BEE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
@@ -229,7 +227,6 @@
 				133BD33A223A76F00069279A /* PoliticalParty.swift */,
 				13CCFEF52253B7F9005D6CE1 /* Event.swift */,
 				133C70C12255823F00D7E060 /* EventAttendee.swift */,
-				137B65B6225D1A24007800C6 /* AppState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -729,7 +726,6 @@
 				3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */,
 				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
 				169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */,
-				137B65B7225D1A24007800C6 /* AppState.swift in Sources */,
 				13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */,
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
 				0DF1F11D225CFD8A008D61CF /* EventDetailsViewController.swift in Sources */,
