@@ -19,6 +19,10 @@
 		134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9225225E5F3E00B797B4 /* EventListDelegate.swift */; };
 		134F9228225E89CA00B797B4 /* HomeTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */; };
 		134F922A225E8C3800B797B4 /* HomeTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */; };
+		134F922D225EA23200B797B4 /* SettingsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */; };
+		134F922F225EA41500B797B4 /* SettingsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F922E225EA41500B797B4 /* SettingsEntry.swift */; };
+		134F9231225EA48D00B797B4 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9230225EA48D00B797B4 /* SettingsSection.swift */; };
+		134F9233225EA9B200B797B4 /* SettingsTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */; };
 		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
 		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
 		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
@@ -112,6 +116,10 @@
 		134F9225225E5F3E00B797B4 /* EventListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListDelegate.swift; sourceTree = "<group>"; };
 		134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewDataSource.swift; sourceTree = "<group>"; };
 		134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewDelegate.swift; sourceTree = "<group>"; };
+		134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewDataSource.swift; sourceTree = "<group>"; };
+		134F922E225EA41500B797B4 /* SettingsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntry.swift; sourceTree = "<group>"; };
+		134F9230225EA48D00B797B4 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewDelegate.swift; sourceTree = "<group>"; };
 		13527111221F74AB00442AA6 /* JSONData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		13527112221F74AB00442AA6 /* JSONOfficial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOfficial.swift; sourceTree = "<group>"; };
 		13527113221F74AB00442AA6 /* OfficialScraper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialScraper.swift; sourceTree = "<group>"; };
@@ -388,6 +396,10 @@
 			isa = PBXGroup;
 			children = (
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
+				134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */,
+				134F922E225EA41500B797B4 /* SettingsEntry.swift */,
+				134F9230225EA48D00B797B4 /* SettingsSection.swift */,
+				134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */,
 				16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */,
 				169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
@@ -740,6 +752,7 @@
 				16ECF811225516C9003DEA68 /* PickerPopoverViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
+				134F922F225EA41500B797B4 /* SettingsEntry.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */,
 				169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */,
@@ -771,12 +784,15 @@
 				3BE4383D2255347800EC049B /* ContactViewController.swift in Sources */,
 				0D9449C2223184F30057BAB1 /* DetailsViewController.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
+				134F9233225EA9B200B797B4 /* SettingsTableViewDelegate.swift in Sources */,
 				16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */,
 				16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */,
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
+				134F922D225EA23200B797B4 /* SettingsTableViewDataSource.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
 				1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */,
 				134F9228225E89CA00B797B4 /* HomeTableViewDataSource.swift in Sources */,
+				134F9231225EA48D00B797B4 /* SettingsSection.swift in Sources */,
 				13DDF425225CED0D008E3D32 /* Enum.swift in Sources */,
 				134F9223225E591600B797B4 /* EventsTableViewDataSource.swift in Sources */,
 				133C70C22255823F00D7E060 /* EventAttendee.swift in Sources */,
