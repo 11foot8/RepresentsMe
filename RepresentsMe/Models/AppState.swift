@@ -10,30 +10,46 @@ import Foundation
 
 protocol AppStateListener {
     func appStateReceivedHomeOfficials(officials: [Official])
+    func appStateReceivedSandboxOfficials(officials: [Official])
+}
+
+enum AddressType {
+    case home
+    case sandbox
 }
 
 class AppState {
-    /// The Officials for the user's home address
-    static var homeOfficials:[Official] = []
-
-    /// The Officials for the user's selected address
-    static var sandboxOfficials:[Official] = []
-
-    /// The currently selected sandbox Address
-    static var sandboxAddress:Address?
-
     static var homeAddress:Address? {
         didSet {
             if let address = homeAddress {
-                loadOfficials(address: address)
+                loadOfficials(address: address, type: .home)
+            }
+        }
+    }    /// The Officials for the user's home address
+    static var homeOfficials:[Official] = []
+
+    /// The currently selected sandbox Address
+    static var sandboxAddress:Address? {
+        didSet {
+            if let address = sandboxAddress {
+                loadOfficials(address: address, type: .sandbox)
             }
         }
     }
 
-    private static var listeners: [AppStateListener] = []
+    /// The Officials for the user's selected address
+    static var sandboxOfficials:[Official] = []
 
-    static func addListener(listener: AppStateListener) {
-        listeners.append(listener)
+    private static var homeAddressListeners: [AppStateListener] = []
+
+    static func addHomeAddressListener(listener: AppStateListener) {
+        homeAddressListeners.append(listener)
+    }
+
+    private static var sandboxAddressListeners: [AppStateListener] = []
+
+    static func addSandboxAddressListener(listener: AppStateListener) {
+        sandboxAddressListeners.append(listener)
     }
 
     static func setup() {
@@ -49,18 +65,27 @@ class AppState {
         }
     }
 
-    static func loadOfficials(address: Address) {
+    static func loadOfficials(address: Address, type: AddressType) {
         OfficialScraper.getForAddress(address: address, apikey: civic_api_key, completion: { (officials: [Official]?, error: ParserError?) in
             if error != nil {
                 // TODO: Handle error
             }
 
             if let officials = officials {
-                homeOfficials = officials
-                for listener in listeners {
-                    listener.appStateReceivedHomeOfficials(officials: self.homeOfficials)
+                switch type {
+                case .home:
+                    homeOfficials = officials
+                    for listener in homeAddressListeners {
+                        listener.appStateReceivedHomeOfficials(officials: homeOfficials)
+                    }
+                    break
+                case .sandbox:
+                    sandboxOfficials = officials
+                    for listener in sandboxAddressListeners {
+                        listener.appStateReceivedSandboxOfficials(officials: sandboxOfficials)
+                    }
+                    break
                 }
-
             }
         })
     }

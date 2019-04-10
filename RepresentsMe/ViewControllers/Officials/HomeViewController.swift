@@ -30,12 +30,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Outlets
     @IBOutlet weak var officialsTableView: UITableView!
-    var address: Address? {
-        didSet {
-            needToPull = true
-        }
-    }
-    var needToPull:Bool = false
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -46,72 +40,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         switch reachType {
         case .home, .event:
-            AppState.addListener(listener: self)
+            AppState.addHomeAddressListener(listener: self)
+            self.navigationItem.title = "Home"
             break
         case .map:
+            AppState.addSandboxAddressListener(listener: self)
+            navigationItem.title = "\(AppState.sandboxAddress!.city), \(AppState.sandboxAddress!.state)"
             break
         }
-
-        loadOfficials()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        loadOfficials()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate = nil
     }
 
     func appStateReceivedHomeOfficials(officials: [Official]) {
-        self.address = AppState.homeAddress
         DispatchQueue.main.async {
             self.officialsTableView.reloadData()
         }
     }
 
-    func loadOfficials() {
-        switch reachType {
-        case .home, .event:
-            self.navigationItem.title = "Home"
-            break
-        case .map:
-            // TODO: Use current address
-            self.getOfficials(for: self.address!)
-            break
-        }
-    }
-
-    // MARK: User Location
-    func getOfficials(for address: Address) {
-        self.address = address
-        OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
-            (officialList: [Official]?, error: ParserError?) in
-            if error == nil, let officialList = officialList {
-                switch self.reachType {
-                case .home, .event:
-                    AppState.homeOfficials = officialList
-                    break
-                case .map:
-                    AppState.sandboxOfficials = officialList
-                    break
-                }
-                
-                DispatchQueue.main.async {
-                    self.needToPull = false
-                    switch self.reachType {
-                    case .home, .event:
-                        self.navigationItem.title = "Home"
-                        break
-                    case .map:
-                        self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
-                    }
-
-                    self.officialsTableView.reloadData()
-                }
-            }
+    func appStateReceivedSandboxOfficials(officials: [Official]) {
+        navigationItem.title = "\(AppState.sandboxAddress!.city), \(AppState.sandboxAddress!.state)"
+        DispatchQueue.main.async {
+            self.officialsTableView.reloadData()
         }
     }
 
