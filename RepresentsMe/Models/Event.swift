@@ -224,6 +224,10 @@ class Event: Comparable {
     ///
     /// - Returns: true if matches the query, false otherwise
     func matches(_ query:String) -> Bool {
+        if query == "" {
+            return true
+        }
+        
         let query = query.lowercased()
         guard let official = self.official else {
             return self.name.lowercased().contains(query)
@@ -231,6 +235,7 @@ class Event: Comparable {
         
         return self.name.lowercased().contains(query) ||
             official.division.lowercased().contains(query) ||
+            official.office.lowercased().contains(query) ||
             official.name.lowercased().contains(query)
     }
     
