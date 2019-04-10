@@ -1189,9 +1189,14 @@
                         <viewLayoutGuide key="safeArea" id="ND4-xx-3xZ"/>
                     </view>
                     <navigationItem key="navigationItem" id="bgm-Ze-5P5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="4bk-0q-wm3"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="4bk-0q-wm3">
+                            <connections>
+                                <action selector="editButtonTapped:" destination="egU-99-xc4" id="2S7-k9-0Rk"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="4bk-0q-wm3" id="qYb-Dv-bvz"/>
                         <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
                         <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>

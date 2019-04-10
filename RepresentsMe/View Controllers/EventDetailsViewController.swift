@@ -10,12 +10,15 @@ import Foundation
 import UIKit
 import MapKit
 
+let EDIT_EVENT_SEGUE = "editEventSegue"
+
 class EventDetailsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
+    @IBOutlet weak var editButton: UIBarButtonItem!
 
     var event:Event?
 
@@ -46,5 +49,21 @@ class EventDetailsViewController: UIViewController {
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
 
         self.mapView.setRegion(region, animated: true)
+
+        editButton.isEnabled = false
+        if (UsersDatabase.shared.getCurrentUserUID() == event?.owner) {
+            editButton.isEnabled = true
+        }
+    }
+
+    @IBAction func editButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: EDIT_EVENT_SEGUE, sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == EDIT_EVENT_SEGUE {
+            let destination = segue.destination as! CreateEventViewController
+            destination.event = event
+        }
     }
 }
