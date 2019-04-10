@@ -1130,23 +1130,29 @@
                                     <constraint firstAttribute="height" constant="144" id="VDK-fC-GGL"/>
                                 </constraints>
                             </mapView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="232" width="375" height="182"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
+                                <rect key="frame" x="0.0" y="232" width="375" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
-                                        <rect key="frame" x="0.0" y="64" width="375" height="29"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
+                                        <rect key="frame" x="0.0" y="63.999999999999993" width="375" height="28.666666666666664"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHP-BZ-P0D">
-                                        <rect key="frame" x="0.0" y="101" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="125.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-dm-V8w">
-                                        <rect key="frame" x="0.0" y="130" width="375" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="154.66666666666669" width="375" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Official" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTn-YH-UMt">
+                                        <rect key="frame" x="0.0" y="100.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1154,18 +1160,21 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="rTn-YH-UMt" secondAttribute="bottom" constant="4" id="0Do-Kp-F8C"/>
+                                    <constraint firstAttribute="trailing" secondItem="rTn-YH-UMt" secondAttribute="trailing" id="1gq-xv-dGn"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="top" secondItem="bHP-BZ-P0D" secondAttribute="bottom" constant="8" id="20O-dA-Dj9"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="GaW-Zw-uqb"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="LXi-Ry-EbA"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="top" constant="64" id="NXT-gr-Ed0"/>
+                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="UhB-AD-YlJ"/>
                                     <constraint firstAttribute="trailing" secondItem="kC2-E6-8xR" secondAttribute="trailing" id="WRa-33-aUP"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="cLH-so-40Y"/>
                                     <constraint firstAttribute="trailing" secondItem="bHP-BZ-P0D" secondAttribute="trailing" id="dCe-ps-4KY"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="gGd-Dn-rxp"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="nTs-Vv-4ME"/>
                                     <constraint firstAttribute="trailing" secondItem="Ge3-dm-V8w" secondAttribute="trailing" id="oMY-r6-JP3"/>
-                                    <constraint firstAttribute="height" constant="182" id="pdp-uu-lUc"/>
-                                    <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="q29-H3-7N2"/>
+                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="pq0-DF-XvK"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ge3-dm-V8w" secondAttribute="bottom" constant="24" id="wN9-Py-lGc"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="wV1-Zk-22C"/>
                                 </constraints>
                             </view>
@@ -1176,8 +1185,8 @@
                                     <constraint firstAttribute="height" constant="150" id="w8m-I3-k4m"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
-                                <rect key="frame" x="144" y="454" width="87" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
+                                <rect key="frame" x="144" y="472" width="87" height="30"/>
                                 <state key="normal" title="Delete Event">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -1215,6 +1224,7 @@
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
                         <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>
                         <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
+                        <outlet property="officialNameLabel" destination="rTn-YH-UMt" id="IZi-Ty-MdD"/>
                         <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
                         <segue destination="V5Z-GW-aU6" kind="show" id="xAA-0M-hTn"/>
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
@@ -1959,10 +1969,10 @@
         <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Yh7-ve-cIi"/>
+        <segue reference="fZv-Vr-KZp"/>
         <segue reference="7Am-r7-zXQ"/>
         <segue reference="JrQ-Sz-hlR"/>
-        <segue reference="EnH-nx-c8p"/>
+        <segue reference="xAA-0M-hTn"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>
 </document>
