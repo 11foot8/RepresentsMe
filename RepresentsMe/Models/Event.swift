@@ -218,6 +218,22 @@ class Event: Comparable {
         }
     }
     
+    /// Checks if this Event matches the given query
+    ///
+    /// - Parameter query:  the query to check against
+    ///
+    /// - Returns: true if matches the query, false otherwise
+    func matches(_ query:String) -> Bool {
+        let query = query.lowercased()
+        guard let official = self.official else {
+            return self.name.lowercased().contains(query)
+        }
+        
+        return self.name.lowercased().contains(query) ||
+            official.division.lowercased().contains(query) ||
+            official.name.lowercased().contains(query)
+    }
+    
     /// Creates a new event in Firestore
     ///
     /// - Parameter completion:     the completion handler

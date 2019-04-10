@@ -98,4 +98,13 @@ class EventListViewController: UIViewController,
             (AppState.sandboxAddress != nil &&
                 self.address != AppState.sandboxAddress)
     }
+    
+    /// Filters the Events based on the given query
+    ///
+    /// - Parameter by:     the query to filter by
+    ///
+    /// - Returns: the Array of filtered Events
+    private func filterEvents(by query:String) -> [Event] {
+        return self.events.filter {(event) in event.matches(query)}
+    }
 }
