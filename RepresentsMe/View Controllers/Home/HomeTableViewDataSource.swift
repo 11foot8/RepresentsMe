@@ -30,6 +30,15 @@ class HomeTableViewDataSource: NSObject, UITableViewDataSource {
         self.parent = parent
     }
     
+    /// Gets the Official at the given index
+    ///
+    /// - Parameter at:     the index to get
+    ///
+    /// - Returns: the Official
+    func getOfficial(at index:Int) -> Official {
+        return self.officials[index]
+    }
+    
     /// The number of rows is the number of Officials
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {

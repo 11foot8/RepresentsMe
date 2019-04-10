@@ -9,15 +9,19 @@
 import UIKit
 import CoreLocation
 
-let DETAILS_VIEW_SEGUE = "detailsViewSegue"
-let UNWIND_TO_CREATE_EVENT_SEGUE = "unwindToCreateEventViewController"
-
+/// The protocol to implement in order to receive an Official when the user
+/// selects an Official.
 protocol OfficialSelectionDelegate {
     func didSelectOfficial(official: Official)
 }
 
-class HomeViewController: UIViewController,
-                          UITableViewDelegate {
+/// The view controller to display a table view of Officials.
+/// Allows for showing the user's home Officials as well as Officials for a
+/// selected Address. Also allows for selecting an Official in order to select
+/// Officials for Events.
+class HomeViewController: UIViewController {
+    
+    static let DETAILS_VIEW_SEGUE = "detailsViewSegue"
 
     /// The modes avaliable for the home view controller
     enum ReachType {
@@ -28,8 +32,11 @@ class HomeViewController: UIViewController,
 
     // MARK: - Properties
     
+    // The table view delegate and data source
     var tableViewDataSource:HomeTableViewDataSource!
+    var tableViewDelegate:HomeTableViewDelegate!
     
+    // Properties
     var reachType:ReachType = .home
     var delegate:OfficialSelectionDelegate?
     var address:Address? {
@@ -48,11 +55,15 @@ class HomeViewController: UIViewController,
     /// Set the table view delegate and data source
     override func viewDidLoad() {
         super.viewDidLoad()
-        officialsTableView.delegate = self
         
         // Set the data source
         self.tableViewDataSource = HomeTableViewDataSource(for: self)
         officialsTableView.dataSource = self.tableViewDataSource
+        
+        // Set the delegate
+        self.tableViewDelegate = HomeTableViewDelegate(for: self)
+        officialsTableView.delegate = self.tableViewDelegate
+        
     }
 
     /// Update the Officials if the address changed
@@ -77,26 +88,20 @@ class HomeViewController: UIViewController,
         reachType = .home
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch reachType {
-        case .home, .map:
-            performSegue(withIdentifier: DETAILS_VIEW_SEGUE, sender: self)
-            break
-        case .event:
-            delegate?.didSelectOfficial(official: self.officials[indexPath.row])
-            navigationController?.popViewController(animated: true)
-        }
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
-
     // MARK: Segue
+    
+    /// Prepare to segue to show the details for an Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DETAILS_VIEW_SEGUE,
+        if segue.identifier == HomeViewController.DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? DetailsViewController,
             let indexPath = officialsTableView.indexPathForSelectedRow {
             
+            // Deselect the row
             officialsTableView.deselectRow(at: indexPath, animated: false)
-            destination.official = self.officials[indexPath.row]
+            
+            // Set the selected Official
+            destination.official = self.tableViewDataSource.getOfficial(
+                at: indexPath.row)
         }
     }
 

@@ -18,6 +18,7 @@
 		134F9223225E591600B797B4 /* EventsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */; };
 		134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9225225E5F3E00B797B4 /* EventListDelegate.swift */; };
 		134F9228225E89CA00B797B4 /* HomeTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */; };
+		134F922A225E8C3800B797B4 /* HomeTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */; };
 		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
 		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
 		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
@@ -111,6 +112,7 @@
 		134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewDataSource.swift; sourceTree = "<group>"; };
 		134F9225225E5F3E00B797B4 /* EventListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListDelegate.swift; sourceTree = "<group>"; };
 		134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewDataSource.swift; sourceTree = "<group>"; };
+		134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewDelegate.swift; sourceTree = "<group>"; };
 		13527111221F74AB00442AA6 /* JSONData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		13527112221F74AB00442AA6 /* JSONOfficial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOfficial.swift; sourceTree = "<group>"; };
 		13527113221F74AB00442AA6 /* OfficialScraper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialScraper.swift; sourceTree = "<group>"; };
@@ -234,6 +236,16 @@
 				134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */,
 			);
 			path = "Events Table View";
+			sourceTree = "<group>";
+		};
+		134F922B225E8F2200B797B4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
+				134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */,
+				134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		13BD31AA22302078000A6BEE /* Models */ = {
@@ -390,18 +402,17 @@
 			isa = PBXGroup;
 			children = (
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				1683D0382253D27600350471 /* LoginViewController.swift */,
 				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
-				165B7F65225BE1800095D9E1 /* Sign Up */,
 				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
+				134F922B225E8F2200B797B4 /* Home */,
+				165B7F65225BE1800095D9E1 /* Sign Up */,
 				3BE4383B2255345B00EC049B /* Details */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
-				134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -740,6 +751,7 @@
 				16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
 				169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */,
+				134F922A225E8C3800B797B4 /* HomeTableViewDelegate.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */,
