@@ -18,4 +18,6 @@ class AppState {
     
     /// The currently selected sandbox Address
     static var sandboxAddress:Address?
+
+    static var homeAddress:Address?
 }

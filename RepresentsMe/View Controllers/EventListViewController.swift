@@ -25,6 +25,7 @@ class EventListViewController: UIViewController,
     var eventsSource:[Event] = []
     var events:[Event] = []     // The events being displayed
     var address:Address?        // The current address for officials for events
+    var previousAddress:Address?
     
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
@@ -37,28 +38,51 @@ class EventListViewController: UIViewController,
     /// If the address or is nil, update the events being displayed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if self.shouldUpdate() {
-            self.address = AppState.sandboxAddress
+        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+            if let _ = error {
+                // TODO: Handle error
+            } else {
+                if self.previousAddress == nil || self.previousAddress != address {
+                    self.getOfficials(for: address!)
+                }
+            }
+        }
+    }
 
-            // Clear current events
-            self.events.removeAll()
-            self.eventsSource.removeAll()
+    func getOfficials(for address: Address) {
+        previousAddress = address
+        OfficialScraper.getForAddress(address: address, apikey: civic_api_key) {
+            (officialList: [Official]?, error: ParserError?) in
+            if error == nil, let officialList = officialList {
+                AppState.homeOfficials = officialList
+                self.reloadEvents()
+            }
+        }
+    }
 
-            // Pull the new events
-            for official in AppState.homeOfficials {
-                Event.allWith(official: official) {(events, error) in
-                    if error == nil {
-                        self.eventsSource += events
-                        self.eventsSource.sort()
-                        self.events += events
-                        self.events.sort()
+    func reloadEvents() {
+        // Clear current events
+        self.events.removeAll()
+        self.eventsSource.removeAll()
+
+        // Pull the new events
+        for official in AppState.homeOfficials {
+            Event.allWith(official: official) {(events, error) in
+                if error == nil {
+                    self.eventsSource += events
+                    self.eventsSource.sort()
+                    self.events += events
+                    self.events.sort()
+
+                    DispatchQueue.main.async {
                         self.eventTableView.reloadData()
                     }
                 }
             }
-            
-            // Update the table view
+        }
+
+        // Update the table view
+        DispatchQueue.main.async {
             self.eventTableView.reloadData()
         }
     }
@@ -138,9 +162,7 @@ class EventListViewController: UIViewController,
     ///
     /// - Returns: true if should update, false otherwise
     private func shouldUpdate() -> Bool {
-        return self.events.isEmpty ||
-            (AppState.sandboxAddress != nil &&
-                self.address != AppState.sandboxAddress)
+        return self.events.isEmpty
     }
     
     /// Filters the Events based on the given query
