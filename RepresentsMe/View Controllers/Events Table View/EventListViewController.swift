@@ -14,7 +14,7 @@ let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
 class EventListViewController: UIViewController,
                                UISearchBarDelegate,
-                               CreateEventsDelegate {
+                               EventListDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!

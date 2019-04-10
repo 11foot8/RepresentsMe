@@ -16,6 +16,7 @@
 		133C70C22255823F00D7E060 /* EventAttendee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C70C12255823F00D7E060 /* EventAttendee.swift */; };
 		134F9221225E587F00B797B4 /* EventsTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9220225E587F00B797B4 /* EventsTableViewDelegate.swift */; };
 		134F9223225E591600B797B4 /* EventsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */; };
+		134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F9225225E5F3E00B797B4 /* EventListDelegate.swift */; };
 		13527116221F74AC00442AA6 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527111221F74AB00442AA6 /* JSONData.swift */; };
 		13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527112221F74AB00442AA6 /* JSONOfficial.swift */; };
 		13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527113221F74AB00442AA6 /* OfficialScraper.swift */; };
@@ -107,6 +108,7 @@
 		133C70C12255823F00D7E060 /* EventAttendee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAttendee.swift; sourceTree = "<group>"; };
 		134F9220225E587F00B797B4 /* EventsTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewDelegate.swift; sourceTree = "<group>"; };
 		134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewDataSource.swift; sourceTree = "<group>"; };
+		134F9225225E5F3E00B797B4 /* EventListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListDelegate.swift; sourceTree = "<group>"; };
 		13527111221F74AB00442AA6 /* JSONData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		13527112221F74AB00442AA6 /* JSONOfficial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONOfficial.swift; sourceTree = "<group>"; };
 		13527113221F74AB00442AA6 /* OfficialScraper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialScraper.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
+				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -736,6 +739,7 @@
 				169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
+				134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */,
 				16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */,

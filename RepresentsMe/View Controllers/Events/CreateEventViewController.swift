@@ -13,13 +13,11 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
-protocol CreateEventsDelegate {
-    func eventCreatedDelegate(event:Event)
-    func eventUpdatedDelegate()
-    func eventDeletedDelegate(event:Event)
-}
-
-class CreateEventViewController: UIViewController, UIPopoverPresentationControllerDelegate, OfficialSelectionDelegate, LocationSelectionDelegate, DatePopoverViewControllerDelegate {
+class CreateEventViewController: UIViewController,
+                                 UIPopoverPresentationControllerDelegate,
+                                 OfficialSelectionDelegate,
+                                 LocationSelectionDelegate,
+                                 DatePopoverViewControllerDelegate {
 
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventNameTextField: UITextField!
@@ -28,59 +26,44 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
     @IBOutlet weak var selectDateButton: UIButton!
 
     var event: Event?
-
     var selectedDate: Date?
     var selectedOfficial: Official?
     var selectedLocation: CLLocationCoordinate2D?
-    var delegate:CreateEventsDelegate? = nil
+    var delegate:EventListDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup the image view
+        self.setupImageView()
 
-        eventImageView.layer.cornerRadius = 5.0
-        eventImageView.clipsToBounds = true
-        eventImageView.image = DEFAULT_NOT_LOADED
-
-        if (event != nil) {
-            eventImageView.image = event!.official?.photo
-            eventNameTextField.text = event!.name
-            selectOfficialButton.setTitle(event!.official?.name, for: .normal)
-
-            selectLocationButton.setTitle("", for: .normal)
-            GeocoderWrapper.reverseGeocodeCoordinates(event!.location) { (address: Address) in
-                self.selectLocationButton.setTitle(address.addressLine1(), for: .normal)
-            }
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM d, h:mm a"
-            selectDateButton.setTitle(dateFormatter.string(from: event!.date), for: .normal)
-
-            selectedOfficial = event!.official
-            selectedDate = event!.date
-            selectedLocation = event!.location
+        // If editing an Event, setup for that Event
+        if let event = self.event {
+            self.setupFor(event: event)
         }
     }
 
-    /// OfficialSelectionDelegate
+    /// Update the views when an Official is selected.
+    /// Implements OfficialSelectionDelegate
+    ///
+    /// - Parameter official:   the Official that was selected
     func didSelectOfficial(official: Official) {
-        selectedOfficial = official
-        eventImageView.image = official.photo
-        selectOfficialButton.setTitle(official.name, for: .normal)
+        self.set(official: official)
     }
 
-    /// LocationSelectionDelegate
-    func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
-        selectedLocation = location
-        selectLocationButton.setTitle(address.addressLine1(), for: .normal)
+    /// Update the views when a location is selected
+    /// Implements LocationSelectionDelegate
+    ///
+    /// - Parameter location:   the selected location
+    /// - Parameter address:    the selected Address
+    func didSelectLocation(location: CLLocationCoordinate2D,
+                           address: Address) {
+        self.set(location: location, address: address)
     }
 
     /// DatePopoverViewControllerDelegate
     func didSelectDate(date: Date) {
-        selectedDate = date
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, h:mm a"
-        selectDateButton.setTitle(dateFormatter.string(from: date), for: .normal)
+        self.set(date: date)
     }
 
     @IBAction func saveTapped(_ sender: Any) {
@@ -152,4 +135,65 @@ class CreateEventViewController: UIViewController, UIPopoverPresentationControll
         }
     }
 
+    /// Sets up the image view
+    private func setupImageView() {
+        eventImageView.layer.cornerRadius = 5.0
+        eventImageView.clipsToBounds = true
+        eventImageView.image = DEFAULT_NOT_LOADED
+    }
+    
+    /// Sets up the views for the given Event
+    ///
+    /// - Parameter event:  the Event to setup for
+    private func setupFor(event:Event) {
+        // Set the name of the Event
+        eventNameTextField.text = event.name
+        
+        // Set the official
+        self.set(official: event.official)
+
+        // Set the location
+        selectLocationButton.setTitle("", for: .normal)
+        GeocoderWrapper.reverseGeocodeCoordinates(
+            event.location) {(address: Address) in
+            self.set(location: event.location, address: address)
+        }
+        
+        // Set the date
+        self.set(date: event.date)
+        selectDateButton.setTitle(event.formattedDate, for: .normal)
+    }
+    
+    /// Sets the Official for the Event
+    ///
+    /// - Parameter official:   the Official to set
+    private func set(official:Official?) {
+        if let official = official {
+            selectedOfficial = official
+            eventImageView.image = official.photo
+            selectOfficialButton.setTitle(official.name, for: .normal)
+        }
+    }
+    
+    /// Sets the location for the Event
+    ///
+    /// - Parameter location:   the coordinates for the Event
+    /// - Parameter address:    the Address for the Event
+    private func set(location:CLLocationCoordinate2D, address:Address) {
+        selectedLocation = location
+        selectLocationButton.setTitle(address.addressLine1(),
+                                      for: .normal)
+    }
+    
+    /// Sets the date for the Event
+    ///
+    /// - Parameter date:   the Date for the Event
+    private func set(date:Date) {
+        selectedDate = date
+        
+        // Format the date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, h:mm a"
+        selectDateButton.setTitle(formatter.string(from: date), for: .normal)
+    }
 }

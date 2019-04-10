@@ -22,7 +22,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var deleteEventButton: UIButton!
 
     var event:Event?
-    var delegate:CreateEventsDelegate?
+    var delegate:EventListDelegate?
 
     override func viewWillAppear(_ animated: Bool) {
         if event == nil {
