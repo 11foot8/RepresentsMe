@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 
 class EntryViewController: UIViewController {
@@ -44,11 +45,17 @@ class EntryViewController: UIViewController {
             return
         }
 
+        // TODO: Show loading animation
+        let hud = LoadingHUD(self.view)
         usersDB.loginUser(withEmail: email, password: password) { (uid, error) in
             if let _ = error {
                 // TODO: Handle error
                 print(error.debugDescription)
+                // TODO: End loading animation
+                hud.end()
             } else {
+                // TODO: End loading animation
+                hud.end()
                 self.view.endEditing(true)
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")

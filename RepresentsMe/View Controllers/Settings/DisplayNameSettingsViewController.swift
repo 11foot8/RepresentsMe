@@ -26,13 +26,17 @@ class DisplayNameSettingsViewController: UIViewController {
     // TODO: Disable save button until all fields are valid
     @IBAction func saveTouchUp(_ sender: Any) {
         self.view.endEditing(true)
-        // TODO: Start loading animation
+        // Start loading animation
+        self.navigationItem.hidesBackButton = true
+        let hud = LoadingHUD(self.view)
         guard let displayName = displayNameTextField.text else { return }
 
         usersDB.changeUserDisplayName(newDisplayName: displayName) { (error) in
             if let _ = error {
                 // TODO: Handle error
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Error",
                     message: "\(error.debugDescription)",
@@ -40,7 +44,9 @@ class DisplayNameSettingsViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Saved",
                     message: nil,

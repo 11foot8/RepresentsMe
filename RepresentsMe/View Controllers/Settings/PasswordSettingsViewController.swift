@@ -38,7 +38,9 @@ class PasswordSettingsViewController: UIViewController {
     // MARK: - Actions
     @IBAction func saveTouchUp(_ sender: Any) {
         self.view.endEditing(true)
-        // TODO: Start loading animation
+        // Start loading animation
+        self.navigationItem.hidesBackButton = true
+        let hud = LoadingHUD(self.view)
         guard let currentPassword = currentPasswordTextField.text else { return }
         guard let newPassword = newPasswordTextField.text else { return }
         guard let email = usersDB.getCurrentUserEmail() else { return }
@@ -46,7 +48,9 @@ class PasswordSettingsViewController: UIViewController {
         usersDB.changeUserPassword(email: email, currentPassword: currentPassword, newPassword: newPassword, completion: { (error) in
             if let _ = error {
                 // TODO: Handle error
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Error",
                     message: "\(error.debugDescription)",
@@ -54,7 +58,9 @@ class PasswordSettingsViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                // TODO: Stop loading animation
+                // End loading animation
+                hud.end()
+                self.navigationItem.hidesBackButton = false
                 let alert = UIAlertController(
                     title: "Saved",
                     message: nil,
