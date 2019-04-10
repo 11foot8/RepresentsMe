@@ -11,21 +11,29 @@ import Foundation
 
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
-enum MapViewControllerReachType {
-    case map
-    case event
-}
-
+/// The protocol to implement to receive a location when the user selects a
+/// location on the map.
 protocol LocationSelectionDelegate {
     func didSelectLocation(location: CLLocationCoordinate2D, address: Address)
 }
 
+/// The view controller that displays a map for the user to interact with.
+/// The map allows the user to drop pins, go to their current location, and go
+/// to their home location. Depending on the mode, the map can send the
+/// location to show Officials for the selected Address or to select the
+/// location as the location for an Event.
 class MapViewController: UIViewController,
                          MKMapViewDelegate,
                          UISearchBarDelegate,
                          LocationInfoDelegate,
                          CustomSearchBarDelegate,
-MapActionButtonsDelegate {
+                         MapActionButtonsDelegate {
+
+    /// The modes avaliable for the map view controller
+    enum ReachType {
+        case map        // The sandbox mode
+        case event      // The mode for selecting a location for an Event
+    }
 
     // MARK: - Properties
     
@@ -40,7 +48,7 @@ MapActionButtonsDelegate {
     var previousGeocodeTime:Date?
     var address:Address?
     var annotation:MKAnnotation?
-    var reachType: MapViewControllerReachType = .map
+    var reachType:ReachType = .map
     var delegate: LocationSelectionDelegate?
     var workItem:DispatchWorkItem?
 
@@ -127,13 +135,14 @@ MapActionButtonsDelegate {
 
     /// Move view to user's saved address and drop a pin
     func onHomeTouchUp() {
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
+        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
             if let _ = error {
                 // TODO: Handle error
-                print(error.debugDescription)
             } else {
                 if let addressStr = address?.description {
-                    GeocoderWrapper.geocodeAddressString(addressStr) {(placemark) in
+                    GeocoderWrapper.geocodeAddressString(
+                        addressStr) {(placemark) in
+                            
                         let coords = placemark.location!.coordinate
                         self.dropPin(coords: coords,
                                      title: "Home",
@@ -148,30 +157,48 @@ MapActionButtonsDelegate {
     }
 
     // MARK: - Methods
+    
+    /// Clears the set pin
     func clearPin() {
-        if self.annotation != nil {
-            mapView.removeAnnotation(self.annotation!)
+        if let annotation = self.annotation {
+            mapView.removeAnnotation(annotation)
         }
         locationInfoView.isHidden = true
     }
 
-    func dropPin(coords:CLLocationCoordinate2D, title:String, replaceSearchedValue:Bool) {
+    /// Drops a pin at the given coordinates
+    ///
+    /// - Parameter coords:                 the coordinates to drop the pin at
+    /// - Parameter title:                  the title for the pin
+    /// - Parameter replaceSearchedValue:   whether or not to replace the
+    ///                                     search bar text
+    func dropPin(coords:CLLocationCoordinate2D,
+                 title:String,
+                 replaceSearchedValue:Bool) {
+        // Replace the search bar text
         if replaceSearchedValue {
             customSearchBar.setQuery(title)
         }
-        locationInfoView.isHidden = false
-        if (self.annotation != nil) {
-            mapView.removeAnnotation(self.annotation!)
-            self.annotation = nil
-        }
-        self.annotation = DroppedPin(title: title, locationName: "", discipline: "", coordinate: coords)
+        
+        // Remove an existing pins
+        self.clearPin()
+
+        // Drop the new pin
+        self.annotation = DroppedPin(title: title,
+                                     locationName: "",
+                                     discipline: "",
+                                     coordinate: coords)
         mapView.addAnnotation(annotation!)
+        
+        // Update the location info view
         locationInfoView.isHidden = false
         locationInfoView.updateWithCoordinates(coords: coords, title: title)
     }
 
     // MARK: - Location Utilities
-    /// Center mapView on user location with default zoom level, animate transition.
+    
+    /// Center mapView on user location with default zoom level,
+    /// animate transition.
     func centerViewOnUserLocation() {
         if let coordinate = LocationManager.shared.userCoordinate {
             centerView(on: coordinate, animated: true)
@@ -179,19 +206,24 @@ MapActionButtonsDelegate {
     }
 
     /// Center mapView on given locaiton.
-    /// - Parameter location: Location on which to center mapView
-    /// - Parameter animated: Whether or not to animate the transition
+    ///
+    /// - Parameter on:         Location on which to center mapView
+    /// - Parameter animated:   Whether or not to animate the transition
     func centerView(on location:CLLocationCoordinate2D, animated:Bool) {
-        let region = MKCoordinateRegion.init(center:location,
-                                             latitudinalMeters: regionInMeters,
-                                             longitudinalMeters: regionInMeters)
+        let region = MKCoordinateRegion(center: location,
+                                        latitudinalMeters: regionInMeters,
+                                        longitudinalMeters: regionInMeters)
         // Set zoom level
         mapView.setRegion(region, animated: animated)
+        
         // Correct center
         mapView.setCenter(location, animated: animated)
     }
 
     /// Returns the current center location of mapView
+    ///
+    /// - Parameter for:    the map view to get the center of
+    ///
     /// - Returns: Current center location of mapView
     func getCenterLocation(for mapView:MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
@@ -201,10 +233,14 @@ MapActionButtonsDelegate {
     }
 
     /// Convert MKCoordinateRegion to CLCircularRegion.
-    func convertRegion(mk:MKCoordinateRegion) -> (CLCircularRegion) {
+    ///
+    /// - Parameter mk:     the MKCoordinateRegion to convert
+    ///
+    /// - Returns: the converted CLCircularRegion
+    func convertRegion(mk:MKCoordinateRegion) -> CLCircularRegion {
         // MKCoordinateRegion is a center and span
-        //  Span is 2 values, latitudeDelta and longitudeDelta
-        //  To convert to CLCircularRegion, a center and radius is needed
+        // Span is 2 values, latitudeDelta and longitudeDelta
+        // To convert to CLCircularRegion, a center and radius is needed
 
         let center = mk.center                      // Center of region
         let span = mk.span                          // Span of region
@@ -220,36 +256,46 @@ MapActionButtonsDelegate {
         let region = CLCircularRegion(center: center,
                                       radius: radius,
                                       identifier: "region")
+        
         // CLCircularRegion analog to MKCoordinateRegion
         return region
     }
 
     // MARK: - Keyboard
+    
     /// Hide keyboard when tapping out of SearchBar
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Hide keyboard when tapping out of SearchBar
         self.view.endEditing(true)
     }
 
     // MARK: - LocationInfoDelegate
+    
+    /// Handles when the go button is pressed.
+    /// If in the sandbox mode, show the Officials for the given Address.
+    /// If selecting a location for an Event, send the Address back to the
+    /// delegate.
+    ///
+    /// - Parameter address:    the selected Address
     func goButtonPressed(address: Address) {
         switch reachType {
         case .map:
+            // Selected a location for the sandbox view, show the Officials for
+            // that location
             self.address = address
             // TODO: Check address validity - incl. addresses outside of US
-            performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER, sender: self)
+            performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
+                         sender: self)
             break
-        case.event:
-            delegate?.didSelectLocation(location: self.annotation!.coordinate, address: address)
+        case .event:
+            // Selected a location for the Event, send location to the delegate
+            // and dismiss
+            delegate?.didSelectLocation(location: self.annotation!.coordinate,
+                                        address: address)
             navigationController?.popViewController(animated: true)
         }
     }
 
-    // MARK: - MKMapViewDelegate
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-
-    }
-
+    /// Prepare to segue to the Officials table view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! HomeViewController
