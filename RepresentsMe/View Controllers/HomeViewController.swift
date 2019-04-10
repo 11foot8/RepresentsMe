@@ -129,7 +129,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 DispatchQueue.main.async {
                     self.needToPull = false
-                    self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
+                    switch self.reachType {
+                    case .home, .event:
+                        self.navigationItem.title = "Home"
+                        break
+                    case .map:
+                        self.navigationItem.title = "\(self.address!.city), \(self.address!.state)"
+                    }
+
                     self.officialsTableView.reloadData()
                 }
             }
