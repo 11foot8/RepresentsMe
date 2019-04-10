@@ -325,14 +325,13 @@
 			children = (
 				1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
-				3BE4384122556ADB00EC049B /* Interface Builder */,
+				3BE4384122556ADB00EC049B /* InterfaceBuilder */,
 				3BE4383E22555B5B00EC049B /* Sources */,
 				13BD31AA22302078000A6BEE /* Models */,
-				3B45F0B62226F15B00FA5B8B /* View Controllers */,
+				3B45F0B62226F15B00FA5B8B /* ViewControllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
-				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
 				3B1EFD5A221F06E9003176BF /* RepresentsMe.xcdatamodeld */,
 			);
@@ -371,7 +370,7 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
+		3B45F0B62226F15B00FA5B8B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
@@ -390,7 +389,7 @@
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		3B45F0B72226F1A300FA5B8B /* Views */ = {
@@ -418,6 +417,25 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		3BCC16B4225E38B30088D757 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				16A6535E225D6D4300E13856 /* Util.swift */,
+				3BE4384222556D4700EC049B /* LocationManager.swift */,
+				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		3BCC16B5225E38CA0088D757 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				13DDF421225CED0D008E3D32 /* FontAwesome */,
+				13BD31BD22302605000A6BEE /* Fonts */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		3BE4383B2255345B00EC049B /* Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,22 +447,20 @@
 		3BE4383E22555B5B00EC049B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				16A6535E225D6D4300E13856 /* Util.swift */,
-				13DDF421225CED0D008E3D32 /* FontAwesome */,
-				3BE4384222556D4700EC049B /* LocationManager.swift */,
-				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
+				3BCC16B4225E38B30088D757 /* Utilities */,
 				13287BC22220C09A00622CD4 /* Scraper */,
+				3BCC16B5225E38CA0088D757 /* Fonts */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		3BE4384122556ADB00EC049B /* Interface Builder */ = {
+		3BE4384122556ADB00EC049B /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */,
 				3BCC166A225D0A140088D757 /* Main.storyboard */,
 			);
-			path = "Interface Builder";
+			path = InterfaceBuilder;
 			sourceTree = "<group>";
 		};
 		D1D4E0A5BB7050608C9B5714 /* Frameworks */ = {
