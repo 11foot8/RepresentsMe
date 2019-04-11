@@ -8,61 +8,70 @@
 
 import UIKit
 
+/// View controller for the user to update their email address.
 class EmailSettingsViewController: UIViewController {
-    // MARK: - Properties
 
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        dividerView.layer.cornerRadius = 2.0
-        dividerView.clipsToBounds = true
-
-        currentEmailTextField.text = UsersDatabase.shared.getCurrentUserEmail()
-
-        // Do any additional setup after loading the view.
-    }
-
-    // MARK: - Outlets
     @IBOutlet weak var currentEmailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var newEmailTextField: UITextField!
     @IBOutlet weak var dividerView: UIView!
 
-    // MARK: - Actions
-    // TODO: Disable save button until all fields are valid
+    /// Sets up the views
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        dividerView.layer.cornerRadius = 2.0
+        dividerView.clipsToBounds = true
+        currentEmailTextField.text = UsersDatabase.shared.getCurrentUserEmail()
+    }
+
+    /// Attempts to update the user's email address.
     @IBAction func saveTouchUp(_ sender: Any) {
+        // Hide the keyboard
         self.view.endEditing(true)
+        
+        // Ensure values were set
+        guard let currentEmail = currentEmailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        guard let newEmail = newEmailTextField.text else {return}
+        
         // Start loading animation
         self.navigationItem.hidesBackButton = true
         let hud = LoadingHUD(self.view)
-        guard let currentEmail = currentEmailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        guard let newEmail = newEmailTextField.text else { return }
 
-        UsersDatabase.shared.changeUserEmail(currentEmail: currentEmail, password: password, newEmail: newEmail, completion: { (error) in
-            if let _ = error {
-                // TODO: Handle error
-                // End loading animation
-                hud.end()
-                self.navigationItem.hidesBackButton = false
-                let alert = UIAlertController(
-                    title: "Error",
-                    message: "\(error.debugDescription)",
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
+        // Update the user's email address
+        UsersDatabase.shared.changeUserEmail(
+            currentEmail: currentEmail,
+            password: password,
+            newEmail: newEmail) {(error) in
+            
+            // Stop the loading animation
+            hud.end()
+            self.navigationItem.hidesBackButton = false
+            
+            if let error = error {
+                // Failed to update
+                self.alert(title: "Error",
+                           message: error.localizedDescription)
             } else {
-                // End loading animation
-                hud.end()
-                self.navigationItem.hidesBackButton = false
-                let alert = UIAlertController(
-                    title: "Saved",
-                    message: nil,
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-                self.present(alert, animated: true, completion: nil)
+                // Successfully updated
+                self.alert(title: "Saved")
             }
-        })
+        }
+    }
+    
+    /// Presents an alert to the user
+    ///
+    /// - Parameter title:      the title of the alert.
+    /// - Parameter message:    the message for the alert (default nil).
+    private func alert(title:String, message:String? = nil) {
+        // Build the alert
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        // Present the alert
+        self.present(alert, animated: true, completion: nil)
     }
 }
