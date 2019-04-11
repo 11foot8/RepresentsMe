@@ -70,7 +70,7 @@ class SignupViewController: UIViewController {
 
     /// Unwind to the login view controller when the cancel button is pressed
     @IBAction func cancelTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: "SignupUnwindSegue", sender: self)
+        self.dismiss(animated: true)
     }
 
     /// Checks that the fields are valid when the email is changed
