@@ -19,7 +19,7 @@ protocol OfficialSelectionDelegate {
 /// Allows for showing the user's home Officials as well as Officials for a
 /// selected Address. Also allows for selecting an Official in order to select
 /// Officials for Events.
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, AppStateListener {
     
     static let DETAILS_VIEW_SEGUE = "detailsViewSegue"
 
@@ -39,13 +39,7 @@ class HomeViewController: UIViewController {
     // Properties
     var reachType:ReachType = .home
     var delegate:OfficialSelectionDelegate?
-    var address:Address? {
-        didSet {
-            addressChanged = true
-        }
-    }
-    var addressChanged:Bool = false
-    
+
     // MARK: - Outlets
     
     @IBOutlet weak var officialsTableView: UITableView!
@@ -64,28 +58,35 @@ class HomeViewController: UIViewController {
         self.tableViewDelegate = HomeTableViewDelegate(for: self)
         officialsTableView.delegate = self.tableViewDelegate
         
-    }
-
-    /// Update the Officials if the address changed
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        switch reachType {
+        // Add as a listener
+        switch self.reachType {
         case .home, .event:
-            // Using the home Officials
-            self.updateHomeOfficials()
-            break
+            AppState.addHomeAddressListener(listener: self)
         case .map:
-            // Using the sandbox Officials
-            self.updateSandboxOfficials()
-            break
+            AppState.addSandboxAddressListener(listener: self)
         }
     }
 
-    /// Reset the view controller
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        delegate = nil
-        reachType = .home
+        
+        if (self.isMovingFromParent) {
+            AppState.removeHomeAddressListener(listener: self)
+        }
+    }
+    
+    func appStateReceivedHomeOfficials(officials: [Official]) {
+        DispatchQueue.main.async {
+            self.navigationItem.title = "Home"
+            self.officialsTableView.reloadData()
+        }
+    }
+    
+    func appStateReceivedSandboxOfficials(officials: [Official]) {
+        DispatchQueue.main.async {
+            self.navigationItem.title = "\(AppState.sandboxAddress!.city), \(AppState.sandboxAddress!.state)"
+            self.officialsTableView.reloadData()
+        }
     }
 
     // MARK: Segue
@@ -100,55 +101,12 @@ class HomeViewController: UIViewController {
             officialsTableView.deselectRow(at: indexPath, animated: false)
             
             // Set the selected Official
-            destination.official = self.tableViewDataSource.getOfficial(
-                at: indexPath.row)
-        }
-    }
-
-
-    /// Updates the table view with the new officials
-    /// Gets the user's current home address and checks if need to update the
-    /// Officials. If needs to update, pulls the new Officials and updates
-    /// the table view.
-    private func updateHomeOfficials() {
-        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
-            if let _ = error {
-                // TODO: Handle error
-            } else {
-                if self.address == nil || self.address != address {
-                    self.getOfficials(for: address!)
-                }
+            switch self.reachType {
+            case .home, .event:
+                destination.official = AppState.homeOfficials[indexPath.row]
+            case .map:
+                destination.official = AppState.sandboxOfficials[indexPath.row]
             }
         }
     }
-    
-    /// Checks if a new sandbox address was selected. If a new address was
-    /// selected, pulls the new Officials and updates the table view.
-    private func updateSandboxOfficials() {
-        if self.addressChanged {
-            self.getOfficials(for: self.address!)
-        }
-    }
-    
-    /// Updates the officials for the given address.
-    /// Scrapes the officials and reloads the table data if successfully pulls
-    /// officials.
-    ///
-    /// - Parameter for:    the address to pull for
-    private func getOfficials(for address: Address) {
-        // Update the address
-        self.address = address
-        self.addressChanged = false
-        
-        // Scrape the new Officials
-        OfficialScraper.getForAddress(
-        address: address, apikey: civic_api_key) {(officials, error) in
-            
-            if error == nil {
-                // Store the officials
-                self.tableViewDataSource.officials = officials
-            }
-        }
-    }
-
 }

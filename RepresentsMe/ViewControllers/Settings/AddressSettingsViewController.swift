@@ -119,7 +119,7 @@ class AddressSettingsViewController: UIViewController,
         let hud = LoadingHUD(self.view)
         
         // Get the current address
-        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
+        UsersDatabase.getCurrentUserAddress {(address, error) in
             // Stop the loading animation
             hud.end()
             self.navigationItem.hidesBackButton = false
@@ -170,7 +170,7 @@ class AddressSettingsViewController: UIViewController,
         // Start the loading animation
         let hud = LoadingHUD(self.view)
         
-        if let uid = UsersDatabase.shared.getCurrentUserUID() {
+        if let uid = UsersDatabase.currentUserUID {
             UsersDatabase.shared.setUserAddress(uid: uid,
                                                 address: address) {(error) in
                 // Stop the loading animation
@@ -178,6 +178,7 @@ class AddressSettingsViewController: UIViewController,
                 if error != nil {
                     // TODO: Handle error
                 } else {
+                    AppState.homeAddress = address
                     self.alert(title: "Saved")
                 }
             }

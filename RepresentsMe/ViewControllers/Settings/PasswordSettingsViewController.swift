@@ -53,9 +53,7 @@ class PasswordSettingsViewController: UIViewController {
         // Ensure valid values are given
         guard let currentPassword = currentPasswordTextField.text else {return}
         guard let newPassword = newPasswordTextField.text else {return}
-        guard let email = UsersDatabase.shared.getCurrentUserEmail() else {
-            return
-        }
+        guard let email = UsersDatabase.currentUserEmail else {return}
 
         // Attempt to change the password
         UsersDatabase.shared.changeUserPassword(

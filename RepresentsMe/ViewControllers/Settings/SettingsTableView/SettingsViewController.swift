@@ -42,7 +42,7 @@ class SettingsViewController: UIViewController,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
         currentUserLabel.text = "Logged in as " +
-            (UsersDatabase.shared.getCurrentUserEmail() ?? "N/A")
+            (UsersDatabase.currentUserEmail ?? "N/A")
         tableView.reloadData()
     }
 }

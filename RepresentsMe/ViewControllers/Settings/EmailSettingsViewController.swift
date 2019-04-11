@@ -21,7 +21,7 @@ class EmailSettingsViewController: UIViewController {
         super.viewDidLoad()
         dividerView.layer.cornerRadius = 2.0
         dividerView.clipsToBounds = true
-        currentEmailTextField.text = UsersDatabase.shared.getCurrentUserEmail()
+        currentEmailTextField.text = UsersDatabase.currentUserEmail
     }
 
     /// Attempts to update the user's email address.

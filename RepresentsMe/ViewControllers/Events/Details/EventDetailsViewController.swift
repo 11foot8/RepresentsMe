@@ -19,6 +19,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
+    @IBOutlet weak var officialNameLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
     @IBOutlet weak var editButton: UIBarButtonItem!
@@ -74,6 +75,7 @@ class EventDetailsViewController: UIViewController {
     private func setLabels() {
         if let event = self.event {
             eventNameLabel.text = event.name
+            officialNameLabel.text = event.official?.name
             eventDateLabel.text = event.formattedDate
     
             // Set the location
@@ -105,7 +107,7 @@ class EventDetailsViewController: UIViewController {
     /// edit the Event
     private func setEditable() {
         if let event = self.event {
-            if (UsersDatabase.shared.getCurrentUserUID() == event.owner) {
+            if (UsersDatabase.currentUserUID == event.owner) {
                 // User owns the event, let them edit it
                 editButton.isEnabled = true
                 editButton.title = "Edit"

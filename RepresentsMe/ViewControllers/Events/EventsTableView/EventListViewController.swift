@@ -49,7 +49,7 @@ class EventListViewController: UIViewController,
 
         // Check if the user's home address has changed and update events if
         // it did change
-        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
+        UsersDatabase.getCurrentUserAddress {(address, error) in
             if let _ = error {
                 // TODO: Handle error
             } else {

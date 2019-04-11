@@ -16,33 +16,23 @@ let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 class HomeTableViewDataSource: NSObject, UITableViewDataSource {
     
     var parent:HomeViewController
-    var officials:[Official] = [] {
-        didSet {
-            // Update the table data when new Officials are set
-            updateTableData()
-        }
-    }
-    
+
     /// Initialize this data source for the given HomeViewController
     ///
     /// - Parameter for:    the parent view controller
     init(for parent:HomeViewController) {
         self.parent = parent
     }
-    
-    /// Gets the Official at the given index
-    ///
-    /// - Parameter at:     the index to get
-    ///
-    /// - Returns: the Official
-    func getOfficial(at index:Int) -> Official {
-        return self.officials[index]
-    }
-    
+
     /// The number of rows is the number of Officials
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return self.officials.count
+        switch self.parent.reachType {
+        case .home, .event:
+            return AppState.homeOfficials.count
+        case .map:
+            return AppState.sandboxOfficials.count
+        }
     }
     
     /// Set the cell for the Official at the given index
@@ -52,26 +42,24 @@ class HomeTableViewDataSource: NSObject, UITableViewDataSource {
             withIdentifier: OFFICIAL_CELL_IDENTIFIER,
             for: indexPath) as! OfficialCell
         
-        cell.official = self.officials[indexPath.row]
+        switch self.parent.reachType {
+        case .home, .event:
+            cell.official = AppState.homeOfficials[indexPath.row]
+            break
+        case .map:
+            cell.official = AppState.sandboxOfficials[indexPath.row]
+            break
+        }
+        
+        switch self.parent.reachType {
+        case .home, .map:
+            cell.accessoryType = .disclosureIndicator
+            break
+        case .event:
+            cell.accessoryType = .none
+            break
+        }
         
         return cell
-    }
-    
-    /// Updates the table view with the new officials
-    private func updateTableData() {
-        DispatchQueue.main.async {
-            switch self.parent.reachType {
-            case .home, .event:
-                self.parent.navigationItem.title = "Home"
-                break
-            case .map:
-                let title = "\(self.parent.address!.city), " +
-                            self.parent.address!.state
-                self.parent.navigationItem.title = title
-                break
-            }
-            
-            self.parent.officialsTableView.reloadData()
-        }
     }
 }

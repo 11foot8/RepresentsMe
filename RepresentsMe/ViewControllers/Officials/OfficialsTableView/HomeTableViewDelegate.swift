@@ -37,8 +37,7 @@ class HomeTableViewDelegate: NSObject, UITableViewDelegate {
         case .event:
             // Send the selected Official back to the delegate and dismiss
             // the view
-            let official = self.parent.tableViewDataSource.getOfficial(
-                at: indexPath.row)
+            let official = AppState.homeOfficials[indexPath.row]
             self.parent.delegate?.didSelectOfficial(official: official)
             self.parent.navigationController?.popViewController(animated: true)
             

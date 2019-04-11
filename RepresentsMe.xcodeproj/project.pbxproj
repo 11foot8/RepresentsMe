@@ -34,6 +34,8 @@
 		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
+		13895F2F225F8E7100FE405D /* tmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13895F2E225F8E7100FE405D /* tmp.swift */; };
+		13895F31225F8EAA00FE405D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13895F30225F8EAA00FE405D /* AppState.swift */; };
 		13A4F612225F800A0023E150 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F611225F80090023E150 /* UIViewControllerExt.swift */; };
 		13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */; };
 		13A4F617225F848A0023E150 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F616225F848A0023E150 /* DetailsViewController.swift */; };
@@ -133,6 +135,8 @@
 		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		13895F2E225F8E7100FE405D /* tmp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tmp.swift; sourceTree = "<group>"; };
+		13895F30225F8EAA00FE405D /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		13A4F611225F80090023E150 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewController.swift; sourceTree = "<group>"; };
 		13A4F616225F848A0023E150 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -393,6 +397,7 @@
 		3B1EFD47221F06E9003176BF = {
 			isa = PBXGroup;
 			children = (
+				13895F2E225F8E7100FE405D /* tmp.swift */,
 				3B1EFD52221F06E9003176BF /* RepresentsMe */,
 				3B1EFD6A221F06EC003176BF /* RepresentsMeTests */,
 				3B1EFD75221F06EC003176BF /* RepresentsMeUITests */,
@@ -465,6 +470,7 @@
 		3B45F0B62226F15B00FA5B8B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				13895F30225F8EAA00FE405D /* AppState.swift */,
 				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
@@ -802,6 +808,7 @@
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */,
 				169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */,
+				13895F31225F8EAA00FE405D /* AppState.swift in Sources */,
 				13527116221F74AC00442AA6 /* JSONData.swift in Sources */,
 				16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */,
 				13527117221F74AC00442AA6 /* JSONOfficial.swift in Sources */,
@@ -835,6 +842,7 @@
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				134F922D225EA23200B797B4 /* SettingsTableViewDataSource.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
+				13895F2F225F8E7100FE405D /* tmp.swift in Sources */,
 				1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */,
 				134F9228225E89CA00B797B4 /* HomeTableViewDataSource.swift in Sources */,
 				134F9231225EA48D00B797B4 /* SettingsSection.swift in Sources */,

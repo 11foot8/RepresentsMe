@@ -239,7 +239,7 @@ class CreateEventViewController: UIViewController,
                              location:CLLocationCoordinate2D,
                              date:Date) {
         Event.create(name: name,
-                     owner: UsersDatabase.shared.getCurrentUserUID()!,
+                     owner: UsersDatabase.currentUserUID!,
                      location: location,
                      date: date,
                      official: official) {(event, error) in

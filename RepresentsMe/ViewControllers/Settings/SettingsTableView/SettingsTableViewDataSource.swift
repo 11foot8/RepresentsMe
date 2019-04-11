@@ -77,13 +77,13 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
                     name: "Email",
                     icon: .envelope,
                     segueID: "EmailSettingsSegue",
-                    subtitle: UsersDatabase.shared.getCurrentUserEmail()),
+                    subtitle: UsersDatabase.currentUserEmail),
                 SettingsSegueEntry(
                     parent: parent,
                     name: "Username",
                     icon: .user,
                     segueID: "DisplayNameSettingsSegue",
-                    subtitle: UsersDatabase.shared.getCurrentUserDisplayName()),
+                    subtitle: UsersDatabase.currentUserDisplayName),
                 SettingsSegueEntry(
                     parent: parent,
                     name: "Password",

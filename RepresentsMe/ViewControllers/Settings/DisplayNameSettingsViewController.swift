@@ -14,8 +14,7 @@ class DisplayNameSettingsViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayNameTextField.text = UsersDatabase.shared.getCurrentUserDisplayName()
-        // Do any additional setup after loading the view.
+        displayNameTextField.text = UsersDatabase.currentUserDisplayName
     }
 
     // MARK: - Outlets
