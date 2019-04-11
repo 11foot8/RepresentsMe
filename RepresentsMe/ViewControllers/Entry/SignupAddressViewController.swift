@@ -10,8 +10,6 @@ import UIKit
 
 // SignupAddressViewController -> StatePopoverViewController
 let POPOVER_SEGUE_IDENTIFIER = "SignupPickerPopoverSegue"
-// SignupAddressViewController -> SignupViewController
-let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
 
 /// The view controller to have the user select an address and create their
 /// account.

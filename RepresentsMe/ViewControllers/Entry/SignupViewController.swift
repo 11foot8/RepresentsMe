@@ -11,8 +11,6 @@ import Firebase
 
 // SignupViewController -> SignupAddressViewController
 let ADDRESS_SEGUE_IDENTIFIER = "CreateAccountAddressSegue"
-// SignupViewController -> LoginViewController
-let SIGNUP_UNWIND_SEGUE_IDENTIFIER = "SignupUnwindSegue"
 let MIN_PASSWORD_LENGTH:Int = 6
 
 /// The view controller that starts the process for a user to create an
