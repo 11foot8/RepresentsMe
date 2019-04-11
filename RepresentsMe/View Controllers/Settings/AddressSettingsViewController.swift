@@ -183,20 +183,4 @@ class AddressSettingsViewController: UIViewController,
             }
         }
     }
-
-    /// Presents an alert to the user
-    ///
-    /// - Parameter title:      the title of the alert.
-    /// - Parameter message:    the message of the alert (default nil).
-    private func alert(title:String, message:String? = nil) {
-        // Build the alert
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        
-        // Present the alert
-        self.present(alert, animated: true, completion: nil)
-    }
 }

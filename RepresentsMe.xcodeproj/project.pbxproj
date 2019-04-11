@@ -36,6 +36,7 @@
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
 		13A4F610225EC6E60023E150 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */; };
+		13A4F612225F800A0023E150 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F611225F80090023E150 /* UIViewControllerExt.swift */; };
 		13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD31B5223021F1000A6BEE /* TabBarViewController.swift */; };
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
@@ -134,6 +135,7 @@
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = "/Users/tirtow/college/cs/371l/RepresentsMe/RepresentsMe/View Controllers/Settings/AddressSettingsViewController.swift"; sourceTree = "<absolute>"; };
+		13A4F611225F80090023E150 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		13BD31B5223021F1000A6BEE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				3BE4383B2255345B00EC049B /* Details */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
+				13A4F611225F80090023E150 /* UIViewControllerExt.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */,
 				134F9228225E89CA00B797B4 /* HomeTableViewDataSource.swift in Sources */,
 				134F9231225EA48D00B797B4 /* SettingsSection.swift in Sources */,
+				13A4F612225F800A0023E150 /* UIViewControllerExt.swift in Sources */,
 				13DDF425225CED0D008E3D32 /* Enum.swift in Sources */,
 				134F9223225E591600B797B4 /* EventsTableViewDataSource.swift in Sources */,
 				134F9237225EBBA600B797B4 /* SettingsLogoutEntry.swift in Sources */,
