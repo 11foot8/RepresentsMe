@@ -59,27 +59,29 @@ class OfficialsListViewController: UIViewController, AppStateListener {
         // Add as a listener
         switch self.reachType {
         case .home, .event:
-            AppState.addHomeAddressListener(listener: self)
+            AppState.addHomeAddressListener(self)
         case .map:
-            AppState.addSandboxAddressListener(listener: self)
+            AppState.addSandboxAddressListener(self)
         }
     }
 
+    /// Remove as a listener if moving from parent
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        if (self.isMovingFromParent) {
+        if self.isMovingFromParent {
             switch self.reachType {
             case .home, .event:
-                AppState.removeHomeAddressListener(listener: self)
+                AppState.removeHomeAddressListener(self)
                 break
             case .map:
-                AppState.removeSandboxAddressListener(listener: self)
+                AppState.removeSandboxAddressListener(self)
                 break
             }
         }
     }
     
+    /// Reload the data when the home Officials change
     func appStateReceivedHomeOfficials(officials: [Official]) {
         DispatchQueue.main.async {
             self.navigationItem.title = "Home"
@@ -87,9 +89,11 @@ class OfficialsListViewController: UIViewController, AppStateListener {
         }
     }
     
+    /// Reload the data when the sandbox Officials change
     func appStateReceivedSandboxOfficials(officials: [Official]) {
         DispatchQueue.main.async {
-            self.navigationItem.title = "\(AppState.sandboxAddress!.city), \(AppState.sandboxAddress!.state)"
+            self.navigationItem.title = "\(AppState.sandboxAddress!.city), " +
+                AppState.sandboxAddress!.state
             self.officialsTableView.reloadData()
         }
     }
