@@ -34,7 +34,7 @@ class OfficialScraper {
     public static func getForAddress(
         address:Address,
         apikey:String,
-        completion: @escaping ([Official]?, ParserError?) -> ()) {
+        completion: @escaping ([Official], ParserError?) -> ()) {
 
         // Build the request
         var urlString:String? = nil

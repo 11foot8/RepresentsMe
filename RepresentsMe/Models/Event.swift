@@ -43,6 +43,13 @@ class Event: Comparable {
             "divisionOCDID": official?.divisionOCDID ?? ""
         ]
     }
+    
+    /// Gets the date formatted to "MMMM d, h:mm a"
+    var formattedDate:String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, h:mm a"
+        return formatter.string(from: date)
+    }
 
     /// Creates a new Event given its attributes
     ///
