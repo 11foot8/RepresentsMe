@@ -281,7 +281,8 @@ class MapViewController: UIViewController,
         case .map:
             // Selected a location for the sandbox view, show the Officials for
             // that location
-            self.address = address
+            AppState.sandboxAddress = address
+            
             // TODO: Check address validity - incl. addresses outside of US
             performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
                          sender: self)
