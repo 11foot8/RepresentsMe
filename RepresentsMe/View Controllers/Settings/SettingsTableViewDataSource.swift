@@ -72,39 +72,34 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
     private func initializeSections(with parent:SettingsViewController) {
         self.sections = [
             SettingsSection(name: "User", entries: [
-                SettingsEntry(
+                SettingsSegueEntry(
                     parent: parent,
-                    option: .segue,
                     name: "Email",
                     icon: .envelope,
-                    subtitle: UsersDatabase.shared.getCurrentUserEmail(),
-                    segueID: "EmailSettingsSegue"),
-                SettingsEntry(
+                    segueID: "EmailSettingsSegue",
+                    subtitle: UsersDatabase.shared.getCurrentUserEmail()),
+                SettingsSegueEntry(
                     parent: parent,
-                    option: .segue,
                     name: "Username",
                     icon: .user,
-                    subtitle: UsersDatabase.shared.getCurrentUserDisplayName(),
-                    segueID: "DisplayNameSettingsSegue"),
-                SettingsEntry(
+                    segueID: "DisplayNameSettingsSegue",
+                    subtitle: UsersDatabase.shared.getCurrentUserDisplayName()),
+                SettingsSegueEntry(
                     parent: parent,
-                    option: .segue,
                     name: "Password",
                     icon: .key,
                     segueID: "PasswordSettingsSegue")
                 ]),
             SettingsSection(name: "", entries: [
-                SettingsEntry(
+                SettingsSegueEntry(
                     parent: parent,
-                    option: .segue,
                     name: "Address",
                     icon: .home,
                     segueID: "AddressSettingsSegue")
                 ]),
             SettingsSection(name: "", entries: [
-                SettingsEntry(
+                SettingsLogoutEntry(
                     parent: parent,
-                    option: .logout,
                     name: "Logout",
                     icon: .signOutAlt)
                 ])
