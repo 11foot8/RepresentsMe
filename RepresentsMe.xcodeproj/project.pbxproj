@@ -65,7 +65,7 @@
 		16ECF805225508B8003DEA68 /* FirebaseWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */; };
 		16ECF8072255103B003DEA68 /* PickerPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16ECF8062255103B003DEA68 /* PickerPopup.xib */; };
 		16ECF809225510D5003DEA68 /* PickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF808225510D5003DEA68 /* PickerPopup.swift */; };
-		16ECF811225516C9003DEA68 /* PickerPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */; };
+		16ECF811225516C9003DEA68 /* StatePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */; };
 		16FCC84E2252B58F008D3991 /* LocationInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FCC84D2252B58F008D3991 /* LocationInfo.xib */; };
 		16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCC84F2252B5CF008D3991 /* LocationInfo.swift */; };
 		34760810FBDB441A2F565AD1 /* Pods_RepresentsMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB88E31673EB3A34EA58700A /* Pods_RepresentsMe.framework */; };
@@ -166,7 +166,7 @@
 		16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWrapper.swift; sourceTree = "<group>"; };
 		16ECF8062255103B003DEA68 /* PickerPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerPopup.xib; sourceTree = "<group>"; };
 		16ECF808225510D5003DEA68 /* PickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPopup.swift; sourceTree = "<group>"; };
-		16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPopoverViewController.swift; sourceTree = "<group>"; };
+		16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePopoverViewController.swift; sourceTree = "<group>"; };
 		16FCC84D2252B58F008D3991 /* LocationInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationInfo.xib; sourceTree = "<group>"; };
 		16FCC84F2252B5CF008D3991 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		2606EAF9AD601CDBDC9B898F /* Pods-RepresentsMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMe/Pods-RepresentsMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -473,7 +473,7 @@
 				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
-				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
+				16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */,
 				134F922B225E8F2200B797B4 /* Officials */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
@@ -801,7 +801,7 @@
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,
-				16ECF811225516C9003DEA68 /* PickerPopoverViewController.swift in Sources */,
+				16ECF811225516C9003DEA68 /* StatePopoverViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
 				134F922F225EA41500B797B4 /* SettingsEntry.swift in Sources */,

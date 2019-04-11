@@ -8,7 +8,7 @@
 
 import UIKit
 
-// SignupAddressViewController -> PickerPopoverViewController
+// SignupAddressViewController -> StatePopoverViewController
 let POPOVER_SEGUE_IDENTIFIER = "SignupPickerPopoverSegue"
 // SignupAddressViewController -> SignupViewController
 let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
@@ -16,7 +16,7 @@ let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
 /// The view controller to have the user select an address and create their
 /// account.
 class SignupAddressViewController: UIViewController,
-                                   PickerPopoverViewControllerDelegate,
+                                   StatePopoverViewControllerDelegate,
                                    UIPopoverPresentationControllerDelegate {
     
     // MARK: - Properties
@@ -116,8 +116,8 @@ class SignupAddressViewController: UIViewController,
     }
 
     /// Set the chosen state when the user selects a state
-    func pickerDoneTouchUp(selection: String) {
-        stateTextField.text = selection
+    func didSelectState(state: String) {
+        stateTextField.text = state
     }
 
     // MARK: - Segue functions
@@ -125,7 +125,7 @@ class SignupAddressViewController: UIViewController,
     /// Prepare to show the popover for the states select
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == POPOVER_SEGUE_IDENTIFIER {
-            let destination = segue.destination as! PickerPopoverViewController
+            let destination = segue.destination as! StatePopoverViewController
             destination.setup(parent: self, view: self.view)
             destination.delegate = self
             destination.selectedValue = stateTextField.text!

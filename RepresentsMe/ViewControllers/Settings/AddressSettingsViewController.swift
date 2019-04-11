@@ -11,7 +11,7 @@ import CoreData
 
 /// The view controller to allow the user to change their home address.
 class AddressSettingsViewController: UIViewController,
-                                     PickerPopoverViewControllerDelegate,
+                                     StatePopoverViewControllerDelegate,
                                      UIPopoverPresentationControllerDelegate {
 
     // MARK: - Properties
@@ -64,8 +64,8 @@ class AddressSettingsViewController: UIViewController,
     /// Sets the state to the given selection
     ///
     /// - Parameter selection:  the selected state
-    func pickerDoneTouchUp(selection: String) {
-        stateTextField.text = selection
+    func didSelectState(state: String) {
+        stateTextField.text = state
     }
 
     // MARK: - Segue functions
@@ -73,7 +73,7 @@ class AddressSettingsViewController: UIViewController,
     /// Prepare to show the state select popover
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == popoverSegueIdentifier {
-            let destination = segue.destination as! PickerPopoverViewController
+            let destination = segue.destination as! StatePopoverViewController
             destination.setup(parent: self, view: self.view)
             destination.delegate = self
             destination.selectedValue = stateTextField.text!
