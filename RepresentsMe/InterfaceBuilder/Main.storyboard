@@ -1001,7 +1001,7 @@
         <!--Home Events-->
         <scene sceneID="gQH-TK-svZ">
             <objects>
-                <viewController id="bJG-fH-d8a" customClass="EventListViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bJG-fH-d8a" customClass="EventsListViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0HA-OE-ZSU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

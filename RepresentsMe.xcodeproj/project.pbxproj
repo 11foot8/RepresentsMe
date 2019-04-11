@@ -31,7 +31,7 @@
 		1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13527115221F74AC00442AA6 /* JSONDivision.swift */; };
 		1352711C221F793800442AA6 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711B221F793800442AA6 /* ParserError.swift */; };
 		13527120221F8AA200442AA6 /* Official.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1352711F221F8AA200442AA6 /* Official.swift */; };
-		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
+		1371C07F225D1F0C00FA0CCB /* EventsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventsListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
 		13895F31225F8EAA00FE405D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13895F30225F8EAA00FE405D /* AppState.swift */; };
@@ -131,7 +131,7 @@
 		13527115221F74AC00442AA6 /* JSONDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDivision.swift; sourceTree = "<group>"; };
 		1352711B221F793800442AA6 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
 		1352711F221F8AA200442AA6 /* Official.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Official.swift; sourceTree = "<group>"; };
-		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
+		1371C07E225D1F0C00FA0CCB /* EventsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13895F30225F8EAA00FE405D /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 		134F9224225E5EBC00B797B4 /* EventsTableView */ = {
 			isa = PBXGroup;
 			children = (
-				1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */,
+				1371C07E225D1F0C00FA0CCB /* EventsListViewController.swift */,
 				134F9220225E587F00B797B4 /* EventsTableViewDelegate.swift */,
 				134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */,
 			);
@@ -291,7 +291,7 @@
 			path = OfficialsTableView;
 			sourceTree = "<group>";
 		};
-		13A4F619225F84DC0023E150 /* Details */ = {
+		13A4F619225F84DC0023E150 /* EventDetails */ = {
 			isa = PBXGroup;
 			children = (
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
@@ -299,7 +299,7 @@
 				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
-			path = Details;
+			path = EventDetails;
 			sourceTree = "<group>";
 		};
 		13A4F61A225F85510023E150 /* SettingsTableView */ = {
@@ -500,7 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				134F9224225E5EBC00B797B4 /* EventsTableView */,
-				13A4F619225F84DC0023E150 /* Details */,
+				13A4F619225F84DC0023E150 /* EventDetails */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -839,7 +839,7 @@
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,
 				134F922D225EA23200B797B4 /* SettingsTableViewDataSource.swift in Sources */,
 				13527119221F74AC00442AA6 /* JSONOffice.swift in Sources */,
-				1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */,
+				1371C07F225D1F0C00FA0CCB /* EventsListViewController.swift in Sources */,
 				134F9228225E89CA00B797B4 /* OfficialsTableViewDataSource.swift in Sources */,
 				134F9231225EA48D00B797B4 /* SettingsSection.swift in Sources */,
 				13A4F612225F800A0023E150 /* UIViewControllerExt.swift in Sources */,

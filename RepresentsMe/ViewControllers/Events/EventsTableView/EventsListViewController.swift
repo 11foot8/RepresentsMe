@@ -1,5 +1,5 @@
 //
-//  EventListViewController.swift
+//  EventsListViewController.swift
 //  RepresentsMe
 //
 //  Created by Varun Adiga on 4/2/19.
@@ -12,9 +12,10 @@ import UIKit
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
-class EventListViewController: UIViewController,
-                               UISearchBarDelegate,
-                               EventListDelegate {
+/// The view controller to show the list of Events for the user's home Address
+class EventsListViewController: UIViewController,
+                                UISearchBarDelegate,
+                                EventListDelegate {
     
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
