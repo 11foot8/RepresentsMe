@@ -11,8 +11,7 @@ import CoreData
 
 /// The view controller to allow the user to change their home address.
 class AddressSettingsViewController: UIViewController,
-                                     StatePopoverViewControllerDelegate,
-                                     UIPopoverPresentationControllerDelegate {
+                                     StatePopoverViewControllerDelegate {
 
     // MARK: - Properties
     let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
@@ -74,15 +73,10 @@ class AddressSettingsViewController: UIViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == popoverSegueIdentifier {
             let destination = segue.destination as! StatePopoverViewController
-            destination.setup(parent: self, view: self.view)
+            destination.setup(in: self.view)
             destination.delegate = self
             destination.selectedValue = stateTextField.text!
         }
-    }
-    
-    func adaptivePresentationStyle(
-        for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
     }
 
     /// Hide the keyboard when the user clicks away from a text field

@@ -18,7 +18,6 @@ let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
 /// The view controller to handle creating and updating Events
 class EventCreateViewController: UIViewController,
-                                 UIPopoverPresentationControllerDelegate,
                                  OfficialSelectionDelegate,
                                  LocationSelectionDelegate,
                                  DatePopoverViewControllerDelegate {
@@ -103,12 +102,6 @@ class EventCreateViewController: UIViewController,
         navigationController?.popViewController(animated: true)
     }
 
-    /// UIPopoverPresentationControllerDelegate
-    func adaptivePresentationStyle(
-        for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
     /// Prepare for segues to select the Official, location, and date
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
@@ -124,7 +117,7 @@ class EventCreateViewController: UIViewController,
         } else if (segue.identifier == DATE_POPOVER_SEGUE) {
             // Seguing to select a date
             let destination = segue.destination as! DatePopoverViewController
-            destination.setup(parent: self, view: self.view)
+            destination.setup(in: self.view)
             destination.delegate = self
         }
     }

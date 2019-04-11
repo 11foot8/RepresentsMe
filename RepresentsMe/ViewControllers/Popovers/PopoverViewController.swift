@@ -9,18 +9,17 @@
 import UIKit
 
 /// Implements view controllers as a popover
-class PopoverViewController: UIViewController {
+class PopoverViewController: UIViewController,
+                             UIPopoverPresentationControllerDelegate {
 
     /// Sets up the view controller as a popover
     ///
-    /// - Parameter parent:     the popover presentation delegate
-    /// - Parameter view:       the source view
-    func setup(parent:UIPopoverPresentationControllerDelegate,
-               view:UIView) {
+    /// - Parameter in:     the source view
+    func setup(in view:UIView) {
         self.modalPresentationStyle = .overFullScreen
 
         if let controller = self.popoverPresentationController {
-            controller.delegate = parent
+            controller.delegate = self
             controller.sourceRect = CGRect(x: view.center.x,
                                            y: view.center.y,
                                            width: 0,
@@ -29,5 +28,11 @@ class PopoverViewController: UIViewController {
             controller.permittedArrowDirections = UIPopoverArrowDirection(
                 rawValue: 0)
         }
+    }
+    
+    /// Use no adaptive presentation style
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

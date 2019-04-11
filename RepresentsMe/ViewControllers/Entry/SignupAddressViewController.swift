@@ -16,9 +16,8 @@ let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
 /// The view controller to have the user select an address and create their
 /// account.
 class SignupAddressViewController: UIViewController,
-                                   StatePopoverViewControllerDelegate,
-                                   UIPopoverPresentationControllerDelegate {
-    
+                                   StatePopoverViewControllerDelegate {
+
     // MARK: - Properties
     
     var email:String?
@@ -126,15 +125,10 @@ class SignupAddressViewController: UIViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == POPOVER_SEGUE_IDENTIFIER {
             let destination = segue.destination as! StatePopoverViewController
-            destination.setup(parent: self, view: self.view)
+            destination.setup(in: self.view)
             destination.delegate = self
             destination.selectedValue = stateTextField.text!
         }
-    }
-    
-    func adaptivePresentationStyle(
-        for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
     }
 
     /// Hide the keyboard when the user touches outside a text field
