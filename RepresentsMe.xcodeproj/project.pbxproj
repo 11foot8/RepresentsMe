@@ -273,6 +273,7 @@
 		13A4F615225F84060023E150 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */,
 				16A6535E225D6D4300E13856 /* Util.swift */,
 				3BE4384222556D4700EC049B /* LocationManager.swift */,
 				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
@@ -316,7 +317,6 @@
 		13BD31AA22302078000A6BEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */,
 				1352711F221F8AA200442AA6 /* Official.swift */,
 				3B9072C722309B2700B8A2F8 /* Address.swift */,
 				133BD33A223A76F00069279A /* PoliticalParty.swift */,
