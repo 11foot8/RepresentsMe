@@ -9,8 +9,11 @@
 import UIKit
 import MapKit
 
+// CreateEventViewController -> OfficialsListViewController
 let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
+// CreateEventViewController -> MapViewController
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
+// CreateEventViewController -> DatePopoverViewController
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
 /// The view controller to handle creating and updating Events

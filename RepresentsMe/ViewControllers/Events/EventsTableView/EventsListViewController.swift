@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
+// EventsListViewController -> EventDetailsViewController
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
+// EventsListViewController -> CreateEventViewController
 let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
 /// The view controller to show the list of Events for the user's home Address

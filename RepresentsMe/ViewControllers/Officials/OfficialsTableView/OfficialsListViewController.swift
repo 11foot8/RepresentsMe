@@ -20,8 +20,6 @@ protocol OfficialSelectionDelegate {
 /// selected Address. Also allows for selecting an Official in order to select
 /// Officials for Events.
 class OfficialsListViewController: UIViewController, AppStateListener {
-    
-    static let DETAILS_VIEW_SEGUE = "detailsViewSegue"
 
     /// The modes avaliable for the home view controller
     enum ReachType {
@@ -100,7 +98,7 @@ class OfficialsListViewController: UIViewController, AppStateListener {
     
     /// Prepare to segue to show the details for an Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == OfficialsListViewController.DETAILS_VIEW_SEGUE,
+        if segue.identifier == OFFICIAL_DETAILS_VIEW_SEGUE,
             let destination = segue.destination as? OfficialDetailsViewController,
             let indexPath = officialsTableView.indexPathForSelectedRow {
             

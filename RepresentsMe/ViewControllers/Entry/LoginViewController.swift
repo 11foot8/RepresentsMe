@@ -9,6 +9,7 @@
 import UIKit
 import MBProgressHUD
 
+// LoginViewController -> SignupViewController
 let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
 let TAB_BAR_VIEW_CONTROLLER_NAME = "mainTabBarViewController"
 

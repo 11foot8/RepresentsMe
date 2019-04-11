@@ -8,6 +8,8 @@
 
 import UIKit
 
+// OfficialsListViewController -> OfficialsDetailsViewController
+let OFFICIAL_DETAILS_VIEW_SEGUE = "detailsViewSegue"
 
 /// The delegate for the Officials table view on the HomeViewController
 class OfficialsTableViewDelegate: NSObject, UITableViewDelegate {
@@ -31,7 +33,7 @@ class OfficialsTableViewDelegate: NSObject, UITableViewDelegate {
         case .home, .map:
             // Show the details for the selected Official
             self.parent.performSegue(
-                withIdentifier: OfficialsListViewController.DETAILS_VIEW_SEGUE,
+                withIdentifier: OFFICIAL_DETAILS_VIEW_SEGUE,
                 sender: self)
             break
         case .event:

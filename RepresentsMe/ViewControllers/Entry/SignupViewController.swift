@@ -9,10 +9,12 @@
 import UIKit
 import Firebase
 
+// SignupViewController -> EnterAddressViewController
+let ADDRESS_SEGUE_IDENTIFIER = "CreateAccountAddressSegue"
+
 class SignupViewController: UIViewController {
 
     // MARK: - Properties
-    let addressSegueIdentifier = "CreateAccountAddressSegue"
 
     let validFontAwesomeString = "check-circle"
     let invalidFontAwesomeString = "times-circle"
@@ -208,7 +210,7 @@ class SignupViewController: UIViewController {
 
     // MARK: Segue functions
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == addressSegueIdentifier {
+        if segue.identifier == ADDRESS_SEGUE_IDENTIFIER {
             let enterAddressViewController = segue.destination as! EnterAddressViewController
             enterAddressViewController.email = emailTextField.text!
             enterAddressViewController.password = passwordTextField.text!

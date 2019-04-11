@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
+// EventDetailsViewController -> CreateEventViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
 
 /// The view controller to display the details for an Event and allow the

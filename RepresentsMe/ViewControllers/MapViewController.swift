@@ -9,6 +9,7 @@ import UIKit
 import MapKit
 import Foundation
 
+// MapViewController -> OfficialsListViewController
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 
 /// The protocol to implement to receive a location when the user selects a

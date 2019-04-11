@@ -9,7 +9,8 @@
 import UIKit
 import MapKit
 
-let CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
+// OfficialDetailsViewController -> OfficialContactViewController
+let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 
 /// The view controller to show the details for an Official
 class OfficialDetailsViewController: UIViewController {
@@ -85,7 +86,7 @@ class OfficialDetailsViewController: UIViewController {
 
     /// Prepare to segue to the contacts view for the Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == CONTACT_SEGUE_IDENTIFIER,
+        if segue.identifier == OFFICIAL_CONTACT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? OfficialContactViewController {
             destination.official = official
         }
