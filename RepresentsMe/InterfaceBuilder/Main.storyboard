@@ -612,7 +612,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="signUpDidTouch:" destination="Ofp-tx-83I" eventType="touchUpInside" id="ehe-BR-YrA"/>
                                     <segue destination="15G-as-B8d" kind="showDetail" identifier="CreateAccountAddressSegue" id="CsS-zD-AGd"/>
                                 </connections>
                             </button>
