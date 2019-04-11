@@ -14,7 +14,7 @@ protocol DatePopoverViewControllerDelegate {
 }
 
 /// View controller to show a popover to select a date
-class DatePopoverViewController: UIViewController {
+class DatePopoverViewController: PopoverViewController {
 
     @IBOutlet weak var datePicker: UIDatePicker!
     

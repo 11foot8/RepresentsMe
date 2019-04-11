@@ -73,23 +73,10 @@ class AddressSettingsViewController: UIViewController,
     /// Prepare to show the state select popover
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == popoverSegueIdentifier {
-            let popoverViewController = segue.destination as! PickerPopoverViewController
-            popoverViewController.modalPresentationStyle =
-                UIModalPresentationStyle.overFullScreen
-            popoverViewController.popoverPresentationController?.delegate =
-                self
-            popoverViewController.delegate = self
-            popoverViewController.popoverPresentationController?
-                .sourceRect = CGRect(x: view.center.x,
-                                     y: view.center.y,
-                                     width: 0,
-                                     height: 0)
-            popoverViewController.popoverPresentationController?
-                .sourceView = view
-            popoverViewController.popoverPresentationController?
-                .permittedArrowDirections = UIPopoverArrowDirection(
-                    rawValue: 0)
-            popoverViewController.selectedValue = stateTextField.text!
+            let destination = segue.destination as! PickerPopoverViewController
+            destination.setup(parent: self, view: self.view)
+            destination.delegate = self
+            destination.selectedValue = stateTextField.text!
         }
     }
     

@@ -124,15 +124,8 @@ class EventCreateViewController: UIViewController,
         } else if (segue.identifier == DATE_POPOVER_SEGUE) {
             // Seguing to select a date
             let destination = segue.destination as! DatePopoverViewController
-            destination.popoverPresentationController?.delegate = self
+            destination.setup(parent: self, view: self.view)
             destination.delegate = self
-            
-            // Present the view controller as a popover
-            destination.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-            destination.popoverPresentationController?.sourceRect = CGRect(
-                x: view.center.x, y: view.center.y, width: 0, height: 0)
-            destination.popoverPresentationController?.sourceView = view
-            destination.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         }
     }
 

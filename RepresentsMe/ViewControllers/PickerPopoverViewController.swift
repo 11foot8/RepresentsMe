@@ -12,7 +12,7 @@ protocol PickerPopoverViewControllerDelegate {
     func pickerDoneTouchUp(selection:String)
 }
 
-class PickerPopoverViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class PickerPopoverViewController: PopoverViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     // MARK: - Properties
     let pickerData = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT",
