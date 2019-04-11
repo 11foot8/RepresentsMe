@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D9449C2223184F30057BAB1 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9449C1223184F30057BAB1 /* DetailsViewController.swift */; };
 		0DF1F11D225CFD8A008D61CF /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */; };
 		13287BB92220479B00622CD4 /* OfficialScraperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BB82220479B00622CD4 /* OfficialScraperTests.swift */; };
 		13287BBD222065D400622CD4 /* OfficialScraperTestsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13287BBC222065D400622CD4 /* OfficialScraperTestsData.swift */; };
@@ -35,8 +34,9 @@
 		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
-		13A4F610225EC6E60023E150 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */; };
 		13A4F612225F800A0023E150 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F611225F80090023E150 /* UIViewControllerExt.swift */; };
+		13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */; };
+		13A4F617225F848A0023E150 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F616225F848A0023E150 /* DetailsViewController.swift */; };
 		13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD31B5223021F1000A6BEE /* TabBarViewController.swift */; };
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
@@ -105,7 +105,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D9449C1223184F30057BAB1 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = "RepresentsMe/View Controllers/DetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		106FE128867F4D9B064C11E3 /* Pods-RepresentsMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepresentsMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RepresentsMeTests/Pods-RepresentsMeTests.release.xcconfig"; sourceTree = "<group>"; };
 		13287BB82220479B00622CD4 /* OfficialScraperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialScraperTests.swift; sourceTree = "<group>"; };
@@ -134,8 +133,9 @@
 		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = "/Users/tirtow/college/cs/371l/RepresentsMe/RepresentsMe/View Controllers/Settings/AddressSettingsViewController.swift"; sourceTree = "<absolute>"; };
 		13A4F611225F80090023E150 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewController.swift; sourceTree = "<group>"; };
+		13A4F616225F848A0023E150 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		13BD31B5223021F1000A6BEE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
@@ -238,27 +238,26 @@
 			path = Scraper;
 			sourceTree = "<group>";
 		};
-		134F9224225E5EBC00B797B4 /* Events Table View */ = {
+		134F9224225E5EBC00B797B4 /* EventsTableView */ = {
 			isa = PBXGroup;
 			children = (
 				1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */,
 				134F9220225E587F00B797B4 /* EventsTableViewDelegate.swift */,
 				134F9222225E591600B797B4 /* EventsTableViewDataSource.swift */,
 			);
-			path = "Events Table View";
+			path = EventsTableView;
 			sourceTree = "<group>";
 		};
-		134F922B225E8F2200B797B4 /* Home */ = {
+		134F922B225E8F2200B797B4 /* Officials */ = {
 			isa = PBXGroup;
 			children = (
-				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
-				134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */,
-				134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */,
+				13A4F618225F84BE0023E150 /* OfficialsTableView */,
+				3BE4383B2255345B00EC049B /* Details */,
 			);
-			path = Home;
+			path = Officials;
 			sourceTree = "<group>";
 		};
-		134F9238225EBCF600B797B4 /* Settings Section */ = {
+		134F9238225EBCF600B797B4 /* SettingsSection */ = {
 			isa = PBXGroup;
 			children = (
 				134F922E225EA41500B797B4 /* SettingsEntry.swift */,
@@ -266,7 +265,50 @@
 				134F9234225EBA6600B797B4 /* SettingsSegueEntry.swift */,
 				134F9236225EBBA600B797B4 /* SettingsLogoutEntry.swift */,
 			);
-			path = "Settings Section";
+			path = SettingsSection;
+			sourceTree = "<group>";
+		};
+		13A4F615225F84060023E150 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				16A6535E225D6D4300E13856 /* Util.swift */,
+				3BE4384222556D4700EC049B /* LocationManager.swift */,
+				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
+				13A4F611225F80090023E150 /* UIViewControllerExt.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		13A4F618225F84BE0023E150 /* OfficialsTableView */ = {
+			isa = PBXGroup;
+			children = (
+				3B45F0B22222414F00FA5B8B /* HomeViewController.swift */,
+				134F9227225E89CA00B797B4 /* HomeTableViewDataSource.swift */,
+				134F9229225E8C3800B797B4 /* HomeTableViewDelegate.swift */,
+			);
+			path = OfficialsTableView;
+			sourceTree = "<group>";
+		};
+		13A4F619225F84DC0023E150 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
+				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
+				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
+				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		13A4F61A225F85510023E150 /* SettingsTableView */ = {
+			isa = PBXGroup;
+			children = (
+				134F9238225EBCF600B797B4 /* SettingsSection */,
+				3B649F062237274100E88430 /* SettingsViewController.swift */,
+				134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */,
+				134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */,
+			);
+			path = SettingsTableView;
 			sourceTree = "<group>";
 		};
 		13BD31AA22302078000A6BEE /* Models */ = {
@@ -297,17 +339,19 @@
 			children = (
 				13DDF422225CED0D008E3D32 /* FontAwesome.swift */,
 				13DDF423225CED0D008E3D32 /* Enum.swift */,
+				13BD31BD22302605000A6BEE /* Fonts */,
 			);
 			path = FontAwesome;
 			sourceTree = "<group>";
 		};
-		165B7F65225BE1800095D9E1 /* Sign Up */ = {
+		165B7F65225BE1800095D9E1 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				1683D03A2253D2A300350471 /* SignupViewController.swift */,
 				165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */,
 			);
-			path = "Sign Up";
+			path = Entry;
 			sourceTree = "<group>";
 		};
 		16ECF80A225510E3003DEA68 /* PickerPopup */ = {
@@ -371,13 +415,12 @@
 		3B1EFD52221F06E9003176BF /* RepresentsMe */ = {
 			isa = PBXGroup;
 			children = (
-				3BE4384122556ADB00EC049B /* Interface Builder */,
+				3BE4384122556ADB00EC049B /* InterfaceBuilder */,
 				3BE4383E22555B5B00EC049B /* Sources */,
 				13BD31AA22302078000A6BEE /* Models */,
-				3B45F0B62226F15B00FA5B8B /* View Controllers */,
+				3B45F0B62226F15B00FA5B8B /* ViewControllers */,
 				3B45F0B72226F1A300FA5B8B /* Views */,
 				3B1EFD5D221F06EC003176BF /* Assets.xcassets */,
-				13BD31BD22302605000A6BEE /* Fonts */,
 				3B1EFD53221F06E9003176BF /* AppDelegate.swift */,
 				13287BBA2220490E00622CD4 /* apikey.swift */,
 				3B1EFD62221F06EC003176BF /* Info.plist */,
@@ -410,33 +453,27 @@
 		3B2C789A224BC4D90036AFD0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				134F9238225EBCF600B797B4 /* Settings Section */,
-				3B649F062237274100E88430 /* SettingsViewController.swift */,
-				134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */,
-				134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */,
-				13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */,
+				13A4F61A225F85510023E150 /* SettingsTableView */,
 				169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */,
+				13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
 				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		3B45F0B62226F15B00FA5B8B /* View Controllers */ = {
+		3B45F0B62226F15B00FA5B8B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
-				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
-				134F922B225E8F2200B797B4 /* Home */,
-				165B7F65225BE1800095D9E1 /* Sign Up */,
-				3BE4383B2255345B00EC049B /* Details */,
+				134F922B225E8F2200B797B4 /* Officials */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
-				13A4F611225F80090023E150 /* UIViewControllerExt.swift */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		3B45F0B72226F1A300FA5B8B /* Views */ = {
@@ -459,11 +496,8 @@
 		3BCC1665225CF5FA0088D757 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				134F9224225E5EBC00B797B4 /* Events Table View */,
-				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
-				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
-				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
+				134F9224225E5EBC00B797B4 /* EventsTableView */,
+				13A4F619225F84DC0023E150 /* Details */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -471,7 +505,7 @@
 		3BE4383B2255345B00EC049B /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				0D9449C1223184F30057BAB1 /* DetailsViewController.swift */,
+				13A4F616225F848A0023E150 /* DetailsViewController.swift */,
 				3BE4383C2255347800EC049B /* ContactViewController.swift */,
 			);
 			path = Details;
@@ -480,22 +514,20 @@
 		3BE4383E22555B5B00EC049B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				16A6535E225D6D4300E13856 /* Util.swift */,
-				13DDF421225CED0D008E3D32 /* FontAwesome */,
-				3BE4384222556D4700EC049B /* LocationManager.swift */,
-				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
+				13A4F615225F84060023E150 /* Utilities */,
 				13287BC22220C09A00622CD4 /* Scraper */,
+				13DDF421225CED0D008E3D32 /* FontAwesome */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		3BE4384122556ADB00EC049B /* Interface Builder */ = {
+		3BE4384122556ADB00EC049B /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */,
 				3BCC166A225D0A140088D757 /* Main.storyboard */,
 			);
-			path = "Interface Builder";
+			path = InterfaceBuilder;
 			sourceTree = "<group>";
 		};
 		D1D4E0A5BB7050608C9B5714 /* Frameworks */ = {
@@ -767,7 +799,6 @@
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
 				134F922F225EA41500B797B4 /* SettingsEntry.swift in Sources */,
-				13A4F610225EC6E60023E150 /* AddressSettingsViewController.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */,
 				169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */,
@@ -786,6 +817,7 @@
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
 				0DF1F11D225CFD8A008D61CF /* EventDetailsViewController.swift in Sources */,
 				134F9235225EBA6600B797B4 /* SettingsSegueEntry.swift in Sources */,
+				13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */,
 				165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
@@ -796,7 +828,6 @@
 				16ECF809225510D5003DEA68 /* PickerPopup.swift in Sources */,
 				1683D03D2253D35500350471 /* EntryViewController.swift in Sources */,
 				3BE4383D2255347800EC049B /* ContactViewController.swift in Sources */,
-				0D9449C2223184F30057BAB1 /* DetailsViewController.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
 				134F9233225EA9B200B797B4 /* SettingsTableViewDelegate.swift in Sources */,
 				16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */,
@@ -817,6 +848,7 @@
 				16A6535F225D6D4300E13856 /* Util.swift in Sources */,
 				1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */,
 				3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */,
+				13A4F617225F848A0023E150 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
