@@ -88,7 +88,10 @@ class SignupAddressViewController: UIViewController,
         self.view.endEditing(true)
         
         // Create the user
-        UsersDatabase.shared.createUser(email: email, password: password, displayName:displayName, address:address) { error in
+        UsersDatabase.shared.createUser(email: email,
+                                        password: password,
+                                        displayName: displayName,
+                                        address: address) {(error) in
             
             // Stop the loading animation
             hud.end()
@@ -98,6 +101,9 @@ class SignupAddressViewController: UIViewController,
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
                 // Successfully created the user
+                AppState.homeAddress = address
+                
+                // Send the user to the officials list
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
                 let tabBarViewController =
                     storyBoard.instantiateViewController(
