@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/tirtow/college/cs/371l/RepresentsMe/RepresentsMe/View Controllers/Settings/AddressSettingsViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:RepresentsMe.xcodeproj">
    </FileRef>
    <FileRef

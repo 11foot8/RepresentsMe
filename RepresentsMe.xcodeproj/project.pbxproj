@@ -35,6 +35,7 @@
 		1371C07F225D1F0C00FA0CCB /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */; };
 		1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371C080225D1F1500FA0CCB /* EventCell.swift */; };
 		1371C083225D6B1E00FA0CCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */; };
+		13A4F610225EC6E60023E150 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */; };
 		13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD31B5223021F1000A6BEE /* TabBarViewController.swift */; };
 		13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */; };
 		13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */; };
@@ -54,7 +55,6 @@
 		169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */; };
 		169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */; };
 		16A6535F225D6D4300E13856 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A6535E225D6D4300E13856 /* Util.swift */; };
-		16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */; };
 		16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65362225D80C500E13856 /* LoadingHUD.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
@@ -72,7 +72,6 @@
 		3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B1EFD5F221F06EC003176BF /* LaunchScreen.storyboard */; };
 		3B1EFD6C221F06EC003176BF /* RepresentsMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD6B221F06EC003176BF /* RepresentsMeTests.swift */; };
 		3B1EFD77221F06EC003176BF /* RepresentsMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */; };
-		3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */; };
 		3B45F0B32222414F00FA5B8B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B22222414F00FA5B8B /* HomeViewController.swift */; };
 		3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45F0B42222452D00FA5B8B /* OfficialCell.swift */; };
 		3B649F052237264800E88430 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F042237264800E88430 /* SettingsCell.swift */; };
@@ -134,6 +133,7 @@
 		1371C07E225D1F0C00FA0CCB /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		1371C080225D1F1500FA0CCB /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		1371C082225D6B1D00FA0CCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = "/Users/tirtow/college/cs/371l/RepresentsMe/RepresentsMe/View Controllers/Settings/AddressSettingsViewController.swift"; sourceTree = "<absolute>"; };
 		13BD31B5223021F1000A6BEE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		13BD31B7223025FB000A6BEE /* Font Awesome 5 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		13BD31B8223025FB000A6BEE /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
@@ -153,7 +153,6 @@
 		169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
 		169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNameSettingsViewController.swift; sourceTree = "<group>"; };
 		16A6535E225D6D4300E13856 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressSettingsViewController.swift; path = ../AddressSettingsViewController.swift; sourceTree = "<group>"; };
 		16A65362225D80C500E13856 /* LoadingHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
@@ -177,7 +176,6 @@
 		3B1EFD72221F06EC003176BF /* RepresentsMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepresentsMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B1EFD76221F06EC003176BF /* RepresentsMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentsMeUITests.swift; sourceTree = "<group>"; };
 		3B1EFD78221F06EC003176BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewController.swift; sourceTree = "<group>"; };
 		3B45F0B22222414F00FA5B8B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3B45F0B42222452D00FA5B8B /* OfficialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialCell.swift; sourceTree = "<group>"; };
 		3B649F042237264800E88430 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -414,7 +412,7 @@
 				3B649F062237274100E88430 /* SettingsViewController.swift */,
 				134F922C225EA23200B797B4 /* SettingsTableViewDataSource.swift */,
 				134F9232225EA9B200B797B4 /* SettingsTableViewDelegate.swift */,
-				16A65360225D6ED100E13856 /* AddressSettingsViewController.swift */,
+				13A4F60F225EC6E60023E150 /* AddressSettingsViewController.swift */,
 				169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
 				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
@@ -428,7 +426,6 @@
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				1683D03C2253D35500350471 /* EntryViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
-				3B2C789B224BC4EF0036AFD0 /* AddressSettingsViewController.swift */,
 				16ECF810225516C9003DEA68 /* PickerPopoverViewController.swift */,
 				134F922B225E8F2200B797B4 /* Home */,
 				165B7F65225BE1800095D9E1 /* Sign Up */,
@@ -767,6 +764,7 @@
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
 				134F922F225EA41500B797B4 /* SettingsEntry.swift in Sources */,
+				13A4F610225EC6E60023E150 /* AddressSettingsViewController.swift in Sources */,
 				3B649F072237274100E88430 /* SettingsViewController.swift in Sources */,
 				169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */,
 				169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */,
@@ -778,10 +776,8 @@
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */,
-				16A65361225D6ED100E13856 /* AddressSettingsViewController.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
 				3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */,
-				3B2C789C224BC4EF0036AFD0 /* AddressSettingsViewController.swift in Sources */,
 				169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */,
 				13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */,
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
