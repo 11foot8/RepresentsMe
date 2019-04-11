@@ -1,5 +1,5 @@
 //
-//  EnterAddressViewController.swift
+//  SignupAddressViewController.swift
 //  RepresentsMe
 //
 //  Created by Jacob Hausmann on 4/8/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EnterAddressViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
+class SignupAddressViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
     // MARK: - Properties
     var email:String?
     var password:String?

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
-// EventDetailsViewController -> CreateEventViewController
+// EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
 
 /// The view controller to display the details for an Event and allow the
@@ -66,7 +66,7 @@ class EventDetailsViewController: UIViewController {
     /// Prepare to segue to edit the Event
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EDIT_EVENT_SEGUE {
-            let destination = segue.destination as! CreateEventViewController
+            let destination = segue.destination as! EventCreateViewController
             destination.event = event
             destination.delegate = delegate
         }

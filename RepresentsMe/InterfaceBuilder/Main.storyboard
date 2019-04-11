@@ -766,10 +766,10 @@
             </objects>
             <point key="canvasLocation" x="-1394" y="-180"/>
         </scene>
-        <!--Enter Address View Controller-->
+        <!--Signup Address View Controller-->
         <scene sceneID="Zyp-et-ShQ">
             <objects>
-                <viewController id="15G-as-B8d" customClass="EnterAddressViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="15G-as-B8d" customClass="SignupAddressViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r5d-0J-mq7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1392,10 +1392,10 @@
             </objects>
             <point key="canvasLocation" x="2015" y="913"/>
         </scene>
-        <!--Create Event View Controller-->
+        <!--Event Create View Controller-->
         <scene sceneID="J04-S1-ATd">
             <objects>
-                <viewController id="BQt-xH-cRm" customClass="CreateEventViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BQt-xH-cRm" customClass="EventCreateViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FVK-Di-kra">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

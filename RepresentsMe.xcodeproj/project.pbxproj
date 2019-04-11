@@ -45,7 +45,7 @@
 		13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCFEF52253B7F9005D6CE1 /* Event.swift */; };
 		13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF422225CED0D008E3D32 /* FontAwesome.swift */; };
 		13DDF425225CED0D008E3D32 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF423225CED0D008E3D32 /* Enum.swift */; };
-		165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */; };
+		165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
@@ -80,7 +80,7 @@
 		3B649F072237274100E88430 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B649F062237274100E88430 /* SettingsViewController.swift */; };
 		3B9072C822309B2700B8A2F8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9072C722309B2700B8A2F8 /* Address.swift */; };
 		3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */; };
-		3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1668225D06E30088D757 /* CreateEventViewController.swift */; };
+		3BCC1669225D06E30088D757 /* EventCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC1668225D06E30088D757 /* EventCreateViewController.swift */; };
 		3BCC166B225D0A140088D757 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC166A225D0A140088D757 /* Main.storyboard */; };
 		3BE4383D2255347800EC049B /* OfficialContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4383C2255347800EC049B /* OfficialContactViewController.swift */; };
 		3BE4384322556D4700EC049B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE4384222556D4700EC049B /* LocationManager.swift */; };
@@ -145,7 +145,7 @@
 		13CCFEF52253B7F9005D6CE1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		13DDF422225CED0D008E3D32 /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
 		13DDF423225CED0D008E3D32 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
-		165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewController.swift; sourceTree = "<group>"; };
+		165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupAddressViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		3B649F062237274100E88430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3B9072C722309B2700B8A2F8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopoverViewController.swift; sourceTree = "<group>"; };
-		3BCC1668225D06E30088D757 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		3BCC1668225D06E30088D757 /* EventCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCreateViewController.swift; sourceTree = "<group>"; };
 		3BCC166A225D0A140088D757 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3BE4383C2255347800EC049B /* OfficialContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialContactViewController.swift; sourceTree = "<group>"; };
 		3BE4384222556D4700EC049B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				3BCC1668225D06E30088D757 /* CreateEventViewController.swift */,
+				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
 				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
@@ -351,7 +351,7 @@
 			children = (
 				1683D03C2253D35500350471 /* LoginViewController.swift */,
 				1683D03A2253D2A300350471 /* SignupViewController.swift */,
-				165B7F63225BE16C0095D9E1 /* EnterAddressViewController.swift */,
+				165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */,
 			);
 			path = Entry;
 			sourceTree = "<group>";
@@ -815,14 +815,14 @@
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
-				3BCC1669225D06E30088D757 /* CreateEventViewController.swift in Sources */,
+				3BCC1669225D06E30088D757 /* EventCreateViewController.swift in Sources */,
 				169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */,
 				13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */,
 				13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */,
 				0DF1F11D225CFD8A008D61CF /* EventDetailsViewController.swift in Sources */,
 				134F9235225EBA6600B797B4 /* SettingsSegueEntry.swift in Sources */,
 				13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */,
-				165B7F64225BE16C0095D9E1 /* EnterAddressViewController.swift in Sources */,
+				165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				16ECF805225508B8003DEA68 /* FirebaseWrapper.swift in Sources */,

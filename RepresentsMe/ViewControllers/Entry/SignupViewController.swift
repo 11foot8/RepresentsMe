@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-// SignupViewController -> EnterAddressViewController
+// SignupViewController -> SignupAddressViewController
 let ADDRESS_SEGUE_IDENTIFIER = "CreateAccountAddressSegue"
 
 class SignupViewController: UIViewController {
@@ -211,7 +211,7 @@ class SignupViewController: UIViewController {
     // MARK: Segue functions
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ADDRESS_SEGUE_IDENTIFIER {
-            let enterAddressViewController = segue.destination as! EnterAddressViewController
+            let enterAddressViewController = segue.destination as! SignupAddressViewController
             enterAddressViewController.email = emailTextField.text!
             enterAddressViewController.password = passwordTextField.text!
             enterAddressViewController.displayName = displayNameTextField.text!

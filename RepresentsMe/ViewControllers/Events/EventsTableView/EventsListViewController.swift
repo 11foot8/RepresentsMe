@@ -11,7 +11,7 @@ import UIKit
 
 // EventsListViewController -> EventDetailsViewController
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
-// EventsListViewController -> CreateEventViewController
+// EventsListViewController -> EventCreateViewController
 let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 
 /// The view controller to show the list of Events for the user's home Address
@@ -148,7 +148,7 @@ class EventsListViewController: UIViewController,
                 at: eventIndex)
             destination.delegate = self
         } else if segue.identifier == CREATE_EVENT_SEGUE_IDENTIFIER,
-            let destination = segue.destination as? CreateEventViewController {
+            let destination = segue.destination as? EventCreateViewController {
             destination.delegate = self
         }
     }

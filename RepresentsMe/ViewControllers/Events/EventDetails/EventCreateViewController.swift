@@ -1,5 +1,5 @@
 //
-//  CreateEventViewController.swift
+//  EventCreateViewController.swift
 //  RepresentsMe
 //
 //  Created by Benny Singer on 4/8/19.
@@ -9,15 +9,15 @@
 import UIKit
 import MapKit
 
-// CreateEventViewController -> OfficialsListViewController
+// EventCreateViewController -> OfficialsListViewController
 let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
-// CreateEventViewController -> MapViewController
+// EventCreateViewController -> MapViewController
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
-// CreateEventViewController -> DatePopoverViewController
+// EventCreateViewController -> DatePopoverViewController
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
 
 /// The view controller to handle creating and updating Events
-class CreateEventViewController: UIViewController,
+class EventCreateViewController: UIViewController,
                                  UIPopoverPresentationControllerDelegate,
                                  OfficialSelectionDelegate,
                                  LocationSelectionDelegate,
