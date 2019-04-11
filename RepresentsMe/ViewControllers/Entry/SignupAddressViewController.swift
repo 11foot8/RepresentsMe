@@ -8,22 +8,23 @@
 
 import UIKit
 
-class SignupAddressViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
+// SignupAddressViewController -> PickerPopoverViewController
+let POPOVER_SEGUE_IDENTIFIER = "SignupPickerPopoverSegue"
+// SignupAddressViewController -> SignupViewController
+let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
+
+/// The view controller to have the user select an address and create their
+/// account.
+class SignupAddressViewController: UIViewController,
+                                   PickerPopoverViewControllerDelegate,
+                                   UIPopoverPresentationControllerDelegate {
+    
     // MARK: - Properties
+    
     var email:String?
     var password:String?
     var displayName:String?
-    let popoverSegueIdentifier = "SignupPickerPopoverSegue"
-    var pickerData: [String] = [String]()
-
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
-        cityTextField.clearButtonMode = UITextField.ViewMode.always
-        zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
-        // Do any additional setup after loading the view.
-    }
+    var pickerData:[String] = []
 
     // MARK: - Outlets
     @IBOutlet weak var streetAddressTextField: UITextField!
@@ -32,7 +33,19 @@ class SignupAddressViewController: UIViewController, PickerPopoverViewController
     @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
+    // MARK: - Lifecycle
+    
+    /// Sets up the text fields
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
+        cityTextField.clearButtonMode = UITextField.ViewMode.always
+        zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
+    }
+
     // MARK: - Actions
+    
+    /// Attempt to create the user's account when they press the create button
     @IBAction func createAccountTouchUp(_ sender: Any) {
         attemptCreateUser()
     }
@@ -42,12 +55,15 @@ class SignupAddressViewController: UIViewController, PickerPopoverViewController
         // TODO: Enable User Current Location Button
     }
 
+    /// Unwind to the signup view controller when the cancel button is pressed
     @IBAction func cancelTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: "SignupAddressUnwindSegue", sender: self)
+        performSegue(withIdentifier: SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER,
+                     sender: self)
     }
 
     func attemptCreateUser() {
         // Check all values are valid
+        // TODO: Check that email is in correct form
         guard let email = email else {
             // TODO: Handle Error
             return
@@ -61,77 +77,91 @@ class SignupAddressViewController: UIViewController, PickerPopoverViewController
             // TODO: Handle Error
             return
         }
-
-        guard let streetAddress = streetAddressTextField.text else {
+        
+        guard let address = self.buildAddress() else {
             // TODO: Handle Error
             return
         }
 
-        guard let city = cityTextField.text else {
-            // TODO: Handle Error
-            return
-        }
-
-        guard let state = stateTextField.text else {
-            // TODO: Handle Error
-            return
-        }
-
-        guard let zipcode = zipcodeTextField.text else {
-            // TODO: Handle Error
-            return
-        }
-
-        // TODO: Check that email is in correct form
-
-        // TODO: Check address validity
-
-        let address = Address(streetAddress: streetAddress, city: city, state: state, zipcode: zipcode)
-
-        // Display loading animation
+        // Start the loading animation
         let hud = LoadingHUD(self.view)
+        self.view.endEditing(true)
+        
+        // Create the user
         UsersDatabase.shared.createUser(email: email, password: password, displayName:displayName, address:address) { error in
-            if let _ = error {
-                // TODO: Handle error
-                print(error.debugDescription)
-                // End loading animation
-                hud.end()
-                // TODO: display error alert
+            
+            // Stop the loading animation
+            hud.end()
+            
+            if let error = error {
+                // Failed to create the user
+                self.alert(title: "Error", message: error.localizedDescription)
             } else {
-                // End loading animation
-                hud.end()
-                self.view.endEditing(true)
+                // Successfully created the user
                 let storyBoard = UIStoryboard(name:"Main", bundle:nil)
-                let tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "mainTabBarViewController")
-                guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return }
-                appDel.window?.rootViewController = tabBarViewController
+                let tabBarViewController =
+                    storyBoard.instantiateViewController(
+                        withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
+                if let appDel = UIApplication.shared.delegate as? AppDelegate {
+                    appDel.window?.rootViewController = tabBarViewController
+                }
             }
         }
     }
 
+    /// Set the chosen state when the user selects a state
     func pickerDoneTouchUp(selection: String) {
         stateTextField.text = selection
     }
 
     // MARK: - Segue functions
+    
+    /// Prepare to show the popover for the states select
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == popoverSegueIdentifier {
+        if segue.identifier == POPOVER_SEGUE_IDENTIFIER {
             let popoverViewController = segue.destination as! PickerPopoverViewController
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-            popoverViewController.popoverPresentationController?.delegate=self
+            popoverViewController.modalPresentationStyle =
+                UIModalPresentationStyle.overFullScreen
+            popoverViewController.popoverPresentationController?
+                .delegate = self
             popoverViewController.delegate = self
-            popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
-            popoverViewController.popoverPresentationController?.sourceView = view
-            popoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverViewController.popoverPresentationController?
+                .sourceRect = CGRect(x: view.center.x,
+                                     y: view.center.y,
+                                     width: 0,
+                                     height: 0)
+            popoverViewController.popoverPresentationController?
+                .sourceView = view
+            popoverViewController.popoverPresentationController?
+                .permittedArrowDirections =
+                UIPopoverArrowDirection(rawValue: 0)
             popoverViewController.selectedValue = stateTextField.text!
         }
     }
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 
+    /// Hide the keyboard when the user touches outside a text field
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    /// Attempts to build the address for the user
+    ///
+    /// - Returns: the Address or nil if failed to build
+    private func buildAddress() -> Address? {
+        guard let streetAddress = streetAddressTextField.text else {return nil}
+        guard let city = cityTextField.text else {return nil}
+        guard let state = stateTextField.text else {return nil}
+        guard let zipcode = zipcodeTextField.text else {return nil}
 
+        // TODO: Check address validity
+        return Address(streetAddress: streetAddress,
+                       city: city,
+                       state: state,
+                       zipcode: zipcode)
     }
 }
