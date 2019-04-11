@@ -13,6 +13,7 @@ import Firebase
 let ADDRESS_SEGUE_IDENTIFIER = "CreateAccountAddressSegue"
 // SignupViewController -> LoginViewController
 let SIGNUP_UNWIND_SEGUE_IDENTIFIER = "SignupUnwindSegue"
+let MIN_PASSWORD_LENGTH:Int = 6
 
 /// The view controller that starts the process for a user to create an
 /// account.
@@ -29,7 +30,7 @@ class SignupViewController: UIViewController {
     static let defaultEmailMessage = ""
 
     static let validPasswordMessage = ""
-    static let invalidPasswordMessage = "InvalidPassword"
+    static let invalidPasswordMessage = "Password is too short"
     static let defaultPasswordMessage = ""
 
     static let validConfirmPasswordMessage = ""
@@ -88,147 +89,6 @@ class SignupViewController: UIViewController {
         checkFields()
     }
 
-    /// Checks that all fields are correctly filled out.
-    /// If all fields are correctly filled out, enables the continue button,
-    /// otherwise disables the continue button.
-    func checkFields() {
-        if setEmailMessage() &&
-            setPasswordMessage() {
-            // All fields are correctly filled out, let the user continue
-            continueButton.isEnabled = true
-        } else {
-            // Some fields are not correctly filled out
-            continueButton.isEnabled = false
-        }
-    }
-
-    // MARK: - Email Message
-    
-    /// Checks that the entered email is valid.
-    /// Updates the email validity indicator.
-    ///
-    /// - Returns: true if the email is a valid email, false otherwise
-    func setEmailMessage() -> Bool {
-        if let email = emailTextField.text {
-            if Util.isValidEmail(testStr: email) {
-                setEmailMessageValid()
-                return true
-            } else {
-                setEmailMessageInvalid()
-                return false
-            }
-        } else {
-            setEmailMessageDefault()
-            return false
-        }
-    }
-
-    /// Displays that the entered email is valid
-    func setEmailMessageValid() {
-        validEmailLabel.textColor = UIColor.green
-        validEmailLabel.text = SignupViewController.validIcon
-        emailMessageLabel.text =
-            SignupViewController.validEmailMessage
-    }
-
-    /// Displays that the entered email is invalid
-    func setEmailMessageInvalid() {
-        validEmailLabel.textColor = UIColor.red
-        validEmailLabel.text = SignupViewController.invalidIcon
-        emailMessageLabel.text =
-            SignupViewController.invalidEmailMessage
-    }
-
-    /// Displays the default email indicator
-    func setEmailMessageDefault() {
-        validEmailLabel.textColor = UIColor.black
-        validEmailLabel.text = SignupViewController.defaultIcon
-        emailMessageLabel.text =
-            SignupViewController.defaultEmailMessage
-    }
-
-    // MARK: - Password Message
-    
-    /// Checks that the entered password is valid.
-    /// Updates the indicator for the password validity.
-    ///
-    /// - Returns: true if the password and password confirmation is valid,
-    ///            false otherwise
-    func setPasswordMessage() -> Bool {
-        setPasswordMessageDefault()
-        return setConfirmPasswordMessage()
-    }
-
-    /// Displays that the entered password is valid
-    func setPasswordMessageValid() {
-        validPasswordLabel.textColor = UIColor.green
-        validPasswordLabel.text = SignupViewController.validIcon
-        passwordMessageLabel.text =
-            SignupViewController.validPasswordMessage
-    }
-
-    /// Displays that the entered password is invalid
-    func setPasswordMessageInvalid() {
-        validPasswordLabel.textColor = UIColor.red
-        validPasswordLabel.text = SignupViewController.invalidIcon
-        passwordMessageLabel.text =
-            SignupViewController.invalidPasswordMessage
-    }
-
-    /// Displays the default indicator for password validity
-    func setPasswordMessageDefault() {
-        validPasswordLabel.textColor = UIColor.black
-        validPasswordLabel.text = ""
-        passwordMessageLabel.text =
-            SignupViewController.defaultPasswordMessage
-    }
-
-    // MARK: - Confirm Password Message
-    
-    /// Checks that the password confirmation is valid.
-    /// Updates the indicator for the password confirmation validity.
-    ///
-    /// - Returns: true if the password confirmation is valid, false otherwise
-    func setConfirmPasswordMessage() -> Bool {
-        if let confirmPassword = confirmPasswordTextField.text,
-            let password = passwordTextField.text {
-            if (confirmPassword == password) {
-                setConfirmPasswordMessageValid()
-                return true
-            } else {
-                setConfirmPasswordMessageInvalid()
-                return false
-            }
-        } else {
-            setConfirmPasswordMessageDefault()
-            return false
-        }
-    }
-
-    /// Displays that the password confirmation is valid
-    func setConfirmPasswordMessageValid() {
-        validConfirmPasswordLabel.textColor = UIColor.green
-        validConfirmPasswordLabel.text = SignupViewController.validIcon
-        confirmPasswordMessageLabel.text =
-            SignupViewController.validConfirmPasswordMessage
-    }
-
-    /// Displays that the password confirmation is invalid
-    func setConfirmPasswordMessageInvalid() {
-        validConfirmPasswordLabel.textColor = UIColor.red
-        validConfirmPasswordLabel.text = SignupViewController.invalidIcon
-        confirmPasswordMessageLabel.text =
-            SignupViewController.invalidConfirmPasswordMessage
-    }
-
-    /// Displays the default password confirmation validity indicator
-    func setConfirmPasswordMessageDefault() {
-        validConfirmPasswordLabel.textColor = UIColor.black
-        validConfirmPasswordLabel.text = SignupViewController.defaultIcon
-        confirmPasswordMessageLabel.text =
-            SignupViewController.defaultConfirmPasswordMessage
-    }
-
     // MARK: Segue functions
     
     /// Prepare to segue to have the user enter an address
@@ -244,6 +104,122 @@ class SignupViewController: UIViewController {
     /// Hide the keyboard when the user touches outside of a text field
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
 
+    /// Checks that all fields are correctly filled out.
+    /// If all fields are correctly filled out, enables the continue button,
+    /// otherwise disables the continue button.
+    private func checkFields() {
+        let emailValid = self.emailValid()
+        let passwordValid = self.passwordValid()
+        let confirmValid = self.passwordConfirmationValid()
+        
+        // Update the message for the email
+        if emailValid {
+            setEmailMessageValid()
+        } else {
+            setEmailMessageInvalid()
+        }
+        
+        // Update the messages for the password and password confirmation
+        if passwordValid {
+            setPasswordMessageValid()
+            if confirmValid {
+                setConfirmPasswordMessageValid()
+            } else {
+                setConfirmPasswordMessageInvalid()
+            }
+        } else {
+            setPasswordMessageInvalid()
+            setConfirmPasswordMessageDefault()
+        }
+        
+        // Toggle whether the continue button is enabled
+        if emailValid && passwordValid && confirmValid {
+            continueButton.isEnabled = true
+        } else {
+            continueButton.isEnabled = false
+        }
+    }
+    
+    /// Gets whether or not the email is valid.
+    ///
+    /// - Returns: true if the email is valid, false otherwise
+    private func emailValid() -> Bool {
+        guard let email = emailTextField.text else {return false}
+        return Util.isValidEmail(testStr: email)
+    }
+    
+    /// Gets whether or not the password is valid.
+    ///
+    /// - Returns: true if the password is valid, false otherwise
+    private func passwordValid() -> Bool {
+        guard let password = passwordTextField.text else {return false}
+        return password.count >= MIN_PASSWORD_LENGTH
+    }
+    
+    /// Gets whether or not the password confirmation is valid.
+    ///
+    /// - Returns: true if the password confirmation is valid, false otherwise
+    private func passwordConfirmationValid() -> Bool {
+        guard let password = passwordTextField.text else {return false}
+        guard let confirm = confirmPasswordTextField.text else {return false}
+        return password == confirm
+    }
+
+    /// Displays that the entered email is valid
+    private func setEmailMessageValid() {
+        validEmailLabel.textColor = UIColor.green
+        validEmailLabel.text = SignupViewController.validIcon
+        emailMessageLabel.text =
+            SignupViewController.validEmailMessage
+    }
+    
+    /// Displays that the entered email is invalid
+    private func setEmailMessageInvalid() {
+        validEmailLabel.textColor = UIColor.red
+        validEmailLabel.text = SignupViewController.invalidIcon
+        emailMessageLabel.text =
+            SignupViewController.invalidEmailMessage
+    }
+
+    /// Displays that the entered password is valid
+    private func setPasswordMessageValid() {
+        validPasswordLabel.textColor = UIColor.green
+        validPasswordLabel.text = SignupViewController.validIcon
+        passwordMessageLabel.text =
+            SignupViewController.validPasswordMessage
+    }
+    
+    /// Displays that the entered password is invalid
+    private func setPasswordMessageInvalid() {
+        validPasswordLabel.textColor = UIColor.red
+        validPasswordLabel.text = SignupViewController.invalidIcon
+        passwordMessageLabel.text =
+            SignupViewController.invalidPasswordMessage
+    }
+
+    /// Displays that the password confirmation is valid
+    private func setConfirmPasswordMessageValid() {
+        validConfirmPasswordLabel.textColor = UIColor.green
+        validConfirmPasswordLabel.text = SignupViewController.validIcon
+        confirmPasswordMessageLabel.text =
+            SignupViewController.validConfirmPasswordMessage
+    }
+    
+    /// Displays that the password confirmation is invalid
+    private func setConfirmPasswordMessageInvalid() {
+        validConfirmPasswordLabel.textColor = UIColor.red
+        validConfirmPasswordLabel.text = SignupViewController.invalidIcon
+        confirmPasswordMessageLabel.text =
+            SignupViewController.invalidConfirmPasswordMessage
+    }
+    
+    /// Displays the default password confirmation validity indicator
+    private func setConfirmPasswordMessageDefault() {
+        validConfirmPasswordLabel.textColor = UIColor.black
+        validConfirmPasswordLabel.text = ""
+        confirmPasswordMessageLabel.text =
+            SignupViewController.defaultConfirmPasswordMessage
     }
 }
