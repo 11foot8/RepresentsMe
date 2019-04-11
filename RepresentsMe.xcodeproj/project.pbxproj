@@ -272,6 +272,16 @@
 			path = SettingsSection;
 			sourceTree = "<group>";
 		};
+		13895F34225FBD8300FE405D /* Popovers */ = {
+			isa = PBXGroup;
+			children = (
+				13895F32225FB51400FE405D /* PopoverViewController.swift */,
+				16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */,
+				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
+			);
+			path = Popovers;
+			sourceTree = "<group>";
+		};
 		13A4F615225F84060023E150 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,7 +309,6 @@
 			children = (
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
 				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
-				3BCC1661225C4B890088D757 /* DatePopoverViewController.swift */,
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
 			path = EventDetails;
@@ -473,11 +482,10 @@
 				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,
-				16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */,
+				13895F34225FBD8300FE405D /* Popovers */,
 				134F922B225E8F2200B797B4 /* Officials */,
 				3BCC1665225CF5FA0088D757 /* Events */,
 				3B2C789A224BC4D90036AFD0 /* Settings */,
-				13895F32225FB51400FE405D /* PopoverViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
