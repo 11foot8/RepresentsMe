@@ -136,9 +136,9 @@ class SignupViewController: UIViewController {
         
         // Toggle whether the continue button is enabled
         if emailValid && passwordValid && confirmValid {
-            continueButton.isEnabled = true
+            self.enableContineButton()
         } else {
-            continueButton.isEnabled = false
+            self.disableContineButton()
         }
     }
     
@@ -221,5 +221,17 @@ class SignupViewController: UIViewController {
         validConfirmPasswordLabel.text = ""
         confirmPasswordMessageLabel.text =
             SignupViewController.defaultConfirmPasswordMessage
+    }
+    
+    /// Enables to continue button
+    private func enableContineButton() {
+        continueButton.isEnabled = true
+        continueButton.alpha = 1.0
+    }
+    
+    /// Disables to continue button
+    private func disableContineButton() {
+        continueButton.isEnabled = false
+        continueButton.alpha = 0.5
     }
 }
