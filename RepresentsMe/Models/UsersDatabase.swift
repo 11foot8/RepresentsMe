@@ -10,7 +10,8 @@ import Foundation
 import Firebase
 
 class UsersDatabase {
-    static let collection = "users"
+    static let collection = "users" // Database collection
+
     static let db = Firestore.firestore().collection(UsersDatabase.collection)
 
     static let shared = UsersDatabase()
@@ -20,6 +21,8 @@ class UsersDatabase {
     }
 
     // MARK: - Create User
+    /// Create a new user with the given email, password, display name, and address
+    /// 
     func createUser(email:String, password:String, displayName:String, address:Address, completion:@escaping (Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let _ = error {
