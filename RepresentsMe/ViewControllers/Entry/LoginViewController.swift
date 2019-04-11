@@ -43,8 +43,9 @@ class LoginViewController: UIViewController {
         let email = emailTextField.text!
         let password = passwordTextField.text!
 
-        // TODO: Show loading animation
+        // Show the loading animation
         let hud = LoadingHUD(self.view)
+        self.view.endEditing(true)
         
         // Log the user in
         UsersDatabase.shared.loginUser(withEmail: email,
@@ -53,7 +54,7 @@ class LoginViewController: UIViewController {
             hud.end()
                                         
             if let error = error {
-                self.loginFailed(with: error)
+                self.alert(title: "Error", message: error.localizedDescription)
             } else {
                 self.loginSucceeded()
             }
@@ -65,24 +66,11 @@ class LoginViewController: UIViewController {
         self.view.endEditing(true)
     }
 
-    /// Displays that the login failed to the user
-    ///
-    /// - Parameter with:   the error that occurred
-    private func loginFailed(with error:Error) {
-        // Display the error to the user
-        let alert = UIAlertController(
-            title: "Error",
-            message: error.localizedDescription,
-            preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     /// If the login succeeds segue to the entry point of the app
     private func loginSucceeded() {
-        // Stop editing
-        self.view.endEditing(true)
-        
+        // Load the home Officials
+        AppState.setup()
+
         // Segue to the tab bar view controller
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarViewController = storyBoard.instantiateViewController(
