@@ -1,5 +1,5 @@
 //
-//  HomeTableViewDataSource.swift
+//  OfficialsTableViewDataSource.swift
 //  RepresentsMe
 //
 //  Created by Michael Tirtowidjojo on 4/10/19.
@@ -13,14 +13,14 @@ let OFFICIAL_CELL_IDENTIFIER = "officialCell"
 /// The data source for the Officials table on the HomeViewController.
 /// Manages the Array of Officials being displayed and manages which Official
 /// is displayed where in the table view.
-class HomeTableViewDataSource: NSObject, UITableViewDataSource {
+class OfficialsTableViewDataSource: NSObject, UITableViewDataSource {
     
-    var parent:HomeViewController
+    var parent:OfficialsListViewController
 
     /// Initialize this data source for the given HomeViewController
     ///
     /// - Parameter for:    the parent view controller
-    init(for parent:HomeViewController) {
+    init(for parent:OfficialsListViewController) {
         self.parent = parent
     }
 

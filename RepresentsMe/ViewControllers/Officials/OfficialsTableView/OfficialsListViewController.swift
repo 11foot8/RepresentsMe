@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  OfficialsListViewController.swift
 //  RepresentsMe
 //
 //  Created by Benny Singer on 2/23/19.
@@ -19,7 +19,7 @@ protocol OfficialSelectionDelegate {
 /// Allows for showing the user's home Officials as well as Officials for a
 /// selected Address. Also allows for selecting an Official in order to select
 /// Officials for Events.
-class HomeViewController: UIViewController, AppStateListener {
+class OfficialsListViewController: UIViewController, AppStateListener {
     
     static let DETAILS_VIEW_SEGUE = "detailsViewSegue"
 
@@ -33,8 +33,8 @@ class HomeViewController: UIViewController, AppStateListener {
     // MARK: - Properties
     
     // The table view delegate and data source
-    var tableViewDataSource:HomeTableViewDataSource!
-    var tableViewDelegate:HomeTableViewDelegate!
+    var tableViewDataSource:OfficialsTableViewDataSource!
+    var tableViewDelegate:OfficialsTableViewDelegate!
     
     // Properties
     var reachType:ReachType = .home
@@ -51,11 +51,11 @@ class HomeViewController: UIViewController, AppStateListener {
         super.viewDidLoad()
         
         // Set the data source
-        self.tableViewDataSource = HomeTableViewDataSource(for: self)
+        self.tableViewDataSource = OfficialsTableViewDataSource(for: self)
         officialsTableView.dataSource = self.tableViewDataSource
         
         // Set the delegate
-        self.tableViewDelegate = HomeTableViewDelegate(for: self)
+        self.tableViewDelegate = OfficialsTableViewDelegate(for: self)
         officialsTableView.delegate = self.tableViewDelegate
         
         // Add as a listener
@@ -100,8 +100,8 @@ class HomeViewController: UIViewController, AppStateListener {
     
     /// Prepare to segue to show the details for an Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == HomeViewController.DETAILS_VIEW_SEGUE,
-            let destination = segue.destination as? DetailsViewController,
+        if segue.identifier == OfficialsListViewController.DETAILS_VIEW_SEGUE,
+            let destination = segue.destination as? OfficialDetailsViewController,
             let indexPath = officialsTableView.indexPathForSelectedRow {
             
             // Deselect the row

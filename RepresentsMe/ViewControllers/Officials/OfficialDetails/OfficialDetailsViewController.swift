@@ -1,5 +1,5 @@
 //
-//  DetailsViewController.swift
+//  OfficialDetailsViewController.swift
 //  RepresentsMe
 //
 //  Created by Varun Adiga on 3/2/19.
@@ -12,7 +12,7 @@ import MapKit
 let CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 
 /// The view controller to show the details for an Official
-class DetailsViewController: UIViewController {
+class OfficialDetailsViewController: UIViewController {
     
     var official:Official?
     
@@ -86,7 +86,7 @@ class DetailsViewController: UIViewController {
     /// Prepare to segue to the contacts view for the Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == CONTACT_SEGUE_IDENTIFIER,
-            let destination = segue.destination as? ContactViewController {
+            let destination = segue.destination as? OfficialContactViewController {
             destination.official = official
         }
     }

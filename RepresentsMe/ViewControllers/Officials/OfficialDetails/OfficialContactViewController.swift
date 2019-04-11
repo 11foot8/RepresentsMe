@@ -1,5 +1,5 @@
 //
-//  ContactViewController.swift
+//  OfficialContactViewController.swift
 //  RepresentsMe
 //
 //  Created by Benny Singer on 4/3/19.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// The view controller to show additional contacts for an Official
-class ContactViewController: UIViewController {
+class OfficialContactViewController: UIViewController {
 
     var official:Official?
     

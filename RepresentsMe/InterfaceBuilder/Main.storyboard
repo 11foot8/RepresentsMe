@@ -20,10 +20,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Home View Controller-->
+        <!--Officials List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="OfficialsListViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -215,10 +215,10 @@
             </objects>
             <point key="canvasLocation" x="2796" y="912.5615763546798"/>
         </scene>
-        <!--Details View Controller-->
+        <!--Official Details View Controller-->
         <scene sceneID="Ttv-8G-SZo">
             <objects>
-                <viewController id="V5Z-GW-aU6" customClass="DetailsViewController" customModule="RepresentsMe" sceneMemberID="viewController">
+                <viewController id="V5Z-GW-aU6" customClass="OfficialDetailsViewController" customModule="RepresentsMe" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Bs-8X-5li">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,7 +265,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMe-UG-GBM">
-                                        <rect key="frame" x="28" y="180" width="343" height="30"/>
+                                        <rect key="frame" x="28" y="183" width="343" height="30"/>
                                         <state key="normal" title="View All Contact Info">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -274,7 +274,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Od-fq-lVD">
-                                        <rect key="frame" x="60" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="60" y="143" width="48" height="32"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="phone">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -284,7 +284,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3">
-                                        <rect key="frame" x="309" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="270" y="143" width="69" height="32"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="envelope">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -294,7 +294,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wu-N3-voZ">
-                                        <rect key="frame" x="184.66666666666666" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="140" y="143" width="119" height="32"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="external-link-alt">
                                             <color key="titleColor" red="0.24861783286830486" green="0.62991085583233741" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -304,7 +304,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a19-Tz-BcN">
-                                        <rect key="frame" x="164.66666666666666" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="-47.666666666666657" y="261" width="494.33333333333326" height="106"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="twitter-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -314,7 +314,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pwh-CN-Hl4">
-                                        <rect key="frame" x="297" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="-198" y="261" width="565" height="106"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="youtube-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -324,7 +324,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XR-Ps-ufA">
-                                        <rect key="frame" x="32" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="32" y="261" width="608" height="106"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="facebook-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -403,10 +403,10 @@
             </objects>
             <point key="canvasLocation" x="2784.8000000000002" y="133.00492610837438"/>
         </scene>
-        <!--Contact View Controller-->
+        <!--Official Contact View Controller-->
         <scene sceneID="06g-MV-Asr">
             <objects>
-                <viewController id="5VN-HP-B4K" customClass="ContactViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5VN-HP-B4K" customClass="OfficialContactViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4WL-Mw-1Sk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

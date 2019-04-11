@@ -299,7 +299,7 @@ class MapViewController: UIViewController,
     /// Prepare to segue to the Officials table view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
-            let destination = segue.destination as! HomeViewController
+            let destination = segue.destination as! OfficialsListViewController
             destination.reachType = .map
         }
     }

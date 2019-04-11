@@ -110,7 +110,7 @@ class CreateEventViewController: UIViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
             // Seguing to select an Official
-            let destination = segue.destination as! HomeViewController
+            let destination = segue.destination as! OfficialsListViewController
             destination.reachType = .event
             destination.delegate = self
         } else if (segue.identifier == SELECT_LOCATION_SEGUE) {

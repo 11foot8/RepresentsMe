@@ -1,5 +1,5 @@
 //
-//  HomeTableViewDelegate.swift
+//  OfficialsTableViewDelegate.swift
 //  RepresentsMe
 //
 //  Created by Michael Tirtowidjojo on 4/10/19.
@@ -10,14 +10,14 @@ import UIKit
 
 
 /// The delegate for the Officials table view on the HomeViewController
-class HomeTableViewDelegate: NSObject, UITableViewDelegate {
+class OfficialsTableViewDelegate: NSObject, UITableViewDelegate {
     
-    var parent:HomeViewController
+    var parent:OfficialsListViewController
     
     /// Initializes this delegate for the given HomeViewController
     ///
     /// - Parameter for:    the HomeViewController
-    init(for parent:HomeViewController) {
+    init(for parent:OfficialsListViewController) {
         self.parent = parent
     }
     
@@ -31,7 +31,7 @@ class HomeTableViewDelegate: NSObject, UITableViewDelegate {
         case .home, .map:
             // Show the details for the selected Official
             self.parent.performSegue(
-                withIdentifier: HomeViewController.DETAILS_VIEW_SEGUE,
+                withIdentifier: OfficialsListViewController.DETAILS_VIEW_SEGUE,
                 sender: self)
             break
         case .event:
