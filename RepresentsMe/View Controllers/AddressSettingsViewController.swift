@@ -9,33 +9,124 @@
 import UIKit
 import CoreData
 
-class AddressSettingsViewController: UIViewController, PickerPopoverViewControllerDelegate, UIPopoverPresentationControllerDelegate {
+/// The view controller to allow the user to change their home address.
+class AddressSettingsViewController: UIViewController,
+                                     PickerPopoverViewControllerDelegate,
+                                     UIPopoverPresentationControllerDelegate {
 
     // MARK: - Properties
     let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
 
+    // MARK: - Outlets
+    
+    @IBOutlet weak var streetAddressTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var stateTextField: UITextField!
+    @IBOutlet weak var zipcodeTextField: UITextField!
+    
     // MARK: - Lifecycle
+    
+    /// Setup the views and load the current address
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup the text fields
+        self.setupTextFields()
+        
+        // Load the current address
+        self.loadAddress()
+    }
 
+    // MARK: - Actions
+    
+    /// Save the user's entered address
+    @IBAction func saveAddress(_ sender: Any) {
+        // Hide the keyboard
+        self.view.endEditing(true)
+        
+        // Build and save the address
+        if let address = self.buildAddress() {
+            // Successfully built, save it
+            self.save(address: address)
+        } else {
+            // The address is missing fields
+            self.alert(title: "Empty Fields",
+                       message: "An address requires all fields to be filled.")
+        }
+    }
+    
+    /// Shows the state select popover
+    @IBAction func selectStateTouchUp(_ sender: Any) {
+        self.view.endEditing(true)
+        performSegue(withIdentifier: popoverSegueIdentifier, sender: self)
+    }
+    
+    /// Sets the state to the given selection
+    ///
+    /// - Parameter selection:  the selected state
+    func pickerDoneTouchUp(selection: String) {
+        stateTextField.text = selection
+    }
+
+    // MARK: - Segue functions
+    
+    /// Prepare to show the state select popover
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == popoverSegueIdentifier {
+            let popoverViewController = segue.destination as! PickerPopoverViewController
+            popoverViewController.modalPresentationStyle =
+                UIModalPresentationStyle.overFullScreen
+            popoverViewController.popoverPresentationController?.delegate =
+                self
+            popoverViewController.delegate = self
+            popoverViewController.popoverPresentationController?
+                .sourceRect = CGRect(x: view.center.x,
+                                     y: view.center.y,
+                                     width: 0,
+                                     height: 0)
+            popoverViewController.popoverPresentationController?
+                .sourceView = view
+            popoverViewController.popoverPresentationController?
+                .permittedArrowDirections = UIPopoverArrowDirection(
+                    rawValue: 0)
+            popoverViewController.selectedValue = stateTextField.text!
+        }
+    }
+    
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    /// Hide the keyboard when the user clicks away from a text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    /// Sets up the text fields for the view
+    private func setupTextFields() {
         streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
         cityTextField.clearButtonMode = UITextField.ViewMode.always
         zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
-
-        // Start loading animation
+    }
+    
+    /// Loads in the user's current address
+    private func loadAddress() {
+        // Disable the back button while loading
         self.navigationItem.hidesBackButton = true
+        
+        // Show a loading indicator
         let hud = LoadingHUD(self.view)
-        UsersDatabase.shared.getCurrentUserAddress { (address, error) in
-            if let _ = error {
-                // End loading animation
-                hud.end()
-                self.navigationItem.hidesBackButton = false
+        
+        // Get the current address
+        UsersDatabase.shared.getCurrentUserAddress {(address, error) in
+            // Stop the loading animation
+            hud.end()
+            self.navigationItem.hidesBackButton = false
+            
+            if error != nil {
                 // TODO: Handle error
-                print("Error fetching address: \(error.debugDescription)")
             } else {
-                // End loading animation
-                hud.end()
-                self.navigationItem.hidesBackButton = false
                 if let address = address {
                     self.streetAddressTextField.text = address.streetAddress
                     self.cityTextField.text = address.city
@@ -43,93 +134,69 @@ class AddressSettingsViewController: UIViewController, PickerPopoverViewControll
                     self.zipcodeTextField.text = address.zipcode
                 } else {
                     // TODO: Handle nil address
-                    print("Address field nil")
+                }
+            }
+        }
+    }
+    
+    /// Builds the address from the views
+    ///
+    /// - Returns: the Address or nil if missing a field
+    private func buildAddress() -> Address? {
+        guard let streetAddress = streetAddressTextField.text,
+            !streetAddress.isEmpty else {
+                return nil
+        }
+        guard let city = cityTextField.text, !city.isEmpty else {
+            return nil
+        }
+        guard let state = stateTextField.text, !state.isEmpty else {
+            return nil
+        }
+        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty else {
+            return nil
+        }
+        
+        return Address(streetAddress: streetAddress,
+                       city: city,
+                       state: state,
+                       zipcode: zipcode)
+    }
+
+    /// Saves the address.
+    ///
+    /// - Parameter address:    the Address to save
+    private func save(address:Address) {
+        // Start the loading animation
+        let hud = LoadingHUD(self.view)
+        
+        if let uid = UsersDatabase.shared.getCurrentUserUID() {
+            UsersDatabase.shared.setUserAddress(uid: uid,
+                                                address: address) {(error) in
+                // Stop the loading animation
+                hud.end()
+                if error != nil {
+                    // TODO: Handle error
+                } else {
+                    self.alert(title: "Saved")
                 }
             }
         }
     }
 
-    // MARK: - Outlets
-    @IBOutlet weak var streetAddressTextField: UITextField!
-    @IBOutlet weak var cityTextField: UITextField!
-    @IBOutlet weak var stateTextField: UITextField!
-    @IBOutlet weak var zipcodeTextField: UITextField!
-
-    // MARK: - Actions
-    @IBAction func saveAddress(_ sender: Any) {
-        self.view.endEditing(true)
-        guard
-            let streetAddress = streetAddressTextField.text,
-            streetAddress.count > 0,
-            let city = cityTextField.text,
-            city.count > 0,
-            let state = stateTextField.text,
-            state.count > 0,
-            let zipcode = zipcodeTextField.text,
-            zipcode.count > 0
-            else {
-                let alert = UIAlertController(
-                    title: "Empty Fields",
-                    message: "An address requires all fields to be filled.",
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-                self.present(alert, animated: true, completion: nil)
-                return
-        }
-
-        let address = Address(streetAddress: streetAddressTextField.text!,
-                           city: cityTextField.text!,
-                           state: stateTextField.text!,
-                           zipcode: zipcodeTextField.text!)
-
-        // TODO: Start loading animation
-        let hud = LoadingHUD(self.view)
-        UsersDatabase.shared.setUserAddress(uid: UsersDatabase.shared.getCurrentUserUID() ?? "", address: address) { (error) in
-            if let _ = error {
-                // TODO: Handle error
-                // End loading animation
-                hud.end()
-            } else {
-                // End loading animation
-                hud.end()
-                let alert = UIAlertController(
-                    title: "Saved",
-                    message: nil,
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    @IBAction func selectStateTouchUp(_ sender: Any) {
-        self.view.endEditing(true)
-        performSegue(withIdentifier: popoverSegueIdentifier, sender: self)
-    }
-    func pickerDoneTouchUp(selection: String) {
-        stateTextField.text = selection
-    }
-
-    // MARK: - Segue functions
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == popoverSegueIdentifier {
-            let popoverViewController = segue.destination as! PickerPopoverViewController
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-            popoverViewController.popoverPresentationController?.delegate=self
-            popoverViewController.delegate = self
-            popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
-            popoverViewController.popoverPresentationController?.sourceView = view
-            popoverViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-            popoverViewController.selectedValue = stateTextField.text!
-
-        }
-    }
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    /// Presents an alert to the user
+    ///
+    /// - Parameter title:      the title of the alert.
+    /// - Parameter message:    the message of the alert (default nil).
+    private func alert(title:String, message:String? = nil) {
+        // Build the alert
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        // Present the alert
+        self.present(alert, animated: true, completion: nil)
     }
 }
