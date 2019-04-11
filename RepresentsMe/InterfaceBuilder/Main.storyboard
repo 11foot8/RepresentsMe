@@ -445,10 +445,10 @@
             </objects>
             <point key="canvasLocation" x="3560.8000000000002" y="133.74384236453201"/>
         </scene>
-        <!--Entry View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="w7e-Nb-zPx">
             <objects>
-                <viewController storyboardIdentifier="entryViewController" id="wIp-Hi-1OM" customClass="EntryViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="entryViewController" id="wIp-Hi-1OM" customClass="LoginViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MZf-D3-33w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

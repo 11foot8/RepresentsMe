@@ -1,5 +1,5 @@
 //
-//  EntryViewController.swift
+//  LoginViewController.swift
 //  RepresentsMe
 //
 //  Created by Jacob Hausmann on 4/2/19.
@@ -13,7 +13,7 @@ let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
 let TAB_BAR_VIEW_CONTROLLER_NAME = "mainTabBarViewController"
 
 /// The view controller to handle logging in to the app.
-class EntryViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var emailTextField: UITextField!
