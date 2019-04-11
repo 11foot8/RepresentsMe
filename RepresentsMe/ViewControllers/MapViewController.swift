@@ -90,7 +90,7 @@ class MapViewController: UIViewController,
     // MARK: - Actions
     
     /// Geocode the address given when search started and drop an pin on the
-    /// location if one is found.k
+    /// location if one is found.
     ///
     /// - Parameter query:  the entered address
     func onSearchQuery(query: String) {

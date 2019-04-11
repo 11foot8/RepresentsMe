@@ -32,6 +32,8 @@ class SettingsViewController: UIViewController,
         // Set the delegate
         self.tableViewDelegate = SettingsTableViewDelegate(for: self)
         tableView.delegate = self.tableViewDelegate
+        
+        tableView.backgroundColor = .groupTableViewBackground
     }
     
     /// Sets up views when the view appears

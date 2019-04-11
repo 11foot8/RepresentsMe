@@ -45,7 +45,6 @@ class AppState {
 
     static func addHomeAddressListener(listener: AppStateListener) {
         homeAddressListeners.append(listener)
-        print(homeAddressListeners.count)
     }
 
     static func removeHomeAddressListener(listener: AppStateListener) {
@@ -63,6 +62,17 @@ class AppState {
 
     static func addSandboxAddressListener(listener: AppStateListener) {
         sandboxAddressListeners.append(listener)
+    }
+    
+    static func removeSandboxAddressListener(listener: AppStateListener) {
+        sandboxAddressListeners.removeAll { (appStateListener: AppStateListener) -> Bool in
+            if let listener1 = listener as? UIViewController,
+                let listener2 = appStateListener as? UIViewController {
+                return listener1 === listener2
+            }
+            // should never occur
+            return false
+        }
     }
 
     static func setup() {

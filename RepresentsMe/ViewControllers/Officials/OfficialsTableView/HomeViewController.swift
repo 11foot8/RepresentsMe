@@ -71,7 +71,14 @@ class HomeViewController: UIViewController, AppStateListener {
         super.viewDidDisappear(animated)
         
         if (self.isMovingFromParent) {
-            AppState.removeHomeAddressListener(listener: self)
+            switch self.reachType {
+            case .home, .event:
+                AppState.removeHomeAddressListener(listener: self)
+                break
+            case .map:
+                AppState.removeSandboxAddressListener(listener: self)
+                break
+            }
         }
     }
     
