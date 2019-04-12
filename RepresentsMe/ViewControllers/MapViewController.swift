@@ -127,6 +127,7 @@ class MapViewController: UIViewController,
     /// Centers the map on the user's current location
     func onLocateTouchUp() {
         if let coordinate = LocationManager.shared.userCoordinate {
+            mapView.showsUserLocation = true
             centerView(on: coordinate,animated: true)
             dropPin(coords: coordinate,
                     title: "Current Location",
@@ -216,9 +217,6 @@ class MapViewController: UIViewController,
                                         longitudinalMeters: regionInMeters)
         // Set zoom level
         mapView.setRegion(region, animated: animated)
-        
-        // Correct center
-        mapView.setCenter(location, animated: animated)
     }
 
     /// Returns the current center location of mapView
