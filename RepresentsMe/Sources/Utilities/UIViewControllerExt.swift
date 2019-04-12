@@ -25,4 +25,23 @@ extension UIViewController {
         // Present the alert
         self.present(alert, animated: true, completion: nil)
     }
+
+    /// Presents an alert to the user with completion handler
+    ///
+    /// - Parameter title:      the title of the alert.
+    /// - Parameter message:    the message for the alert (default nil).
+    /// - Parameter completion: code to execute when alert action is completed
+    func alert(title:String, message: String? = nil, completion: @escaping () -> Void) {
+        // Build the alert
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            completion()
+        }))
+
+        // Present the alert
+        self.present(alert, animated: true, completion: completion)
+    }
 }

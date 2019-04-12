@@ -47,4 +47,8 @@ class SettingsViewController: UIViewController,
             (UsersDatabase.currentUserEmail ?? "N/A")
         tableView.reloadData()
     }
+
+    @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+        
+    }
 }
