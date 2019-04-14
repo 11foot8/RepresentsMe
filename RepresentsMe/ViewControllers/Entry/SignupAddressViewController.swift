@@ -10,8 +10,6 @@ import UIKit
 
 // SignupAddressViewController -> StatePopoverViewController
 let POPOVER_SEGUE_IDENTIFIER = "SignupPickerPopoverSegue"
-// SignupAddressViewController -> SignupViewController
-let SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER = "SignupAddressUnwindSegue"
 
 /// The view controller to have the user select an address and create their
 /// account.
@@ -56,8 +54,7 @@ class SignupAddressViewController: UIViewController,
 
     /// Unwind to the signup view controller when the cancel button is pressed
     @IBAction func cancelTouchUp(_ sender: Any) {
-        performSegue(withIdentifier: SIGNUP_ADDRESS_UNWIND_SEGUE_IDENTIFIER,
-                     sender: self)
+        self.dismiss(animated: true)
     }
 
     func attemptCreateUser() {

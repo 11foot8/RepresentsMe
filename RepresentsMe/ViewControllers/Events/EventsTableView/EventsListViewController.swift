@@ -49,6 +49,10 @@ class EventsListViewController: UIViewController,
     /// Update the events being displayed if the user's address changed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Ensure the navigation bar is shown
+        self.navigationController?.setNavigationBarHidden(false,
+                                                          animated: false)
 
         // Check if the user's home address has changed and update events if
         // it did change
