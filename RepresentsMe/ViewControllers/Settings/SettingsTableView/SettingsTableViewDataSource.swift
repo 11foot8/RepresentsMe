@@ -76,19 +76,22 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
                     parent: parent,
                     name: "Email",
                     icon: .envelope,
-                    segueID: "EmailSettingsSegue",
-                    subtitle: UsersDatabase.currentUserEmail),
+                    segueID: "EmailSettingsSegue"),
                 SettingsSegueEntry(
                     parent: parent,
                     name: "Username",
                     icon: .user,
-                    segueID: "DisplayNameSettingsSegue",
-                    subtitle: UsersDatabase.currentUserDisplayName),
+                    segueID: "DisplayNameSettingsSegue"),
                 SettingsSegueEntry(
                     parent: parent,
                     name: "Password",
                     icon: .key,
-                    segueID: "PasswordSettingsSegue")
+                    segueID: "PasswordSettingsSegue"),
+                SettingsSegueEntry(
+                    parent: parent,
+                    name: "Profile Picture",
+                    icon: .userCircle,
+                    segueID: "ProfilePictureSettingsSegue")
                 ]),
             SettingsSection(name: "", entries: [
                 SettingsSegueEntry(

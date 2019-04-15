@@ -167,13 +167,17 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
     /// - Parameter address:    the Address to save
     private func save(address:Address) {
         // Start the loading animation
+        self.navigationItem.hidesBackButton = true
         let hud = LoadingHUD(self.view)
         
         if let uid = UsersDatabase.currentUserUID {
             UsersDatabase.shared.setUserAddress(uid: uid,
-                                                address: address) {(error) in
+                                                address: address)
+            {(error) in
                 // Stop the loading animation
                 hud.end()
+                self.navigationItem.hidesBackButton = false
+
                 if error != nil {
                     // TODO: Handle error
                 } else {

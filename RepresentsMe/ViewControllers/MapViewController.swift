@@ -287,17 +287,13 @@ class MapViewController: UIViewController,
             performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
                          sender: self)
             break
-        case .event:
+        case .event, .settings:
             // Selected a location for the Event, send location to the delegate
             // and dismiss
+            // OR Selected a location for changing user's home address in settings,
+            // send location to the delegate and dismiss
             delegate?.didSelectLocation(location: self.annotation!.coordinate,
                                         address: address)
-            navigationController?.popViewController(animated: true)
-            break
-        case .settings:
-            // Selected a location for changing user's home address in settings,
-            // send location to the delegate and dismiss
-            delegate?.didSelectLocation(location: self.annotation!.coordinate, address: address)
             navigationController?.popViewController(animated: true)
             break
         }

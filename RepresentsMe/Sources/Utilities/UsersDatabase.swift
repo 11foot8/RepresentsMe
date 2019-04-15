@@ -9,10 +9,14 @@
 import Foundation
 import Firebase
 
+let MAX_PROF_PIC_SIZE: Int64 = 10 * 1024 * 1024 // MAX profile pic size is 10 MB
+
 class UsersDatabase {
     static let collection = "users" // Database collection
 
     static let db = Firestore.firestore().collection(UsersDatabase.collection)
+
+    static let imagesRef = Storage.storage().reference().child("images") // Profile Pictures database
 
     static let shared = UsersDatabase()
     private init() { }
@@ -64,6 +68,35 @@ class UsersDatabase {
         }
     }
 
+    /// Retrieves the current user's profile picture, and passes it to the closure
+    ///
+    /// - Parameter completion: the completion handler to run after
+    ///                         received server response
+    static func getCurrentUserProfilePicture(completion:@escaping (UIImage?, Error?) -> Void) {
+        if let uid = currentUserUID {
+            getUserProfilePicture(uid: uid, completion: completion)
+        } else {
+            // TODO: Handle no current user error
+            completion(nil, NilValueError.runtimeError("Nil User ID"))
+        }
+    }
+
+    /// Retrieves the given user's profile picture, and passes it to the closure
+    ///
+    /// - Parameter completion: the completion handler to run after
+    ///                         received server response
+    static func getUserProfilePicture(uid: String, completion: @escaping (UIImage?, Error?) -> Void) {
+        let imageRef = imagesRef.child(uid)
+        imageRef.getData(maxSize: MAX_PROF_PIC_SIZE) { (data, error) in
+            if let _ = error {
+                completion(nil, error)
+            } else {
+                let image = UIImage(data: data!)
+                completion(image,nil)
+            }
+        }
+    }
+
     // MARK: Create User
 
     /// Builds a User
@@ -80,9 +113,7 @@ class UsersDatabase {
                 // TODO: Handle error
                 completion(error)
             } else {
-                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                changeRequest?.displayName = displayName
-                changeRequest?.commitChanges(completion: { (error) in
+                self.changeUserDisplayName(newDisplayName: displayName, completion: { (error) in
                     if let _ = error {
                         // TODO: Handle error
                         completion(error)
@@ -117,10 +148,6 @@ class UsersDatabase {
                 })
             }
         }
-    }
-
-    func createDocumentForUser(uid:String) {
-
     }
 
     // MARK: - Set user info
@@ -191,6 +218,72 @@ class UsersDatabase {
                 completion(nil)
             }
         })
+    }
+
+    /// Changes the current user's profile picture to the provided UIImage
+    ///
+    /// - Parameter image:          Image to use as the user's profile picture
+    /// - Parameter completion:     the completion handler to run after
+    ///                             receive server response
+    func changeUserProfilePicture(image:UIImage, completion: @escaping (Error?) -> Void) {
+        if let uid = UsersDatabase.currentUserUID {
+            let imageRef = UsersDatabase.imagesRef.child(uid)
+            if let data = image.pngData() {
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                let _ = imageRef.putData(data, metadata: metadata) { (metadata, error) in
+                    if let _ = error {
+                        completion(error)
+                    } else {
+                        AppState.profilePicture = image
+                        imageRef.downloadURL(completion: { (url, error) in
+                            if let _ = error {
+                                completion(error)
+                            } else {
+                                // TODO: Execute completion handler
+                                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                                changeRequest?.photoURL = url
+                                changeRequest?.commitChanges(completion: { (error) in
+                                    if let _ = error {
+                                        completion(error)
+                                        return
+                                    } else {
+                                        completion(nil)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+    /// Removes the current user's profile picture, and deletes the image
+    ///     from the database
+    ///
+    /// - Parameter completion:     the completion handler to run after
+    ///                             receive server response
+    func removeUserProfilePicture(completion: @escaping (Error?) -> Void) {
+        if let uid = UsersDatabase.currentUserUID {
+            let imageRef = UsersDatabase.imagesRef.child(uid).delete { (error) in
+                if let _ = error {
+                    // TODO: Handle Error
+                    completion(error)
+                } else {
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.photoURL = nil
+                    changeRequest?.commitChanges(completion: { (error) in
+                        if let _ = error {
+                            completion(error)
+                            return
+                        } else {
+                            AppState.profilePicture = DEFAULT_NOT_LOADED
+                            completion(nil)
+                        }
+                    })
+                }
+            }
+        }
     }
 
     // MARK: - Login/Logout
