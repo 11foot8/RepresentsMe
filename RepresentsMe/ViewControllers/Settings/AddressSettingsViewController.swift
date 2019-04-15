@@ -71,11 +71,8 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
         stateTextField.text = state
     }
 
+    /// Sets the address labels to the given address
     func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
-        setAddress(address)
-    }
-
-    func setAddress(_ address:Address) {
         self.streetAddressTextField.text = address.streetAddress
         self.cityTextField.text = address.city
         self.stateTextField.text = address.state
