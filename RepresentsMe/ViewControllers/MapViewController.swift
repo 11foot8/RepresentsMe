@@ -34,6 +34,7 @@ class MapViewController: UIViewController,
     enum ReachType {
         case map        // The sandbox mode
         case event      // The mode for selecting a location for an Event
+        case settings   // The mode for selecting user's home location in settings
     }
 
     // MARK: - Properties
@@ -292,6 +293,13 @@ class MapViewController: UIViewController,
             delegate?.didSelectLocation(location: self.annotation!.coordinate,
                                         address: address)
             navigationController?.popViewController(animated: true)
+            break
+        case .settings:
+            // Selected a location for changing user's home address in settings,
+            // send location to the delegate and dismiss
+            delegate?.didSelectLocation(location: self.annotation!.coordinate, address: address)
+            navigationController?.popViewController(animated: true)
+            break
         }
     }
 

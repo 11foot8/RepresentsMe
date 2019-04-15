@@ -8,13 +8,16 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 /// The view controller to allow the user to change their home address.
-class AddressSettingsViewController: UIViewController,
-                                     StatePopoverViewControllerDelegate {
+class AddressSettingsViewController: UIViewController, StatePopoverViewControllerDelegate, LocationSelectionDelegate {
+
+
 
     // MARK: - Properties
     let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
+    let selectLocationSegue = "SelectLocationSegue"
 
     // MARK: - Outlets
     
@@ -67,6 +70,17 @@ class AddressSettingsViewController: UIViewController,
         stateTextField.text = state
     }
 
+    func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
+        setAddress(address)
+    }
+
+    func setAddress(_ address:Address) {
+        self.streetAddressTextField.text = address.streetAddress
+        self.cityTextField.text = address.city
+        self.stateTextField.text = address.state
+        self.zipcodeTextField.text = address.zipcode
+    }
+
     // MARK: - Segue functions
     
     /// Prepare to show the state select popover
@@ -76,6 +90,10 @@ class AddressSettingsViewController: UIViewController,
             destination.setup(in: self.view)
             destination.delegate = self
             destination.selectedValue = stateTextField.text!
+        } else if segue.identifier == selectLocationSegue {
+            let destination = segue.destination as! MapViewController
+            destination.reachType = .settings
+            destination.delegate = self
         }
     }
 
