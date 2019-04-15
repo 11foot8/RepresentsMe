@@ -62,8 +62,4 @@ class SettingsViewController: UIViewController,
         profilePictureImageView.layer.cornerRadius = 50
         profilePictureImageView.clipsToBounds = true
     }
-
-    @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
-        
-    }
 }

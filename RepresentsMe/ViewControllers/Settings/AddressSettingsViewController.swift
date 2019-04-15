@@ -10,17 +10,18 @@ import UIKit
 import CoreData
 import MapKit
 
+let ADDRESS_POPOVER_SEGUE = "SettingsPickerPopoverSegue"
+let ADDRESS_SELECT_LOCATION_SEGUE = "SelectLocationSegue"
+
 /// The view controller to allow the user to change their home address.
 class AddressSettingsViewController: UIViewController, StatePopoverViewControllerDelegate, LocationSelectionDelegate {
 
 
 
     // MARK: - Properties
-    let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
-    let selectLocationSegue = "SelectLocationSegue"
 
     // MARK: - Outlets
-    
+
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateTextField: UITextField!
@@ -60,7 +61,7 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
     /// Shows the state select popover
     @IBAction func selectStateTouchUp(_ sender: Any) {
         self.view.endEditing(true)
-        performSegue(withIdentifier: popoverSegueIdentifier, sender: self)
+        performSegue(withIdentifier: ADDRESS_POPOVER_SEGUE, sender: self)
     }
     
     /// Sets the state to the given selection
@@ -81,22 +82,8 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
         self.zipcodeTextField.text = address.zipcode
     }
 
-    // MARK: - Segue functions
+    // MARK: -
     
-    /// Prepare to show the state select popover
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == popoverSegueIdentifier {
-            let destination = segue.destination as! StatePopoverViewController
-            destination.setup(in: self.view)
-            destination.delegate = self
-            destination.selectedValue = stateTextField.text!
-        } else if segue.identifier == selectLocationSegue {
-            let destination = segue.destination as! MapViewController
-            destination.reachType = .settings
-            destination.delegate = self
-        }
-    }
-
     /// Hide the keyboard when the user clicks away from a text field
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -185,6 +172,22 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
                     self.alert(title: "Saved")
                 }
             }
+        }
+    }
+
+    // MARK: - Navigation
+
+    /// Prepare to show the state select popover
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ADDRESS_POPOVER_SEGUE {
+            let destination = segue.destination as! StatePopoverViewController
+            destination.setup(in: self.view)
+            destination.delegate = self
+            destination.selectedValue = stateTextField.text!
+        } else if segue.identifier == ADDRESS_SELECT_LOCATION_SEGUE {
+            let destination = segue.destination as! MapViewController
+            destination.reachType = .settings
+            destination.delegate = self
         }
     }
 }

@@ -31,6 +31,16 @@ class EventCreateViewController: UIViewController,
     var mapViewAnnotation:MKAnnotation?             // The dropped pin on the mapview
     let regionInMeters:CLLocationDistance = 7500
 
+    // MARK: - Outlets
+    @IBOutlet weak var eventOfficialCardView: OfficialCardView!
+    @IBOutlet weak var eventNameTextField: UITextField!
+    @IBOutlet weak var selectOfficialButton: UIButton!
+    @IBOutlet weak var selectLocationButton: UIButton!
+    @IBOutlet weak var selectDateButton: UIButton!
+    @IBOutlet weak var selectedDateLabel: UILabel!
+    @IBOutlet weak var selectedLocationLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
+
     // MARK: - Lifecycle
     /// Sets up the view for the Event if editing an Event
     override func viewDidLoad() {
@@ -42,19 +52,8 @@ class EventCreateViewController: UIViewController,
         }
 
         self.setupMapView()
-//        self.setupLabels()
         self.set(date: Date.init())
     }
-
-    // MARK: - Outlets
-    @IBOutlet weak var eventOfficialCardView: OfficialCardView!
-    @IBOutlet weak var eventNameTextField: UITextField!
-    @IBOutlet weak var selectOfficialButton: UIButton!
-    @IBOutlet weak var selectLocationButton: UIButton!
-    @IBOutlet weak var selectDateButton: UIButton!
-    @IBOutlet weak var selectedDateLabel: UILabel!
-    @IBOutlet weak var selectedLocationLabel: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
 
     // MARK: - Actions
     /// Creates or updates the Event when the save button is pressed.
@@ -65,7 +64,7 @@ class EventCreateViewController: UIViewController,
         guard let location = selectedLocation else {return}
         guard let date = selectedDate else {return}
         let name = self.eventNameTextField.text!
-        guard name.count > 0 else {return}
+        guard !name.isEmpty else {return}
 
         if event != nil {
             // Editing an Event, update it
@@ -174,7 +173,7 @@ class EventCreateViewController: UIViewController,
         if let annotation = self.mapViewAnnotation {
             mapView.removeAnnotation(annotation)
         }
-        self.mapViewAnnotation = DroppedPin(title: address.streetAddress, locationName: "\(address.city), \(address.state)", discipline: "", coordinate: location)
+        self.mapViewAnnotation = DroppedPin(title: address.streetAddress, locationName: address.addressCityState(), discipline: "", coordinate: location)
         self.mapView.addAnnotation(self.mapViewAnnotation!)
         let region = MKCoordinateRegion(center: location,
                                         latitudinalMeters: regionInMeters,
@@ -220,7 +219,7 @@ class EventCreateViewController: UIViewController,
     /// - Parameter address:    the Address for the Event
     private func set(location:CLLocationCoordinate2D, address:Address) {
         selectedLocation = location
-        selectedLocationLabel.text = "\(address.addressLine1())\n\(address.city), \(address.state)"
+        selectedLocationLabel.text = address.fullMultilineAddress()
         self.setMapViewLocation(location: location, address: address)
     }
     

@@ -8,11 +8,22 @@
 
 import UIKit
 
+/// A view that represents a card showing an officials information
 class OfficialCardView: UIView {
     // MARK: - Properties
-    var official:Official?
+
+    var official:Official?  // Official this card represents
+
+    // MARK: - Outlets
+
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var officialImageView: UIImageView!
+    @IBOutlet weak var officialNameLabel: UILabel!
+    @IBOutlet weak var officialSeatLabel: UILabel!
+    @IBOutlet weak var officialPartyLabel: UILabel!
 
     // MARK: - Lifecycle
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -39,15 +50,13 @@ class OfficialCardView: UIView {
         setupImageView()
     }
 
-    // MARK: - Outlets
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var officialImageView: UIImageView!
-    @IBOutlet weak var officialNameLabel: UILabel!
-    @IBOutlet weak var officialSeatLabel: UILabel!
-    @IBOutlet weak var officialPartyLabel: UILabel!
-
     // MARK: - Actions
 
+    // MARK: -
+
+    /// Sets the card info for the given official
+    ///
+    /// - Parameter official:   Official for which to set this card's data
     func set(official:Official?) {
         if let official = official {
             self.official = official
