@@ -160,7 +160,14 @@ class EventDetailsViewController: UIViewController {
         } else {
             // If user has not yet RSVPed, add self
             if let uid = UsersDatabase.currentUserUID {
-                event?.addAttendee(userID: uid, status: status)
+                event?.addAttendee(userID: uid, status: status,
+                                   completion: { (attendee: EventAttendee, error: Error?) in
+                                    if (error != nil) {
+                                        // TODO: Handle error
+                                    }
+
+                                    self.currentUserEventAttendee = attendee
+                })
             } else {
                 self.alert(title: "Error",
                            message: "You must be logged in to RSVP for an event.")
