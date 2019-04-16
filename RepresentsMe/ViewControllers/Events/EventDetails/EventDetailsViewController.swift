@@ -139,7 +139,9 @@ class EventDetailsViewController: UIViewController {
         }
     }
 
-
+    @IBAction func exportEvent(_ sender: Any) {
+    }
+    
     /// Sets up the edit views based on whether or not the user is allowed to
     /// edit the Event
     private func setEditable() {

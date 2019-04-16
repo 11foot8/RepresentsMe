@@ -1313,6 +1313,9 @@
                                 <rect key="frame" x="70.666666666666671" y="528" width="30" height="29"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                 <state key="normal" title="calendar-plus"/>
+                                <connections>
+                                    <action selector="exportEvent:" destination="egU-99-xc4" eventType="touchUpInside" id="nW6-D4-4zb"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-en-Ogo">
                                 <rect key="frame" x="69.666666666666671" y="551" width="32" height="12"/>
