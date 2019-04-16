@@ -30,6 +30,7 @@ class Event: Comparable {
     var location:CLLocationCoordinate2D     // The location of the event
     var date:Date                           // The date of the event
     var official:Official?                  // The official related to event
+    var address:Address                     // The Address for the event
     var attendees:[EventAttendee] = []      // The attendees for the event
 
     /// Gets the data formatted for Firestore
@@ -42,7 +43,13 @@ class Event: Comparable {
                                  longitude: location.longitude),
             "date": date,
             "officialName": official?.name ?? "",
-            "divisionOCDID": official?.divisionOCDID ?? ""
+            "divisionOCDID": official?.divisionOCDID ?? "",
+            "address": [
+                "line1": address.streetAddress,
+                "city": address.city,
+                "state": address.state,
+                "zip": address.zipcode
+            ]
         ]
     }
     
@@ -61,18 +68,21 @@ class Event: Comparable {
     /// - Parameter location:       the location of the event
     /// - Parameter date:           the date of the event
     /// - Parameter official:       the Official related to the event
+    /// - Parameter address:        the Address for the event
     init(name:String,
          owner:String,
          description:String,
          location:CLLocationCoordinate2D,
          date:Date,
-         official:Official) {
+         official:Official,
+         address:Address) {
         self.name = name
         self.owner = owner
         self.description = description
         self.location = location
         self.date = date
         self.official = official
+        self.address = address
     }
     
     /// Builds the given Event and inserts it into the given Array
@@ -116,7 +126,8 @@ class Event: Comparable {
         self.owner = data["owner"] as! String
         self.description = data["description"] as! String
         self.date = (data["date"] as! Timestamp).dateValue()
-        
+        self.address = Address(with: data["address"] as! [String: String])
+
         // Build the location coordinate
         let geopoint = data["location"] as! GeoPoint
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
@@ -301,9 +312,16 @@ class Event: Comparable {
                        date:Date,
                        official:Official,
                        completion: @escaping completionHandler) {
-        let event = Event(name: name, owner: owner, description: description,
-                          location: location, date: date, official: official)
-        event.save(completion: completion)
+        GeocoderWrapper.reverseGeocodeCoordinates(location) {(address) in
+            let event = Event(name: name,
+                              owner: owner,
+                              description: description,
+                              location: location,
+                              date: date,
+                              official: official,
+                              address: address)
+            event.save(completion: completion)
+        }
     }
     
     /// Gets all Events with the given query
