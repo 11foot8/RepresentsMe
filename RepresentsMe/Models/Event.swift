@@ -194,6 +194,29 @@ class Event: Comparable {
             }
         }
     }
+
+    /// Returns user's RSVP status to Event
+    ///
+    /// - Parameter userID:         the ID of the user
+    /// - Parameter completion:     the completion handler (default nil)
+    func getRSVPStatus(userID:String, completion:@escaping (Bool, RSVPType) -> ()) {
+        loadAttendees { (event: Event?, error: Error?) in
+            if (error != nil) {
+                // TODO:
+                return completion(false, .going)
+            }
+
+            if let event = event {
+                for attendee in event.attendees {
+                    if attendee.userID == UsersDatabase.currentUserUID {
+                        return completion(true, attendee.status)
+                    }
+                }
+            }
+
+            return completion(false, .going)
+        }
+    }
     
     /// Adds an attendee to this Event
     ///

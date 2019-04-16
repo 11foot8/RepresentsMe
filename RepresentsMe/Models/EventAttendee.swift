@@ -10,8 +10,8 @@ import Firebase
 
 /// The types of RSVP status
 enum RSVPType: String {
-    case going = "going"       // Status for a user planning on attending an event
-    case maybe = "maybe"      // Status for a user who may attend an event
+    case going = "going"         // Status for a user planning on attending an event
+    case maybe = "maybe"         // Status for a user who may attend an event
     case notGoing = "not_going"  // Status for a user who will not attend an event
 }
 
@@ -45,12 +45,12 @@ class EventAttendee {
         return status == .going
     }
     
-    /// Gets is the attendee is maybe going to the Event
+    /// Gets if the attendee is maybe going to the Event
     var isMaybeGoing:Bool {
         return status == .maybe
     }
     
-    /// Gets is the attendee is not going to the Event
+    /// Gets if the attendee is not going to the Event
     var isNotGoing:Bool {
         return status == .notGoing
     }
