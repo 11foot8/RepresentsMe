@@ -13,6 +13,14 @@ import MapKit
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
 
+// RSVP colors
+let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
+                          green: 204.0 / 255.0,
+                          blue: 51.0 / 255.0,
+                          alpha: 1.0)
+let MAYBE_ORANGE = UIColor.orange
+let NOT_GOING_RED = UIColor.red
+
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
@@ -25,6 +33,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var eventLocationLabel: UILabel!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var deleteEventButton: UIButton!
+    @IBOutlet weak var deleteEventButtonLabel: UILabel!
 
     @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var goingButtonLabel: UILabel!
@@ -116,6 +125,9 @@ class EventDetailsViewController: UIViewController {
         if let uid = UsersDatabase.currentUserUID {
             event?.addAttendee(userID: uid, status: .going)
             goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+            dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+            dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
         } else {
             // TODO: Alert for no logged-in user
         }
@@ -125,6 +137,9 @@ class EventDetailsViewController: UIViewController {
         if let uid = UsersDatabase.currentUserUID {
             event?.addAttendee(userID: uid, status: .maybe)
             maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+            dimButtonLabel(button: goingButton, label: goingButtonLabel)
+            dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
         } else {
             // TODO: Alert for no logged-in user
         }
@@ -134,9 +149,17 @@ class EventDetailsViewController: UIViewController {
         if let uid = UsersDatabase.currentUserUID {
             event?.addAttendee(userID: uid, status: .not_going)
             notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+            dimButtonLabel(button: goingButton, label: goingButtonLabel)
+            dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
         } else {
             // TODO: Alert for no logged-in user
         }
+    }
+
+    func dimButtonLabel(button: UIButton, label: UILabel) {
+        button.setTitleColor(.lightGray, for: .normal)
+        label.textColor = .lightGray
     }
 
     @IBAction func exportEvent(_ sender: Any) {
@@ -152,10 +175,12 @@ class EventDetailsViewController: UIViewController {
                 editButton.title = "Edit"
                 deleteEventButton.isEnabled = true
                 deleteEventButton.isHidden = false
+                deleteEventButtonLabel.isHidden = false
             } else {
                 // User does not own the event, do not let them edit it
                 editButton.isEnabled = false
                 deleteEventButton.isHidden = true
+                deleteEventButtonLabel.isHidden = true
                 deleteEventButton.isEnabled = false
             }
         }

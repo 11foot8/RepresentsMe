@@ -1183,7 +1183,7 @@
                                 </constraints>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="232" width="375" height="255"/>
+                                <rect key="frame" x="0.0" y="232" width="375" height="300"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
                                         <rect key="frame" x="0.0" y="63.999999999999993" width="375" height="28.666666666666664"/>
@@ -1236,7 +1236,6 @@
                                             <color key="titleColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                         </state>
                                         <connections>
-                                            <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="K5U-d0-4NE"/>
                                             <action selector="setRSVPNotGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="RHg-D6-ojK"/>
                                         </connections>
                                     </button>
@@ -1262,7 +1261,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="rTn-YH-UMt" secondAttribute="bottom" constant="4" id="0Do-Kp-F8C"/>
-                                    <constraint firstAttribute="height" constant="255" id="0WX-t6-QM4"/>
+                                    <constraint firstAttribute="height" constant="300" id="0WX-t6-QM4"/>
                                     <constraint firstAttribute="trailing" secondItem="rTn-YH-UMt" secondAttribute="trailing" id="1gq-xv-dGn"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="top" secondItem="bHP-BZ-P0D" secondAttribute="bottom" constant="8" id="20O-dA-Dj9"/>
                                     <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="81d-vy-lsc"/>
@@ -1300,7 +1299,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
-                                <rect key="frame" x="172.66666666666666" y="528" width="30" height="29"/>
+                                <rect key="frame" x="172.66666666666666" y="686" width="30" height="29"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                 <state key="normal" title="trash-alt">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1310,7 +1309,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-9w-p5K">
-                                <rect key="frame" x="70.666666666666671" y="528" width="30" height="29"/>
+                                <rect key="frame" x="70.666666666666671" y="686" width="30" height="29"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                 <state key="normal" title="calendar-plus"/>
                                 <connections>
@@ -1318,13 +1317,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-en-Ogo">
-                                <rect key="frame" x="69.666666666666671" y="551" width="32" height="12"/>
+                                <rect key="frame" x="69.666666666666671" y="709" width="32" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhi-xT-Y5H">
-                                <rect key="frame" x="171.66666666666666" y="551" width="32" height="12"/>
+                                <rect key="frame" x="171.66666666666666" y="709" width="32" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
@@ -1334,6 +1333,7 @@
                         <constraints>
                             <constraint firstItem="M9u-en-Ogo" firstAttribute="centerX" secondItem="TVV-9w-p5K" secondAttribute="centerX" id="4jv-LL-wn0"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="CcH-38-qPN"/>
+                            <constraint firstItem="ND4-xx-3xZ" firstAttribute="bottom" secondItem="bhi-xT-Y5H" secondAttribute="bottom" constant="8" id="Gzi-Z6-N0j"/>
                             <constraint firstItem="M9u-en-Ogo" firstAttribute="top" secondItem="TVV-9w-p5K" secondAttribute="bottom" constant="-6" id="MFv-ow-duW"/>
                             <constraint firstItem="waI-wd-V1n" firstAttribute="leading" secondItem="TVV-9w-p5K" secondAttribute="trailing" constant="72" id="MlX-3E-OGi"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="Of8-qf-LQj"/>
@@ -1344,7 +1344,6 @@
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" id="adi-rk-2bd"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="fAQ-fj-TOL"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="fqv-zW-6a8"/>
-                            <constraint firstItem="waI-wd-V1n" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="bottom" constant="41" id="hVs-dA-ewM"/>
                             <constraint firstItem="bhi-xT-Y5H" firstAttribute="centerX" secondItem="waI-wd-V1n" secondAttribute="centerX" id="lxY-py-Jlc"/>
                             <constraint firstItem="bhi-xT-Y5H" firstAttribute="top" secondItem="waI-wd-V1n" secondAttribute="bottom" constant="-6" id="mvy-95-PPf"/>
                             <constraint firstItem="waI-wd-V1n" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="u7Y-wh-CuP"/>
@@ -1360,6 +1359,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deleteEventButton" destination="waI-wd-V1n" id="9CR-wb-GEz"/>
+                        <outlet property="deleteEventButtonLabel" destination="bhi-xT-Y5H" id="iSN-Ir-2hp"/>
                         <outlet property="editButton" destination="4bk-0q-wm3" id="qYb-Dv-bvz"/>
                         <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
