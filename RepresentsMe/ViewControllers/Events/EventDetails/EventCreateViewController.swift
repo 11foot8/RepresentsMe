@@ -191,7 +191,7 @@ class EventCreateViewController: UIViewController,
         eventNameTextField.text = event.name
         
         // Set the official
-        eventOfficialCardView.set(official: event.official)
+        self.set(official: event.official)
 
         // Set the location
         selectLocationButton.setTitle("", for: .normal)
