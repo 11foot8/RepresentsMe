@@ -13,79 +13,50 @@ let EVENT_CELL_IDENTIFIER = "eventCell"
 /// The data source for the events table view.
 /// Manages the Array of Events that are being displayed and handles adding,
 /// removing, and setting the Events that are being shown
-class EventsTableViewDataSource: NSObject, UITableViewDataSource {
+class EventsTableViewDataSource: NSObject,
+                                 UITableViewDataSource,
+                                 UISearchBarDelegate,
+                                 EventListDelegate,
+                                 EventsListener {
     
     var tableView:UITableView   // The table view this is the data source for
-    var events:[Event] = []     // The events being displayed
-    
+    var events:[Event] = []     // The Events being displayed
+    var filter:String = ""      // The current filter for Events
+
     /// Initializes this data source for the given table view
     ///
     /// - Parameter for:    the table view this is the data source for
     init(for tableView:UITableView) {
         self.tableView = tableView
-    }
-
-    /// Adds a single event
-    ///
-    /// - Parameter event:      the Event to add
-    /// - Parameter filter:     the filter to check event against
-    func add(event:Event, filter:String) {
-        if event.matches(filter) {
-            self.events.append(event)
-            self.events.sort()
-            self.updateTableData()
-        }
-    }
-
-    /// Adds an Array of Events
-    ///
-    /// - Parameter events:     the Events to add
-    /// - Parameter filter:     the filter to check each Event against
-    func add(events:[Event], filter:String) {
-        self.events += events.filter {(event) in event.matches(filter)}
-        self.events.sort()
+        super.init()
+        AppState.addHomeEventsListener(self)
         self.updateTableData()
     }
     
-    /// Sets the events to the given events that match the given filter
-    ///
-    /// - Parameter events:     the Events to set
-    /// - Parameter filter:     the filter to check each Event against
-    func set(events:[Event], filter:String) {
-        self.events = events.filter {(event) in event.matches(filter)}
+    /// Updates the Events table when new Events are received
+    func appStateReceivedHomeEvents(events: [Event]) {
         self.updateTableData()
     }
     
-    /// Deletes the given Event
-    ///
-    /// - Parameter event:  the event to delete
-    func delete(event:Event) {
-        if let index = self.events.index(of: event) {
-            self.events.remove(at: index)
-            self.updateTableData()
-        }
-    }
-    
-    /// Deletes all Events
-    func deleteAll() {
-        self.events.removeAll()
+    /// Filters and updates the table data after an Event is created
+    func eventCreatedDelegate(event: Event) {
         self.updateTableData()
     }
     
-    /// Gets the Event at the given index
-    ///
-    /// - Parameter at:     the index
-    ///
-    /// - Returns: the Event
-    func getEvent(at index:Int) -> Event {
-        return self.events[index]
+    /// Filters and updates the table data after an Event is updated
+    func eventUpdatedDelegate(event: Event) {
+        self.updateTableData()
     }
     
-    /// Updates the event table view
-    func updateTableData() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+    /// Updates the table data after an Event is deleted
+    func eventDeletedDelegate(event: Event) {
+        self.updateTableData()
+    }
+    
+    /// When the search text changes, filter the events
+    func searchBar(_ searchBar:UISearchBar, textDidChange:String) {
+        self.filter = textDidChange
+        self.updateTableData()
     }
 
     /// The number of rows is the number of events
@@ -103,5 +74,18 @@ class EventsTableViewDataSource: NSObject, UITableViewDataSource {
         
         cell.event = self.events[indexPath.row]
         return cell
+    }
+    
+    /// Filters the events and updates the table data
+    private func updateTableData() {
+        // Filter the Events
+        self.events = AppState.homeEvents.filter {(event) in
+            event.matches(self.filter)
+        }
+        
+        // Update the table data
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

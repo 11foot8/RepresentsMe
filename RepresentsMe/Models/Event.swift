@@ -9,13 +9,6 @@
 import MapKit
 import Firebase
 
-/// The types of RSVP status
-enum RSVPType {
-    case going       // Status for a user planning on attending an event
-    case maybe       // Status for a user who may attend an event
-    case not_going   // Status for a user who will not attend an event
-}
-
 /// Manages creating, updating, and deleting events through Firestore
 class Event: Comparable {
     
@@ -26,9 +19,6 @@ class Event: Comparable {
     // The Firestore database
     static let collection = "events"
     static let db = Firestore.firestore().collection(Event.collection)
-    
-    // Caches single instances of each Event
-    static var events:[String: Event] = [:]
 
     var documentID:String?                  // The document ID on Firestore
     var name:String                         // The name of the event
@@ -139,9 +129,28 @@ class Event: Comparable {
         let geopoint = data["location"] as! GeoPoint
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
                                                longitude: geopoint.longitude)
+    }
+    
+    /// Creates a new Event with the given Official
+    ///
+    /// - Parameter data:       the DocumentSnapshot
+    /// - Parameter official:   the Official
+    private convenience init(data:DocumentSnapshot, official:Official) {
+        self.init(data: data)
+        self.official = official
+    }
+    
+    /// Creates a new Event scraping the Official
+    ///
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the group to notify when done
+    private convenience init(data:DocumentSnapshot, group:DispatchGroup) {
+        self.init(data: data)
         
-        // Add to the list of events
-        Event.events[self.documentID!] = self
+        // Get the official
+        self.getOfficial(name: data["officialName"] as! String,
+                         division: data["divisionOCDID"] as! String,
+                         group: group)
     }
     
     /// Saves this Event
@@ -176,7 +185,12 @@ class Event: Comparable {
         if let documentID = self.documentID {
             Event.db.document(documentID).delete {(error) in
                 if error == nil {
-                    // Succesfully deleted, delete all attendees
+                    // Delete from AppState
+                    if let index = AppState.homeEvents.index(of: self) {
+                        AppState.homeEvents.remove(at: index)
+                    }
+                    
+                    // Delete all attendees
                     for attendee in self.attendees {
                         attendee.delete()
                     }
@@ -200,8 +214,8 @@ class Event: Comparable {
                     
                     // Build and add each attendee
                     for data in data!.documents {
-                        self.attendees.append(EventAttendee.new(data: data,
-                                                                event: self))
+                        self.attendees.append(EventAttendee(data: data,
+                                                            event: self))
                     }
                 }
                 
@@ -218,24 +232,10 @@ class Event: Comparable {
     func addAttendee(userID:String,
                      status:RSVPType,
                      completion:EventAttendee.completionHandler = nil) {
-
-        var statusString = ""
-        switch status {
-        case .going:
-            statusString = "going"
-            break
-        case .maybe:
-            statusString = "maybe"
-            break
-        case .not_going:
-            statusString = "not_going"
-            break
-        }
-
         if self.documentID != nil {
             EventAttendee.create(event: self,
                                  userID: userID,
-                                 status: statusString) {(attendee, error) in
+                                 status: status) {(attendee, error) in
                 // Add to the list of attendees and return the completion
                 if error == nil {
                     self.attendees.append(attendee)
@@ -292,7 +292,8 @@ class Event: Comparable {
         ref = Event.db.addDocument(data: self.data) {(error) in
             if error == nil {
                 self.documentID = ref!.documentID
-                Event.events[self.documentID!] = self
+                AppState.homeEvents.append(self)
+                AppState.homeEvents.sort()
             }
             return completion(self, error)
         }
@@ -357,7 +358,7 @@ class Event: Comparable {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    Event.insert(into: &events, data: data, group: group)
+                    events.append(Event(data: data, group: group))
                 }
             }
             
@@ -388,22 +389,15 @@ class Event: Comparable {
             .whereField("divisionOCDID", isEqualTo: official.divisionOCDID)
             .whereField("officialName", isEqualTo: official.name)
         query.getDocuments {(data, error) in
-            let group = DispatchGroup()
             var events:[Event] = []
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    Event.insert(into: &events,
-                                 data: data,
-                                 group: group,
-                                 official: official)
+                    events.append(Event(data: data, official: official))
                 }
             }
             
-            // Wait until all Officials are pulled before returning
-            group.notify(queue: .main) {
-                return completion(events, error)
-            }
+            return completion(events, error)
         }
     }
 
@@ -413,23 +407,12 @@ class Event: Comparable {
     /// - Parameter completion:     the completion handler
     static func find_by(eventID:String,
                         completion: @escaping completionHandler) {
-        if let event = Event.events[eventID] {
-            // Already have built the Event, return it
-            return completion(event, nil)
-        }
-
-        // Need to build the event
         let ref = Event.db.document(eventID)
         ref.getDocument {(data, error) in
             if error == nil {
                 // Build the event
                 let group = DispatchGroup()
-                let event = Event(data: data!)
-                
-                // Get the official
-                event.getOfficial(name: data!["officialName"] as! String,
-                                  division: data!["divisionOCDID"] as! String,
-                                  group: group)
+                let event = Event(data: data!, group: group)
 
                 // Wait until the Official is pulled before returning
                 group.notify(queue: .main) {
