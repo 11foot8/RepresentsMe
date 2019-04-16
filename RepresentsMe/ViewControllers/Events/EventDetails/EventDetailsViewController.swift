@@ -106,12 +106,27 @@ class EventDetailsViewController: UIViewController {
     }
 
     @IBAction func setRSVPGoing(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .going)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
     }
 
     @IBAction func setRSVPMaybe(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .maybe)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
     }
 
     @IBAction func setRSVPNotGoing(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .not_going)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
     }
 
 
