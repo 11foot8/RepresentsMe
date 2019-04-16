@@ -105,7 +105,10 @@ class EventDetailsViewController: UIViewController {
                                         longitudeDelta: 0.1)
             let region = MKCoordinateRegion(center: event.location, span: span)
             self.mapView.setRegion(region, animated: true)
-            self.mapView.addAnnotation(DroppedPin(title: self.event!.name, locationName: "", discipline: "", coordinate: self.event!.location))
+            self.mapView.addAnnotation(DroppedPin(title: self.event.name,
+                                                  locationName: "",
+                                                  discipline: "",
+                                                  coordinate: self.event.location))
         }
     }
 
@@ -114,6 +117,8 @@ class EventDetailsViewController: UIViewController {
             event?.addAttendee(userID: uid, status: .going)
             goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
             // TODO: Alert for no logged-in user
         }
     }
@@ -123,7 +128,8 @@ class EventDetailsViewController: UIViewController {
             event?.addAttendee(userID: uid, status: .maybe)
             maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
-            // TODO: Alert for no logged-in user
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
         }
     }
 
@@ -132,7 +138,8 @@ class EventDetailsViewController: UIViewController {
             event?.addAttendee(userID: uid, status: .notGoing)
             notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
-            // TODO: Alert for no logged-in user
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
         }
     }
 
