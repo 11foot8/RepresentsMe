@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -283,32 +283,32 @@
                                 <rect key="frame" x="-12" y="274" width="399" height="455"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXY-SU-akR">
-                                        <rect key="frame" x="182" y="57" width="35" height="21"/>
+                                        <rect key="frame" x="182" y="49" width="35" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FirstName LastName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3s-J5-Zz6">
-                                        <rect key="frame" x="28" y="28" width="343" height="21"/>
+                                        <rect key="frame" x="28" y="20" width="343" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Party" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9uj-c0-c1n">
-                                        <rect key="frame" x="179.66666666666666" y="86" width="40" height="21"/>
+                                        <rect key="frame" x="179.66666666666666" y="78" width="40" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdg-kt-WWj">
-                                        <rect key="frame" x="28" y="131" width="343" height="4"/>
+                                        <rect key="frame" x="28" y="123" width="343" height="4"/>
                                         <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="9Ti-8Z-RDA"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMe-UG-GBM">
-                                        <rect key="frame" x="28" y="180" width="343" height="30"/>
+                                        <rect key="frame" x="28" y="172" width="343" height="30"/>
                                         <state key="normal" title="View All Contact Info">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -317,7 +317,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Od-fq-lVD">
-                                        <rect key="frame" x="60" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="60" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="phone">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -327,7 +327,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-8h-tP3">
-                                        <rect key="frame" x="309" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="309" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="envelope">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -337,7 +337,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wu-N3-voZ">
-                                        <rect key="frame" x="184.66666666666666" y="143" width="30" height="29"/>
+                                        <rect key="frame" x="184.66666666666666" y="135" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="external-link-alt">
                                             <color key="titleColor" red="0.24861783286830486" green="0.62991085583233741" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -347,7 +347,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a19-Tz-BcN">
-                                        <rect key="frame" x="164.66666666666666" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="164.66666666666666" y="250" width="70" height="92"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="twitter-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -357,7 +357,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pwh-CN-Hl4">
-                                        <rect key="frame" x="297" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="297" y="250" width="70" height="92"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="youtube-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -367,7 +367,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XR-Ps-ufA">
-                                        <rect key="frame" x="32" y="258" width="70" height="92"/>
+                                        <rect key="frame" x="32" y="250" width="70" height="92"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Brands-Regular" family="Font Awesome 5 Brands" pointSize="80"/>
                                         <state key="normal" title="facebook-square">
                                             <color key="titleColor" red="0.2486178329" green="0.62991085579999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1191,8 +1191,8 @@
                                     <constraint firstAttribute="height" constant="144" id="VDK-fC-GGL"/>
                                 </constraints>
                             </mapView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="232" width="375" height="200"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
+                                <rect key="frame" x="0.0" y="232" width="375" height="255"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
                                         <rect key="frame" x="0.0" y="63.999999999999993" width="375" height="28.666666666666664"/>
@@ -1201,41 +1201,103 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHP-BZ-P0D">
-                                        <rect key="frame" x="0.0" y="125.66666666666669" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="179.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-dm-V8w">
-                                        <rect key="frame" x="0.0" y="154.66666666666669" width="375" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="208.66666666666669" width="375" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Official" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTn-YH-UMt">
-                                        <rect key="frame" x="0.0" y="100.66666666666669" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="154.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H8o-jp-YQP">
+                                        <rect key="frame" x="86.666666666666671" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="check-circle">
+                                            <color key="titleColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setRSVPGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="rGH-V2-qiL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-NF-Ph2">
+                                        <rect key="frame" x="172.66666666666666" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="question-circle">
+                                            <color key="titleColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="Grb-tn-hbn"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brj-Rg-tLr">
+                                        <rect key="frame" x="258.66666666666669" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="times-circle">
+                                            <color key="titleColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="K5U-d0-4NE"/>
+                                            <action selector="setRSVPNotGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="RHg-D6-ojK"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Going" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDc-fU-vdY">
+                                        <rect key="frame" x="249" y="134.66666666666669" width="49" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maybe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1X9-4t-mRq">
+                                        <rect key="frame" x="171.66666666666666" y="134.66666666666669" width="32" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Going" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ia-YB-9pF">
+                                        <rect key="frame" x="87" y="134.66666666666669" width="29" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="rTn-YH-UMt" secondAttribute="bottom" constant="4" id="0Do-Kp-F8C"/>
+                                    <constraint firstAttribute="height" constant="255" id="0WX-t6-QM4"/>
                                     <constraint firstAttribute="trailing" secondItem="rTn-YH-UMt" secondAttribute="trailing" id="1gq-xv-dGn"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="top" secondItem="bHP-BZ-P0D" secondAttribute="bottom" constant="8" id="20O-dA-Dj9"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="81d-vy-lsc"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="8WZ-ax-mKx"/>
+                                    <constraint firstItem="6Ia-YB-9pF" firstAttribute="centerX" secondItem="H8o-jp-YQP" secondAttribute="centerX" id="90x-cP-Wd1"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="DLj-jo-4nQ"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="GaW-Zw-uqb"/>
+                                    <constraint firstItem="eDc-fU-vdY" firstAttribute="centerY" secondItem="6Ia-YB-9pF" secondAttribute="centerY" id="JfZ-Fx-EYV"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="centerY" secondItem="6Ia-YB-9pF" secondAttribute="centerY" id="Kgq-dO-4hG"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="LXi-Ry-EbA"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="top" constant="64" id="NXT-gr-Ed0"/>
-                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="UhB-AD-YlJ"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="leading" secondItem="H8o-jp-YQP" secondAttribute="trailing" constant="56" id="SXB-kN-o2h"/>
+                                    <constraint firstItem="Brj-Rg-tLr" firstAttribute="leading" secondItem="6o9-NF-Ph2" secondAttribute="trailing" constant="56" id="UmQ-WZ-EFw"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="Uo4-WZ-zvI"/>
                                     <constraint firstAttribute="trailing" secondItem="kC2-E6-8xR" secondAttribute="trailing" id="WRa-33-aUP"/>
+                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="top" secondItem="1X9-4t-mRq" secondAttribute="bottom" constant="8" id="X6G-Ql-fKE"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="cLH-so-40Y"/>
+                                    <constraint firstItem="eDc-fU-vdY" firstAttribute="centerX" secondItem="Brj-Rg-tLr" secondAttribute="centerX" id="cNo-l5-DRb"/>
                                     <constraint firstAttribute="trailing" secondItem="bHP-BZ-P0D" secondAttribute="trailing" id="dCe-ps-4KY"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="gGd-Dn-rxp"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerY" secondItem="H8o-jp-YQP" secondAttribute="centerY" id="lt7-67-yDt"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="nTs-Vv-4ME"/>
+                                    <constraint firstItem="Brj-Rg-tLr" firstAttribute="centerY" secondItem="H8o-jp-YQP" secondAttribute="centerY" id="nnE-LP-H2s"/>
                                     <constraint firstAttribute="trailing" secondItem="Ge3-dm-V8w" secondAttribute="trailing" id="oMY-r6-JP3"/>
                                     <constraint firstItem="rTn-YH-UMt" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="pq0-DF-XvK"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ge3-dm-V8w" secondAttribute="bottom" constant="24" id="wN9-Py-lGc"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="top" secondItem="6o9-NF-Ph2" secondAttribute="bottom" constant="-6" id="vpZ-JY-Xc1"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="wV1-Zk-22C"/>
                                 </constraints>
                             </view>
@@ -1246,27 +1308,54 @@
                                     <constraint firstAttribute="height" constant="150" id="w8m-I3-k4m"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
-                                <rect key="frame" x="144" y="472" width="87" height="30"/>
-                                <state key="normal" title="Delete Event">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
+                                <rect key="frame" x="172.66666666666666" y="528" width="30" height="29"/>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                <state key="normal" title="trash-alt">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="deleteButtonTapped:" destination="egU-99-xc4" eventType="touchUpInside" id="9jZ-e8-Qtw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-9w-p5K">
+                                <rect key="frame" x="70.666666666666671" y="528" width="30" height="29"/>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                <state key="normal" title="calendar-plus"/>
+                                <connections>
+                                    <action selector="exportEvent:" destination="egU-99-xc4" eventType="touchUpInside" id="nW6-D4-4zb"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-en-Ogo">
+                                <rect key="frame" x="69.666666666666671" y="551" width="32" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhi-xT-Y5H">
+                                <rect key="frame" x="171.66666666666666" y="551" width="32" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="M9u-en-Ogo" firstAttribute="centerX" secondItem="TVV-9w-p5K" secondAttribute="centerX" id="4jv-LL-wn0"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="CcH-38-qPN"/>
+                            <constraint firstItem="M9u-en-Ogo" firstAttribute="top" secondItem="TVV-9w-p5K" secondAttribute="bottom" constant="-6" id="MFv-ow-duW"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="leading" secondItem="TVV-9w-p5K" secondAttribute="trailing" constant="72" id="MlX-3E-OGi"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="Of8-qf-LQj"/>
                             <constraint firstItem="vdf-XQ-iMh" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" constant="36" id="R6f-qS-CiF"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="top" secondItem="gEE-cq-WmL" secondAttribute="bottom" id="RFi-iB-T1A"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="centerY" secondItem="TVV-9w-p5K" secondAttribute="centerY" id="Usm-lp-WmY"/>
                             <constraint firstItem="vdf-XQ-iMh" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="aaK-Oq-GJo"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" id="adi-rk-2bd"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="fAQ-fj-TOL"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="fqv-zW-6a8"/>
-                            <constraint firstItem="waI-wd-V1n" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="bottom" constant="40" id="hVs-dA-ewM"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="bottom" constant="41" id="hVs-dA-ewM"/>
+                            <constraint firstItem="bhi-xT-Y5H" firstAttribute="centerX" secondItem="waI-wd-V1n" secondAttribute="centerX" id="lxY-py-Jlc"/>
+                            <constraint firstItem="bhi-xT-Y5H" firstAttribute="top" secondItem="waI-wd-V1n" secondAttribute="bottom" constant="-6" id="mvy-95-PPf"/>
                             <constraint firstItem="waI-wd-V1n" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="u7Y-wh-CuP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ND4-xx-3xZ"/>
@@ -1284,7 +1373,13 @@
                         <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
                         <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>
+                        <outlet property="goingButton" destination="H8o-jp-YQP" id="IPP-ga-ncP"/>
+                        <outlet property="goingButtonLabel" destination="6Ia-YB-9pF" id="Kso-U8-JbS"/>
                         <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
+                        <outlet property="maybeButton" destination="6o9-NF-Ph2" id="cOF-ez-4Vq"/>
+                        <outlet property="maybeButtonLabel" destination="1X9-4t-mRq" id="rTN-vX-cdw"/>
+                        <outlet property="notGoingButton" destination="Brj-Rg-tLr" id="e0b-R4-bBx"/>
+                        <outlet property="notGoingButtonLabel" destination="eDc-fU-vdY" id="1Pk-yR-gjh"/>
                         <outlet property="officialNameLabel" destination="rTn-YH-UMt" id="i5i-1h-Pi3"/>
                         <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
