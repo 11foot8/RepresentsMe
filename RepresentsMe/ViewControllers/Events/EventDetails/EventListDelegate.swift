@@ -10,6 +10,6 @@
 /// created, updated, and deleted
 protocol EventListDelegate {
     func eventCreatedDelegate(event:Event)
-    func eventUpdatedDelegate()
+    func eventUpdatedDelegate(event:Event)
     func eventDeletedDelegate(event:Event)
 }

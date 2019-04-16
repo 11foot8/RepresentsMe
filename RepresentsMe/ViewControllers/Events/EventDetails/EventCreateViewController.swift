@@ -60,6 +60,7 @@ class EventCreateViewController: UIViewController,
     /// If successfully saves, segues back a view controller
     @IBAction func saveTapped(_ sender: Any) {
         // Ensure selected attributes are valid
+        let description = ""            // TODO: fill in
         guard let official = selectedOfficial else {return}
         guard let location = selectedLocation else {return}
         guard let date = selectedDate else {return}
@@ -75,6 +76,7 @@ class EventCreateViewController: UIViewController,
         } else {
             // Not editing an Event, create a new Event
             self.createEvent(name: name,
+                             description: description,
                              official: official,
                              location: location,
                              date: date)
@@ -189,7 +191,7 @@ class EventCreateViewController: UIViewController,
         eventNameTextField.text = event.name
         
         // Set the official
-        eventOfficialCardView.set(official: event.official)
+        self.set(official: event.official)
 
         // Set the location
         selectLocationButton.setTitle("", for: .normal)
@@ -257,7 +259,7 @@ class EventCreateViewController: UIViewController,
                 if (error != nil) {
                     // TODO: handle error
                 } else {
-                    self.delegate?.eventUpdatedDelegate()
+                    self.delegate?.eventUpdatedDelegate(event: event!)
     
                     // Navigate back
                     self.navigationController?.popViewController(
@@ -270,16 +272,19 @@ class EventCreateViewController: UIViewController,
     /// Creates a new Event.
     /// Segues back a view controller if successfully creates
     ///
-    /// - Parameter name:       the name for the Event
-    /// - Parameter official:   the Official for the Event
-    /// - Parameter location:   the location for the Event
-    /// - Parameter date:       the date for the Event
+    /// - Parameter name:           the name for the Event
+    /// - Parameter description:    the description for the Event
+    /// - Parameter official:       the Official for the Event
+    /// - Parameter location:       the location for the Event
+    /// - Parameter date:           the date for the Event
     private func createEvent(name:String,
+                             description:String,
                              official:Official,
                              location:CLLocationCoordinate2D,
                              date:Date) {
         Event.create(name: name,
                      owner: UsersDatabase.currentUserUID!,
+                     description: description,
                      location: location,
                      date: date,
                      official: official) {(event, error) in
