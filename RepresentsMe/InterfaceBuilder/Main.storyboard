@@ -1183,7 +1183,7 @@
                                 </constraints>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="232" width="375" height="249"/>
+                                <rect key="frame" x="0.0" y="232" width="375" height="255"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
                                         <rect key="frame" x="0.0" y="63.999999999999993" width="375" height="28.666666666666664"/>
@@ -1192,69 +1192,103 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHP-BZ-P0D">
-                                        <rect key="frame" x="0.0" y="163.66666666666669" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="179.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-dm-V8w">
-                                        <rect key="frame" x="0.0" y="192.66666666666669" width="375" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="208.66666666666669" width="375" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Official" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTn-YH-UMt">
-                                        <rect key="frame" x="0.0" y="138.66666666666669" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="154.66666666666669" width="375" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H8o-jp-YQP">
-                                        <rect key="frame" x="59.666666666666657" y="100.66666666666669" width="41" height="30"/>
-                                        <state key="normal" title="Going"/>
+                                        <rect key="frame" x="86.666666666666671" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="check-circle">
+                                            <color key="titleColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="setRSVPGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="rGH-V2-qiL"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-NF-Ph2">
-                                        <rect key="frame" x="164.66666666666666" y="100.66666666666669" width="46" height="30"/>
-                                        <state key="normal" title="Maybe"/>
+                                        <rect key="frame" x="172.66666666666666" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="question-circle">
+                                            <color key="titleColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
                                         <connections>
                                             <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="Grb-tn-hbn"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brj-Rg-tLr">
-                                        <rect key="frame" x="258.66666666666669" y="100.66666666666669" width="70" height="30"/>
-                                        <state key="normal" title="Not Going"/>
+                                        <rect key="frame" x="258.66666666666669" y="100.66666666666669" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="28"/>
+                                        <state key="normal" title="times-circle">
+                                            <color key="titleColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
                                         <connections>
                                             <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="K5U-d0-4NE"/>
                                             <action selector="setRSVPNotGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="RHg-D6-ojK"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Going" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDc-fU-vdY">
+                                        <rect key="frame" x="249" y="134.66666666666669" width="49" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maybe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1X9-4t-mRq">
+                                        <rect key="frame" x="171.66666666666666" y="134.66666666666669" width="32" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Going" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ia-YB-9pF">
+                                        <rect key="frame" x="87" y="134.66666666666669" width="29" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="top" secondItem="rTn-YH-UMt" secondAttribute="bottom" constant="4" id="0Do-Kp-F8C"/>
-                                    <constraint firstAttribute="height" constant="249" id="0WX-t6-QM4"/>
+                                    <constraint firstAttribute="height" constant="255" id="0WX-t6-QM4"/>
                                     <constraint firstAttribute="trailing" secondItem="rTn-YH-UMt" secondAttribute="trailing" id="1gq-xv-dGn"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="top" secondItem="bHP-BZ-P0D" secondAttribute="bottom" constant="8" id="20O-dA-Dj9"/>
                                     <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="81d-vy-lsc"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="8WZ-ax-mKx"/>
+                                    <constraint firstItem="6Ia-YB-9pF" firstAttribute="centerX" secondItem="H8o-jp-YQP" secondAttribute="centerX" id="90x-cP-Wd1"/>
                                     <constraint firstItem="6o9-NF-Ph2" firstAttribute="top" secondItem="kC2-E6-8xR" secondAttribute="bottom" constant="8" id="DLj-jo-4nQ"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="GaW-Zw-uqb"/>
+                                    <constraint firstItem="eDc-fU-vdY" firstAttribute="centerY" secondItem="6Ia-YB-9pF" secondAttribute="centerY" id="JfZ-Fx-EYV"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="centerY" secondItem="6Ia-YB-9pF" secondAttribute="centerY" id="Kgq-dO-4hG"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="LXi-Ry-EbA"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="top" constant="64" id="NXT-gr-Ed0"/>
-                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="leading" secondItem="H8o-jp-YQP" secondAttribute="trailing" constant="64" id="SXB-kN-o2h"/>
-                                    <constraint firstItem="Brj-Rg-tLr" firstAttribute="leading" secondItem="6o9-NF-Ph2" secondAttribute="trailing" constant="48" id="UmQ-WZ-EFw"/>
+                                    <constraint firstItem="6o9-NF-Ph2" firstAttribute="leading" secondItem="H8o-jp-YQP" secondAttribute="trailing" constant="56" id="SXB-kN-o2h"/>
+                                    <constraint firstItem="Brj-Rg-tLr" firstAttribute="leading" secondItem="6o9-NF-Ph2" secondAttribute="trailing" constant="56" id="UmQ-WZ-EFw"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="Uo4-WZ-zvI"/>
                                     <constraint firstAttribute="trailing" secondItem="kC2-E6-8xR" secondAttribute="trailing" id="WRa-33-aUP"/>
+                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="top" secondItem="1X9-4t-mRq" secondAttribute="bottom" constant="8" id="X6G-Ql-fKE"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="cLH-so-40Y"/>
+                                    <constraint firstItem="eDc-fU-vdY" firstAttribute="centerX" secondItem="Brj-Rg-tLr" secondAttribute="centerX" id="cNo-l5-DRb"/>
                                     <constraint firstAttribute="trailing" secondItem="bHP-BZ-P0D" secondAttribute="trailing" id="dCe-ps-4KY"/>
                                     <constraint firstItem="Ge3-dm-V8w" firstAttribute="centerX" secondItem="Oil-RO-Enc" secondAttribute="centerX" id="gGd-Dn-rxp"/>
                                     <constraint firstItem="6o9-NF-Ph2" firstAttribute="centerY" secondItem="H8o-jp-YQP" secondAttribute="centerY" id="lt7-67-yDt"/>
                                     <constraint firstItem="kC2-E6-8xR" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="nTs-Vv-4ME"/>
                                     <constraint firstItem="Brj-Rg-tLr" firstAttribute="centerY" secondItem="H8o-jp-YQP" secondAttribute="centerY" id="nnE-LP-H2s"/>
-                                    <constraint firstItem="rTn-YH-UMt" firstAttribute="top" secondItem="6o9-NF-Ph2" secondAttribute="bottom" constant="8" id="oEr-28-xCZ"/>
                                     <constraint firstAttribute="trailing" secondItem="Ge3-dm-V8w" secondAttribute="trailing" id="oMY-r6-JP3"/>
                                     <constraint firstItem="rTn-YH-UMt" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="pq0-DF-XvK"/>
+                                    <constraint firstItem="1X9-4t-mRq" firstAttribute="top" secondItem="6o9-NF-Ph2" secondAttribute="bottom" constant="-6" id="vpZ-JY-Xc1"/>
                                     <constraint firstItem="bHP-BZ-P0D" firstAttribute="leading" secondItem="Oil-RO-Enc" secondAttribute="leading" id="wV1-Zk-22C"/>
                                 </constraints>
                             </view>
@@ -1266,7 +1300,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
-                                <rect key="frame" x="144" y="522" width="87" height="30"/>
+                                <rect key="frame" x="144" y="528" width="87" height="30"/>
                                 <state key="normal" title="Delete Event">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -1303,7 +1337,13 @@
                         <outlet property="eventDateLabel" destination="bHP-BZ-P0D" id="DvZ-QM-gb0"/>
                         <outlet property="eventLocationLabel" destination="Ge3-dm-V8w" id="Hwn-s2-dhA"/>
                         <outlet property="eventNameLabel" destination="kC2-E6-8xR" id="oDh-pe-pri"/>
+                        <outlet property="goingButton" destination="H8o-jp-YQP" id="IPP-ga-ncP"/>
+                        <outlet property="goingButtonLabel" destination="6Ia-YB-9pF" id="Kso-U8-JbS"/>
                         <outlet property="mapView" destination="gEE-cq-WmL" id="ZfE-gU-vOG"/>
+                        <outlet property="maybeButton" destination="6o9-NF-Ph2" id="cOF-ez-4Vq"/>
+                        <outlet property="maybeButtonLabel" destination="1X9-4t-mRq" id="rTN-vX-cdw"/>
+                        <outlet property="notGoingButton" destination="Brj-Rg-tLr" id="e0b-R4-bBx"/>
+                        <outlet property="notGoingButtonLabel" destination="eDc-fU-vdY" id="1Pk-yR-gjh"/>
                         <outlet property="officialNameLabel" destination="rTn-YH-UMt" id="i5i-1h-Pi3"/>
                         <outlet property="portraitImageView" destination="vdf-XQ-iMh" id="L4L-kK-Slm"/>
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
