@@ -57,12 +57,14 @@
 		169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */; };
 		169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */; };
 		169EB6C4225D09D700090CDA /* DisplayNameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */; };
+		16A0DCDC2264D838007D0617 /* ProfilePictureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A0DCDB2264D838007D0617 /* ProfilePictureSettingsViewController.swift */; };
 		16A6535F225D6D4300E13856 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A6535E225D6D4300E13856 /* Util.swift */; };
 		16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A65362225D80C500E13856 /* LoadingHUD.swift */; };
 		16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B6B2C522209D8100DB3A5B /* MapViewController.swift */; };
+		16C72C2F225FFC6100D43215 /* OfficialCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C72C2E225FFC6100D43215 /* OfficialCardView.swift */; };
+		16C72C32225FFC7C00D43215 /* OfficialCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16C72C31225FFC7C00D43215 /* OfficialCardView.xib */; };
 		16D0263F2252706A005C86F2 /* DroppedPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D0263E2252706A005C86F2 /* DroppedPin.swift */; };
 		16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */; };
-		16ECF805225508B8003DEA68 /* FirebaseWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */; };
 		16ECF8072255103B003DEA68 /* PickerPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16ECF8062255103B003DEA68 /* PickerPopup.xib */; };
 		16ECF809225510D5003DEA68 /* PickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF808225510D5003DEA68 /* PickerPopup.swift */; };
 		16ECF811225516C9003DEA68 /* StatePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */; };
@@ -158,12 +160,14 @@
 		169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
 		169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
 		169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNameSettingsViewController.swift; sourceTree = "<group>"; };
+		16A0DCDB2264D838007D0617 /* ProfilePictureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSettingsViewController.swift; sourceTree = "<group>"; };
 		16A6535E225D6D4300E13856 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16A65362225D80C500E13856 /* LoadingHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		16B6B2C522209D8100DB3A5B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		16C72C2E225FFC6100D43215 /* OfficialCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialCardView.swift; sourceTree = "<group>"; };
+		16C72C31225FFC7C00D43215 /* OfficialCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficialCardView.xib; sourceTree = "<group>"; };
 		16D0263E2252706A005C86F2 /* DroppedPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppedPin.swift; path = RepresentsMe/Views/DroppedPin.swift; sourceTree = SOURCE_ROOT; };
 		16E6AF7522567CD4003E3D34 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
-		16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWrapper.swift; sourceTree = "<group>"; };
 		16ECF8062255103B003DEA68 /* PickerPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerPopup.xib; sourceTree = "<group>"; };
 		16ECF808225510D5003DEA68 /* PickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPopup.swift; sourceTree = "<group>"; };
 		16ECF810225516C9003DEA68 /* StatePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePopoverViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +371,15 @@
 			path = Entry;
 			sourceTree = "<group>";
 		};
+		16C72C30225FFC6500D43215 /* OfficialCardView */ = {
+			isa = PBXGroup;
+			children = (
+				16C72C2E225FFC6100D43215 /* OfficialCardView.swift */,
+				16C72C31225FFC7C00D43215 /* OfficialCardView.xib */,
+			);
+			path = OfficialCardView;
+			sourceTree = "<group>";
+		};
 		16ECF80A225510E3003DEA68 /* PickerPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +484,7 @@
 				13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
 				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
+				16A0DCDB2264D838007D0617 /* ProfilePictureSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -495,7 +509,7 @@
 			children = (
 				1371C080225D1F1500FA0CCB /* EventCell.swift */,
 				16A65362225D80C500E13856 /* LoadingHUD.swift */,
-				16ECF804225508B8003DEA68 /* FirebaseWrapper.swift */,
+				16C72C30225FFC6500D43215 /* OfficialCardView */,
 				16D0263E2252706A005C86F2 /* DroppedPin.swift */,
 				3B45F0B42222452D00FA5B8B /* OfficialCell.swift */,
 				3B649F042237264800E88430 /* SettingsCell.swift */,
@@ -679,6 +693,7 @@
 				3BCC166B225D0A140088D757 /* Main.storyboard in Resources */,
 				1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */,
 				13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
+				16C72C32225FFC7C00D43215 /* OfficialCardView.xib in Resources */,
 				3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */,
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
 				13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */,
@@ -805,6 +820,7 @@
 			files = (
 				134F9221225E587F00B797B4 /* EventsTableViewDelegate.swift in Sources */,
 				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
+				16A0DCDC2264D838007D0617 /* ProfilePictureSettingsViewController.swift in Sources */,
 				3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */,
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
@@ -836,7 +852,6 @@
 				165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
-				16ECF805225508B8003DEA68 /* FirebaseWrapper.swift in Sources */,
 				16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */,
 				133BD33B223A76F00069279A /* PoliticalParty.swift in Sources */,
 				1371C081225D1F1500FA0CCB /* EventCell.swift in Sources */,
@@ -845,6 +860,7 @@
 				3BE4383D2255347800EC049B /* OfficialContactViewController.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
 				134F9233225EA9B200B797B4 /* SettingsTableViewDelegate.swift in Sources */,
+				16C72C2F225FFC6100D43215 /* OfficialCardView.swift in Sources */,
 				16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */,
 				16A65363225D80C500E13856 /* LoadingHUD.swift in Sources */,
 				13287BC02220BEA300622CD4 /* apikey.swift in Sources */,

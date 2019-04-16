@@ -101,6 +101,7 @@ class EventDetailsViewController: UIViewController {
                                         longitudeDelta: 0.1)
             let region = MKCoordinateRegion(center: event.location, span: span)
             self.mapView.setRegion(region, animated: true)
+            self.mapView.addAnnotation(DroppedPin(title: self.event!.name, locationName: "", discipline: "", coordinate: self.event!.location))
         }
     }
     

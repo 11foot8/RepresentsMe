@@ -8,16 +8,20 @@
 
 import UIKit
 import CoreData
+import MapKit
+
+let ADDRESS_POPOVER_SEGUE = "SettingsPickerPopoverSegue"
+let ADDRESS_SELECT_LOCATION_SEGUE = "SelectLocationSegue"
 
 /// The view controller to allow the user to change their home address.
-class AddressSettingsViewController: UIViewController,
-                                     StatePopoverViewControllerDelegate {
+class AddressSettingsViewController: UIViewController, StatePopoverViewControllerDelegate, LocationSelectionDelegate {
+
+
 
     // MARK: - Properties
-    let popoverSegueIdentifier = "SettingsPickerPopoverSegue"
 
     // MARK: - Outlets
-    
+
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateTextField: UITextField!
@@ -57,7 +61,7 @@ class AddressSettingsViewController: UIViewController,
     /// Shows the state select popover
     @IBAction func selectStateTouchUp(_ sender: Any) {
         self.view.endEditing(true)
-        performSegue(withIdentifier: popoverSegueIdentifier, sender: self)
+        performSegue(withIdentifier: ADDRESS_POPOVER_SEGUE, sender: self)
     }
     
     /// Sets the state to the given selection
@@ -67,18 +71,16 @@ class AddressSettingsViewController: UIViewController,
         stateTextField.text = state
     }
 
-    // MARK: - Segue functions
-    
-    /// Prepare to show the state select popover
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == popoverSegueIdentifier {
-            let destination = segue.destination as! StatePopoverViewController
-            destination.setup(in: self.view)
-            destination.delegate = self
-            destination.selectedValue = stateTextField.text!
-        }
+    /// Sets the address labels to the given address
+    func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
+        self.streetAddressTextField.text = address.streetAddress
+        self.cityTextField.text = address.city
+        self.stateTextField.text = address.state
+        self.zipcodeTextField.text = address.zipcode
     }
 
+    // MARK: -
+    
     /// Hide the keyboard when the user clicks away from a text field
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -149,13 +151,17 @@ class AddressSettingsViewController: UIViewController,
     /// - Parameter address:    the Address to save
     private func save(address:Address) {
         // Start the loading animation
+        self.navigationItem.hidesBackButton = true
         let hud = LoadingHUD(self.view)
         
         if let uid = UsersDatabase.currentUserUID {
             UsersDatabase.shared.setUserAddress(uid: uid,
-                                                address: address) {(error) in
+                                                address: address)
+            {(error) in
                 // Stop the loading animation
                 hud.end()
+                self.navigationItem.hidesBackButton = false
+
                 if error != nil {
                     // TODO: Handle error
                 } else {
@@ -163,6 +169,22 @@ class AddressSettingsViewController: UIViewController,
                     self.alert(title: "Saved")
                 }
             }
+        }
+    }
+
+    // MARK: - Navigation
+
+    /// Prepare to show the state select popover
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ADDRESS_POPOVER_SEGUE {
+            let destination = segue.destination as! StatePopoverViewController
+            destination.setup(in: self.view)
+            destination.delegate = self
+            destination.selectedValue = stateTextField.text!
+        } else if segue.identifier == ADDRESS_SELECT_LOCATION_SEGUE {
+            let destination = segue.destination as! MapViewController
+            destination.reachType = .settings
+            destination.delegate = self
         }
     }
 }

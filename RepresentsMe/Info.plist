@@ -25,8 +25,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to take your profile picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use location to find your representatives</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We use your photos to select your profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string></string>
@@ -42,8 +46,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

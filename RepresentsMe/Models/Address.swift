@@ -73,6 +73,11 @@ class Address: Equatable, CustomStringConvertible {
         return "\(city), \(state)"
     }
 
+    /// Returns a String representation of the full multi-line address
+    func fullMultilineAddress() -> String {
+        return "\(addressLine1())\n\(addressLine2())"
+    }
+
     static func == (lhs: Address, rhs: Address) -> Bool {
         return (
             lhs.streetAddress == rhs.streetAddress &&

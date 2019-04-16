@@ -22,28 +22,102 @@ class EventCreateViewController: UIViewController,
                                  LocationSelectionDelegate,
                                  DatePopoverViewControllerDelegate {
 
-    @IBOutlet weak var eventImageView: UIImageView!
-    @IBOutlet weak var eventNameTextField: UITextField!
-    @IBOutlet weak var selectOfficialButton: UIButton!
-    @IBOutlet weak var selectLocationButton: UIButton!
-    @IBOutlet weak var selectDateButton: UIButton!
-
+    // MARK: - Properties
     var event: Event?                               // The Event if editing
     var selectedDate: Date?                         // The selected date
     var selectedOfficial: Official?                 // The selected Official
     var selectedLocation: CLLocationCoordinate2D?   // The selected location
     var delegate:EventListDelegate?                 // The delegate to update
+    var mapViewAnnotation:MKAnnotation?             // The dropped pin on the mapview
+    let regionInMeters:CLLocationDistance = 7500
 
+    // MARK: - Outlets
+    @IBOutlet weak var eventOfficialCardView: OfficialCardView!
+    @IBOutlet weak var eventNameTextField: UITextField!
+    @IBOutlet weak var selectOfficialButton: UIButton!
+    @IBOutlet weak var selectLocationButton: UIButton!
+    @IBOutlet weak var selectDateButton: UIButton!
+    @IBOutlet weak var selectedDateLabel: UILabel!
+    @IBOutlet weak var selectedLocationLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
+
+    // MARK: - Lifecycle
     /// Sets up the view for the Event if editing an Event
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Setup the image view
-        self.setupImageView()
 
         // If editing an Event, setup for that Event
         if let event = self.event {
             self.setupFor(event: event)
+        }
+
+        self.setupMapView()
+        self.set(date: Date.init())
+    }
+
+    // MARK: - Actions
+    /// Creates or updates the Event when the save button is pressed.
+    /// If successfully saves, segues back a view controller
+    @IBAction func saveTapped(_ sender: Any) {
+        // Ensure selected attributes are valid
+        guard let official = selectedOfficial else {return}
+        guard let location = selectedLocation else {return}
+        guard let date = selectedDate else {return}
+        let name = self.eventNameTextField.text!
+        guard !name.isEmpty else {return}
+
+        if event != nil {
+            // Editing an Event, update it
+            self.updateEvent(name: name,
+                             official: official,
+                             location: location,
+                             date: date)
+        } else {
+            // Not editing an Event, create a new Event
+            self.createEvent(name: name,
+                             official: official,
+                             location: location,
+                             date: date)
+        }
+    }
+
+    /// Discard changes and segue back a view controller
+    @IBAction func cancelTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+
+    // Hide keyboard when select officials is tapped
+    @IBAction func selectOfficialTouchUp(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+
+    // Hide keyboard when edit date is tapped
+    @IBAction func editDateTouchUp(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+
+    // Hide keyboard when edit location is tapped
+    @IBAction func editLocationTouchUp(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+
+    /// Prepare for segues to select the Official, location, and date
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
+            // Seguing to select an Official
+            let destination = segue.destination as! OfficialsListViewController
+            destination.reachType = .event
+            destination.delegate = self
+        } else if (segue.identifier == SELECT_LOCATION_SEGUE) {
+            // Seguing to select a location
+            let destination = segue.destination as! MapViewController
+            destination.reachType = .event
+            destination.delegate = self
+        } else if (segue.identifier == DATE_POPOVER_SEGUE) {
+            // Seguing to select a date
+            let destination = segue.destination as! DatePopoverViewController
+            destination.setup(in: self.view)
+            destination.delegate = self
         }
     }
 
@@ -73,62 +147,40 @@ class EventCreateViewController: UIViewController,
         self.set(date: date)
     }
 
-    /// Creates or updates the Event when the save button is pressed.
-    /// If successfully saves, segues back a view controller
-    @IBAction func saveTapped(_ sender: Any) {
-        // Ensure selected attributes are valid
-        guard let official = selectedOfficial else {return}
-        guard let location = selectedLocation else {return}
-        guard let date = selectedDate else {return}
-        let name = self.eventNameTextField.text!
+    func setupLabels() {
+        self.selectedDateLabel.layer.cornerRadius = 8.0
+        self.selectedDateLabel.clipsToBounds = true
+        self.selectedDateLabel.layer.borderColor = UIColor.lightGray.cgColor
+        self.selectedDateLabel.layer.borderWidth = 1.0
 
-        if event != nil {
-            // Editing an Event, update it
-            self.updateEvent(name: name,
-                             official: official,
-                             location: location,
-                             date: date)
-        } else {
-            // Not editing an Event, create a new Event
-            self.createEvent(name: name,
-                             official: official,
-                             location: location,
-                             date: date)
+        self.selectedLocationLabel.layer.cornerRadius = 8.0
+        self.selectedLocationLabel.clipsToBounds = true
+        self.selectedLocationLabel.layer.borderColor = UIColor.lightGray.cgColor
+        self.selectedLocationLabel.layer.borderWidth = 1.0
+
+    }
+    /// Sets up mapView
+    func setupMapView() {
+        self.mapView.isScrollEnabled = false
+        self.mapView.layer.cornerRadius = 10
+        self.mapView.clipsToBounds = true
+        self.mapView.layer.borderColor = UIColor.lightGray.cgColor
+        self.mapView.layer.borderWidth = 1.0
+    }
+
+    func setMapViewLocation(location: CLLocationCoordinate2D,
+                            address: Address) {
+        if let annotation = self.mapViewAnnotation {
+            mapView.removeAnnotation(annotation)
         }
+        self.mapViewAnnotation = DroppedPin(title: address.streetAddress, locationName: address.addressCityState(), discipline: "", coordinate: location)
+        self.mapView.addAnnotation(self.mapViewAnnotation!)
+        let region = MKCoordinateRegion(center: location,
+                                        latitudinalMeters: regionInMeters,
+                                        longitudinalMeters: regionInMeters)
+        mapView.setRegion(region, animated: false)
     }
 
-    /// Discard changes and segue back a view controller
-    @IBAction func cancelTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
-
-    /// Prepare for segues to select the Official, location, and date
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == SELECT_OFFICIAL_SEGUE) {
-            // Seguing to select an Official
-            let destination = segue.destination as! OfficialsListViewController
-            destination.reachType = .event
-            destination.delegate = self
-        } else if (segue.identifier == SELECT_LOCATION_SEGUE) {
-            // Seguing to select a location
-            let destination = segue.destination as! MapViewController
-            destination.reachType = .event
-            destination.delegate = self
-        } else if (segue.identifier == DATE_POPOVER_SEGUE) {
-            // Seguing to select a date
-            let destination = segue.destination as! DatePopoverViewController
-            destination.setup(in: self.view)
-            destination.delegate = self
-        }
-    }
-
-    /// Sets up the image view
-    private func setupImageView() {
-        eventImageView.layer.cornerRadius = 5.0
-        eventImageView.clipsToBounds = true
-        eventImageView.image = DEFAULT_NOT_LOADED
-    }
-    
     /// Sets up the views for the given Event
     ///
     /// - Parameter event:  the Event to setup for
@@ -137,7 +189,7 @@ class EventCreateViewController: UIViewController,
         eventNameTextField.text = event.name
         
         // Set the official
-        self.set(official: event.official)
+        eventOfficialCardView.set(official: event.official)
 
         // Set the location
         selectLocationButton.setTitle("", for: .normal)
@@ -150,15 +202,14 @@ class EventCreateViewController: UIViewController,
         self.set(date: event.date)
         selectDateButton.setTitle(event.formattedDate, for: .normal)
     }
-    
+
     /// Sets the Official for the Event
     ///
     /// - Parameter official:   the Official to set
     private func set(official:Official?) {
         if let official = official {
             selectedOfficial = official
-            eventImageView.image = official.photo
-            selectOfficialButton.setTitle(official.name, for: .normal)
+            eventOfficialCardView.set(official: official)
         }
     }
     
@@ -168,8 +219,8 @@ class EventCreateViewController: UIViewController,
     /// - Parameter address:    the Address for the Event
     private func set(location:CLLocationCoordinate2D, address:Address) {
         selectedLocation = location
-        selectLocationButton.setTitle(address.addressLine1(),
-                                      for: .normal)
+        selectedLocationLabel.text = address.fullMultilineAddress()
+        self.setMapViewLocation(location: location, address: address)
     }
     
     /// Sets the date for the Event
@@ -180,8 +231,8 @@ class EventCreateViewController: UIViewController,
         
         // Format the date
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, h:mm a"
-        selectDateButton.setTitle(formatter.string(from: date), for: .normal)
+        formatter.dateFormat = "MMMM d, YYYY h:mm a"
+        selectedDateLabel.text = formatter.string(from: date)
     }
     
     /// Updates the Event.
@@ -242,5 +293,9 @@ class EventCreateViewController: UIViewController,
                     animated: true)
             }
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

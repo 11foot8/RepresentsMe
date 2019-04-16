@@ -17,7 +17,10 @@ class SettingsViewController: UIViewController,
 
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var currentUserLabel: UILabel!
+    @IBOutlet weak var displayNameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var profilePictureImageView: UIImageView!
 
     // MARK: - Lifecycle
     
@@ -43,8 +46,20 @@ class SettingsViewController: UIViewController,
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
                                  height: tableView.contentSize.height)
-        currentUserLabel.text = "Logged in as " +
-            (UsersDatabase.currentUserEmail ?? "N/A")
         tableView.reloadData()
+        setupCurrentUserInfo()
+    }
+
+    /// Fills in data for current user at top of settings
+    func setupCurrentUserInfo() {
+        displayNameLabel.text = UsersDatabase.currentUserDisplayName
+        emailLabel.text = UsersDatabase.currentUserEmail
+        addressLabel.text = ""
+        if let address = AppState.homeAddress {
+            addressLabel.text = "\(address.addressLine1())\n\(address.addressLine2())"
+        }
+        profilePictureImageView.image = AppState.profilePicture
+        profilePictureImageView.layer.cornerRadius = 50
+        profilePictureImageView.clipsToBounds = true
     }
 }

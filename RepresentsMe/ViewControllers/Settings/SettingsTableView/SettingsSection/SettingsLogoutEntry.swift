@@ -26,6 +26,8 @@ class SettingsLogoutEntry: SettingsEntry {
                 if let appDel = UIApplication.shared.delegate as? AppDelegate {
                     appDel.window?.rootViewController = entryViewController
                 }
+                // Clear App state when user logs off
+                AppState.clear()
             }
         }
     }

@@ -38,6 +38,9 @@ class AppState {
             }
         }
     }
+
+    /// The User's Profile Picture
+    static var profilePicture:UIImage = DEFAULT_NOT_LOADED
     
     /// The Officials for the user's home address
     static var homeOfficials:[Official] = []
@@ -99,6 +102,7 @@ class AppState {
     }
 
     /// Initializes the home Officials with the current user's home Address
+    /// and the profile picture to the user's profile picture
     static func setup() {
         UsersDatabase.getCurrentUserAddress {(address, error) in
             if error != nil {
@@ -109,6 +113,22 @@ class AppState {
                 }
             }
         }
+        UsersDatabase.getCurrentUserProfilePicture { (image, error) in
+            if error != nil {
+                // TODO: Handle Error
+                print(error.debugDescription)
+            } else {
+                if let image = image {
+                    profilePicture = image
+                }
+            }
+        }
+    }
+
+    /// Clears app state data (for use when user logs out)
+    static func clear() {
+        homeAddress = nil
+        profilePicture = DEFAULT_NOT_LOADED
     }
 
     /// Loads the Officials for the given Address

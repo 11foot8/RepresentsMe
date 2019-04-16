@@ -11,6 +11,7 @@ target 'RepresentsMe' do
   pod 'Firebase/Database', :inhibit_warnings => true
   pod 'Firebase/Auth', :inhibit_warnings => true
   pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
   pod 'MBProgressHUD', '~> 1.1.0'
 
   target 'RepresentsMeTests' do
