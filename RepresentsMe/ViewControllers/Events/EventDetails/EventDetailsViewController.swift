@@ -26,6 +26,13 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var deleteEventButton: UIButton!
 
+    @IBOutlet weak var goingButton: UIButton!
+    @IBOutlet weak var goingButtonLabel: UILabel!
+    @IBOutlet weak var maybeButton: UIButton!
+    @IBOutlet weak var maybeButtonLabel: UILabel!
+    @IBOutlet weak var notGoingButton: UIButton!
+    @IBOutlet weak var notGoingButtonLabel: UILabel!
+
     var event:Event?                    // The Event to display
     var delegate:EventListDelegate?     // The delegate to update
 
@@ -100,6 +107,36 @@ class EventDetailsViewController: UIViewController {
             self.mapView.setRegion(region, animated: true)
             self.mapView.addAnnotation(DroppedPin(title: self.event!.name, locationName: "", discipline: "", coordinate: self.event!.location))
         }
+    }
+
+    @IBAction func setRSVPGoing(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .going)
+            goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
+    }
+
+    @IBAction func setRSVPMaybe(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .maybe)
+            maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
+    }
+
+    @IBAction func setRSVPNotGoing(_ sender: Any) {
+        if let uid = UsersDatabase.currentUserUID {
+            event?.addAttendee(userID: uid, status: .not_going)
+            notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+        } else {
+            // TODO: Alert for no logged-in user
+        }
+    }
+
+    @IBAction func exportEvent(_ sender: Any) {
     }
     
     /// Sets up the edit views based on whether or not the user is allowed to
