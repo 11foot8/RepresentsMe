@@ -1212,14 +1212,24 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H8o-jp-YQP">
                                         <rect key="frame" x="59.666666666666657" y="100.66666666666669" width="41" height="30"/>
                                         <state key="normal" title="Going"/>
+                                        <connections>
+                                            <action selector="setRSVPGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="rGH-V2-qiL"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-NF-Ph2">
                                         <rect key="frame" x="164.66666666666666" y="100.66666666666669" width="46" height="30"/>
                                         <state key="normal" title="Maybe"/>
+                                        <connections>
+                                            <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="Grb-tn-hbn"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brj-Rg-tLr">
                                         <rect key="frame" x="258.66666666666669" y="100.66666666666669" width="70" height="30"/>
                                         <state key="normal" title="Not Going"/>
+                                        <connections>
+                                            <action selector="setRSVPMaybe:" destination="egU-99-xc4" eventType="touchUpInside" id="K5U-d0-4NE"/>
+                                            <action selector="setRSVPNotGoing:" destination="egU-99-xc4" eventType="touchUpInside" id="RHg-D6-ojK"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1263,11 +1273,6 @@
                                 <connections>
                                     <action selector="deleteButtonTapped:" destination="egU-99-xc4" eventType="touchUpInside" id="9jZ-e8-Qtw"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sof-k2-DhC">
-                                <rect key="frame" x="32" y="545" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

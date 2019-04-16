@@ -104,7 +104,17 @@ class EventDetailsViewController: UIViewController {
             self.mapView.addAnnotation(DroppedPin(title: self.event!.name, locationName: "", discipline: "", coordinate: self.event!.location))
         }
     }
-    
+
+    @IBAction func setRSVPGoing(_ sender: Any) {
+    }
+
+    @IBAction func setRSVPMaybe(_ sender: Any) {
+    }
+
+    @IBAction func setRSVPNotGoing(_ sender: Any) {
+    }
+
+
     /// Sets up the edit views based on whether or not the user is allowed to
     /// edit the Event
     private func setEditable() {
