@@ -11,9 +11,14 @@ import UIKit
 
 /// The protocol to implement to be notified when the home Officials or
 /// sandbox Officials change.
-protocol AppStateListener {
+protocol OfficialsListener {
     func appStateReceivedHomeOfficials(officials: [Official])
     func appStateReceivedSandboxOfficials(officials: [Official])
+}
+
+/// The protocol to implement to be notified when the home Events change
+protocol EventsListener {
+    func appStateReceivedHomeEvents(events:[Event])
 }
 
 /// Manages the Officials for the app.
@@ -29,10 +34,21 @@ class AppState {
         didSet {
             if let address = homeAddress {
                 loadOfficials(address: address) {(officials) in
+                    // Set the Officials and notify listeners
                     homeOfficials = officials
                     for listener in homeAddressListeners {
                         listener.appStateReceivedHomeOfficials(
                             officials: homeOfficials)
+                    }
+                    
+                    // Load the Events
+                    loadEvents {(events) in
+                        // Set the Events and notify listeners
+                        homeEvents = events
+                        for listener in homeEventsListeners {
+                            listener.appStateReceivedHomeEvents(
+                                events: homeEvents)
+                        }
                     }
                 }
             }
@@ -44,6 +60,9 @@ class AppState {
     
     /// The Officials for the user's home address
     static var homeOfficials:[Official] = []
+    
+    /// The Events for the user's home address
+    static var homeEvents:[Event] = []
 
     /// The Address for Officials in sandboxOfficials
     static var sandboxAddress:Address? {
@@ -64,22 +83,25 @@ class AppState {
     static var sandboxOfficials:[Official] = []
 
     /// The listeners for home address changes
-    private static var homeAddressListeners: [AppStateListener] = []
+    private static var homeAddressListeners: [OfficialsListener] = []
+    
+    /// The listeners for home Event changes
+    private static var homeEventsListeners: [EventsListener] = []
     
     /// The listeners for sandbox address changes
-    private static var sandboxAddressListeners:[AppStateListener] = []
+    private static var sandboxAddressListeners:[OfficialsListener] = []
 
     /// Adds a listener for changes in the home address
     ///
-    /// - Parameter listener:   the AppStateListener to add
-    static func addHomeAddressListener(_ listener:AppStateListener) {
+    /// - Parameter listener:   the OfficialsListener to add
+    static func addHomeAddressListener(_ listener:OfficialsListener) {
         homeAddressListeners.append(listener)
     }
 
     /// Removes a listener for changes in the home address
     ///
-    /// - Parameter listener:   the AppStateListener to remove
-    static func removeHomeAddressListener(_ listener: AppStateListener) {
+    /// - Parameter listener:   the OfficialsListener to remove
+    static func removeHomeAddressListener(_ listener: OfficialsListener) {
         if let index = find(listener: listener, in: homeAddressListeners) {
             homeAddressListeners.remove(at: index)
         }
@@ -87,16 +109,32 @@ class AppState {
 
     /// Adds a listener for changes in the sandbox address
     ///
-    /// - Parameter listener:   the AppStateListener to add
-    static func addSandboxAddressListener(_ listener: AppStateListener) {
+    /// - Parameter listener:   the OfficialsListener to add
+    static func addSandboxAddressListener(_ listener: OfficialsListener) {
         sandboxAddressListeners.append(listener)
     }
     
     /// Removes a listener for changes in the sandbox address
     ///
-    /// - Parameter listener:   the AppStateListener to remove
-    static func removeSandboxAddressListener(_ listener: AppStateListener) {
+    /// - Parameter listener:   the OfficialsListener to remove
+    static func removeSandboxAddressListener(_ listener: OfficialsListener) {
         if let index = find(listener: listener, in: sandboxAddressListeners) {
+            sandboxAddressListeners.remove(at: index)
+        }
+    }
+    
+    /// Adds a listener for changes in home Events
+    ///
+    /// - Parameter listener:   the EventsListener to add
+    static func addHomeEventsListener(_ listener: EventsListener) {
+        homeEventsListeners.append(listener)
+    }
+    
+    /// Removes a listener for changes in the home Events
+    ///
+    /// - Parameter listener:   the EventsListener to remove
+    static func removeSandboxAddressListener(_ listener: EventsListener) {
+        if let index = find(listener: listener, in: homeEventsListeners) {
             sandboxAddressListeners.remove(at: index)
         }
     }
@@ -149,14 +187,56 @@ class AppState {
         }
     }
     
+    /// Loads in the Events for the home Officials
+    ///
+    /// - Parameter completion:     the completion handler
+    private static func loadEvents(completion: @escaping ([Event]) -> ()) {
+        let group = DispatchGroup()
+        var result:[Event] = []
+        
+        // Get Events for each Official
+        for official in AppState.homeOfficials {
+            group.enter()
+            Event.allWith(official: official) {(events, error) in
+                // Append the Events and leave
+                result += events
+                group.leave()
+            }
+        }
+        
+        // Wait until all Events are pulled before returning
+        group.notify(queue: .main) {
+            return completion(result.sorted())
+        }
+    }
+    
     /// Finds the given listener in the given Array of listeners
     ///
     /// - Parameter listener:   the listener to search for
     /// - Parameter in:         the Array to search
     ///
     /// - Returns: the index if found or nil if not found
-    private static func find(listener:AppStateListener,
-                             in listeners:[AppStateListener]) -> Int? {
+    private static func find(listener:OfficialsListener,
+                             in listeners:[OfficialsListener]) -> Int? {
+        return listeners.firstIndex {(appStateListener) in
+            if let listener1 = listener as? UIViewController,
+                let listener2 = appStateListener as? UIViewController {
+                return listener1 === listener2
+            }
+            
+            // should never occur
+            return false
+        }
+    }
+    
+    /// Finds the given listener in the given Array of listeners
+    ///
+    /// - Parameter listener:   the listener to search for
+    /// - Parameter in:         the Array to search
+    ///
+    /// - Returns: the index if found or nil if not found
+    private static func find(listener:EventsListener,
+                             in listeners:[EventsListener]) -> Int? {
         return listeners.firstIndex {(appStateListener) in
             if let listener1 = listener as? UIViewController,
                 let listener2 = appStateListener as? UIViewController {

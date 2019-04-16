@@ -259,7 +259,7 @@ class EventCreateViewController: UIViewController,
                 if (error != nil) {
                     // TODO: handle error
                 } else {
-                    self.delegate?.eventUpdatedDelegate()
+                    self.delegate?.eventUpdatedDelegate(event: event!)
     
                     // Navigate back
                     self.navigationController?.popViewController(

@@ -26,9 +26,6 @@ class Event: Comparable {
     // The Firestore database
     static let collection = "events"
     static let db = Firestore.firestore().collection(Event.collection)
-    
-    // Caches single instances of each Event
-    static var events:[String: Event] = [:]
 
     var documentID:String?                  // The document ID on Firestore
     var name:String                         // The name of the event
@@ -91,35 +88,6 @@ class Event: Comparable {
         self.official = official
         self.address = address
     }
-    
-    /// Builds the given Event and inserts it into the given Array
-    ///
-    /// - Parameter into:   the Array to insert into
-    /// - Parameter data:   the DocumentSnapshot
-    /// - Parameter group:  the dispatch group to leave
-    static func insert(into events: inout [Event],
-                       data:DocumentSnapshot,
-                       group:DispatchGroup,
-                       official:Official? = nil) {
-        if let event = Event.events[data.documentID] {
-            // Already have built the event, append it
-            events.append(event)
-        } else {
-            // Build the event
-            let event = Event(data: data)
-            events.append(event)
-            
-            if let official = official {
-                // Already have the official, do not scrape
-                event.official = official
-            } else {
-                // Need to get the official
-                event.getOfficial(name: data["officialName"] as! String,
-                                  division: data["divisionOCDID"] as! String,
-                                  group: group)
-            }
-        }
-    }
 
     /// Creates a new Event with the given document snapshot
     ///
@@ -139,9 +107,28 @@ class Event: Comparable {
         let geopoint = data["location"] as! GeoPoint
         self.location = CLLocationCoordinate2D(latitude: geopoint.latitude,
                                                longitude: geopoint.longitude)
+    }
+    
+    /// Creates a new Event with the given Official
+    ///
+    /// - Parameter data:       the DocumentSnapshot
+    /// - Parameter official:   the Official
+    private convenience init(data:DocumentSnapshot, official:Official) {
+        self.init(data: data)
+        self.official = official
+    }
+    
+    /// Creates a new Event scraping the Official
+    ///
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the group to notify when done
+    private convenience init(data:DocumentSnapshot, group:DispatchGroup) {
+        self.init(data: data)
         
-        // Add to the list of events
-        Event.events[self.documentID!] = self
+        // Get the official
+        self.getOfficial(name: data["officialName"] as! String,
+                         division: data["divisionOCDID"] as! String,
+                         group: group)
     }
     
     /// Saves this Event
@@ -176,7 +163,12 @@ class Event: Comparable {
         if let documentID = self.documentID {
             Event.db.document(documentID).delete {(error) in
                 if error == nil {
-                    // Succesfully deleted, delete all attendees
+                    // Delete from AppState
+                    if let index = AppState.homeEvents.index(of: self) {
+                        AppState.homeEvents.remove(at: index)
+                    }
+                    
+                    // Delete all attendees
                     for attendee in self.attendees {
                         attendee.delete()
                     }
@@ -292,7 +284,8 @@ class Event: Comparable {
         ref = Event.db.addDocument(data: self.data) {(error) in
             if error == nil {
                 self.documentID = ref!.documentID
-                Event.events[self.documentID!] = self
+                AppState.homeEvents.append(self)
+                AppState.homeEvents.sort()
             }
             return completion(self, error)
         }
@@ -357,7 +350,7 @@ class Event: Comparable {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    Event.insert(into: &events, data: data, group: group)
+                    events.append(Event(data: data, group: group))
                 }
             }
             
@@ -388,22 +381,15 @@ class Event: Comparable {
             .whereField("divisionOCDID", isEqualTo: official.divisionOCDID)
             .whereField("officialName", isEqualTo: official.name)
         query.getDocuments {(data, error) in
-            let group = DispatchGroup()
             var events:[Event] = []
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    Event.insert(into: &events,
-                                 data: data,
-                                 group: group,
-                                 official: official)
+                    events.append(Event(data: data, official: official))
                 }
             }
             
-            // Wait until all Officials are pulled before returning
-            group.notify(queue: .main) {
-                return completion(events, error)
-            }
+            return completion(events, error)
         }
     }
 
@@ -413,23 +399,12 @@ class Event: Comparable {
     /// - Parameter completion:     the completion handler
     static func find_by(eventID:String,
                         completion: @escaping completionHandler) {
-        if let event = Event.events[eventID] {
-            // Already have built the Event, return it
-            return completion(event, nil)
-        }
-
-        // Need to build the event
         let ref = Event.db.document(eventID)
         ref.getDocument {(data, error) in
             if error == nil {
                 // Build the event
                 let group = DispatchGroup()
-                let event = Event(data: data!)
-                
-                // Get the official
-                event.getOfficial(name: data!["officialName"] as! String,
-                                  division: data!["divisionOCDID"] as! String,
-                                  group: group)
+                let event = Event(data: data!, group: group)
 
                 // Wait until the Official is pulled before returning
                 group.notify(queue: .main) {
