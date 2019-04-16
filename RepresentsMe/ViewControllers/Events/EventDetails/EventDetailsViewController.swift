@@ -87,10 +87,7 @@ class EventDetailsViewController: UIViewController {
             eventDateLabel.text = event.formattedDate
     
             // Set the location
-            self.eventLocationLabel.text = ""
-            GeocoderWrapper.reverseGeocodeCoordinates(event.location) {(address) in
-                self.eventLocationLabel.text = address.description
-            }
+            self.eventLocationLabel.text = event.address.description
         }
     }
     
