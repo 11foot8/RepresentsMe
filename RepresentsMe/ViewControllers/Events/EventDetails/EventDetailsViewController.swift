@@ -42,8 +42,10 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var notGoingButton: UIButton!
     @IBOutlet weak var notGoingButtonLabel: UILabel!
 
-    var event:Event?                    // The Event to display
-    var delegate:EventListDelegate?     // The delegate to update
+    var event:Event?                              // The Event to display
+    var delegate:EventListDelegate?               // The delegate to update
+    var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
+                                                  // for the current user
 
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +61,9 @@ class EventDetailsViewController: UIViewController {
 
             // Set whether or not the user can edit the event
             self.setEditable()
+
+            // Set user's RSVP status
+            self.setRSVPButtons()
         }
     }
 
@@ -122,47 +127,58 @@ class EventDetailsViewController: UIViewController {
     }
 
     @IBAction func setRSVPGoing(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .going)
-            goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-
-            dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
-            dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
-        } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
-        }
+        setRSVPStatus(status: .going)
     }
 
     @IBAction func setRSVPMaybe(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .maybe)
-            maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-
-            dimButtonLabel(button: goingButton, label: goingButtonLabel)
-            dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
-        } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
-        }
+        setRSVPStatus(status: .maybe)
     }
 
     @IBAction func setRSVPNotGoing(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .notGoing)
-            notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-
-            dimButtonLabel(button: goingButton, label: goingButtonLabel)
-            dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
-        } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
-        }
+        setRSVPStatus(status: .notGoing)
     }
 
-    func dimButtonLabel(button: UIButton, label: UILabel) {
-        button.setTitleColor(.lightGray, for: .normal)
-        label.textColor = .lightGray
+    func setRSVPStatus(status: RSVPType) {
+        // If user already has RSVPed, set status or remove self
+        if let attendee = currentUserEventAttendee {
+            // If pressed button for current status, set layout to "no response"
+            if (attendee.status == status) {
+                event?.removeAttendee(userID: UsersDatabase.currentUserUID!, completion: { (attendee: EventAttendee, error: Error?) in
+                    if (error != nil) {
+                        // TODO: Handle error
+                    }
+
+                    self.setNoResponseLayout()
+                })
+
+                currentUserEventAttendee = nil
+
+                return
+            } else {
+                attendee.setStatus(to: status)
+            }
+        } else {
+            // If user has not yet RSVPed, add self
+            if let uid = UsersDatabase.currentUserUID {
+                event?.addAttendee(userID: uid, status: status)
+            } else {
+                self.alert(title: "Error",
+                           message: "You must be logged in to RSVP for an event.")
+                return
+            }
+        }
+
+        switch status {
+        case .going:
+            self.setRSVPGoingLayout()
+            break
+        case .maybe:
+            self.setRSVPMaybeLayout()
+            break
+        case .notGoing:
+            self.setRSVPNotGoingLayout()
+            break
+        }
     }
 
     @IBAction func exportEvent(_ sender: Any) {
@@ -187,5 +203,96 @@ class EventDetailsViewController: UIViewController {
                 deleteEventButton.isEnabled = false
             }
         }
+    }
+
+    private func setRSVPButtons() {
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        goingButton.isUserInteractionEnabled = false
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+        maybeButton.isUserInteractionEnabled = false
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+        notGoingButton.isUserInteractionEnabled = false
+
+        event?.loadAttendees(completion: { (event: Event?, error: Error?) in
+            if error != nil {
+                // TODO: Handle error
+            }
+
+            if let event = event {
+                for attendee in event.attendees {
+                    self.currentUserEventAttendee = attendee
+                    if attendee.userID == UsersDatabase.currentUserUID! {
+                        switch attendee.status {
+                        case .going:
+                            self.setRSVPGoingLayout()
+                            break
+                        case .maybe:
+                            self.setRSVPMaybeLayout()
+                            break
+                        case .notGoing:
+                            self.setRSVPNotGoingLayout()
+                            break
+                        }
+                        self.enableRSVPButtons()
+                        return
+                    }
+                }
+                self.setNoResponseLayout()
+                self.enableRSVPButtons()
+            }
+        })
+    }
+
+    func setNoResponseLayout() {
+        goingButton.setTitleColor(GOING_GREEN, for: .normal)
+        goingButtonLabel.textColor = GOING_GREEN
+        goingButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+
+        maybeButton.setTitleColor(MAYBE_ORANGE, for: .normal)
+        maybeButtonLabel.textColor = MAYBE_ORANGE
+        maybeButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+
+        notGoingButton.setTitleColor(NOT_GOING_RED, for: .normal)
+        notGoingButtonLabel.textColor = NOT_GOING_RED
+        notGoingButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+    }
+
+    func setRSVPGoingLayout() {
+        goingButton.setTitleColor(GOING_GREEN, for: .normal)
+        goingButtonLabel.textColor = GOING_GREEN
+        goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+    }
+
+    func setRSVPMaybeLayout() {
+        maybeButton.setTitleColor(MAYBE_ORANGE, for: .normal)
+        maybeButtonLabel.textColor = MAYBE_ORANGE
+        maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+    }
+
+    func setRSVPNotGoingLayout() {
+        notGoingButton.setTitleColor(NOT_GOING_RED, for: .normal)
+        notGoingButtonLabel.textColor = NOT_GOING_RED
+        notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+    }
+
+    func dimButtonLabel(button: UIButton, label: UILabel) {
+        button.setTitleColor(.lightGray, for: .normal)
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 10.0)
+    }
+
+    func enableRSVPButtons() {
+        self.goingButton.isUserInteractionEnabled = true
+        self.maybeButton.isUserInteractionEnabled = true
+        self.notGoingButton.isUserInteractionEnabled = true
     }
 }
