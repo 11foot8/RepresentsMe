@@ -27,6 +27,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>We use your camera to take your profile picture</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>We use Face ID to log you in</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use location to find your representatives</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

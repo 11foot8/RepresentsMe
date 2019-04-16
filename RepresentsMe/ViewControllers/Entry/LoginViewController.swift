@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import LocalAuthentication
 
 // LoginViewController -> SignupViewController
 let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
@@ -29,8 +30,16 @@ class LoginViewController: UIViewController {
         passwordTextField.clearButtonMode = UITextField.ViewMode.always
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        checkLocalAuthentication()
+    }
+
     // MARK: - Actions
-    
+
+    @IBAction func touchIdAction(_ sender: UIButton) {
+        authenticateUserUsingBiometrics()
+    }
+
     /// Segue to the view for the user to create an account
     @IBAction func signupTouchUp(_ sender: Any) {
         performSegue(withIdentifier: SIGNUP_SEGUE_IDENTIFIER, sender: nil)
@@ -56,8 +65,155 @@ class LoginViewController: UIViewController {
             if let error = error {
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
+                self.saveAccountDetailsToKeychain(account: email, password: password)
                 self.loginSucceeded()
             }
+        }
+    }
+
+    func checkLocalAuthentication() {
+        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: "lastAccessedUserName") as? String else {
+            print("Saved username missing")
+            return
+
+        }
+        emailTextField.text = lastAccessedUserName
+    }
+
+    fileprivate func authenticateUserUsingBiometrics() {
+        let context = LAContext()
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
+            self.evaluateBiometricsAuthenticity(context: context)
+        }
+    }
+
+    func evaluateBiometricsAuthenticity(context: LAContext) {
+        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: "lastAccessedUserName") as? String else { return }
+        context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: lastAccessedUserName) { (authSuccessful, authError) in
+            if authSuccessful {
+                self.loadPasswordFromKeychainAndAuthenticateUser(lastAccessedUserName)
+            } else {
+                if let error = authError as? LAError {
+                    self.showError(error: error)
+                }
+            }
+        }
+    }
+
+    fileprivate func loadPasswordFromKeychainAndAuthenticateUser(_ account: String) {
+        guard !account.isEmpty else { return }
+        let passwordItem = KeychainPasswordItem(service:   KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
+        do {
+            let storedPassword = try passwordItem.readPassword()
+            // Show the loading animation
+            let hud = LoadingHUD(self.view)
+            self.view.endEditing(true)
+            // Log the user in
+            UsersDatabase.shared.loginUser(withEmail: account,
+                                           password: storedPassword) {(uid, error) in
+                                            // Stop the loading animation
+                                            hud.end()
+
+                                            if let error = error {
+                                                self.alert(title: "Error", message: error.localizedDescription)
+                                            } else {
+                                                self.loginSucceeded()
+                                            }
+            }
+        } catch KeychainPasswordItem.KeychainError.noPassword {
+            print("No saved password")
+        } catch {
+            print("Unhandled error")
+        }
+    }
+
+    func showError(error: LAError) {
+        var message: String = ""
+        switch error.code {
+        case LAError.authenticationFailed:
+            message = "Authentication was not successful because the user failed to provide valid credentials. Please enter password to login."
+            break
+        case LAError.userCancel:
+            message = "Authentication was canceled by the user"
+            break
+        case LAError.userFallback:
+            message = "Authentication was canceled because the user tapped the fallback button"
+            break
+        case LAError.touchIDNotEnrolled:
+            message = "Authentication could not start because Touch ID has no enrolled fingers."
+            break
+        case LAError.passcodeNotSet:
+            message = "Passcode is not set on the device."
+            break
+        case LAError.systemCancel:
+            message = "Authentication was canceled by system"
+            break
+        default:
+            message = error.localizedDescription
+            break
+        }
+        alert(title: "Error", message: message)
+    }
+
+
+    func localAuthentication() -> Void {
+
+        let laContext = LAContext()
+        var error: NSError?
+        let biometricsPolicy = LAPolicy.deviceOwnerAuthenticationWithBiometrics
+
+        if (laContext.canEvaluatePolicy(biometricsPolicy, error: &error)) {
+
+            if let laError = error {
+                print("laError - \(laError)")
+                return
+            }
+
+            var localizedReason = "Unlock device"
+            if #available(iOS 11.0, *) {
+                if (laContext.biometryType == LABiometryType.faceID) {
+                    localizedReason = "Unlock using Face ID"
+                    print("FaceId support")
+                } else if (laContext.biometryType == LABiometryType.touchID) {
+                    localizedReason = "Unlock using Touch ID"
+                    print("TouchId support")
+                } else {
+                    print("No Biometric support")
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+
+
+            laContext.evaluatePolicy(biometricsPolicy, localizedReason: localizedReason, reply: { (isSuccess, error) in
+
+                DispatchQueue.main.async(execute: {
+
+                    if let laError = error {
+                        print("laError - \(laError)")
+                    } else {
+                        if isSuccess {
+                            print("success")
+                        } else {
+                            print("failure")
+                        }
+                    }
+
+                })
+            })
+        }
+
+
+    }
+
+    fileprivate func saveAccountDetailsToKeychain(account: String, password: String) {
+        guard account.isEmpty, password.isEmpty else { return }
+        UserDefaults.standard.set(account, forKey: "lastAccessedUserName")
+        let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
+        do {
+            try passwordItem.savePassword(password)
+        } catch {
+            print("Error saving password")
         }
     }
 
