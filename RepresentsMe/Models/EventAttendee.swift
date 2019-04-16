@@ -8,8 +8,17 @@
 
 import Firebase
 
+/// The types of RSVP status
+enum RSVPType: String {
+    case going = "going"       // Status for a user planning on attending an event
+    case maybe = "maybe"      // Status for a user who may attend an event
+    case notGoing = "not_going"  // Status for a user who will not attend an event
+}
+
+/// Manages creating, updating, and deleting event attendees through Firestore
 class EventAttendee {
     
+    /// The completion handler for using Firestore
     typealias completionHandler = ((EventAttendee, Error?) -> ())?
     typealias allCompletionHandler = ([EventAttendee], Error?) -> ()
     
@@ -19,7 +28,7 @@ class EventAttendee {
     
     var documentID:String?  // The document ID on Firestore
     var userID:String       // The ID of the attendee
-    var status:String       // The status of the attendee
+    var status:RSVPType     // The status of the attendee
     var event:Event?        // The event
     
     /// Gets the data formatted for Firestore
@@ -27,23 +36,23 @@ class EventAttendee {
         return [
             "userID": self.userID,
             "eventID": self.event?.documentID ?? "",
-            "status": self.status
+            "status": self.status.rawValue
         ]
     }
     
     /// Gets if the attendee is going to the Event
     var isGoing:Bool {
-        return status == "going"
+        return status == .going
     }
     
     /// Gets is the attendee is maybe going to the Event
     var isMaybeGoing:Bool {
-        return status == "maybe"
+        return status == .maybe
     }
     
     /// Gets is the attendee is not going to the Event
     var isNotGoing:Bool {
-        return status == "not_going"
+        return status == .notGoing
     }
     
     /// Creates a new attendee for an event
@@ -54,7 +63,7 @@ class EventAttendee {
     init(event:Event, userID:String, status:String) {
         self.event = event
         self.userID = userID
-        self.status = status
+        self.status = RSVPType(rawValue: status)!
     }
 
     /// Creates a new attendee from the given document snapshot
@@ -66,7 +75,7 @@ class EventAttendee {
         // Set the basic data
         let data = data.data()!
         self.userID = data["userID"] as! String
-        self.status = data["status"] as! String
+        self.status = RSVPType(rawValue: data["status"] as! String)!
     }
     
     /// Creates a new attendee for the given Event
@@ -118,21 +127,21 @@ class EventAttendee {
     ///
     /// - Parameter completion:     the completion handler (default nil)
     func setIsGoing(completion:completionHandler = nil) {
-        self.setStatus(to: "going", completion: completion)
+        self.setStatus(to: .going, completion: completion)
     }
     
     /// Sets the attendee to maybe going
     ///
     /// - Parameter completion:     the completion handler (default nil)
     func setIsMaybeGoing(completion:completionHandler = nil) {
-        self.setStatus(to: "maybe", completion: completion)
+        self.setStatus(to: .maybe, completion: completion)
     }
 
     /// Sets the attendee to not going
     ///
     /// - Parameter completion:     the completion handler (default nil)
     func setIsNotGoing(completion:completionHandler = nil) {
-        self.setStatus(to: "not_going", completion: completion)
+        self.setStatus(to: .notGoing, completion: completion)
     }
     
     /// Updates the status of the attendee.
@@ -141,7 +150,7 @@ class EventAttendee {
     ///
     /// - Parameter to:             the status to set to
     /// - Parameter completion:     the completion handler (default nil)
-    func setStatus(to status:String, completion:completionHandler = nil) {
+    func setStatus(to status:RSVPType, completion:completionHandler = nil) {
         if status != self.status {
             self.status = status
             self.update(completion: completion)

@@ -9,13 +9,6 @@
 import MapKit
 import Firebase
 
-/// The types of RSVP status
-enum RSVPType {
-    case going       // Status for a user planning on attending an event
-    case maybe       // Status for a user who may attend an event
-    case not_going   // Status for a user who will not attend an event
-}
-
 /// Manages creating, updating, and deleting events through Firestore
 class Event: Comparable {
     
@@ -219,7 +212,7 @@ class Event: Comparable {
         case .maybe:
             statusString = "maybe"
             break
-        case .not_going:
+        case .notGoing:
             statusString = "not_going"
             break
         }

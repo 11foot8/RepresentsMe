@@ -129,7 +129,7 @@ class EventDetailsViewController: UIViewController {
 
     @IBAction func setRSVPNotGoing(_ sender: Any) {
         if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .not_going)
+            event?.addAttendee(userID: uid, status: .notGoing)
             notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
             // TODO: Alert for no logged-in user
