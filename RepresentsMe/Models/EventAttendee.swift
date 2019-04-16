@@ -17,8 +17,6 @@ class EventAttendee {
     static let collection = "event_attendees"
     static let db = Firestore.firestore().collection(EventAttendee.collection)
     
-    static var attendees:[String: EventAttendee] = [:]
-    
     var documentID:String?  // The document ID on Firestore
     var userID:String       // The ID of the attendee
     var status:String       // The status of the attendee
@@ -58,28 +56,7 @@ class EventAttendee {
         self.userID = userID
         self.status = status
     }
-    
-    /// Builds the given EventAttendee and inserts it into the given Array
-    ///
-    /// - Parameter into:   the Array to insert into
-    /// - Parameter data:   the DocumentSnapshot
-    /// - Parameter group:  the dispatch group to leave
-    static func insert(into attendees: inout [EventAttendee],
-                       data:DocumentSnapshot,
-                       group:DispatchGroup) {
-        if let attendee = EventAttendee.attendees[data.documentID] {
-            attendees.append(attendee)
-        } else {
-            // Build the attendee
-            let attendee = EventAttendee(data: data)
-            attendees.append(attendee)
-            
-            // Scrape the Event
-            attendee.getEvent(eventID: data["eventID"] as! String,
-                              group: group)
-        }
-    }
-    
+
     /// Creates a new attendee from the given document snapshot
     ///
     /// - Parameter data:   the DocumentSnapshot
@@ -90,42 +67,28 @@ class EventAttendee {
         let data = data.data()!
         self.userID = data["userID"] as! String
         self.status = data["status"] as! String
-        
-        // Add to list of attendees
-        EventAttendee.attendees[self.documentID!] = self
     }
     
-    /// Creates a new attendee from the given document snapshot
+    /// Creates a new attendee for the given Event
     ///
-    /// - Parameter data:   the QueryDocumentSnapshot
+    /// - Parameter data:   the DocumentSnapshot
     /// - Parameter event:  the Event
-    ///
-    /// - Returns: the EventAttendee
-    static func new(data:DocumentSnapshot, event:Event) -> EventAttendee {
-        if let attendee = EventAttendee.attendees[data.documentID] {
-            return attendee
-        }
-        
-        return EventAttendee(data: data, event: event)
-    }
-    
-    /// Creates a new attendee from the given document snapshot
-    ///
-    /// - Parameter data:   the QueryDocumentSnapshot
-    /// - Parameter event:  the Event
-    private init(data:DocumentSnapshot, event:Event) {
-        self.documentID = data.documentID
-        
-        // Set the basic data
-        let data = data.data()!
-        self.userID = data["userID"] as! String
-        self.status = data["status"] as! String
+    convenience init(data:DocumentSnapshot, event:Event) {
+        self.init(data: data)
         self.event = event
-        
-        // Add to list of attendees
-        EventAttendee.attendees[self.documentID!] = self
     }
     
+    /// Creates a new attendee scraping the Event
+    ///
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the group to notify when done
+    convenience init(data:DocumentSnapshot, group:DispatchGroup) {
+        self.init(data: data)
+        
+        // Scrape the Event
+        self.getEvent(eventID: data["eventID"] as! String, group: group)
+    }
+
     /// Saves this EventAttendee
     ///
     /// - Parameter completion:     the completion handler (default nil)
@@ -252,9 +215,7 @@ class EventAttendee {
             if error == nil {
                 // Build each event
                 for data in data!.documents {
-                    EventAttendee.insert(into: &attendees,
-                                         data: data,
-                                         group: group)
+                    attendees.append(EventAttendee(data: data, group: group))
                 }
             }
             

@@ -192,8 +192,8 @@ class Event: Comparable {
                     
                     // Build and add each attendee
                     for data in data!.documents {
-                        self.attendees.append(EventAttendee.new(data: data,
-                                                                event: self))
+                        self.attendees.append(EventAttendee(data: data,
+                                                            event: self))
                     }
                 }
                 
