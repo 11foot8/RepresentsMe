@@ -1300,26 +1300,50 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waI-wd-V1n">
-                                <rect key="frame" x="144" y="528" width="87" height="30"/>
-                                <state key="normal" title="Delete Event">
+                                <rect key="frame" x="172.66666666666666" y="528" width="30" height="29"/>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                <state key="normal" title="trash-alt">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="deleteButtonTapped:" destination="egU-99-xc4" eventType="touchUpInside" id="9jZ-e8-Qtw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-9w-p5K">
+                                <rect key="frame" x="70.666666666666671" y="528" width="30" height="29"/>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                <state key="normal" title="calendar-plus"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-en-Ogo">
+                                <rect key="frame" x="69.666666666666671" y="551" width="32" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhi-xT-Y5H">
+                                <rect key="frame" x="171.66666666666666" y="551" width="32" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="M9u-en-Ogo" firstAttribute="centerX" secondItem="TVV-9w-p5K" secondAttribute="centerX" id="4jv-LL-wn0"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="CcH-38-qPN"/>
+                            <constraint firstItem="M9u-en-Ogo" firstAttribute="top" secondItem="TVV-9w-p5K" secondAttribute="bottom" constant="-6" id="MFv-ow-duW"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="leading" secondItem="TVV-9w-p5K" secondAttribute="trailing" constant="72" id="MlX-3E-OGi"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="Of8-qf-LQj"/>
                             <constraint firstItem="vdf-XQ-iMh" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" constant="36" id="R6f-qS-CiF"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="top" secondItem="gEE-cq-WmL" secondAttribute="bottom" id="RFi-iB-T1A"/>
+                            <constraint firstItem="waI-wd-V1n" firstAttribute="centerY" secondItem="TVV-9w-p5K" secondAttribute="centerY" id="Usm-lp-WmY"/>
                             <constraint firstItem="vdf-XQ-iMh" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="aaK-Oq-GJo"/>
                             <constraint firstItem="gEE-cq-WmL" firstAttribute="top" secondItem="ND4-xx-3xZ" secondAttribute="top" id="adi-rk-2bd"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="leading" secondItem="ND4-xx-3xZ" secondAttribute="leading" id="fAQ-fj-TOL"/>
                             <constraint firstItem="Oil-RO-Enc" firstAttribute="trailing" secondItem="ND4-xx-3xZ" secondAttribute="trailing" id="fqv-zW-6a8"/>
                             <constraint firstItem="waI-wd-V1n" firstAttribute="top" secondItem="Oil-RO-Enc" secondAttribute="bottom" constant="41" id="hVs-dA-ewM"/>
+                            <constraint firstItem="bhi-xT-Y5H" firstAttribute="centerX" secondItem="waI-wd-V1n" secondAttribute="centerX" id="lxY-py-Jlc"/>
+                            <constraint firstItem="bhi-xT-Y5H" firstAttribute="top" secondItem="waI-wd-V1n" secondAttribute="bottom" constant="-6" id="mvy-95-PPf"/>
                             <constraint firstItem="waI-wd-V1n" firstAttribute="centerX" secondItem="oaX-xy-IAX" secondAttribute="centerX" id="u7Y-wh-CuP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ND4-xx-3xZ"/>
