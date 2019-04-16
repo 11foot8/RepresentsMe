@@ -81,6 +81,35 @@ class Event: Comparable {
         self.official = official
         self.address = address
     }
+    
+    /// Builds the given Event and inserts it into the given Array
+    ///
+    /// - Parameter into:   the Array to insert into
+    /// - Parameter data:   the DocumentSnapshot
+    /// - Parameter group:  the dispatch group to leave
+    static func insert(into events: inout [Event],
+                       data:DocumentSnapshot,
+                       group:DispatchGroup,
+                       official:Official? = nil) {
+        if let event = Event.events[data.documentID] {
+            // Already have built the event, append it
+            events.append(event)
+        } else {
+            // Build the event
+            let event = Event(data: data)
+            events.append(event)
+            
+            if let official = official {
+                // Already have the official, do not scrape
+                event.official = official
+            } else {
+                // Need to get the official
+                event.getOfficial(name: data["officialName"] as! String,
+                                  division: data["divisionOCDID"] as! String,
+                                  group: group)
+            }
+        }
+    }
 
     /// Creates a new Event with the given document snapshot
     ///
