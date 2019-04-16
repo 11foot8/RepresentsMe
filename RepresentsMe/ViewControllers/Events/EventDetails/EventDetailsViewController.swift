@@ -119,7 +119,6 @@ class EventDetailsViewController: UIViewController {
         } else {
             self.alert(title: "Error",
                        message: "You must be logged in to RSVP for an event.")
-            // TODO: Alert for no logged-in user
         }
     }
 

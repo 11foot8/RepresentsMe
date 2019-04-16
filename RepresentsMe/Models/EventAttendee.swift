@@ -60,10 +60,10 @@ class EventAttendee {
     /// - Parameter event:      the Event
     /// - Parameter userID:     the ID of the attendee
     /// - Parameter status:     the attendee's status
-    init(event:Event, userID:String, status:String) {
+    init(event:Event, userID:String, status:RSVPType) {
         self.event = event
         self.userID = userID
-        self.status = RSVPType(rawValue: status)!
+        self.status = status
     }
 
     /// Creates a new attendee from the given document snapshot
@@ -203,7 +203,7 @@ class EventAttendee {
     /// - Parameter completion:     the completion handler (default nil)
     static func create(event:Event,
                        userID:String,
-                       status:String,
+                       status:RSVPType,
                        completion:completionHandler = nil) {
         let attendee = EventAttendee(event: event,
                                      userID: userID,

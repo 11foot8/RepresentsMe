@@ -203,24 +203,10 @@ class Event: Comparable {
     func addAttendee(userID:String,
                      status:RSVPType,
                      completion:EventAttendee.completionHandler = nil) {
-
-        var statusString = ""
-        switch status {
-        case .going:
-            statusString = "going"
-            break
-        case .maybe:
-            statusString = "maybe"
-            break
-        case .notGoing:
-            statusString = "not_going"
-            break
-        }
-
         if self.documentID != nil {
             EventAttendee.create(event: self,
                                  userID: userID,
-                                 status: statusString) {(attendee, error) in
+                                 status: status) {(attendee, error) in
                 // Add to the list of attendees and return the completion
                 if error == nil {
                     self.attendees.append(attendee)
