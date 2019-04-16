@@ -26,6 +26,7 @@ class Event: Comparable {
     var documentID:String?                  // The document ID on Firestore
     var name:String                         // The name of the event
     var owner:String                        // The owner of the event
+    var description:String                  // The description of the event
     var location:CLLocationCoordinate2D     // The location of the event
     var date:Date                           // The date of the event
     var official:Official?                  // The official related to event
@@ -36,6 +37,7 @@ class Event: Comparable {
         return [
             "name": name,
             "owner": owner,
+            "description": description,
             "location": GeoPoint(latitude: location.latitude,
                                  longitude: location.longitude),
             "date": date,
@@ -53,18 +55,21 @@ class Event: Comparable {
 
     /// Creates a new Event given its attributes
     ///
-    /// - Parameter name:       the name of the event
-    /// - Parameter owner:      the owner of the event
-    /// - Parameter location:   the location of the event
-    /// - Parameter date:       the date of the event
-    /// - Parameter official:   the Official related to the event
+    /// - Parameter name:           the name of the event
+    /// - Parameter owner:          the owner of the event
+    /// - Parameter description:    the description of the event
+    /// - Parameter location:       the location of the event
+    /// - Parameter date:           the date of the event
+    /// - Parameter official:       the Official related to the event
     init(name:String,
          owner:String,
+         description:String,
          location:CLLocationCoordinate2D,
          date:Date,
          official:Official) {
         self.name = name
         self.owner = owner
+        self.description = description
         self.location = location
         self.date = date
         self.official = official
@@ -109,6 +114,7 @@ class Event: Comparable {
         let data = data.data()!
         self.name = data["name"] as! String
         self.owner = data["owner"] as! String
+        self.description = data["description"] as! String
         self.date = (data["date"] as! Timestamp).dateValue()
         
         // Build the location coordinate
@@ -290,12 +296,13 @@ class Event: Comparable {
     /// - Parameter completion:     the completion handler
     static func create(name:String,
                        owner:String,
+                       description:String,
                        location:CLLocationCoordinate2D,
                        date:Date,
                        official:Official,
                        completion: @escaping completionHandler) {
-        let event = Event(name: name, owner: owner, location: location,
-                          date: date, official: official)
+        let event = Event(name: name, owner: owner, description: description,
+                          location: location, date: date, official: official)
         event.save(completion: completion)
     }
     
