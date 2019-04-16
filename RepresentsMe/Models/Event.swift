@@ -9,6 +9,13 @@
 import MapKit
 import Firebase
 
+/// The types of RSVP status
+enum RSVPType {
+    case going       // Status for a user planning on attending an event
+    case maybe       // Status for a user who may attend an event
+    case not_going   // Status for a user who will not attend an event
+}
+
 /// Manages creating, updating, and deleting events through Firestore
 class Event: Comparable {
     
@@ -192,12 +199,26 @@ class Event: Comparable {
     /// - Parameter status:         the status of the attendee
     /// - Parameter completion:     the completion handler (default nil)
     func addAttendee(userID:String,
-                     status:String,
+                     status:RSVPType,
                      completion:EventAttendee.completionHandler = nil) {
+
+        var statusString = ""
+        switch status {
+        case .going:
+            statusString = "going"
+            break
+        case .maybe:
+            statusString = "maybe"
+            break
+        case .not_going:
+            statusString = "not_going"
+            break
+        }
+
         if self.documentID != nil {
             EventAttendee.create(event: self,
                                  userID: userID,
-                                 status: status) {(attendee, error) in
+                                 status: statusString) {(attendee, error) in
                 // Add to the list of attendees and return the completion
                 if error == nil {
                     self.attendees.append(attendee)
