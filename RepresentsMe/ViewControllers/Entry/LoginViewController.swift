@@ -13,13 +13,18 @@ import LocalAuthentication
 // LoginViewController -> SignupViewController
 let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
 let TAB_BAR_VIEW_CONTROLLER_NAME = "mainTabBarViewController"
+let REMEMBER_ME_KEY = "rememberMeEnabled"
+let USERNAME_KEY = "lastAccessedUsername"
+let PASSWORD_KEY = "lastUsedPassword"
 
 /// The view controller to handle logging in to the app.
 class LoginViewController: UIViewController {
     
     // MARK: - Outlets
+
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var rememberMeSwitch: UISwitch!
 
     // MARK: - Lifecycle
     
@@ -31,14 +36,10 @@ class LoginViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        checkLocalAuthentication()
+        checkRememberedCredentials()
     }
 
     // MARK: - Actions
-
-    @IBAction func touchIdAction(_ sender: UIButton) {
-        authenticateUserUsingBiometrics()
-    }
 
     /// Segue to the view for the user to create an account
     @IBAction func signupTouchUp(_ sender: Any) {
@@ -51,6 +52,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginTouchUp(_ sender: Any) {
         let email = emailTextField.text!
         let password = passwordTextField.text!
+        let rememberMeEnabled = rememberMeSwitch.isOn
+        UserDefaults.standard.set(rememberMeEnabled, forKey: REMEMBER_ME_KEY)
 
         // Show the loading animation
         let hud = LoadingHUD(self.view)
@@ -65,19 +68,41 @@ class LoginViewController: UIViewController {
             if let error = error {
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
-                self.saveAccountDetailsToKeychain(account: email, password: password)
+
+                if rememberMeEnabled {
+                    self.saveAccountDetailsToKeychain(account: email, password: password)
+                }
                 self.loginSucceeded()
             }
         }
     }
 
-    func checkLocalAuthentication() {
-        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: "lastAccessedUserName") as? String else {
-            print("Saved username missing")
-            return
+    // MARK: - Authentication
 
+    /// Checks if Remember Me was previously activated and activates it if so.
+    //  Then checks if user credentials were saved and fills them if appropriate
+    func checkRememberedCredentials() {
+        guard UserDefaults.standard.bool(forKey: REMEMBER_ME_KEY) else {
+            return
         }
-        emailTextField.text = lastAccessedUserName
+
+        let rememberMeEnabled = UserDefaults.standard.object(forKey: REMEMBER_ME_KEY) as? Bool
+
+        // Set Remember Me Switch
+        rememberMeSwitch.isOn = rememberMeEnabled!
+
+        if rememberMeEnabled! {
+            guard let lastAccessedUserName = UserDefaults.standard.object(forKey: USERNAME_KEY) as? String else {
+                print("No last accessed user name")
+                return
+            }
+
+            // Set username field
+            emailTextField.text = lastAccessedUserName
+
+            loadPasswordFromKeychain(lastAccessedUserName)
+        }
+
     }
 
     fileprivate func authenticateUserUsingBiometrics() {
@@ -88,7 +113,7 @@ class LoginViewController: UIViewController {
     }
 
     func evaluateBiometricsAuthenticity(context: LAContext) {
-        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: "lastAccessedUserName") as? String else { return }
+        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: USERNAME_KEY) as? String else { return }
         context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: lastAccessedUserName) { (authSuccessful, authError) in
             if authSuccessful {
                 self.loadPasswordFromKeychainAndAuthenticateUser(lastAccessedUserName)
@@ -97,6 +122,19 @@ class LoginViewController: UIViewController {
                     self.showError(error: error)
                 }
             }
+        }
+    }
+
+    fileprivate func loadPasswordFromKeychain(_ account: String) {
+        guard !account.isEmpty else { return }
+        let passwordItem = KeychainPasswordItem(service:   KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
+        do {
+            let storedPassword = try passwordItem.readPassword()
+            passwordTextField.text = storedPassword
+        } catch KeychainPasswordItem.KeychainError.noPassword {
+            print("No saved password")
+        } catch {
+            print("Unhandled error")
         }
     }
 
@@ -207,8 +245,8 @@ class LoginViewController: UIViewController {
     }
 
     fileprivate func saveAccountDetailsToKeychain(account: String, password: String) {
-        guard account.isEmpty, password.isEmpty else { return }
-        UserDefaults.standard.set(account, forKey: "lastAccessedUserName")
+        guard !account.isEmpty, !password.isEmpty else { return }
+        UserDefaults.standard.set(account, forKey: USERNAME_KEY)
         let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
         do {
             try passwordItem.savePassword(password)
