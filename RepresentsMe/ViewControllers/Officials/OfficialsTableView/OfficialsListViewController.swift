@@ -19,7 +19,7 @@ protocol OfficialSelectionDelegate {
 /// Allows for showing the user's home Officials as well as Officials for a
 /// selected Address. Also allows for selecting an Official in order to select
 /// Officials for Events.
-class OfficialsListViewController: UIViewController, AppStateListener {
+class OfficialsListViewController: UIViewController, OfficialsListener {
 
     /// The modes avaliable for the home view controller
     enum ReachType {

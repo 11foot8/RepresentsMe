@@ -87,10 +87,7 @@ class EventDetailsViewController: UIViewController {
             eventDateLabel.text = event.formattedDate
     
             // Set the location
-            self.eventLocationLabel.text = ""
-            GeocoderWrapper.reverseGeocodeCoordinates(event.location) {(address) in
-                self.eventLocationLabel.text = address.description
-            }
+            self.eventLocationLabel.text = event.address.description
         }
     }
     
@@ -108,7 +105,10 @@ class EventDetailsViewController: UIViewController {
                                         longitudeDelta: 0.1)
             let region = MKCoordinateRegion(center: event.location, span: span)
             self.mapView.setRegion(region, animated: true)
-            self.mapView.addAnnotation(DroppedPin(title: self.event!.name, locationName: "", discipline: "", coordinate: self.event!.location))
+            self.mapView.addAnnotation(DroppedPin(title: event.name,
+                                                  locationName: "",
+                                                  discipline: "",
+                                                  coordinate: event.location))
         }
     }
 
@@ -117,7 +117,8 @@ class EventDetailsViewController: UIViewController {
             event?.addAttendee(userID: uid, status: .going)
             goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
-            // TODO: Alert for no logged-in user
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
         }
     }
 
@@ -126,16 +127,18 @@ class EventDetailsViewController: UIViewController {
             event?.addAttendee(userID: uid, status: .maybe)
             maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
-            // TODO: Alert for no logged-in user
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
         }
     }
 
     @IBAction func setRSVPNotGoing(_ sender: Any) {
         if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .not_going)
+            event?.addAttendee(userID: uid, status: .notGoing)
             notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         } else {
-            // TODO: Alert for no logged-in user
+            self.alert(title: "Error",
+                       message: "You must be logged in to RSVP for an event.")
         }
     }
 
