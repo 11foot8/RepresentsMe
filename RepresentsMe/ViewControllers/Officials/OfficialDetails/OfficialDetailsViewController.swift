@@ -50,7 +50,7 @@ class OfficialDetailsViewController: UIViewController {
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
-        let actionSheet = UIAlertController(title: "Phone Contact Options", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
             if let phoneNumber = URL(string: "tel://\(self.official!.phones[0])") {
                 UIApplication.shared.open(phoneNumber)
