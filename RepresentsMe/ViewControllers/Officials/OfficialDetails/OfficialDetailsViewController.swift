@@ -50,9 +50,12 @@ class OfficialDetailsViewController: UIViewController {
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
+        let phones = official!.phones.map( { $0.filter("01234567890".contains) } )
+        print(phones)
+
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
-            if let phoneNumber = URL(string: "tel://\(self.official!.phones[0])") {
+            if let phoneNumber = URL(string: "tel://\(phones[0])") {
                 UIApplication.shared.open(phoneNumber)
             }
         }))
@@ -60,7 +63,7 @@ class OfficialDetailsViewController: UIViewController {
             let composeVC = MFMessageComposeViewController()
 
             // Configure the fields of the interface.
-            composeVC.recipients = self.official?.phones
+            composeVC.recipients = phones
 
             // Present the view controller modally.
             self.present(composeVC, animated: true, completion: nil)
