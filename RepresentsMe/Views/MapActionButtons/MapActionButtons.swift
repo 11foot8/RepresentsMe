@@ -45,13 +45,16 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
         contentView.frame = bounds
         addSubview(contentView)
 
+        // Round corners of buttons
         contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
 
         locateButton.layer.borderWidth = 1.0
         locateButton.layer.borderColor = UIColor.lightGray.cgColor
+        // Check set location button state appropriately
         updateLocationButtonState()
 
+        // Add listener to listen for location authorization changes while in use
         LocationManager.addLocationAuthorizationListener(self)
 
         homeButton.layer.borderWidth = 1.0
@@ -69,6 +72,8 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
         delegate?.onHomeTouchUp()
     }
 
+    /// Set location button state appropriately depending on
+    /// whether locations services are enabled and authorized
     func updateLocationButtonState() {
         locateButton.isEnabled = LocationManager.shared.locationServicesEnabledAndAuthorized()
         if locateButton.isEnabled {
@@ -78,6 +83,8 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
         }
     }
 
+    /// Set home button state appropriately depending on
+    /// whether a user is logged in or not
     func updateHomeButtonState() {
         if let _ = UsersDatabase.currentUser {
             homeButton.isEnabled = true
@@ -88,6 +95,8 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
         }
     }
 
+    // MARK: - LocationAuthorizationListener
+    /// If location authorization changes while running, this will be called
     func didChangeLocationAuthorization() {
         updateLocationButtonState()
     }

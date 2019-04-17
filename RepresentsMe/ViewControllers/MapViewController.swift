@@ -91,6 +91,8 @@ class MapViewController: UIViewController,
         mapActionButtons.updateLocationButtonState()
     }
 
+    /// To be called when app returns from background
+    /// Updates mapActionButtons Location Button in case location services were modified
     @objc func appDidBecomeActive() {
         mapActionButtons.updateLocationButtonState()
     }
