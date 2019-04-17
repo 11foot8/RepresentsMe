@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 
+/// The protocol to implement to be notified when the location authorization
+/// changes while app is running.
 protocol LocationAuthorizationListener {
     func didChangeLocationAuthorization()
 }
@@ -17,15 +19,18 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: - Static Properties
     static let shared = LocationManager()
 
+    /// The listeners for location authorization changes
     private static var locationAuthorizationListeners:[LocationAuthorizationListener] = []
 
     // MARK: - Properties
     private var locationManager: CLLocationManager
 
+    /// User's current location, nil if location not available
     public var userLocation: CLLocation? {
         return locationManager.location
     }
 
+    /// User's current GPS coordinates, nil if location not available
     public var userCoordinate: CLLocationCoordinate2D? {
         return locationManager.location?.coordinate
     }
