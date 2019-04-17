@@ -15,6 +15,9 @@ protocol OfficialSelectionDelegate {
     func didSelectOfficial(official: Official)
 }
 
+// OfficialsListViewController -> MapViewController
+let MAP_MODAL_SEGUE_IDENTIFIER = "sandboxModalSegue"
+
 /// The view controller to display a table view of Officials.
 /// Allows for showing the user's home Officials as well as Officials for a
 /// selected Address. Also allows for selecting an Official in order to select
@@ -41,6 +44,7 @@ class OfficialsListViewController: UIViewController, OfficialsListener {
     // MARK: - Outlets
     
     @IBOutlet weak var officialsTableView: UITableView!
+    @IBOutlet weak var mapButton: UIBarButtonItem!
 
     // MARK: - Lifecycle
     
@@ -55,13 +59,29 @@ class OfficialsListViewController: UIViewController, OfficialsListener {
         // Set the delegate
         self.tableViewDelegate = OfficialsTableViewDelegate(for: self)
         officialsTableView.delegate = self.tableViewDelegate
-        
+
         // Add as a listener
         switch self.reachType {
-        case .home, .event:
+        case .home:
+            self.navigationItem.title = "Home"
+            mapButton.image = UIImage.fontAwesomeIcon(
+                name: .mapMarkedAlt,
+                style: .solid,
+                textColor: .blue,
+                size: CGSize(width: 24, height: 24))
             AppState.addHomeAddressListener(self)
+            break
+        case .event:
+            self.navigationItem.title = "Home"
+            AppState.addHomeAddressListener(self)
+            mapButton.image = nil
+            mapButton.isEnabled = false
+            break
         case .map:
             AppState.addSandboxAddressListener(self)
+            mapButton.image = nil
+            mapButton.isEnabled = false
+            break
         }
     }
 
@@ -98,6 +118,9 @@ class OfficialsListViewController: UIViewController, OfficialsListener {
         }
     }
 
+    @IBAction func listBarButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: MAP_MODAL_SEGUE_IDENTIFIER, sender: self)
+    }
     // MARK: Segue
     
     /// Prepare to segue to show the details for an Official
@@ -116,6 +139,11 @@ class OfficialsListViewController: UIViewController, OfficialsListener {
             case .map:
                 destination.official = AppState.sandboxOfficials[indexPath.row]
             }
+        } else if segue.identifier == MAP_MODAL_SEGUE_IDENTIFIER {
+            AppState.removeHomeAddressListener(self)
+            
+            let destination = segue.destination as? MapViewController
+            destination?.reachType = .map
         }
     }
 }

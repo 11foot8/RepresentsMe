@@ -15,7 +15,6 @@ class TabBarViewController: UITabBarController {
     static let icons:[String: (FontAwesome, FontAwesomeStyle)] = [
         "Officials": (.thList, .solid),
         "Settings": (.cog, .solid),
-        "Map": (.mapMarkedAlt, .solid),
         "Events": (.calendarWeek, .solid)
     ]
     
