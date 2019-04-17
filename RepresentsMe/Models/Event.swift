@@ -230,6 +230,7 @@ class Event: Comparable {
                     self.attendees.remove(at: index)
                     completion?(attendee, error)
                 }
+                return
             }
         }
     }
