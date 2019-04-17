@@ -13,10 +13,13 @@ protocol MapActionButtonsDelegate {
     func onHomeTouchUp()
 }
 
-class MapActionButtons: UIView {
+class MapActionButtons: UIView, LocationAuthorizationListener {
 
+
+    // MARK: - Properties
     var delegate:MapActionButtonsDelegate? = nil
 
+    // MARK: - Outlets
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var locateButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
@@ -47,9 +50,13 @@ class MapActionButtons: UIView {
 
         locateButton.layer.borderWidth = 1.0
         locateButton.layer.borderColor = UIColor.lightGray.cgColor
+        updateLocationButtonState()
+
+        LocationManager.addLocationAuthorizationListener(self)
 
         homeButton.layer.borderWidth = 1.0
         homeButton.layer.borderColor = UIColor.lightGray.cgColor
+        updateHomeButtonState()
     }
 
     @IBAction func locateTouchUp(_ sender: Any) {
@@ -62,4 +69,26 @@ class MapActionButtons: UIView {
         delegate?.onHomeTouchUp()
     }
 
+    func updateLocationButtonState() {
+        locateButton.isEnabled = LocationManager.shared.locationServicesEnabledAndAuthorized()
+        if locateButton.isEnabled {
+            locateButton.alpha = 1.0
+        } else {
+            locateButton.alpha = 0.5
+        }
+    }
+
+    func updateHomeButtonState() {
+        if let _ = UsersDatabase.currentUser {
+            homeButton.isEnabled = true
+            homeButton.alpha = 1.0
+        } else {
+            homeButton.isEnabled = false
+            homeButton.alpha = 0.5
+        }
+    }
+
+    func didChangeLocationAuthorization() {
+        updateLocationButtonState()
+    }
 }

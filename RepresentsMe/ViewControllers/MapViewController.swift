@@ -65,6 +65,10 @@ class MapViewController: UIViewController,
     /// Sets up the map view and delegates
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // When view becomes active again (like returning from background), update
+        // the MapActionButton LocationButton state
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         // Setup the map view
         self.setupMapView()
@@ -79,6 +83,16 @@ class MapViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    /// Update the mapActionButton Location button
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mapActionButtons.updateLocationButtonState()
+    }
+
+    @objc func appDidBecomeActive() {
+        mapActionButtons.updateLocationButtonState()
     }
     
     /// Show the navigation bar when the view disappears
