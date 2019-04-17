@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import MessageUI
 
 // OfficialDetailsViewController -> OfficialContactViewController
 let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
@@ -49,9 +50,26 @@ class OfficialDetailsViewController: UIViewController {
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
-        if let phoneNumber = URL(string: "tel://\(official!.phones[0])") {
-            UIApplication.shared.open(phoneNumber)
-        }
+        let actionSheet = UIAlertController(title: "Phone Contact Options", message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
+            if let phoneNumber = URL(string: "tel://\(self.official!.phones[0])") {
+                UIApplication.shared.open(phoneNumber)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Text", style: .default, handler: { (action: UIAlertAction) in
+            let composeVC = MFMessageComposeViewController()
+
+            // Configure the fields of the interface.
+            composeVC.recipients = self.official?.phones
+
+            // Present the view controller modally.
+            self.present(composeVC, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+            actionSheet.dismiss(animated: true, completion: nil)
+        }))
+
+        self.present(actionSheet, animated: true, completion: nil)
     }
 
     /// Opens up email app when email button is pressed.
