@@ -8,13 +8,16 @@
 
 import UIKit
 
+/// Protocol for superview using this view, methods are called when
+/// the given button is tapped
 protocol MapActionButtonsDelegate {
+    /// Method called when Locate encounters a TouchUp event while enabled
     func onLocateTouchUp()
+    /// Method called when Home encounters a TouchUp event while enabled
     func onHomeTouchUp()
 }
 
 class MapActionButtons: UIView, LocationAuthorizationListener {
-
 
     // MARK: - Properties
     var delegate:MapActionButtonsDelegate? = nil
@@ -60,6 +63,11 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
         homeButton.layer.borderWidth = 1.0
         homeButton.layer.borderColor = UIColor.lightGray.cgColor
         updateHomeButtonState()
+    }
+
+    /// Remove listener if this view is destroyed
+    deinit {
+        LocationManager.removeLocationAuthorizationListener(self)
     }
 
     @IBAction func locateTouchUp(_ sender: Any) {
