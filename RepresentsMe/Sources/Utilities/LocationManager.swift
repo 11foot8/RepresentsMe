@@ -9,12 +9,14 @@
 import UIKit
 import MapKit
 
+// MARK: - LocationAuthorizationListener
 /// The protocol to implement to be notified when the location authorization
 /// changes while app is running.
 protocol LocationAuthorizationListener {
+    // MARK: - Methods
     func didChangeLocationAuthorization()
 }
-
+// MARK: - Location Manager
 class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: - Static Properties
     static let shared = LocationManager()
