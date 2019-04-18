@@ -66,6 +66,6 @@ class Util {
         })
         // TODO: reverse geocode result
         // TODO: Check result against original address
-        return .invalid
+        completion(.invalid)
     }
 }

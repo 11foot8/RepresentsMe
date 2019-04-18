@@ -86,7 +86,7 @@ class MapActionButtons: UIView, LocationAuthorizationListener {
     /// Set home button state appropriately depending on
     /// whether a user is logged in or not
     func updateHomeButtonState() {
-        if let _ = UsersDatabase.currentUser {
+        if UsersDatabase.currentUser != nil {
             homeButton.isEnabled = true
             homeButton.alpha = 1.0
         } else {

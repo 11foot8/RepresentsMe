@@ -48,6 +48,7 @@ class LoginViewController: UIViewController {
 
     /// Check if credentials were saved
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         checkRememberedCredentials()
     }
 
