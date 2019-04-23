@@ -56,6 +56,8 @@
 		1695ED2E22663C18007992CB /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1695ED2D22663C18007992CB /* LocalAuthentication.framework */; };
 		1695ED3022663CBC007992CB /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */; };
 		1695ED3222663CFC007992CB /* KeychainConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ED3122663CFC007992CB /* KeychainConfiguration.swift */; };
+		1697B508226F6592009FA082 /* BiometricSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */; };
+		1697B50A226F8AF2009FA082 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B509226F8AF2009FA082 /* KeychainService.swift */; };
 		169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BD225D015200090CDA /* GeocoderWrapper.swift */; };
 		169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */; };
 		169EB6C2225D09CD00090CDA /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */; };
@@ -163,6 +165,8 @@
 		1695ED2D22663C18007992CB /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 		1695ED3122663CFC007992CB /* KeychainConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConfiguration.swift; sourceTree = "<group>"; };
+		1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricSettingsViewController.swift; sourceTree = "<group>"; };
+		1697B509226F8AF2009FA082 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		169EB6BD225D015200090CDA /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
 		169EB6BF225D09C000090CDA /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
 		169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
 				13A4F611225F80090023E150 /* UIViewControllerExt.swift */,
 				1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */,
+				1697B509226F8AF2009FA082 /* KeychainService.swift */,
 				1695ED3122663CFC007992CB /* KeychainConfiguration.swift */,
 			);
 			path = Utilities;
@@ -496,6 +501,7 @@
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
 				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
 				16A0DCDB2264D838007D0617 /* ProfilePictureSettingsViewController.swift */,
+				1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -666,6 +672,9 @@
 					3B1EFD4F221F06E9003176BF = {
 						CreatedOnToolsVersion = 10.0;
 						SystemCapabilities = {
+							com.apple.AutoFillCredentialProvider = {
+								enabled = 0;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 0;
 							};
@@ -844,6 +853,7 @@
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,
+				1697B50A226F8AF2009FA082 /* KeychainService.swift in Sources */,
 				16ECF811225516C9003DEA68 /* StatePopoverViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
@@ -893,6 +903,7 @@
 				13895F33225FB51400FE405D /* PopoverViewController.swift in Sources */,
 				134F9223225E591600B797B4 /* EventsTableViewDataSource.swift in Sources */,
 				134F9237225EBBA600B797B4 /* SettingsLogoutEntry.swift in Sources */,
+				1697B508226F6592009FA082 /* BiometricSettingsViewController.swift in Sources */,
 				133C70C22255823F00D7E060 /* EventAttendee.swift in Sources */,
 				1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */,
 				16FCC8502252B5CF008D3991 /* LocationInfo.swift in Sources */,

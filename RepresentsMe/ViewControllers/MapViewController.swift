@@ -28,7 +28,7 @@ class MapViewController: UIViewController,
                          UISearchBarDelegate,
                          LocationInfoDelegate,
                          CustomSearchBarDelegate,
-                         MapActionButtonsDelegate {
+MapActionButtonsDelegate {
 
     /// The modes avaliable for the map view controller
     enum ReachType {
@@ -106,19 +106,38 @@ class MapViewController: UIViewController,
     }
 
     // MARK: - Actions
+
+    // MARK: - CustomSearchBarDelegate
     
     /// Geocode the address given when search started and drop an pin on the
     /// location if one is found.
     ///
     /// - Parameter query:  the entered address
     func onSearchQuery(query: String) {
-        GeocoderWrapper.geocodeAddressString(query) {(placemark) in
-            let coords = placemark.location!.coordinate
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = query
+        searchRequest.region = mapView.region
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
+            guard let response = response else {
+                // TODO: Handle Error
+                print("Error: \(error?.localizedDescription ?? "Unknown Error").")
+                return
+            }
+
+            let coords = response.mapItems[0].placemark.location!.coordinate
             self.dropPin(coords: coords,
                          title: "Searched Address",
                          replaceSearchedValue: false)
             self.centerView(on: coords, animated: false)
         }
+//        GeocoderWrapper.geocodeAddressString(query) {(placemark) in
+//            let coords = placemark.location!.coordinate
+//            self.dropPin(coords: coords,
+//                         title: "Searched Address",
+//                         replaceSearchedValue: false)
+//            self.centerView(on: coords, animated: false)
+//        }
     }
 
     /// Clear any pins when the search bar is cleared

@@ -9,13 +9,12 @@
 import UIKit
 import MBProgressHUD
 import LocalAuthentication
+import Security
 
 /// LoginViewController -> SignupViewController
 let SIGNUP_SEGUE_IDENTIFIER = "SignupSegue"
 /// LoginViewController -> TabBarViewController
 let TAB_BAR_VIEW_CONTROLLER_NAME = "mainTabBarViewController"
-/// Key for accessing rememberMeEnabled from UserDefaults
-let REMEMBER_ME_KEY = "rememberMeEnabled"
 /// Key for accessing lastAccessedUsername from UserDefaults
 let USERNAME_KEY = "lastAccessedUsername"
 
@@ -25,12 +24,6 @@ class LoginViewController: UIViewController {
     /// Username of last saved credential
     fileprivate var lastAccessedUsername:String? {
         return UserDefaults.standard.object(forKey: USERNAME_KEY) as? String
-    }
-
-    /// Whether rememberMe is enabled or not
-    fileprivate var rememberMeEnabled:Bool {
-        let enabled = UserDefaults.standard.object(forKey: REMEMBER_ME_KEY) as? Bool
-        return enabled ?? false
     }
     
     // MARK: - Outlets
@@ -79,8 +72,9 @@ class LoginViewController: UIViewController {
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
 
-                if self.rememberMeEnabled {
-                    self.saveAccountDetailsToKeychain(account: email, password: password)
+                if Util.rememberMeEnabled {
+                    KeychainService.savePassword(service: "RepresentsMe.com", account: email, data: password)
+//                    self.saveAccountDetailsToKeychain(account: email, password: password)
                 } else {
                     self.clearRememberedCredentials()
                 }
@@ -92,7 +86,7 @@ class LoginViewController: UIViewController {
     /// If rememberMeSwitch turned off, remove saved credentials from memory
     @IBAction func rememberMeValueChanged(_ sender: Any) {
         UserDefaults.standard.set(rememberMeSwitch.isOn, forKey: REMEMBER_ME_KEY)
-        if !rememberMeEnabled {
+        if !Util.rememberMeEnabled {
             clearRememberedCredentials()
         }
     }
@@ -121,24 +115,21 @@ class LoginViewController: UIViewController {
     //  Then checks if user credentials were saved and fills them if appropriate
     func checkRememberedCredentials() {
         // Set Remember Me Switch
-        rememberMeSwitch.isOn = rememberMeEnabled
-        if rememberMeEnabled {
+        rememberMeSwitch.isOn = Util.rememberMeEnabled
+        if Util.rememberMeEnabled {
             // Check that a username was saved
             guard let username = lastAccessedUsername else { return }
 
             // Set username field
             emailTextField.text = username
-
-            // Load saved password for user
-            loadPasswordFromKeychain(username)
         }
     }
 
     /// Clears any saved credentials from UserDefaults
     fileprivate func clearRememberedCredentials() {
-        if let username = lastAccessedUsername {
-            removePasswordFromKeychain(username)
-        }
+//        if let username = lastAccessedUsername {
+//            removePasswordFromKeychain(username)
+//        }
         // Remove saved username from UserDefaults
         UserDefaults.standard.removeObject(forKey: USERNAME_KEY)
     }

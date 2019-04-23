@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 protocol CustomSearchBarDelegate {
     func onSearchQuery(query:String)
