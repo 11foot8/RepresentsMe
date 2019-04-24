@@ -115,10 +115,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="g9F-El-UjE"/>
+                    <navigationItem key="navigationItem" id="g9F-El-UjE">
+                        <barButtonItem key="rightBarButtonItem" id="yzE-Kd-bkZ">
+                            <connections>
+                                <action selector="listBarButtonTapped:" destination="BYZ-38-t0r" id="4Q9-AU-yhB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="mapButton" destination="yzE-Kd-bkZ" id="XJc-lX-g8e"/>
                         <outlet property="officialsTableView" destination="GQ8-gi-0eO" id="14a-Uz-oe1"/>
                         <segue destination="V5Z-GW-aU6" kind="show" identifier="detailsViewSegue" id="EnH-nx-c8p"/>
+                        <segue destination="jGO-i0-7IK" kind="presentation" identifier="sandboxModalSegue" modalTransitionStyle="flipHorizontal" id="eUy-rl-Gyt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1041,7 +1049,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="cfR-IA-rLJ" kind="relationship" relationship="viewControllers" id="ZH4-ze-G8p"/>
-                        <segue destination="jGO-i0-7IK" kind="relationship" relationship="viewControllers" id="CUI-8K-ZrR"/>
                         <segue destination="a0U-DL-GGk" kind="relationship" relationship="viewControllers" id="rIN-20-v2X"/>
                         <segue destination="eF5-1y-pET" kind="relationship" relationship="viewControllers" id="lyw-zd-w0o"/>
                     </connections>
@@ -1425,7 +1432,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="577" width="359" height="100"/>
+                                <rect key="frame" x="8" y="670" width="359" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
@@ -1460,14 +1467,22 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a2S-4s-mxQ"/>
                     </view>
-                    <navigationItem key="navigationItem" id="sPo-XR-ivW"/>
+                    <navigationItem key="navigationItem" title="Sandbox" id="sPo-XR-ivW">
+                        <barButtonItem key="rightBarButtonItem" id="bIq-dm-Bw3">
+                            <connections>
+                                <action selector="listButtonTapped:" destination="XZG-Pc-5F1" id="NpC-bx-gEl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="customSearchBar" destination="mHU-bZ-GVU" id="t3j-Yz-G2o"/>
+                        <outlet property="listButton" destination="bIq-dm-Bw3" id="cIY-Ub-pcc"/>
                         <outlet property="locationInfoView" destination="Got-PF-0XK" id="5UM-np-VFH"/>
                         <outlet property="mapActionButtons" destination="yHU-Ts-F5E" id="tVV-ej-l3G"/>
                         <outlet property="mapView" destination="Yw8-0P-Y2x" id="eFZ-Oy-Udb"/>
                         <outlet property="searchDisplayController" destination="nZe-Oe-lWg" id="Ot6-hl-pw3"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="sandboxOfficials" id="aS0-JL-Lkj"/>
+                        <segue destination="zsX-O5-swd" kind="presentation" identifier="officialsModalSegue" modalTransitionStyle="flipHorizontal" id="RqR-8p-4f9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFN-yo-Ynw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2239,9 +2254,10 @@
         <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eUy-rl-Gyt"/>
         <segue reference="fZv-Vr-KZp"/>
-        <segue reference="kWx-5d-f1X"/>
+        <segue reference="rqM-GS-CRU"/>
         <segue reference="JrQ-Sz-hlR"/>
-        <segue reference="tjC-Zo-ayP"/>
+        <segue reference="MZX-gR-k2v"/>
     </inferredMetricsTieBreakers>
 </document>
