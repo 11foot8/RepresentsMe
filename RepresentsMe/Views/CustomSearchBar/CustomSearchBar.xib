@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,45 +17,69 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomSearchBar" customModule="RepresentsMe" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="6Yu-Co-4iO"/>
+                <outlet property="multifunctionButton" destination="zbs-Qs-4Ve" id="6YJ-GI-2Ke"/>
                 <outlet property="searchBarTextField" destination="ba4-Iu-ODi" id="wFC-X5-zLP"/>
+                <outlet property="searchBarView" destination="ust-59-qhg" id="hZm-bW-fgw"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="447" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Iu-ODi">
-                    <rect key="frame" x="33" y="0.0" width="309" height="44"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="searchPrimaryAction:" destination="-1" eventType="primaryActionTriggered" id="kts-JB-Bb4"/>
-                    </connections>
-                </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bvs-0W-J3d">
-                    <rect key="frame" x="8" y="0.0" width="17" height="44"/>
-                    <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ust-59-qhg">
+                    <rect key="frame" x="0.0" y="0.0" width="447" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbs-Qs-4Ve">
+                            <rect key="frame" x="8" y="8" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="zbs-Qs-4Ve" secondAttribute="height" multiplier="1:1" id="pGi-WA-EBF"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="24"/>
+                            <state key="normal" title="search">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="multifunctionButtonTouchUp:" destination="-1" eventType="touchUpInside" id="sgk-fD-dxf"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Iu-ODi">
+                            <rect key="frame" x="40" y="0.0" width="407" height="40"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="editingChanged:" destination="-1" eventType="editingChanged" id="oHj-c4-iKa"/>
+                                <action selector="editingDidBegin:" destination="-1" eventType="editingDidBegin" id="O3d-b9-97H"/>
+                                <action selector="searchEditingDidEnd:" destination="-1" eventType="editingDidEnd" id="r2I-Bu-uFz"/>
+                                <action selector="searchPrimaryAction:" destination="-1" eventType="primaryActionTriggered" id="kts-JB-Bb4"/>
+                                <action selector="searchValueChanged:" destination="-1" eventType="valueChanged" id="DS6-HC-45X"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="zbs-Qs-4Ve" secondAttribute="bottom" constant="8" id="Ndk-Qz-4e5"/>
+                        <constraint firstItem="zbs-Qs-4Ve" firstAttribute="leading" secondItem="ust-59-qhg" secondAttribute="leading" constant="8" id="VTz-Wt-HGi"/>
+                        <constraint firstItem="ba4-Iu-ODi" firstAttribute="top" secondItem="ust-59-qhg" secondAttribute="top" id="WYw-1q-5Ut"/>
+                        <constraint firstItem="ba4-Iu-ODi" firstAttribute="leading" secondItem="zbs-Qs-4Ve" secondAttribute="trailing" constant="8" id="bE8-3K-I4t"/>
+                        <constraint firstItem="zbs-Qs-4Ve" firstAttribute="top" secondItem="ust-59-qhg" secondAttribute="top" constant="8" id="bbP-ha-bqc"/>
+                        <constraint firstAttribute="trailing" secondItem="ba4-Iu-ODi" secondAttribute="trailing" id="h7t-O0-TzV"/>
+                        <constraint firstAttribute="bottom" secondItem="ba4-Iu-ODi" secondAttribute="bottom" id="zab-v1-Z6s"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ba4-Iu-ODi" secondAttribute="trailing" id="35j-iG-97G"/>
-                <constraint firstItem="ba4-Iu-ODi" firstAttribute="leading" secondItem="Bvs-0W-J3d" secondAttribute="trailing" constant="8" id="G0i-7B-0V5"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ba4-Iu-ODi" secondAttribute="bottom" id="Tcq-7M-33V"/>
-                <constraint firstItem="Bvs-0W-J3d" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="e8c-00-QGa"/>
-                <constraint firstItem="ba4-Iu-ODi" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ili-Gz-rr9"/>
-                <constraint firstItem="Bvs-0W-J3d" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ksE-GI-cSj"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Bvs-0W-J3d" secondAttribute="bottom" id="sI8-t8-rZI"/>
+                <constraint firstItem="ust-59-qhg" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="blg-O1-Bm0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ust-59-qhg" secondAttribute="bottom" id="efL-Pi-cxT"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ust-59-qhg" secondAttribute="trailing" id="j9p-vO-bmg"/>
+                <constraint firstItem="ust-59-qhg" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wTM-02-zFo"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="112" y="-126.83658170914543"/>
+            <point key="canvasLocation" x="28" y="-61.169415292353825"/>
         </view>
     </objects>
 </document>
