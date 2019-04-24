@@ -14,7 +14,7 @@ import MessageUI
 let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 
 /// The view controller to show the details for an Official
-class OfficialDetailsViewController: UIViewController {
+class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     var official:Official?
     
@@ -51,7 +51,6 @@ class OfficialDetailsViewController: UIViewController {
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
         let phones = official!.phones.map( { $0.filter("01234567890".contains) } )
-        print(phones)
 
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
@@ -61,6 +60,8 @@ class OfficialDetailsViewController: UIViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: "Text", style: .default, handler: { (action: UIAlertAction) in
             let composeVC = MFMessageComposeViewController()
+
+            composeVC.messageComposeDelegate = self
 
             // Configure the fields of the interface.
             composeVC.recipients = phones
@@ -73,6 +74,11 @@ class OfficialDetailsViewController: UIViewController {
         }))
 
         self.present(actionSheet, animated: true, completion: nil)
+    }
+
+    func messageComposeViewController(_ controller: MFMessageComposeViewController,
+                                      didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
 
     /// Opens up email app when email button is pressed.
