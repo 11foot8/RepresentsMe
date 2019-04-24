@@ -50,11 +50,15 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
-        let phones = official!.phones.map( { $0.filter("01234567890".contains) } )
+        let phones = official?.phones.map( { $0.filter("01234567890".contains) } )
+
+        guard phones != nil else {
+            return
+        }
 
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
-            if let phoneNumber = URL(string: "tel://\(phones[0])") {
+            if let phoneNumber = URL(string: "tel://\(phones![0])") {
                 UIApplication.shared.open(phoneNumber)
             }
         }))

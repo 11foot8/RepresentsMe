@@ -91,7 +91,7 @@ class MapViewController: UIViewController,
                     size: CGSize(width: 24, height: 24))
                 listButton.isEnabled = true
                 break
-        case .event, .settings:
+        default:
             navigationController?.setNavigationBarHidden(true, animated: animated)
                 listButton.image = nil
                 listButton.isEnabled = false
