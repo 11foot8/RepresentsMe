@@ -18,11 +18,13 @@ enum SearchUnwindType {
     case suggestedResult
 }
 
+/// Search bar for the mapview search view controller, handles autocomplete suggestions
+/// and search history
 class SearchBarViewController: UIViewController {
     // MARK: - Properties
-    var unwindType:SearchUnwindType?    // To be accessed by mapView
-    var searchRequest:MKLocalSearch.Request?
-    var region:MKCoordinateRegion?
+    var unwindType:SearchUnwindType?            // To be accessed by MapViewController
+    var searchRequest:MKLocalSearch.Request?    // Search Request for MapViewController to process
+    var region:MKCoordinateRegion?              // Current region of MapViewController
     private var _searchBarText:String?
 
     var searchBarText:String? {
@@ -35,8 +37,8 @@ class SearchBarViewController: UIViewController {
     }
     var autocompleteResults:[Any] = []
 
-    var searchResults = [MKLocalSearchCompletion]()
-    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults:[MKLocalSearchCompletion] = []    // Data source of current result suggestions
+    var searchCompleter = MKLocalSearchCompleter()      // Completer for getting result suggestions
 
     var workItem:DispatchWorkItem?   // Work item to update searchResults and reload table
     let resultsSemaphore =           // Semaphore to allow only one thread at a time to

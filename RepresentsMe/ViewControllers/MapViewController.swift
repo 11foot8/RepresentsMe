@@ -11,6 +11,7 @@ import Foundation
 
 // MapViewController -> OfficialsListViewController
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
+// MapViewController -> SearchBarViewController
 let SEARCH_BAR_SEGUE = "SearchBarSegue"
 
 /// The protocol to implement to receive a location when the user selects a
@@ -47,7 +48,6 @@ class MapViewController: UIViewController {
     var annotation:MKAnnotation?
     var reachType:ReachType = .map
     var delegate: LocationSelectionDelegate?
-    var workItem:DispatchWorkItem?
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -75,6 +75,7 @@ class MapViewController: UIViewController {
         customSearchBar.delegate = self
         mapActionButtons.delegate = self
 
+        // Set search bar button appearance and disable
         customSearchBar.setMultifunctionButton(icon: .search, enabled: false)
     }
     
@@ -109,8 +110,11 @@ class MapViewController: UIViewController {
     @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.state == .began {
             let touchPoint = gestureRecognizer.location(in: mapView)
+            // Get GPS coordinates of press
             let touchMapCoordinate = mapView.convert(touchPoint,
                                                      toCoordinateFrom: mapView)
+
+            // Create locationInfoItem for this location
             let locationInfoItem = LocationInfoItem(
                 title:"Dropped Pin",
                 coordinates: touchMapCoordinate)
@@ -152,6 +156,11 @@ class MapViewController: UIViewController {
         mapView.addAnnotation(annotation!)
     }
 
+    /// Updates the View Controller for the given LocationInfoItem
+    ///
+    /// - Parameter locationInfoItem:       Item with new location information
+    /// - Parameter replaceSearchedValue:   whether or not to replace the
+    ///                                     search bar text
     func updateWith(locationInfoItem item:LocationInfoItem, replaceSearchedValue:Bool) {
         // Get coordinates for pin
         clearPin()
@@ -296,6 +305,7 @@ class MapViewController: UIViewController {
             return
         }
     }
+
     @IBAction func unwindToMapView(segue: UIStoryboardSegue) {
         if segue.identifier == UNWIND_SEARCH_BAR_SEGUE {
             let source = segue.source as! SearchBarViewController
@@ -305,6 +315,7 @@ class MapViewController: UIViewController {
                 // Do not initiate any search, but update search bar
                 break
             case .primaryButton,.suggestedResult:
+                // Initiate search request
                 if let searchRequest = source.searchRequest {
                     let locationInfoItem = LocationInfoItem(title: nil, searchRequest: searchRequest)
                     self.updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: false)
@@ -352,7 +363,7 @@ extension MapViewController: CustomSearchBarDelegate {
     }
 
     func onSearchValueChanged() {
-
+        // Do nothing
     }
 
     func multifunctionButtonPressed() {

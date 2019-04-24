@@ -27,11 +27,9 @@ class SignupAddressViewController: UIViewController,
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateButton: UIButton!
-//    @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
     // MARK: - Lifecycle
-    
     /// Sets up the text fields
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +43,6 @@ class SignupAddressViewController: UIViewController,
     }
 
     // MARK: - Actions
-    
     /// Attempt to create the user's account when they press the create button
     @IBAction func createAccountTouchUp(_ sender: Any) {
         attemptCreateUser()
@@ -118,11 +115,9 @@ class SignupAddressViewController: UIViewController,
     /// Set the chosen state when the user selects a state
     func didSelectState(state: String) {
         stateButton.setTitle(state, for: .normal)
-//        stateTextField.text = state
     }
 
     // MARK: - Segue functions
-    
     /// Prepare to show the popover for the states select
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == POPOVER_SEGUE_IDENTIFIER {
@@ -130,7 +125,6 @@ class SignupAddressViewController: UIViewController,
             destination.setup(in: self.view)
             destination.delegate = self
             destination.selectedValue = stateButton.title(for: .normal)
-//            destination.selectedValue = stateTextField.text!
         }
     }
 
@@ -146,7 +140,6 @@ class SignupAddressViewController: UIViewController,
         guard let streetAddress = streetAddressTextField.text else {return nil}
         guard let city = cityTextField.text else {return nil}
         guard let state = stateButton.title(for: .normal) else {return nil}
-//        guard let state = stateTextField.text else {return nil}
         guard let zipcode = zipcodeTextField.text else {return nil}
 
         // TODO: Check address validity
