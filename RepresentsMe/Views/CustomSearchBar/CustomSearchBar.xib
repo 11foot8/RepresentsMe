@@ -53,7 +53,6 @@
                                 <action selector="editingDidBegin:" destination="-1" eventType="editingDidBegin" id="O3d-b9-97H"/>
                                 <action selector="searchEditingDidEnd:" destination="-1" eventType="editingDidEnd" id="r2I-Bu-uFz"/>
                                 <action selector="searchPrimaryAction:" destination="-1" eventType="primaryActionTriggered" id="kts-JB-Bb4"/>
-                                <action selector="searchValueChanged:" destination="-1" eventType="valueChanged" id="DS6-HC-45X"/>
                             </connections>
                         </textField>
                     </subviews>

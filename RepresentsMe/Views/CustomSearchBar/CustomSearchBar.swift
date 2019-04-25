@@ -46,8 +46,6 @@ class CustomSearchBar: UIView, UITextFieldDelegate {
         nib.instantiate(withOwner: self, options: nil)
         self.layer.cornerRadius = 8
         self.clipsToBounds = true
-//        self.layer.borderWidth = 1.0
-//        self.layer.borderColor = UIColor.lightGray.cgColor
         contentView.frame = bounds
         addSubview(contentView)
 
@@ -75,10 +73,6 @@ class CustomSearchBar: UIView, UITextFieldDelegate {
     }
     @IBAction func editingDidBegin(_ sender: Any) {
         delegate?.onSearchBegin()
-    }
-    @IBAction func searchValueChanged(_ sender: Any) {
-//        guard delegate != nil else { return }
-//        delegate?.onSearchValueChanged()
     }
     @IBAction func searchEditingDidEnd(_ sender: Any) {
     }
