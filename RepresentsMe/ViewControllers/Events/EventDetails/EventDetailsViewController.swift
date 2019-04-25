@@ -13,6 +13,14 @@ import MapKit
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
 
+// RSVP colors
+let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
+                          green: 204.0 / 255.0,
+                          blue: 51.0 / 255.0,
+                          alpha: 1.0)
+let MAYBE_ORANGE = UIColor.orange
+let NOT_GOING_RED = UIColor.red
+
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
@@ -23,8 +31,11 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var officialNameLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var editButtonLabel: UILabel!
     @IBOutlet weak var deleteEventButton: UIButton!
+    @IBOutlet weak var deleteEventButtonLabel: UILabel!
 
     @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var goingButtonLabel: UILabel!
@@ -33,8 +44,14 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var notGoingButton: UIButton!
     @IBOutlet weak var notGoingButtonLabel: UILabel!
 
-    var event:Event?                    // The Event to display
-    var delegate:EventListDelegate?     // The delegate to update
+    @IBOutlet weak var toolbarView: UIView!
+    var toolbarOut: CGPoint = CGPoint()
+    var toolbarIn: CGPoint = CGPoint()
+
+    var event:Event?                              // The Event to display
+    var delegate:EventListDelegate?               // The delegate to update
+    var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
+                                                  // for the current user
 
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
@@ -48,8 +65,14 @@ class EventDetailsViewController: UIViewController {
             // Center the map on the location for the event
             self.setupMapView()
 
+            // Set up toolbar
+            self.setupToolbar()
+
             // Set whether or not the user can edit the event
             self.setEditable()
+
+            // Set user's RSVP status
+            self.setRSVPButtons()
         }
     }
 
@@ -76,6 +99,34 @@ class EventDetailsViewController: UIViewController {
             let destination = segue.destination as! EventCreateViewController
             destination.event = event
             destination.delegate = delegate
+        }
+    }
+
+    private func setupToolbar() {
+        toolbarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToolbar(tapGestureRecognizer:))))
+
+        var bottomArea: CGFloat = 0.0
+
+        if let tabBarHeight = tabBarController?.tabBar.frame.height {
+            bottomArea += tabBarHeight
+        }
+
+        toolbarIn = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - 16)
+        toolbarOut = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - toolbarView.frame.size.height)
+
+        toolbarView.center = toolbarIn;
+        view.layoutIfNeeded()
+    }
+
+    @objc func didTapToolbar(tapGestureRecognizer: UITapGestureRecognizer) {
+        if toolbarView.frame.origin == toolbarOut {
+            UIView.animate(withDuration: 0.5) {
+                self.toolbarView.frame.origin = self.toolbarIn
+            }
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.toolbarView.frame.origin = self.toolbarOut
+            }
         }
     }
     
@@ -113,32 +164,64 @@ class EventDetailsViewController: UIViewController {
     }
 
     @IBAction func setRSVPGoing(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .going)
-            goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-        } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
-        }
+        setRSVPStatus(status: .going)
     }
 
     @IBAction func setRSVPMaybe(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .maybe)
-            maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-        } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
-        }
+        setRSVPStatus(status: .maybe)
     }
 
     @IBAction func setRSVPNotGoing(_ sender: Any) {
-        if let uid = UsersDatabase.currentUserUID {
-            event?.addAttendee(userID: uid, status: .notGoing)
-            notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+        setRSVPStatus(status: .notGoing)
+    }
+
+    func setRSVPStatus(status: RSVPType) {
+        // If user already has RSVPed, set status or remove self
+        if let attendee = currentUserEventAttendee {
+            // If pressed button for current status, set layout to "no response"
+            if (attendee.status == status) {
+                event?.removeAttendee(userID: UsersDatabase.currentUserUID!, completion: { (attendee: EventAttendee, error: Error?) in
+                    if (error != nil) {
+                        // TODO: Handle error
+                    }
+
+                    self.setNoResponseLayout()
+                })
+
+                currentUserEventAttendee = nil
+
+                return
+            } else {
+                attendee.setStatus(to: status)
+            }
         } else {
-            self.alert(title: "Error",
-                       message: "You must be logged in to RSVP for an event.")
+            // If user has not yet RSVPed, add self
+            if let uid = UsersDatabase.currentUserUID {
+                event?.addAttendee(userID: uid, status: status,
+                                   completion: { (attendee: EventAttendee, error: Error?) in
+                                    if (error != nil) {
+                                        // TODO: Handle error
+                                    }
+
+                                    self.currentUserEventAttendee = attendee
+                })
+            } else {
+                self.alert(title: "Error",
+                           message: "You must be logged in to RSVP for an event.")
+                return
+            }
+        }
+
+        switch status {
+        case .going:
+            self.setRSVPGoingLayout()
+            break
+        case .maybe:
+            self.setRSVPMaybeLayout()
+            break
+        case .notGoing:
+            self.setRSVPNotGoingLayout()
+            break
         }
     }
 
@@ -152,15 +235,105 @@ class EventDetailsViewController: UIViewController {
             if (UsersDatabase.currentUserUID == event.owner) {
                 // User owns the event, let them edit it
                 editButton.isEnabled = true
-                editButton.title = "Edit"
                 deleteEventButton.isEnabled = true
-                deleteEventButton.isHidden = false
             } else {
                 // User does not own the event, do not let them edit it
                 editButton.isEnabled = false
-                deleteEventButton.isHidden = true
+                dimButtonLabel(button: editButton, label: editButtonLabel)
                 deleteEventButton.isEnabled = false
+                dimButtonLabel(button: deleteEventButton, label: deleteEventButtonLabel)
             }
         }
+    }
+
+    private func setRSVPButtons() {
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        goingButton.isUserInteractionEnabled = false
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+        maybeButton.isUserInteractionEnabled = false
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+        notGoingButton.isUserInteractionEnabled = false
+
+        event?.loadAttendees(completion: { (event: Event?, error: Error?) in
+            if error != nil {
+                // TODO: Handle error
+            }
+
+            if let event = event {
+                for attendee in event.attendees {
+                    self.currentUserEventAttendee = attendee
+                    if attendee.userID == UsersDatabase.currentUserUID! {
+                        switch attendee.status {
+                        case .going:
+                            self.setRSVPGoingLayout()
+                            break
+                        case .maybe:
+                            self.setRSVPMaybeLayout()
+                            break
+                        case .notGoing:
+                            self.setRSVPNotGoingLayout()
+                            break
+                        }
+                        self.enableRSVPButtons()
+                        return
+                    }
+                }
+                self.setNoResponseLayout()
+                self.enableRSVPButtons()
+            }
+        })
+    }
+
+    func setNoResponseLayout() {
+        goingButton.setTitleColor(GOING_GREEN, for: .normal)
+        goingButtonLabel.textColor = GOING_GREEN
+        goingButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+
+        maybeButton.setTitleColor(MAYBE_ORANGE, for: .normal)
+        maybeButtonLabel.textColor = MAYBE_ORANGE
+        maybeButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+
+        notGoingButton.setTitleColor(NOT_GOING_RED, for: .normal)
+        notGoingButtonLabel.textColor = NOT_GOING_RED
+        notGoingButtonLabel.font = UIFont.systemFont(ofSize: 10.0)
+    }
+
+    func setRSVPGoingLayout() {
+        goingButton.setTitleColor(GOING_GREEN, for: .normal)
+        goingButtonLabel.textColor = GOING_GREEN
+        goingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+    }
+
+    func setRSVPMaybeLayout() {
+        maybeButton.setTitleColor(MAYBE_ORANGE, for: .normal)
+        maybeButtonLabel.textColor = MAYBE_ORANGE
+        maybeButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        dimButtonLabel(button: notGoingButton, label: notGoingButtonLabel)
+    }
+
+    func setRSVPNotGoingLayout() {
+        notGoingButton.setTitleColor(NOT_GOING_RED, for: .normal)
+        notGoingButtonLabel.textColor = NOT_GOING_RED
+        notGoingButtonLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+
+        dimButtonLabel(button: goingButton, label: goingButtonLabel)
+        dimButtonLabel(button: maybeButton, label: maybeButtonLabel)
+    }
+
+    func dimButtonLabel(button: UIButton, label: UILabel) {
+        button.setTitleColor(.lightGray, for: .normal)
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 10.0)
+    }
+
+    func enableRSVPButtons() {
+        self.goingButton.isUserInteractionEnabled = true
+        self.maybeButton.isUserInteractionEnabled = true
+        self.notGoingButton.isUserInteractionEnabled = true
     }
 }
