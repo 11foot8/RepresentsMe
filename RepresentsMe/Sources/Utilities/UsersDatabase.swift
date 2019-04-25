@@ -265,7 +265,7 @@ class UsersDatabase {
     ///                             receive server response
     func removeUserProfilePicture(completion: @escaping (Error?) -> Void) {
         if let uid = UsersDatabase.currentUserUID {
-            let imageRef = UsersDatabase.imagesRef.child(uid).delete { (error) in
+            UsersDatabase.imagesRef.child(uid).delete { (error) in
                 if let _ = error {
                     // TODO: Handle Error
                     completion(error)

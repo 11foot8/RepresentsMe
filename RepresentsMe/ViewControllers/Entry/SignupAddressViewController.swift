@@ -27,21 +27,22 @@ class SignupAddressViewController: UIViewController,
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateButton: UIButton!
-    @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
 
     // MARK: - Lifecycle
-    
     /// Sets up the text fields
     override func viewDidLoad() {
         super.viewDidLoad()
         streetAddressTextField.clearButtonMode = UITextField.ViewMode.always
         cityTextField.clearButtonMode = UITextField.ViewMode.always
         zipcodeTextField.clearButtonMode = UITextField.ViewMode.always
+        
+        stateButton.layer.borderColor = UIColor(white: 0.6, alpha: 0.6).cgColor
+        stateButton.layer.cornerRadius = 5.0
+        stateButton.layer.borderWidth = 0.5
     }
 
     // MARK: - Actions
-    
     /// Attempt to create the user's account when they press the create button
     @IBAction func createAccountTouchUp(_ sender: Any) {
         attemptCreateUser()
@@ -56,7 +57,7 @@ class SignupAddressViewController: UIViewController,
     @IBAction func cancelTouchUp(_ sender: Any) {
         self.dismiss(animated: true)
     }
-
+    
     func attemptCreateUser() {
         // Check all values are valid
         // TODO: Check that email is in correct form
@@ -113,18 +114,17 @@ class SignupAddressViewController: UIViewController,
 
     /// Set the chosen state when the user selects a state
     func didSelectState(state: String) {
-        stateTextField.text = state
+        stateButton.setTitle(state, for: .normal)
     }
 
     // MARK: - Segue functions
-    
     /// Prepare to show the popover for the states select
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == POPOVER_SEGUE_IDENTIFIER {
             let destination = segue.destination as! StatePopoverViewController
             destination.setup(in: self.view)
             destination.delegate = self
-            destination.selectedValue = stateTextField.text!
+            destination.selectedValue = stateButton.title(for: .normal)
         }
     }
 
@@ -139,7 +139,7 @@ class SignupAddressViewController: UIViewController,
     private func buildAddress() -> Address? {
         guard let streetAddress = streetAddressTextField.text else {return nil}
         guard let city = cityTextField.text else {return nil}
-        guard let state = stateTextField.text else {return nil}
+        guard let state = stateButton.title(for: .normal) else {return nil}
         guard let zipcode = zipcodeTextField.text else {return nil}
 
         // TODO: Check address validity

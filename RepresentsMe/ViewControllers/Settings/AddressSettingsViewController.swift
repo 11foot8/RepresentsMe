@@ -24,8 +24,8 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
 
     @IBOutlet weak var streetAddressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
-    @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
+    @IBOutlet weak var selectStateButton: UIButton!
     
     // MARK: - Lifecycle
     
@@ -38,6 +38,11 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
         
         // Load the current address
         self.loadAddress()
+
+        // Format State Button
+        selectStateButton.layer.borderColor = UIColor(white: 0.6, alpha: 0.6).cgColor
+        selectStateButton.layer.cornerRadius = 5.0
+        selectStateButton.layer.borderWidth = 0.5
     }
 
     // MARK: - Actions
@@ -68,14 +73,14 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
     ///
     /// - Parameter selection:  the selected state
     func didSelectState(state: String) {
-        stateTextField.text = state
+        selectStateButton.setTitle(state, for: .normal)
     }
 
     /// Sets the address labels to the given address
     func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
         self.streetAddressTextField.text = address.streetAddress
         self.cityTextField.text = address.city
-        self.stateTextField.text = address.state
+        self.selectStateButton.setTitle(address.state, for: .normal)
         self.zipcodeTextField.text = address.zipcode
     }
 
@@ -113,7 +118,7 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
                 if let address = address {
                     self.streetAddressTextField.text = address.streetAddress
                     self.cityTextField.text = address.city
-                    self.stateTextField.text = address.state
+                    self.selectStateButton.setTitle(address.state, for: .normal)
                     self.zipcodeTextField.text = address.zipcode
                 } else {
                     // TODO: Handle nil address
@@ -133,7 +138,7 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
         guard let city = cityTextField.text, !city.isEmpty else {
             return nil
         }
-        guard let state = stateTextField.text, !state.isEmpty else {
+        guard let state = selectStateButton.title(for: .normal), !state.isEmpty else {
             return nil
         }
         guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty else {
@@ -180,7 +185,7 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
             let destination = segue.destination as! StatePopoverViewController
             destination.setup(in: self.view)
             destination.delegate = self
-            destination.selectedValue = stateTextField.text!
+            destination.selectedValue = selectStateButton.title(for: .normal)
         } else if segue.identifier == ADDRESS_SELECT_LOCATION_SEGUE {
             let destination = segue.destination as! MapViewController
             destination.reachType = .settings

@@ -72,11 +72,16 @@ class LocationInfo: UIView {
     /// Upon successful reverse geocode, sets locationInfoView correctly
     func updateWithCoordinates(coords:CLLocationCoordinate2D, title:String) {
         startLoadingAnimation()
-
         titleLabel.text = title
-
         GeocoderWrapper.reverseGeocodeCoordinates(coords, completionHandler: reverseGeocodeCompletionHandler)
+    }
 
+    func updateWith(address:Address, title: String) {
+        self.address = address
+        self.address1Label.text = address.addressLine1()
+        self.address2Label.text = address.addressLine2()
+        titleLabel.text = title
+        self.goButton.isEnabled = true
     }
 
     func reverseGeocodeCompletionHandler(address:Address) {
@@ -107,5 +112,80 @@ class LocationInfo: UIView {
         address1Label.isHidden = false
         address2Label.isHidden = false
 
+    }
+}
+
+class LocationInfoItem {
+    public enum LocationInfoError:Error, LocalizedError {
+        case addressGeocodeError
+        public var errorDescription: String? {
+            switch self {
+            case .addressGeocodeError:
+                return NSLocalizedString("Error Geocoding Address", comment: "")
+            }
+        }
+
+    }
+    private(set) var coordinates:CLLocationCoordinate2D?
+    private(set) var searchRequest:MKLocalSearch.Request?
+    private(set) var address:Address?
+    private(set) var title:String?
+
+    init(title:String?, coordinates: CLLocationCoordinate2D) {
+        self.title = title
+        self.coordinates = coordinates
+    }
+
+    init(title:String?, searchRequest:MKLocalSearch.Request) {
+        self.title = title
+        self.searchRequest = searchRequest
+    }
+
+    init(title:String?, address:Address) {
+        self.title = title
+        self.address = address
+    }
+
+    func getLocationInfo(completion:@escaping (String?, CLLocationCoordinate2D? ,Address?, Error?) -> Void) {
+        // If coordiantes provided, reverse geocode
+        if let coordinates = coordinates {
+            GeocoderWrapper.reverseGeocodeCoordinates(coordinates) { (address) in
+                completion(nil,coordinates, address, nil)
+                return
+            }
+            return
+        }
+
+        // If address provided, geocode
+        if let address = address {
+            GeocoderWrapper.geocodeAddressString(address.description) { (placemark) in
+                if let coordinates = placemark.location?.coordinate {
+                    completion(nil,coordinates,address, nil)
+                } else {
+                    completion(nil,nil,nil,LocationInfoError.addressGeocodeError)
+                }
+            }
+            return
+        }
+
+        // If searchRequest provided, MKLocalSearch
+        if let searchRequest = searchRequest {
+            let search = MKLocalSearch(request: searchRequest)
+            search.start { (response, error) in
+                if let _ = error {
+                    // TODO: Handle error
+                } else {
+                    if let mapItem = response?.mapItems[0] {
+                        let title:String = self.title ?? mapItem.name!
+                        let coords = mapItem.placemark.location!.coordinate
+                        let address = Address(with: mapItem.placemark)
+                        completion(title, coords,address,nil)
+                    } else {
+                        completion(nil,nil,nil,LocationInfoError.addressGeocodeError)
+                    }
+                }
+            }
+            return
+        }
     }
 }

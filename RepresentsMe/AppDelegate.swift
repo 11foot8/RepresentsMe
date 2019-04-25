@@ -53,6 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+
+        // MARK: - Remember Me
+        // Log user out if Remember me not on
+        if !Util.rememberMeEnabled {
+            UsersDatabase.shared.logoutUser { (error) in
+                // Do nothing
+            }
+        }
+
     }
 
     // MARK: - Core Data stack

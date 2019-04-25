@@ -71,7 +71,24 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
     /// - Parameter with:   the SettingsViewController
     private func initializeSections(with parent:SettingsViewController) {
         self.sections = [
-            SettingsSection(name: "User", entries: [
+            SettingsSection(name: "Personal Details", entries: [
+                SettingsSegueEntry(
+                    parent: parent,
+                    name: "Display Name",
+                    icon: .user,
+                    segueID: "DisplayNameSettingsSegue"),
+                SettingsSegueEntry(
+                    parent: parent,
+                    name: "Profile Picture",
+                    icon: .userCircle,
+                    segueID: "ProfilePictureSettingsSegue"),
+                SettingsSegueEntry(
+                    parent: parent,
+                    name: "Address",
+                    icon: .home,
+                    segueID: "AddressSettingsSegue")
+                ]),
+            SettingsSection(name: "Sign in & security", entries: [
                 SettingsSegueEntry(
                     parent: parent,
                     name: "Email",
@@ -79,26 +96,14 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
                     segueID: "EmailSettingsSegue"),
                 SettingsSegueEntry(
                     parent: parent,
-                    name: "Username",
-                    icon: .user,
-                    segueID: "DisplayNameSettingsSegue"),
-                SettingsSegueEntry(
-                    parent: parent,
                     name: "Password",
                     icon: .key,
                     segueID: "PasswordSettingsSegue"),
                 SettingsSegueEntry(
                     parent: parent,
-                    name: "Profile Picture",
-                    icon: .userCircle,
-                    segueID: "ProfilePictureSettingsSegue")
-                ]),
-            SettingsSection(name: "", entries: [
-                SettingsSegueEntry(
-                    parent: parent,
-                    name: "Address",
-                    icon: .home,
-                    segueID: "AddressSettingsSegue")
+                    name: "Biometric Login",
+                    icon: .userLock,
+                    segueID: "BiometricSettingsSegue")
                 ]),
             SettingsSection(name: "", entries: [
                 SettingsLogoutEntry(

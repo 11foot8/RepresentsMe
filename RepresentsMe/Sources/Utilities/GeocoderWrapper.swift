@@ -27,6 +27,10 @@ class GeocoderWrapper {
         })
     }
 
+    public static func geocodeAddress(_ address:Address, completionHandler:@escaping (CLPlacemark) -> Void) {
+        geocodeAddressString(address.description, completionHandler: completionHandler)
+    }
+
     public static func reverseGeocodeCoordinates(_ coords:CLLocationCoordinate2D, completionHandler:@escaping (Address) -> Void) {
 
         let location = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
