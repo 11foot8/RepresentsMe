@@ -147,6 +147,7 @@ class EventDetailsViewController: UIViewController {
         if let event = self.event, let photo = event.official?.photo {
             portraitImageView.image = photo
         }
+        portraitImageView.layer.cornerRadius = 5.0
     }
     
     /// Centers the map on the location for the Event
