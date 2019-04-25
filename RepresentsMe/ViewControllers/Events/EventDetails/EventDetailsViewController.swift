@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MapKit
+import EventKit
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
@@ -43,7 +44,6 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var maybeButtonLabel: UILabel!
     @IBOutlet weak var notGoingButton: UIButton!
     @IBOutlet weak var notGoingButtonLabel: UILabel!
-
     @IBOutlet weak var toolbarView: UIView!
     var toolbarOut: CGPoint = CGPoint()
     var toolbarIn: CGPoint = CGPoint()
@@ -52,6 +52,8 @@ class EventDetailsViewController: UIViewController {
     var delegate:EventListDelegate?               // The delegate to update
     var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
                                                   // for the current user
+
+    let eventStore = EKEventStore()
 
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
@@ -227,7 +229,50 @@ class EventDetailsViewController: UIViewController {
     }
 
     @IBAction func exportEvent(_ sender: Any) {
+        let name = self.event?.name
+        let startDate = self.event?.date
+        // Set end date to be an hour after the start date
+        // TODO: add end date field to Event model
+        let endDate = startDate!.addingTimeInterval(60*60)
+        
+        // If the authorization status for calendar access isn't authorized, request
+        // access again and then export the event. Otherwise, just export the event
+        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+            eventStore.requestAccess(to: .event, completion: {
+                (granted, error) in
+                self.saveEvent(eventStore:self.eventStore,
+                                 title:name!,
+                                 startDate: startDate! as NSDate,
+                                 endDate: endDate as NSDate)
+            })
+        } else {
+            saveEvent(eventStore:eventStore,
+                        title:name!,
+                        startDate: startDate! as NSDate,
+                        endDate: endDate as NSDate)
+        }
     }
+    
+    func saveEvent(eventStore:EKEventStore, title:String, startDate:NSDate, endDate:NSDate) {
+        let event = EKEvent(eventStore:eventStore)
+        event.title = title
+        if let officialName = self.event?.official?.name {
+            event.notes = "Event with \(officialName). Exported from RepresentsMe."
+        }
+        event.location = self.event?.address.description
+        event.startDate = startDate as Date?
+        event.endDate = endDate as Date?
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        
+        // Alert the user to let them know if the export succeeded or failed
+        do {
+            try eventStore.save(event,span:.thisEvent)
+            self.alert(title: "Success!", message: "The event has been exported to your calendar")
+        } catch {
+            self.alert(title: "Error", message: "Unable to export event to calendar")
+        }
+    }
+    
     
     /// Sets up the edit views based on whether or not the user is allowed to
     /// edit the Event
