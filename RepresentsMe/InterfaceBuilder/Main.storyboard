@@ -29,7 +29,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GQ8-gi-0eO">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="officialCell" rowHeight="99" id="1zF-WF-e3C" customClass="OfficialCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -115,10 +115,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="g9F-El-UjE"/>
+                    <navigationItem key="navigationItem" id="g9F-El-UjE">
+                        <barButtonItem key="rightBarButtonItem" id="yzE-Kd-bkZ">
+                            <connections>
+                                <action selector="listBarButtonTapped:" destination="BYZ-38-t0r" id="4Q9-AU-yhB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="mapButton" destination="yzE-Kd-bkZ" id="XJc-lX-g8e"/>
                         <outlet property="officialsTableView" destination="GQ8-gi-0eO" id="14a-Uz-oe1"/>
                         <segue destination="V5Z-GW-aU6" kind="show" identifier="detailsViewSegue" id="EnH-nx-c8p"/>
+                        <segue destination="jGO-i0-7IK" kind="presentation" identifier="sandboxModalSegue" modalTransitionStyle="flipHorizontal" id="eUy-rl-Gyt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -268,20 +276,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-iC-oeO">
-                                <rect key="frame" x="0.0" y="88" width="375" height="144"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="144"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="ogt-Hp-hKB"/>
                                 </constraints>
                             </mapView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cxU-Qv-kIJ">
-                                <rect key="frame" x="112.66666666666669" y="128" width="150" height="150"/>
+                                <rect key="frame" x="112.66666666666669" y="84" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Upf-uZ-uMd"/>
                                     <constraint firstAttribute="height" constant="150" id="j5n-Jw-ALG"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8k-dl-get">
-                                <rect key="frame" x="0.0" y="278" width="375" height="451"/>
+                                <rect key="frame" x="0.0" y="234" width="375" height="544"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FirstName LastName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3s-J5-Zz6">
                                         <rect key="frame" x="8" y="16" width="359" height="21"/>
@@ -455,13 +463,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33Z-Aa-XWP">
-                                <rect key="frame" x="16" y="110" width="343" height="24"/>
+                                <rect key="frame" x="16" y="66" width="343" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-4C-tLE">
-                                <rect key="frame" x="16" y="142" width="343" height="587"/>
+                                <rect key="frame" x="16" y="98" width="343" height="680"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -519,7 +527,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" image="11foot8" translatesAutoresizingMaskIntoConstraints="NO" id="M5k-21-xbs">
-                                <rect key="frame" x="137.66666666666666" y="648" width="100" height="100"/>
+                                <rect key="frame" x="179.66666666666666" y="732" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="100" id="9gc-9V-Yz4"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="Jqn-g3-8iY"/>
@@ -744,37 +752,37 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MO0-vM-Kod">
-                                <rect key="frame" x="46.666666666666664" y="148.33333333333334" width="12" height="12"/>
+                                <rect key="frame" x="46.666666666666657" y="147.33333333333334" width="62.333333333333343" height="14"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95X-UE-pWA">
-                                <rect key="frame" x="70.666666666666671" y="205" width="12" height="12"/>
+                                <rect key="frame" x="70.666666666666671" y="204" width="62.333333333333329" height="14"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18G-av-dFq">
-                                <rect key="frame" x="119" y="261.66666666666669" width="12" height="12"/>
+                                <rect key="frame" x="118.99999999999999" y="260.66666666666669" width="62.333333333333329" height="14"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8im-Lx-TU4">
-                                <rect key="frame" x="66.666666666666671" y="147" width="70.000000000000014" height="15"/>
+                                <rect key="frame" x="117" y="147" width="70" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Tz-hY-Lbv">
-                                <rect key="frame" x="90.666666666666686" y="203.33333333333334" width="94" height="15"/>
+                                <rect key="frame" x="141" y="203.33333333333334" width="94" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anM-yK-34J">
-                                <rect key="frame" x="139" y="260" width="94" height="15"/>
+                                <rect key="frame" x="189.33333333333334" y="260" width="94.000000000000028" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1063,7 +1071,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="cfR-IA-rLJ" kind="relationship" relationship="viewControllers" id="ZH4-ze-G8p"/>
-                        <segue destination="jGO-i0-7IK" kind="relationship" relationship="viewControllers" id="CUI-8K-ZrR"/>
                         <segue destination="a0U-DL-GGk" kind="relationship" relationship="viewControllers" id="rIN-20-v2X"/>
                         <segue destination="eF5-1y-pET" kind="relationship" relationship="viewControllers" id="lyw-zd-w0o"/>
                     </connections>
@@ -1443,7 +1450,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="621" width="359" height="100"/>
+                                <rect key="frame" x="8" y="670" width="359" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
@@ -1475,15 +1482,23 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a2S-4s-mxQ"/>
                     </view>
-                    <navigationItem key="navigationItem" id="sPo-XR-ivW"/>
+                    <navigationItem key="navigationItem" title="Sandbox" id="sPo-XR-ivW">
+                        <barButtonItem key="rightBarButtonItem" id="bIq-dm-Bw3">
+                            <connections>
+                                <action selector="listButtonTapped:" destination="XZG-Pc-5F1" id="NpC-bx-gEl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="customSearchBar" destination="mHU-bZ-GVU" id="t3j-Yz-G2o"/>
+                        <outlet property="listButton" destination="bIq-dm-Bw3" id="cIY-Ub-pcc"/>
                         <outlet property="locationInfoView" destination="Got-PF-0XK" id="5UM-np-VFH"/>
                         <outlet property="mapActionButtons" destination="yHU-Ts-F5E" id="tVV-ej-l3G"/>
                         <outlet property="mapView" destination="Yw8-0P-Y2x" id="eFZ-Oy-Udb"/>
                         <outlet property="searchDisplayController" destination="nZe-Oe-lWg" id="Ot6-hl-pw3"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="sandboxOfficials" id="aS0-JL-Lkj"/>
                         <segue destination="kz7-hW-y3g" kind="presentation" identifier="SearchBarSegue" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="vfU-Ju-7gY"/>
+                        <segue destination="zsX-O5-swd" kind="presentation" identifier="officialsModalSegue" modalTransitionStyle="flipHorizontal" id="RqR-8p-4f9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFN-yo-Ynw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2359,9 +2374,9 @@
         <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Yh7-ve-cIi"/>
+        <segue reference="fZv-Vr-KZp"/>
         <segue reference="rqM-GS-CRU"/>
         <segue reference="JrQ-Sz-hlR"/>
-        <segue reference="MZX-gR-k2v"/>
+        <segue reference="aS0-JL-Lkj"/>
     </inferredMetricsTieBreakers>
 </document>

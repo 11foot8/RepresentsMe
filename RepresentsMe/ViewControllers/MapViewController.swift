@@ -13,6 +13,8 @@ import Foundation
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
 // MapViewController -> SearchBarViewController
 let SEARCH_BAR_SEGUE = "SearchBarSegue"
+// MapViewController -> OfficialsListViewController
+let LIST_MODAL_SEGUE_IDENTIFIER = "officialsModalSegue"
 
 /// The protocol to implement to receive a location when the user selects a
 /// location on the map.
@@ -54,6 +56,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var customSearchBar: CustomSearchBar!
     @IBOutlet weak var locationInfoView: LocationInfo!
     @IBOutlet weak var mapActionButtons: MapActionButtons!
+    @IBOutlet weak var listButton: UIBarButtonItem!
 
     // MARK: - Lifecycle
     /// Sets up the map view and delegates
@@ -82,7 +85,22 @@ class MapViewController: UIViewController {
     /// Hide the navigation bar when the view appears
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        switch reachType {
+        case .map:
+            navigationController?.setNavigationBarHidden(false, animated: animated)
+                listButton.image = UIImage.fontAwesomeIcon(
+                    name: .list,
+                    style: .solid,
+                    textColor: .blue,
+                    size: CGSize(width: 24, height: 24))
+                listButton.isEnabled = true
+                break
+        default:
+            navigationController?.setNavigationBarHidden(true, animated: animated)
+                listButton.image = nil
+                listButton.isEnabled = false
+                break
+        }
     }
 
     /// Update the mapActionButton Location button
@@ -120,6 +138,10 @@ class MapViewController: UIViewController {
                 coordinates: touchMapCoordinate)
             updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: true)
         }
+    }
+
+    @IBAction func listButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: LIST_MODAL_SEGUE_IDENTIFIER, sender: self)
     }
 
     // MARK: - Methods
@@ -291,14 +313,21 @@ class MapViewController: UIViewController {
     }
 
     // MARK: - Segue
+
+
     /// Prepare to segue to the Officials table view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
             let destination = segue.destination as! OfficialsListViewController
             destination.reachType = .map
-            return
-        }
-        if segue.identifier == SEARCH_BAR_SEGUE {
+        } else if segue.identifier == LIST_MODAL_SEGUE_IDENTIFIER {
+            let destinationTabBarVC = segue.destination as? UITabBarController
+            destinationTabBarVC?.selectedIndex = 0
+            let destinationNavVC = destinationTabBarVC?.viewControllers?.first as? UINavigationController
+            let destinationListVC = destinationNavVC?.viewControllers.first as! OfficialsListViewController
+
+            destinationListVC.reachType = .home
+        } else if segue.identifier == SEARCH_BAR_SEGUE {
             let destination = segue.destination as! SearchBarViewController
             destination.searchBarText = self.customSearchBar.searchBarText
             destination.region = mapView.region

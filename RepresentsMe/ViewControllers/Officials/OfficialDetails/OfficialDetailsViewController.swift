@@ -8,12 +8,13 @@
 
 import UIKit
 import MapKit
+import MessageUI
 
 // OfficialDetailsViewController -> OfficialContactViewController
 let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 
 /// The view controller to show the details for an Official
-class OfficialDetailsViewController: UIViewController {
+class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     var official:Official?
     
@@ -49,9 +50,39 @@ class OfficialDetailsViewController: UIViewController {
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
-        if let phoneNumber = URL(string: "tel://\(official!.phones[0])") {
-            UIApplication.shared.open(phoneNumber)
+        let phones = official?.phones.map( { $0.filter("01234567890".contains) } )
+
+        guard phones != nil else {
+            return
         }
+
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action: UIAlertAction) in
+            if let phoneNumber = URL(string: "tel://\(phones![0])") {
+                UIApplication.shared.open(phoneNumber)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Text", style: .default, handler: { (action: UIAlertAction) in
+            let composeVC = MFMessageComposeViewController()
+
+            composeVC.messageComposeDelegate = self
+
+            // Configure the fields of the interface.
+            composeVC.recipients = phones
+
+            // Present the view controller modally.
+            self.present(composeVC, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+            actionSheet.dismiss(animated: true, completion: nil)
+        }))
+
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+
+    func messageComposeViewController(_ controller: MFMessageComposeViewController,
+                                      didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
 
     /// Opens up email app when email button is pressed.
