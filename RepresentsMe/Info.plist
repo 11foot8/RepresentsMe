@@ -25,8 +25,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We use your calendar to export and import events</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We use your camera to take your profile picture</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>We use Face ID to log you in</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use location to find your representatives</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -47,8 +51,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSCalendarsUsageDescription</key>
-	<string>We use your calendar to export and import events</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

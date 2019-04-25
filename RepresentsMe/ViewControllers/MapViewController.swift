@@ -11,6 +11,8 @@ import Foundation
 
 // MapViewController -> OfficialsListViewController
 let SANDBOX_OFFICIALS_SEGUE_IDENTIFIER = "sandboxOfficials"
+// MapViewController -> SearchBarViewController
+let SEARCH_BAR_SEGUE = "SearchBarSegue"
 // MapViewController -> OfficialsListViewController
 let LIST_MODAL_SEGUE_IDENTIFIER = "officialsModalSegue"
 
@@ -25,12 +27,7 @@ protocol LocationSelectionDelegate {
 /// to their home location. Depending on the mode, the map can send the
 /// location to show Officials for the selected Address or to select the
 /// location as the location for an Event.
-class MapViewController: UIViewController,
-                         MKMapViewDelegate,
-                         UISearchBarDelegate,
-                         LocationInfoDelegate,
-                         CustomSearchBarDelegate,
-                         MapActionButtonsDelegate {
+class MapViewController: UIViewController {
 
     /// The modes avaliable for the map view controller
     enum ReachType {
@@ -40,7 +37,6 @@ class MapViewController: UIViewController,
     }
 
     // MARK: - Properties
-    
     // Make regions 10km across
     let regionInMeters:CLLocationDistance = 10000
     // Only request new geocodes when the pin has moved at least 50m
@@ -54,7 +50,6 @@ class MapViewController: UIViewController,
     var annotation:MKAnnotation?
     var reachType:ReachType = .map
     var delegate: LocationSelectionDelegate?
-    var workItem:DispatchWorkItem?
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -64,10 +59,16 @@ class MapViewController: UIViewController,
     @IBOutlet weak var listButton: UIBarButtonItem!
 
     // MARK: - Lifecycle
-    
     /// Sets up the map view and delegates
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // When view becomes active again (like returning from background), update
+        // the MapActionButton LocationButton state
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification, object: nil)
         
         // Setup the map view
         self.setupMapView()
@@ -76,6 +77,9 @@ class MapViewController: UIViewController,
         locationInfoView.delegate = self
         customSearchBar.delegate = self
         mapActionButtons.delegate = self
+
+        // Set search bar button appearance and disable
+        customSearchBar.setMultifunctionButton(icon: .search, enabled: false)
     }
     
     /// Hide the navigation bar when the view appears
@@ -98,6 +102,18 @@ class MapViewController: UIViewController,
                 break
         }
     }
+
+    /// Update the mapActionButton Location button
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mapActionButtons.updateLocationButtonState()
+    }
+
+    /// To be called when app returns from background
+    /// Updates mapActionButtons Location Button in case location services were modified
+    @objc func appDidBecomeActive() {
+        mapActionButtons.updateLocationButtonState()
+    }
     
     /// Show the navigation bar when the view disappears
     override func viewWillDisappear(_ animated: Bool) {
@@ -108,83 +124,33 @@ class MapViewController: UIViewController,
     }
 
     // MARK: - Actions
-    
-    /// Geocode the address given when search started and drop an pin on the
-    /// location if one is found.
-    ///
-    /// - Parameter query:  the entered address
-    func onSearchQuery(query: String) {
-        GeocoderWrapper.geocodeAddressString(query) {(placemark) in
-            let coords = placemark.location!.coordinate
-            self.dropPin(coords: coords,
-                         title: "Searched Address",
-                         replaceSearchedValue: false)
-            self.centerView(on: coords, animated: false)
-        }
-    }
-
-    /// Clear any pins when the search bar is cleared
-    func onSearchClear() {
-        clearPin()
-    }
-
     /// Drops a pin on the selected location when a user long presses the map
     @objc func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.state == .began {
             let touchPoint = gestureRecognizer.location(in: mapView)
+            // Get GPS coordinates of press
             let touchMapCoordinate = mapView.convert(touchPoint,
                                                      toCoordinateFrom: mapView)
 
-            dropPin(coords: touchMapCoordinate,
-                    title: "Dropped pin",
-                    replaceSearchedValue: true)
+            // Create locationInfoItem for this location
+            let locationInfoItem = LocationInfoItem(
+                title:"Dropped Pin",
+                coordinates: touchMapCoordinate)
+            updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: true)
         }
     }
 
-    // MARK: - MapActionButtonsDelegate
-    
-    /// Centers the map on the user's current location
-    func onLocateTouchUp() {
-        if let coordinate = LocationManager.shared.userCoordinate {
-            mapView.showsUserLocation = true
-            centerView(on: coordinate,animated: true)
-            dropPin(coords: coordinate,
-                    title: "Current Location",
-                    replaceSearchedValue: true)
-        }
-    }
-
-    /// Move view to user's saved address and drop a pin
-    func onHomeTouchUp() {
-        UsersDatabase.getCurrentUserAddress {(address, error) in
-            if let _ = error {
-                // TODO: Handle error
-            } else {
-                if let addressStr = address?.description {
-                    GeocoderWrapper.geocodeAddressString(
-                        addressStr) {(placemark) in
-                            
-                        let coords = placemark.location!.coordinate
-                        self.dropPin(coords: coords,
-                                     title: "Home",
-                                     replaceSearchedValue: true)
-                        self.centerView(on: coords, animated: true)
-                    }
-                } else {
-                    // TODO: Handle nil address error
-                }
-            }
-        }
+    @IBAction func listButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: LIST_MODAL_SEGUE_IDENTIFIER, sender: self)
     }
 
     // MARK: - Methods
-    
     /// Clears the set pin
     func clearPin() {
         if let annotation = self.annotation {
             mapView.removeAnnotation(annotation)
+            self.annotation = nil
         }
-        locationInfoView.isHidden = true
     }
 
     /// Drops a pin at the given coordinates
@@ -210,14 +176,75 @@ class MapViewController: UIViewController,
                                      discipline: "",
                                      coordinate: coords)
         mapView.addAnnotation(annotation!)
-        
-        // Update the location info view
+    }
+
+    /// Updates the View Controller for the given LocationInfoItem
+    ///
+    /// - Parameter locationInfoItem:       Item with new location information
+    /// - Parameter replaceSearchedValue:   whether or not to replace the
+    ///                                     search bar text
+    func updateWith(locationInfoItem item:LocationInfoItem, replaceSearchedValue:Bool) {
+        // Get coordinates for pin
+        clearPin()
+        if let coordinates = item.coordinates {
+            centerView(on: coordinates,animated: true)
+            dropPin(coords: coordinates,
+                    title: item.title ?? "Unknown",
+                    replaceSearchedValue: replaceSearchedValue)
+        }
+        // Get address for LocationInfoView
         locationInfoView.isHidden = false
-        locationInfoView.updateWithCoordinates(coords: coords, title: title)
+        locationInfoView.startLoadingAnimation()
+        item.getLocationInfo { (title, coordinates, address, error) in
+            if let _ = error {
+                // TODO: Handle error
+                self.clearPin()
+                return
+            }
+            guard let coordinates = coordinates else {
+                self.clearPin()
+                return
+            }
+            guard let address = address else {
+                self.clearPin()
+                return
+            }
+            // Drop pin if not already dropped
+            if self.annotation == nil {
+                self.centerView(on: coordinates,animated: true)
+                self.dropPin(coords: coordinates,
+                             title: item.title ?? title!,
+                             replaceSearchedValue: replaceSearchedValue)
+            }
+            self.locationInfoView.updateWith(address:address, title:item.title ?? title!)
+            self.locationInfoView.stopLoadingAnimation()
+        }
+    }
+
+    /// Sets up the map view
+    private func setupMapView() {
+        // Default location to the center of the map
+        previousLocation = getCenterLocation(for: mapView)
+        previousGeocodeTime = Date()
+
+        // Center the map on the user if they allowed location services
+        if LocationManager.shared.checkLocationServices() {
+            mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+        }
+
+        // Setup long press gesture recognizer to drop pins
+        let longPressRecognizer = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(MapViewController.handleLongPress))
+        mapView.addGestureRecognizer(longPressRecognizer)
+
+        // Clear any previous pins
+        clearPin()
+        locationInfoView.isHidden = true
     }
 
     // MARK: - Location Utilities
-    
     /// Center mapView on user location with default zoom level,
     /// animate transition.
     func centerViewOnUserLocation() {
@@ -280,14 +307,102 @@ class MapViewController: UIViewController,
     }
 
     // MARK: - Keyboard
-    
     /// Hide keyboard when tapping out of SearchBar
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
-    // MARK: - LocationInfoDelegate
-    
+    // MARK: - Segue
+
+
+    /// Prepare to segue to the Officials table view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
+            let destination = segue.destination as! OfficialsListViewController
+            destination.reachType = .map
+        } else if segue.identifier == LIST_MODAL_SEGUE_IDENTIFIER {
+            let destinationTabBarVC = segue.destination as? UITabBarController
+            destinationTabBarVC?.selectedIndex = 0
+            let destinationNavVC = destinationTabBarVC?.viewControllers?.first as? UINavigationController
+            let destinationListVC = destinationNavVC?.viewControllers.first as! OfficialsListViewController
+
+            destinationListVC.reachType = .home
+        } else if segue.identifier == SEARCH_BAR_SEGUE {
+            let destination = segue.destination as! SearchBarViewController
+            destination.searchBarText = self.customSearchBar.searchBarText
+            destination.region = mapView.region
+            return
+        }
+    }
+
+    @IBAction func unwindToMapView(segue: UIStoryboardSegue) {
+        if segue.identifier == UNWIND_SEARCH_BAR_SEGUE {
+            let source = segue.source as! SearchBarViewController
+            self.customSearchBar.setQuery(source.searchBarText)
+            switch source.unwindType! {
+            case .backArrow:
+                // Do not initiate any search, but update search bar
+                break
+            case .primaryButton,.suggestedResult:
+                // Initiate search request
+                if let searchRequest = source.searchRequest {
+                    let locationInfoItem = LocationInfoItem(title: nil, searchRequest: searchRequest)
+                    self.updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: false)
+                }
+                break
+            }
+        }
+    }
+}
+// MARK: - CustomSearchBarDelegate
+extension MapViewController: CustomSearchBarDelegate {
+    /// Geocode the address given when search started and drop an pin on the
+    /// location if one is found.
+    ///
+    /// - Parameter query:  the entered address
+    func onSearchQuery(query: String) {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = query
+        searchRequest.region = mapView.region
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
+            guard let response = response else {
+                // TODO: Handle Error
+                print("Error: \(error?.localizedDescription ?? "Unknown Error").")
+                return
+            }
+
+            let coords = response.mapItems[0].placemark.location!.coordinate
+            self.dropPin(coords: coords,
+                         title: "Searched Address",
+                         replaceSearchedValue: false)
+            self.centerView(on: coords, animated: false)
+        }
+    }
+
+    /// Clear any pins when the search bar is cleared
+    func onSearchClear() {
+        let _ = customSearchBar.resignFirstResponder()
+        locationInfoView.isHidden = true
+        clearPin()
+    }
+
+    func onSearchBegin() {
+        performSegue(withIdentifier: SEARCH_BAR_SEGUE, sender: self)
+    }
+
+    func onSearchValueChanged() {
+        // Do nothing
+    }
+
+    func multifunctionButtonPressed() {
+        let _ = customSearchBar.resignFirstResponder()
+        self.view.endEditing(true)
+    }
+}
+
+// MARK: - LocationInfoDelegate
+extension MapViewController: LocationInfoDelegate {
     /// Handles when the go button is pressed.
     /// If in the sandbox mode, show the Officials for the given Address.
     /// If selecting a location for an Event, send the Address back to the
@@ -300,7 +415,7 @@ class MapViewController: UIViewController,
             // Selected a location for the sandbox view, show the Officials for
             // that location
             AppState.sandboxAddress = address
-            
+
             // TODO: Check address validity - incl. addresses outside of US
             performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
                          sender: self)
@@ -316,45 +431,27 @@ class MapViewController: UIViewController,
             break
         }
     }
+}
 
-    @IBAction func listButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: LIST_MODAL_SEGUE_IDENTIFIER, sender: self)
-    }
-
-    /// Prepare to segue to the Officials table view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SANDBOX_OFFICIALS_SEGUE_IDENTIFIER {
-            let destination = segue.destination as! OfficialsListViewController
-            destination.reachType = .map
-        } else if segue.identifier == LIST_MODAL_SEGUE_IDENTIFIER {
-            let destinationTabBarVC = segue.destination as? UITabBarController
-            destinationTabBarVC?.selectedIndex = 0
-            let destinationNavVC = destinationTabBarVC?.viewControllers?.first as? UINavigationController
-            let destinationListVC = destinationNavVC?.viewControllers.first as! OfficialsListViewController
-
-            destinationListVC.reachType = .home
-        }
-    }
-    
-    /// Sets up the map view
-    private func setupMapView() {
-        // Default location to the center of the map
-        previousLocation = getCenterLocation(for: mapView)
-        previousGeocodeTime = Date()
-        
-        // Center the map on the user if they allowed location services
-        if LocationManager.shared.checkLocationServices() {
+// MARK: - MapActionButtonsDelegate
+extension MapViewController: MapActionButtonsDelegate {
+    /// Centers the map on the user's current location
+    func onLocateTouchUp() {
+        if let coordinate = LocationManager.shared.userCoordinate {
             mapView.showsUserLocation = true
-            centerViewOnUserLocation()
+            let locationInfoItem = LocationInfoItem(
+                title:"Current Location",
+                coordinates: coordinate)
+            updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: true)
         }
-        
-        // Setup long press gesture recognizer to drop pins
-        let longPressRecognizer = UILongPressGestureRecognizer(
-            target: self,
-            action: #selector(MapViewController.handleLongPress))
-        mapView.addGestureRecognizer(longPressRecognizer)
-        
-        // Clear any previous pins
-        clearPin()
+    }
+
+    /// Move view to user's saved address and drop a pin
+    func onHomeTouchUp() {
+        guard let address = AppState.homeAddress else { return }
+        let locationInfoItem = LocationInfoItem(
+            title: "Home",
+            address: address)
+        self.updateWith(locationInfoItem: locationInfoItem, replaceSearchedValue: true)
     }
 }
