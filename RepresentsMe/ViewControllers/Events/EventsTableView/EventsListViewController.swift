@@ -17,11 +17,18 @@ let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 /// The view controller to show the list of Events for the user's home Address
 class EventsListViewController: UIViewController {
 
+    /// The modes avaliable for the events list view controller
+    enum ReachType {
+        case event      // Mode for showing the user's home Events
+        case official   // Mode for showing Event for a selected Official
+    }
+
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
     
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
+    var reachType:ReachType = .event
     
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
@@ -33,7 +40,7 @@ class EventsListViewController: UIViewController {
         
         // Set table view data source
         self.tableViewDataSource = EventsTableViewDataSource(
-            for: self.eventTableView)
+            for: self.eventTableView, with: reachType)
         self.eventTableView.dataSource = self.tableViewDataSource
         
         // Set search bar delegate
