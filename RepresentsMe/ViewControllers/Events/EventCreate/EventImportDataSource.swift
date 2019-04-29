@@ -31,35 +31,12 @@ class EventImportDataSource: NSObject, UITableViewDataSource {
         if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
             eventStore.requestAccess(to: .event) {(granted, error) in
                 if granted {
-                    self.importEvents()
+                    self.importEvents(eventStore)
                 }
             }
         } else {
-            self.importEvents()
+            self.importEvents(eventStore)
         }
-    }
-    
-    /// Imports the events from the user's calendar
-    private func importEvents() {
-        let eventStore = EKEventStore()
-        let calendars = eventStore.calendars(for: .event)
-        for calendar in calendars {
-            if calendar.title != "US Holidays" &&
-                calendar.title != "Birthdays" {
-                // Only get events up to one month from now
-                let now = Date()
-                let oneMonthAfter = Date(timeIntervalSinceNow: +30*24*3600)
-                let predicate = eventStore.predicateForEvents(
-                    withStart: now,
-                    end: oneMonthAfter,
-                    calendars: [calendar])
-    
-                // Add to list of events
-                self.events += eventStore.events(matching: predicate)
-            }
-        }
-        
-        self.tableView.reloadData()
     }
     
     /// Number of rows is the number of events
@@ -77,5 +54,29 @@ class EventImportDataSource: NSObject, UITableViewDataSource {
         
         cell.event = self.events[indexPath.row]
         return cell
+    }
+    
+    /// Imports the events from the user's calendar
+    ///
+    /// - Parameter eventStore:     the EKEventStore to use to import
+    private func importEvents(_ eventStore:EKEventStore) {
+        let calendars = eventStore.calendars(for: .event)
+        for calendar in calendars {
+            if calendar.title != "US Holidays" &&
+                calendar.title != "Birthdays" {
+                // Only get events up to one month from now
+                let now = Date()
+                let oneMonthAfter = Date(timeIntervalSinceNow: +30*24*3600)
+                let predicate = eventStore.predicateForEvents(
+                    withStart: now,
+                    end: oneMonthAfter,
+                    calendars: [calendar])
+                
+                // Add to list of events
+                self.events += eventStore.events(matching: predicate)
+            }
+        }
+        
+        self.tableView.reloadData()
     }
 }

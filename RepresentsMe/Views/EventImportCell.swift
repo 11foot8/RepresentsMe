@@ -9,10 +9,12 @@
 import UIKit
 import EventKit
 
+/// The table view cell to display a calendar event that can be imported
 class EventImportCell: UITableViewCell {
     
     var event:EKEvent! {
         didSet {
+            // Set the views when an event is given
             nameLabel.text = event.title
             let formatter = DateFormatter()
             formatter.dateFormat = "MM/dd/yyyy"
