@@ -339,11 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
-				13E0E03822776DD600512141 /* EventImportViewController.swift */,
-				13E0E03A22776ED000512141 /* EventImportDataSource.swift */,
-				13E0E03E227775A300512141 /* EventImportDelegate.swift */,
 			);
 			path = EventDetails;
 			sourceTree = "<group>";
@@ -389,6 +385,17 @@
 				13BD31BD22302605000A6BEE /* Fonts */,
 			);
 			path = FontAwesome;
+			sourceTree = "<group>";
+		};
+		13E0E04222777BAA00512141 /* EventCreate */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
+				13E0E03822776DD600512141 /* EventImportViewController.swift */,
+				13E0E03A22776ED000512141 /* EventImportDataSource.swift */,
+				13E0E03E227775A300512141 /* EventImportDelegate.swift */,
+			);
+			path = EventCreate;
 			sourceTree = "<group>";
 		};
 		165B7F65225BE1800095D9E1 /* Entry */ = {
@@ -561,6 +568,7 @@
 			children = (
 				134F9224225E5EBC00B797B4 /* EventsTableView */,
 				13A4F619225F84DC0023E150 /* EventDetails */,
+				13E0E04222777BAA00512141 /* EventCreate */,
 			);
 			path = Events;
 			sourceTree = "<group>";
