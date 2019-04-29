@@ -1622,7 +1622,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q66-YJ-iRP">
-                                        <rect key="frame" x="16" y="8" width="289" height="30"/>
+                                        <rect key="frame" x="16" y="8" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -1689,23 +1689,14 @@
                                             <constraint firstAttribute="width" secondItem="FgN-uW-RSe" secondAttribute="height" multiplier="1:1" id="l69-Zb-sMI"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBq-dp-IDW">
-                                        <rect key="frame" x="321" y="8" width="46" height="30"/>
-                                        <state key="normal" title="Import"/>
-                                        <connections>
-                                            <segue destination="AeI-hN-9v6" kind="show" identifier="importEventSegue" id="ydN-Yd-wfh"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="sBq-dp-IDW" secondAttribute="trailing" constant="8" id="2Zv-Xk-JRM"/>
                                     <constraint firstItem="GGC-al-5xJ" firstAttribute="top" secondItem="jjG-xj-KJq" secondAttribute="bottom" constant="16" id="2k4-u8-ZqO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q66-YJ-iRP" secondAttribute="trailing" constant="16" id="3AI-ei-8az"/>
                                     <constraint firstItem="K76-c1-nRC" firstAttribute="leading" secondItem="GGC-al-5xJ" secondAttribute="trailing" constant="8" id="9bq-h6-1kt"/>
                                     <constraint firstAttribute="trailing" secondItem="Waf-UP-JP0" secondAttribute="trailing" constant="8" id="AGx-UR-DJ3"/>
                                     <constraint firstItem="mQs-8w-Y2B" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="CwX-uA-LF7"/>
-                                    <constraint firstItem="sBq-dp-IDW" firstAttribute="top" secondItem="aRJ-Ee-kRj" secondAttribute="top" constant="8" id="GQ3-71-aHe"/>
-                                    <constraint firstItem="sBq-dp-IDW" firstAttribute="leading" secondItem="Q66-YJ-iRP" secondAttribute="trailing" constant="16" id="H4p-GI-P4Y"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="JQC-6i-upi"/>
                                     <constraint firstItem="Waf-UP-JP0" firstAttribute="leading" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="8" id="NUG-g2-8Tp"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="top" secondItem="Q66-YJ-iRP" secondAttribute="bottom" constant="8" id="NbD-lE-s99"/>
@@ -1740,11 +1731,18 @@
                                 <action selector="cancelTapped:" destination="BQt-xH-cRm" id="KyL-ai-cgx"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Opy-Gz-Uoc">
-                            <connections>
-                                <action selector="saveTapped:" destination="BQt-xH-cRm" id="Ya6-T3-gSK"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="done" systemItem="save" id="Opy-Gz-Uoc">
+                                <connections>
+                                    <action selector="saveTapped:" destination="BQt-xH-cRm" id="Ya6-T3-gSK"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Import" id="CWy-BN-fTD">
+                                <connections>
+                                    <segue destination="AeI-hN-9v6" kind="show" identifier="importEventSegue" id="wDd-5A-v0c"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="eventNameTextField" destination="Q66-YJ-iRP" id="Quw-p8-fkX"/>
