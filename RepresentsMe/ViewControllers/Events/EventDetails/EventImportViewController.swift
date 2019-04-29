@@ -12,10 +12,13 @@ import EventKit
 class EventImportViewController: UIViewController {
     
     var dataSource:EventImportDataSource!
+    var delegate:EventImportDelegate!
+    var listener:EventImportListener!
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         self.dataSource = EventImportDataSource(for: self.tableView)
+        self.delegate = EventImportDelegate(with: self)
     }
 }

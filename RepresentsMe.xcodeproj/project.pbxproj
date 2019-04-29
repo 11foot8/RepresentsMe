@@ -49,6 +49,7 @@
 		13E0E03922776DD600512141 /* EventImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03822776DD600512141 /* EventImportViewController.swift */; };
 		13E0E03B22776ED000512141 /* EventImportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03A22776ED000512141 /* EventImportDataSource.swift */; };
 		13E0E03D22776F9700512141 /* EventImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03C22776F9700512141 /* EventImportCell.swift */; };
+		13E0E03F227775A300512141 /* EventImportDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03E227775A300512141 /* EventImportDelegate.swift */; };
 		165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
@@ -162,6 +163,7 @@
 		13E0E03822776DD600512141 /* EventImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportViewController.swift; sourceTree = "<group>"; };
 		13E0E03A22776ED000512141 /* EventImportDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportDataSource.swift; sourceTree = "<group>"; };
 		13E0E03C22776F9700512141 /* EventImportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportCell.swift; sourceTree = "<group>"; };
+		13E0E03E227775A300512141 /* EventImportDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportDelegate.swift; sourceTree = "<group>"; };
 		165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupAddressViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 				13E0E03822776DD600512141 /* EventImportViewController.swift */,
 				13E0E03A22776ED000512141 /* EventImportDataSource.swift */,
+				13E0E03E227775A300512141 /* EventImportDelegate.swift */,
 			);
 			path = EventDetails;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */,
 				165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */,
 				13E0E03D22776F9700512141 /* EventImportCell.swift in Sources */,
+				13E0E03F227775A300512141 /* EventImportDelegate.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */,

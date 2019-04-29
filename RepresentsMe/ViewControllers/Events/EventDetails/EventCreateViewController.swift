@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import EventKit
 
 // EventCreateViewController -> OfficialsListViewController
 let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
@@ -22,7 +23,8 @@ let IMPORT_EVENT_SEGUE = "importEventSegue"
 class EventCreateViewController: UIViewController,
                                  OfficialSelectionDelegate,
                                  LocationSelectionDelegate,
-                                 DatePopoverViewControllerDelegate {
+                                 DatePopoverViewControllerDelegate,
+                                 EventImportListener {
 
     // MARK: - Properties
     var event: Event?                               // The Event if editing
@@ -112,16 +114,19 @@ class EventCreateViewController: UIViewController,
             let destination = segue.destination as! OfficialsListViewController
             destination.reachType = .event
             destination.delegate = self
-        } else if (segue.identifier == SELECT_LOCATION_SEGUE) {
+        } else if segue.identifier == SELECT_LOCATION_SEGUE {
             // Seguing to select a location
             let destination = segue.destination as! MapViewController
             destination.reachType = .event
             destination.delegate = self
-        } else if (segue.identifier == DATE_POPOVER_SEGUE) {
+        } else if segue.identifier == DATE_POPOVER_SEGUE {
             // Seguing to select a date
             let destination = segue.destination as! DatePopoverViewController
             destination.setup(in: self.view)
             destination.delegate = self
+        } else if segue.identifier == IMPORT_EVENT_SEGUE {
+            let destination = segue.destination as! EventImportViewController
+            destination.listener = self
         }
     }
 
@@ -149,6 +154,20 @@ class EventCreateViewController: UIViewController,
     /// - Parameter date:   the selected date
     func didSelectDate(date: Date) {
         self.set(date: date)
+    }
+    
+    /// When an event is imported populate as many fields as possible with it
+    func eventSelected(_ event: EKEvent) {
+        self.eventNameTextField.text = event.title
+        self.set(date: event.startDate)
+        
+        if let location = event.location {
+            GeocoderWrapper.geocodeAddressString(location) {(placemark) in
+                let address = Address(with: placemark)
+                self.set(location: placemark.location!.coordinate,
+                         address: address)
+            }
+        }
     }
 
     func setupLabels() {
