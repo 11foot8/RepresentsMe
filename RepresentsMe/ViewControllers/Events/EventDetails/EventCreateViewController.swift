@@ -15,6 +15,8 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 // EventCreateViewController -> DatePopoverViewController
 let DATE_POPOVER_SEGUE = "datePopoverSegue"
+// EventCreateViewController -> EventImportViewController
+let IMPORT_EVENT_SEGUE = "importEventSegue"
 
 /// The view controller to handle creating and updating Events
 class EventCreateViewController: UIViewController,
