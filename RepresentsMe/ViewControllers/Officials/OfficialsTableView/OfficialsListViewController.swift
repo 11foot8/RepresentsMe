@@ -136,8 +136,10 @@ class OfficialsListViewController: UIViewController, OfficialsListener {
             switch self.reachType {
             case .home, .event:
                 destination.official = AppState.homeOfficials[indexPath.row]
+                break
             case .map:
                 destination.official = AppState.sandboxOfficials[indexPath.row]
+                break
             }
         } else if segue.identifier == MAP_MODAL_SEGUE_IDENTIFIER {
             AppState.removeHomeAddressListener(self)

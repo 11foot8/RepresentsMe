@@ -13,6 +13,9 @@ import MessageUI
 // OfficialDetailsViewController -> OfficialContactViewController
 let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 
+// OfficialDetailsViewController -> EventsListViewController
+let OFFICIAL_EVENTS_SEGUE_IDENTIFIER = "officialEventsSegueIdentifier"
+
 /// The view controller to show the details for an Official
 class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
@@ -115,10 +118,21 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         UIApplication.shared.open(official!.youtubeURL!)
     }
 
+    @IBAction func eventsButtonPressed(_ sender: Any) {
+        AppState.official = official
+        performSegue(withIdentifier: OFFICIAL_EVENTS_SEGUE_IDENTIFIER, sender: self)
+    }
+
     /// Prepare to segue to the contacts view for the Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == OFFICIAL_CONTACT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? OfficialContactViewController {
+            destination.official = official
+        }
+
+        if segue.identifier == OFFICIAL_EVENTS_SEGUE_IDENTIFIER,
+            let destination = segue.destination as? EventsListViewController {
+            destination.reachType = .official
             destination.official = official
         }
     }
@@ -137,6 +151,8 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         if let official = self.official, let portrait = official.photo {
             portraitImageView.image = portrait
         }
+
+        portraitImageView.layer.cornerRadius = 5.0
     }
     
     /// Centers the map view on the Official's Address

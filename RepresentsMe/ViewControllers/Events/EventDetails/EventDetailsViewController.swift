@@ -10,9 +10,15 @@ import Foundation
 import UIKit
 import MapKit
 import EventKit
+import NVActivityIndicatorView
+import Firebase
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
+// EventDetailsViewController -> OfficialDetailsViewController
+let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
+// EventDetailsViewController -> EventsListViewController
+let USER_EVENTS_SEGUE = "userEventsSegue"
 
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
@@ -25,11 +31,14 @@ let NOT_GOING_RED = UIColor.red
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
-    
+
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
+    @IBOutlet weak var eventOwnerImageView: UIImageView!
+    @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var eventNameLabel: UILabel!
-    @IBOutlet weak var officialNameLabel: UILabel!
+    @IBOutlet weak var officialNameButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
 
@@ -61,8 +70,8 @@ class EventDetailsViewController: UIViewController {
             // Set the labels
             self.setLabels()
 
-            // Set the photo
-            self.setPhoto()
+            // Set the photos
+            self.setPhotos()
 
             // Center the map on the location for the event
             self.setupMapView()
@@ -101,6 +110,13 @@ class EventDetailsViewController: UIViewController {
             let destination = segue.destination as! EventCreateViewController
             destination.event = event
             destination.delegate = delegate
+        } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
+            let destination = segue.destination as! OfficialDetailsViewController
+            destination.official = event?.official
+        } else if segue.identifier == USER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.reachType = .user
+            AppState.userId = event!.owner
         }
     }
 
@@ -131,12 +147,16 @@ class EventDetailsViewController: UIViewController {
             }
         }
     }
-    
+
+    @IBAction func officialNameButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: EVENT_OFFICIAL_SEGUE, sender: self)
+    }
+
     /// Sets the labels for the Event
     private func setLabels() {
         if let event = self.event {
             eventNameLabel.text = event.name
-            officialNameLabel.text = event.official?.name
+            officialNameButton.setTitle(event.official?.name, for: .normal)
             eventDateLabel.text = event.formattedDate
     
             // Set the location
@@ -145,13 +165,42 @@ class EventDetailsViewController: UIViewController {
     }
     
     /// Sets the photo for the Event
-    private func setPhoto() {
-        if let event = self.event, let photo = event.official?.photo {
-            portraitImageView.image = photo
+    private func setPhotos() {
+        if let event = self.event {
+            if let photo = event.official?.photo {
+                portraitImageView.image = photo
+            }
+            portraitImageView.layer.cornerRadius = 5.0
+
+            loadingIndicator.isHidden = false
+            loadingIndicator.color = .black
+            loadingIndicator.startAnimating()
+            ownerLabel.isHidden = true
+            UsersDatabase.getUserProfilePicture(uid: event.owner) { (image, error) in
+                if (error != nil) {
+                    self.eventOwnerImageView.isHidden = true
+                } else {
+                    if let image = image {
+                        self.eventOwnerImageView.image = image
+                        self.ownerLabel.isUserInteractionEnabled = true
+                        self.loadingIndicator.isHidden = true
+                        self.loadingIndicator.isUserInteractionEnabled = false
+                        self.ownerLabel.isHidden = false
+                        self.ownerLabel.isUserInteractionEnabled = false
+
+                        self.eventOwnerImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapEventOwnerImage)))
+                    }
+                }
+                self.loadingIndicator.stopAnimating()
+            }
+            eventOwnerImageView.layer.cornerRadius = 5.0
         }
-        portraitImageView.layer.cornerRadius = 5.0
     }
-    
+
+    @objc private func didTapEventOwnerImage() {
+        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+    }
+
     /// Centers the map on the location for the Event
     private func setupMapView() {
         if let event = self.event {

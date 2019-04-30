@@ -18,23 +18,46 @@ class EventsTableViewDataSource: NSObject,
                                  UISearchBarDelegate,
                                  EventListDelegate,
                                  EventsListener {
-    
+
     var tableView:UITableView   // The table view this is the data source for
     var events:[Event] = []     // The Events being displayed
     var filter:String = ""      // The current filter for Events
+    var reachType:EventsListViewController.ReachType = .event
 
     /// Initializes this data source for the given table view
     ///
     /// - Parameter for:    the table view this is the data source for
-    init(for tableView:UITableView) {
+    /// - Parameter with:   the reach type of the table view, which determines the source
+    init(for tableView:UITableView, with reachType:EventsListViewController.ReachType) {
         self.tableView = tableView
         super.init()
-        AppState.addHomeEventsListener(self)
+
+        self.reachType = reachType
+        switch self.reachType {
+        case .event:
+            AppState.addHomeEventsListener(self)
+            break
+        case .official:
+            AppState.addOfficialEventsListener(self)
+            break
+        case .user:
+            AppState.addUserEventsListener(self)
+            break
+        }
         self.updateTableData()
     }
     
     /// Updates the Events table when new Events are received
     func appStateReceivedHomeEvents(events: [Event]) {
+        self.updateTableData()
+    }
+
+    /// Updates the Events table when new Events are received
+    func appStateReceivedOfficialEvents(events: [Event]) {
+        self.updateTableData()
+    }
+
+    func appStateReceivedUserEvents(events: [Event]) {
         self.updateTableData()
     }
     
@@ -78,8 +101,21 @@ class EventsTableViewDataSource: NSObject,
     
     /// Filters the events and updates the table data
     private func updateTableData() {
+        var eventList:[Event] = []
+        switch reachType {
+        case .event:
+            eventList = AppState.homeEvents
+            break
+        case .official:
+            eventList = AppState.officialEvents
+            break
+        case .user:
+            eventList = AppState.userEvents
+            break
+        }
+
         // Filter the Events
-        self.events = AppState.homeEvents.filter {(event) in
+        self.events = eventList.filter {(event) in
             event.matches(self.filter)
         }
         

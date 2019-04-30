@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 // EventsListViewController -> EventDetailsViewController
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
@@ -17,11 +18,21 @@ let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
 /// The view controller to show the list of Events for the user's home Address
 class EventsListViewController: UIViewController {
 
+    /// The modes avaliable for the events list view controller
+    enum ReachType {
+        case event      // Mode for showing the user's home Events
+        case official   // Mode for showing Events for a selected Official
+        case user       // Mode for shwoing Events for a selected User
+    }
+
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
     
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
+
+    var reachType:ReachType = .event
+    var official:Official?
     
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
@@ -33,8 +44,21 @@ class EventsListViewController: UIViewController {
         
         // Set table view data source
         self.tableViewDataSource = EventsTableViewDataSource(
-            for: self.eventTableView)
+            for: self.eventTableView, with: reachType)
         self.eventTableView.dataSource = self.tableViewDataSource
+
+        // Set navigation bar title
+        switch reachType {
+        case .event:
+            self.navigationItem.title = "Home Events"
+            break
+        case .official:
+            self.navigationItem.title = "\(official!.name)'s Events"
+            break
+        case .user:
+            self.navigationItem.title = "User's Events"
+            break
+        }
         
         // Set search bar delegate
         self.eventSearchBar.delegate = self.tableViewDataSource
@@ -47,6 +71,25 @@ class EventsListViewController: UIViewController {
         // Ensure the navigation bar is shown
         self.navigationController?.setNavigationBarHidden(false,
                                                           animated: false)
+    }
+
+    /// Remove as a listener if moving from parent
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if self.isMovingFromParent {
+            switch self.reachType {
+            case .event:
+                AppState.removeHomeEventsListener(self.tableViewDataSource)
+                break
+            case .official:
+                AppState.removeOfficialEventsListener(self.tableViewDataSource)
+                break
+            case .user:
+                AppState.removeUserEventsListener(self.tableViewDataSource)
+                break
+            }
+        }
     }
 
     /// Segue to the event details view or the events create view
