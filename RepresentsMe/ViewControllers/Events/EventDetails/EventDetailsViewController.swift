@@ -13,6 +13,8 @@ import EventKit
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
+// EventDetailsViewController -> OfficialDetailsViewController
+let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
 
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
@@ -29,7 +31,7 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
-    @IBOutlet weak var officialNameLabel: UILabel!
+    @IBOutlet weak var officialNameButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
 
@@ -101,6 +103,9 @@ class EventDetailsViewController: UIViewController {
             let destination = segue.destination as! EventCreateViewController
             destination.event = event
             destination.delegate = delegate
+        } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
+            let destination = segue.destination as! OfficialDetailsViewController
+            destination.official = event?.official
         }
     }
 
@@ -131,12 +136,16 @@ class EventDetailsViewController: UIViewController {
             }
         }
     }
-    
+
+    @IBAction func officialNameButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: EVENT_OFFICIAL_SEGUE, sender: self)
+    }
+
     /// Sets the labels for the Event
     private func setLabels() {
         if let event = self.event {
             eventNameLabel.text = event.name
-            officialNameLabel.text = event.official?.name
+            officialNameButton.setTitle(event.official?.name, for: .normal)
             eventDateLabel.text = event.formattedDate
     
             // Set the location
