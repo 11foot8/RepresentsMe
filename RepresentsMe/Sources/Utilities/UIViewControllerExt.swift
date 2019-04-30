@@ -44,4 +44,23 @@ extension UIViewController {
         // Present the alert
         self.present(alert, animated: true, completion: completion)
     }
+    
+    /// Presents an alert specific to when an event is exported. Takes user to the
+    /// calendar app if they so desire
+    ///
+    /// - Parameter date:      the date at which the exported event is taking place.
+    func exportEventAlert(date: Date) {
+        let interval = date.timeIntervalSinceReferenceDate
+        let alert = UIAlertController(
+            title: "Success",
+            message: "The event has been exported to your calendar. Would you like to open up the calendar app?",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in
+            UIApplication.shared.open(NSURL(string: "calshow:\(interval)")! as URL)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // Present the alert
+        self.present(alert, animated: true)
+    }
 }

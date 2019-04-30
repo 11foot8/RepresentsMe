@@ -314,9 +314,10 @@ class EventDetailsViewController: UIViewController {
         event.calendar = eventStore.defaultCalendarForNewEvents
         
         // Alert the user to let them know if the export succeeded or failed
+        // If succeeded, give the user the option to open up the calendar app.g
         do {
             try eventStore.save(event,span:.thisEvent)
-            self.alert(title: "Success!", message: "The event has been exported to your calendar")
+            self.exportEventAlert(date: startDate as Date)
         } catch {
             self.alert(title: "Error", message: "Unable to export event to calendar")
         }
