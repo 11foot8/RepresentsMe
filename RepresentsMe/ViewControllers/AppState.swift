@@ -238,6 +238,11 @@ class AppState {
             AppState.officialEvents.append(event)
             AppState.officialEvents.sort()
         }
+
+        if (event.owner == AppState.userId) {
+            AppState.userEvents.append(event)
+            AppState.userEvents.sort()
+        }
     }
 
     /// Initializes the home Officials with the current user's home Address
