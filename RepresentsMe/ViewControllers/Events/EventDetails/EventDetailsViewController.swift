@@ -10,9 +10,15 @@ import Foundation
 import UIKit
 import MapKit
 import EventKit
+import NVActivityIndicatorView
+import Firebase
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
+// EventDetailsViewController -> OfficialDetailsViewController
+let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
+// EventDetailsViewController -> EventsListViewController
+let USER_EVENTS_SEGUE = "userEventsSegue"
 
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
@@ -25,14 +31,19 @@ let NOT_GOING_RED = UIColor.red
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
-    
+
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
+    @IBOutlet weak var eventOwnerImageView: UIImageView!
+    @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var eventNameLabel: UILabel!
-    @IBOutlet weak var officialNameLabel: UILabel!
+    @IBOutlet weak var officialNameButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventLocationLabel: UILabel!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var editButtonLabel: UILabel!
     @IBOutlet weak var deleteEventButton: UIButton!
     @IBOutlet weak var deleteEventButtonLabel: UILabel!
 
@@ -42,11 +53,15 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var maybeButtonLabel: UILabel!
     @IBOutlet weak var notGoingButton: UIButton!
     @IBOutlet weak var notGoingButtonLabel: UILabel!
+    @IBOutlet weak var toolbarView: UIView!
+    var toolbarOut: CGPoint = CGPoint()
+    var toolbarIn: CGPoint = CGPoint()
 
     var event:Event?                              // The Event to display
     var delegate:EventListDelegate?               // The delegate to update
     var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
                                                   // for the current user
+
     let eventStore = EKEventStore()
 
     /// Sets up the view for the Event to display
@@ -55,11 +70,14 @@ class EventDetailsViewController: UIViewController {
             // Set the labels
             self.setLabels()
 
-            // Set the photo
-            self.setPhoto()
+            // Set the photos
+            self.setPhotos()
 
             // Center the map on the location for the event
             self.setupMapView()
+
+            // Set up toolbar
+            self.setupToolbar()
 
             // Set whether or not the user can edit the event
             self.setEditable()
@@ -92,14 +110,53 @@ class EventDetailsViewController: UIViewController {
             let destination = segue.destination as! EventCreateViewController
             destination.event = event
             destination.delegate = delegate
+        } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
+            let destination = segue.destination as! OfficialDetailsViewController
+            destination.official = event?.official
+        } else if segue.identifier == USER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.reachType = .user
+            AppState.userId = event!.owner
         }
     }
-    
+
+    private func setupToolbar() {
+        toolbarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToolbar(tapGestureRecognizer:))))
+
+        var bottomArea: CGFloat = 0.0
+
+        if let tabBarHeight = tabBarController?.tabBar.frame.height {
+            bottomArea += tabBarHeight
+        }
+
+        toolbarIn = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - 16)
+        toolbarOut = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - toolbarView.frame.size.height)
+
+        toolbarView.center = toolbarIn;
+        view.layoutIfNeeded()
+    }
+
+    @objc func didTapToolbar(tapGestureRecognizer: UITapGestureRecognizer) {
+        if toolbarView.frame.origin == toolbarOut {
+            UIView.animate(withDuration: 0.5) {
+                self.toolbarView.frame.origin = self.toolbarIn
+            }
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.toolbarView.frame.origin = self.toolbarOut
+            }
+        }
+    }
+
+    @IBAction func officialNameButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: EVENT_OFFICIAL_SEGUE, sender: self)
+    }
+
     /// Sets the labels for the Event
     private func setLabels() {
         if let event = self.event {
             eventNameLabel.text = event.name
-            officialNameLabel.text = event.official?.name
+            officialNameButton.setTitle(event.official?.name, for: .normal)
             eventDateLabel.text = event.formattedDate
     
             // Set the location
@@ -108,12 +165,42 @@ class EventDetailsViewController: UIViewController {
     }
     
     /// Sets the photo for the Event
-    private func setPhoto() {
-        if let event = self.event, let photo = event.official?.photo {
-            portraitImageView.image = photo
+    private func setPhotos() {
+        if let event = self.event {
+            if let photo = event.official?.photo {
+                portraitImageView.image = photo
+            }
+            portraitImageView.layer.cornerRadius = 5.0
+
+            loadingIndicator.isHidden = false
+            loadingIndicator.color = .black
+            loadingIndicator.startAnimating()
+            ownerLabel.isHidden = true
+            UsersDatabase.getUserProfilePicture(uid: event.owner) { (image, error) in
+                if (error != nil) {
+                    self.eventOwnerImageView.isHidden = true
+                } else {
+                    if let image = image {
+                        self.eventOwnerImageView.image = image
+                        self.ownerLabel.isUserInteractionEnabled = true
+                        self.loadingIndicator.isHidden = true
+                        self.loadingIndicator.isUserInteractionEnabled = false
+                        self.ownerLabel.isHidden = false
+                        self.ownerLabel.isUserInteractionEnabled = false
+
+                        self.eventOwnerImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapEventOwnerImage)))
+                    }
+                }
+                self.loadingIndicator.stopAnimating()
+            }
+            eventOwnerImageView.layer.cornerRadius = 5.0
         }
     }
-    
+
+    @objc private func didTapEventOwnerImage() {
+        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+    }
+
     /// Centers the map on the location for the Event
     private func setupMapView() {
         if let event = self.event {
@@ -218,6 +305,10 @@ class EventDetailsViewController: UIViewController {
     func saveEvent(eventStore:EKEventStore, title:String, startDate:NSDate, endDate:NSDate) {
         let event = EKEvent(eventStore:eventStore)
         event.title = title
+        if let officialName = self.event?.official?.name {
+            event.notes = "Event with \(officialName). Exported from RepresentsMe."
+        }
+        event.location = self.event?.address.description
         event.startDate = startDate as Date?
         event.endDate = endDate as Date?
         event.calendar = eventStore.defaultCalendarForNewEvents
@@ -239,16 +330,13 @@ class EventDetailsViewController: UIViewController {
             if (UsersDatabase.currentUserUID == event.owner) {
                 // User owns the event, let them edit it
                 editButton.isEnabled = true
-                editButton.title = "Edit"
                 deleteEventButton.isEnabled = true
-                deleteEventButton.isHidden = false
-                deleteEventButtonLabel.isHidden = false
             } else {
                 // User does not own the event, do not let them edit it
                 editButton.isEnabled = false
-                deleteEventButton.isHidden = true
-                deleteEventButtonLabel.isHidden = true
+                dimButtonLabel(button: editButton, label: editButtonLabel)
                 deleteEventButton.isEnabled = false
+                dimButtonLabel(button: deleteEventButton, label: deleteEventButtonLabel)
             }
         }
     }
