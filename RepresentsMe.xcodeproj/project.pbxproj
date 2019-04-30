@@ -46,6 +46,10 @@
 		13CCFEF62253B7F9005D6CE1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCFEF52253B7F9005D6CE1 /* Event.swift */; };
 		13DDF424225CED0D008E3D32 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF422225CED0D008E3D32 /* FontAwesome.swift */; };
 		13DDF425225CED0D008E3D32 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDF423225CED0D008E3D32 /* Enum.swift */; };
+		13E0E03922776DD600512141 /* EventImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03822776DD600512141 /* EventImportViewController.swift */; };
+		13E0E03B22776ED000512141 /* EventImportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03A22776ED000512141 /* EventImportDataSource.swift */; };
+		13E0E03D22776F9700512141 /* EventImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03C22776F9700512141 /* EventImportCell.swift */; };
+		13E0E03F227775A300512141 /* EventImportDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03E227775A300512141 /* EventImportDelegate.swift */; };
 		165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
@@ -156,6 +160,10 @@
 		13CCFEF52253B7F9005D6CE1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		13DDF422225CED0D008E3D32 /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
 		13DDF423225CED0D008E3D32 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		13E0E03822776DD600512141 /* EventImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportViewController.swift; sourceTree = "<group>"; };
+		13E0E03A22776ED000512141 /* EventImportDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportDataSource.swift; sourceTree = "<group>"; };
+		13E0E03C22776F9700512141 /* EventImportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportCell.swift; sourceTree = "<group>"; };
+		13E0E03E227775A300512141 /* EventImportDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportDelegate.swift; sourceTree = "<group>"; };
 		165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupAddressViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
@@ -331,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				0DF1F11C225CFD8A008D61CF /* EventDetailsViewController.swift */,
-				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
 				134F9225225E5F3E00B797B4 /* EventListDelegate.swift */,
 			);
 			path = EventDetails;
@@ -378,6 +385,17 @@
 				13BD31BD22302605000A6BEE /* Fonts */,
 			);
 			path = FontAwesome;
+			sourceTree = "<group>";
+		};
+		13E0E04222777BAA00512141 /* EventCreate */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC1668225D06E30088D757 /* EventCreateViewController.swift */,
+				13E0E03822776DD600512141 /* EventImportViewController.swift */,
+				13E0E03A22776ED000512141 /* EventImportDataSource.swift */,
+				13E0E03E227775A300512141 /* EventImportDelegate.swift */,
+			);
+			path = EventCreate;
 			sourceTree = "<group>";
 		};
 		165B7F65225BE1800095D9E1 /* Entry */ = {
@@ -540,6 +558,7 @@
 				16ECF80B225510EA003DEA68 /* LocationInfo */,
 				16ECF80C225510F3003DEA68 /* MapActionButtons */,
 				16ECF80A225510E3003DEA68 /* PickerPopup */,
+				13E0E03C22776F9700512141 /* EventImportCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -549,6 +568,7 @@
 			children = (
 				134F9224225E5EBC00B797B4 /* EventsTableView */,
 				13A4F619225F84DC0023E150 /* EventDetails */,
+				13E0E04222777BAA00512141 /* EventCreate */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -875,6 +895,7 @@
 				169EB6C0225D09C000090CDA /* EmailSettingsViewController.swift in Sources */,
 				134F922A225E8C3800B797B4 /* OfficialsTableViewDelegate.swift in Sources */,
 				1352711A221F74AC00442AA6 /* JSONDivision.swift in Sources */,
+				13E0E03B22776ED000512141 /* EventImportDataSource.swift in Sources */,
 				1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */,
 				134F9226225E5F3E00B797B4 /* EventListDelegate.swift in Sources */,
 				3B9072C822309B2700B8A2F8 /* Address.swift in Sources */,
@@ -886,6 +907,8 @@
 				134F9235225EBA6600B797B4 /* SettingsSegueEntry.swift in Sources */,
 				13A4F614225F83A80023E150 /* AddressSettingsViewController.swift in Sources */,
 				165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */,
+				13E0E03D22776F9700512141 /* EventImportCell.swift in Sources */,
+				13E0E03F227775A300512141 /* EventImportDelegate.swift in Sources */,
 				13527120221F8AA200442AA6 /* Official.swift in Sources */,
 				3B1EFD54221F06E9003176BF /* AppDelegate.swift in Sources */,
 				16E6AF7622567CD4003E3D34 /* UsersDatabase.swift in Sources */,
@@ -896,6 +919,7 @@
 				1683D03D2253D35500350471 /* LoginViewController.swift in Sources */,
 				3BE4383D2255347800EC049B /* OfficialContactViewController.swift in Sources */,
 				3B1EFD5C221F06E9003176BF /* RepresentsMe.xcdatamodeld in Sources */,
+				13E0E03922776DD600512141 /* EventImportViewController.swift in Sources */,
 				134F9233225EA9B200B797B4 /* SettingsTableViewDelegate.swift in Sources */,
 				16C72C2F225FFC6100D43215 /* OfficialCardView.swift in Sources */,
 				16B6B2C622209D8100DB3A5B /* MapViewController.swift in Sources */,
