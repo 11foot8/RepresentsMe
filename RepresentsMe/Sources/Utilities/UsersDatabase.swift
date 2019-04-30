@@ -96,6 +96,24 @@ class UsersDatabase {
             }
         }
     }
+    
+    /// Gets a user's display name by their uid
+    ///
+    /// - Parameter for:            the user's id
+    /// - Parameter completion:     the completion handler
+    static func getDisplayName(for uid:String,
+                               completion: @escaping (String?, Error?) -> ()) {
+        let query = UsersDatabase.db.whereField("uid", isEqualTo: uid)
+        query.getDocuments {(data, error) in
+            if error == nil,
+                let data = data?.documents[0],
+                let displayName = data.data()["displayName"] as? String {
+                return completion(displayName, nil)
+            }
+            
+            return completion(nil, error)
+        }
+    }
 
     // MARK: Create User
 
