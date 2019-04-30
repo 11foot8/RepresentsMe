@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import EventKit
+import NVActivityIndicatorView
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
@@ -27,9 +28,12 @@ let NOT_GOING_RED = UIColor.red
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
-    
+
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
+    @IBOutlet weak var eventOwnerImageView: UIImageView!
+    @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var eventNameLabel: UILabel!
     @IBOutlet weak var officialNameButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
@@ -63,8 +67,8 @@ class EventDetailsViewController: UIViewController {
             // Set the labels
             self.setLabels()
 
-            // Set the photo
-            self.setPhoto()
+            // Set the photos
+            self.setPhotos()
 
             // Center the map on the location for the event
             self.setupMapView()
@@ -154,11 +158,31 @@ class EventDetailsViewController: UIViewController {
     }
     
     /// Sets the photo for the Event
-    private func setPhoto() {
-        if let event = self.event, let photo = event.official?.photo {
-            portraitImageView.image = photo
+    private func setPhotos() {
+        if let event = self.event {
+            if let photo = event.official?.photo {
+                portraitImageView.image = photo
+            }
+            portraitImageView.layer.cornerRadius = 5.0
+
+            loadingIndicator.isHidden = false
+            loadingIndicator.color = .black
+            loadingIndicator.startAnimating()
+            ownerLabel.isHidden = true
+            UsersDatabase.getUserProfilePicture(uid: event.owner) { (image, error) in
+                if (error != nil) {
+                    self.eventOwnerImageView.isHidden = true
+                } else {
+                    if let image = image {
+                        self.eventOwnerImageView.image = image
+                        self.loadingIndicator.isHidden = true
+                        self.ownerLabel.isHidden = false
+                    }
+                }
+                self.loadingIndicator.stopAnimating()
+            }
+            eventOwnerImageView.layer.cornerRadius = 5.0
         }
-        portraitImageView.layer.cornerRadius = 5.0
     }
     
     /// Centers the map on the location for the Event
