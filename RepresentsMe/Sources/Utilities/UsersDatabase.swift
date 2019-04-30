@@ -303,6 +303,8 @@ class UsersDatabase {
     func logoutUser(completion: @escaping (Error?) -> Void) {
         // TODO: Log user out
         do {
+            Util.rememberMeEnabled = false
+            Util.biometricEnabled = false
             try Auth.auth().signOut()
             completion(nil)
         } catch let signOutError as NSError {

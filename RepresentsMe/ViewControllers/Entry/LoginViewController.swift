@@ -42,7 +42,25 @@ class LoginViewController: UIViewController {
     /// Check if credentials were saved
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkRememberedCredentials()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // If user currently logged in
+//        authenticateUserUsingBiometrics()
+        if UsersDatabase.currentUser != nil {
+            // If biometric authentication enabled
+            if Util.biometricEnabled {
+                // Require successful authentication
+                authenticateUserUsingBiometrics()
+            } else {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.switchViewControllers()
+            }
+        } else {
+            checkRememberedCredentials()
+        }
+
     }
 
     // MARK: - Actions
@@ -71,13 +89,6 @@ class LoginViewController: UIViewController {
             if let error = error {
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
-
-                if Util.rememberMeEnabled {
-                    KeychainService.savePassword(service: "RepresentsMe.com", account: email, data: password)
-//                    self.saveAccountDetailsToKeychain(account: email, password: password)
-                } else {
-                    self.clearRememberedCredentials()
-                }
                 self.loginSucceeded()
             }
         }
@@ -85,7 +96,7 @@ class LoginViewController: UIViewController {
 
     /// If rememberMeSwitch turned off, remove saved credentials from memory
     @IBAction func rememberMeValueChanged(_ sender: Any) {
-        UserDefaults.standard.set(rememberMeSwitch.isOn, forKey: REMEMBER_ME_KEY)
+        Util.rememberMeEnabled = rememberMeSwitch.isOn
         if !Util.rememberMeEnabled {
             clearRememberedCredentials()
         }
@@ -127,96 +138,31 @@ class LoginViewController: UIViewController {
 
     /// Clears any saved credentials from UserDefaults
     fileprivate func clearRememberedCredentials() {
-//        if let username = lastAccessedUsername {
-//            removePasswordFromKeychain(username)
-//        }
         // Remove saved username from UserDefaults
         UserDefaults.standard.removeObject(forKey: USERNAME_KEY)
-    }
-
-    /// Saves the given account details to the keychain
-    fileprivate func saveAccountDetailsToKeychain(account: String, password: String) {
-        guard !account.isEmpty, !password.isEmpty else { return }
-        // Save username to UserDefaults
-        UserDefaults.standard.set(account, forKey: USERNAME_KEY)
-        // Save password to keychain
-        let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
-        do {
-            try passwordItem.savePassword(password)
-        } catch {
-            // TODO: Handle error saving password
-        }
-    }
-
-    /// Loads in the saved password for the given user
-    fileprivate func loadPasswordFromKeychain(_ account: String) {
-        guard !account.isEmpty else { return }
-        let passwordItem = KeychainPasswordItem(service:   KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
-        do {
-            let storedPassword = try passwordItem.readPassword()
-            passwordTextField.text = storedPassword
-        } catch KeychainPasswordItem.KeychainError.noPassword {
-            // TODO: Handle error from no saved password
-        } catch {
-            // TOOD: Handle unexpected error
-        }
-    }
-
-    /// Deletes the saved password from the keychain
-    fileprivate func removePasswordFromKeychain(_ account: String) {
-        guard !account.isEmpty else { return }
-        let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
-        do {
-            try passwordItem.deleteItem()
-        } catch {
-            // TODO: Handle error deleting saved password
-        }
-    }
-
-    /// Loads password from keychain and logs user in
-    fileprivate func loadPasswordFromKeychainAndAuthenticateUser(_ account: String) {
-        guard !account.isEmpty else { return }
-        let passwordItem = KeychainPasswordItem(service:   KeychainConfiguration.serviceName, account: account, accessGroup: KeychainConfiguration.accessGroup)
-        do {
-            let storedPassword = try passwordItem.readPassword()
-            // Show the loading animation
-            let hud = LoadingHUD(self.view)
-            self.view.endEditing(true)
-            // Log the user in
-            UsersDatabase.shared.loginUser(withEmail: account,
-                                           password: storedPassword) {(uid, error) in
-                                            // Stop the loading animation
-                                            hud.end()
-
-                                            if let error = error {
-                                                self.alert(title: "Error", message: error.localizedDescription)
-                                            } else {
-                                                self.loginSucceeded()
-                                            }
-            }
-        } catch KeychainPasswordItem.KeychainError.noPassword {
-            // TODO: Handle error from no saved password
-        } catch {
-            // TOOD: Handle unexpected error
-        }
     }
 
     // MARK: - Biometrics Authentication
     /// Uses biometrics to authenticate user
     fileprivate func authenticateUserUsingBiometrics() {
         let context = LAContext()
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
+        context.localizedCancelTitle = "Enter Username/Password"
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
             self.evaluateBiometricsAuthenticity(context: context)
         }
     }
 
     /// Executes biometric authentication and handles success or failure
     func evaluateBiometricsAuthenticity(context: LAContext) {
-        guard let lastAccessedUserName = UserDefaults.standard.object(forKey: USERNAME_KEY) as? String else { return }
-        context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: lastAccessedUserName) { (authSuccessful, authError) in
+        context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: "Log in to your account") { (authSuccessful, authError) in
             if authSuccessful {
-                self.loadPasswordFromKeychainAndAuthenticateUser(lastAccessedUserName)
+                // Continue to logged in
+                DispatchQueue.main.async {
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.switchViewControllers()
+                }
             } else {
+                UsersDatabase.shared.logoutUser(completion: { (error) in })
                 if let error = authError as? LAError {
                     self.showError(error: error)
                 }
