@@ -28,7 +28,9 @@ class EventsListViewController: UIViewController {
     
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
+
     var reachType:ReachType = .event
+    var official:Official?
     
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
@@ -42,6 +44,16 @@ class EventsListViewController: UIViewController {
         self.tableViewDataSource = EventsTableViewDataSource(
             for: self.eventTableView, with: reachType)
         self.eventTableView.dataSource = self.tableViewDataSource
+
+        // Set navigation bar title
+        switch reachType {
+        case .event:
+            self.navigationItem.title = "Home Events"
+            break
+        case .official:
+            self.navigationItem.title = "\(official!.name)'s Events"
+            break
+        }
         
         // Set search bar delegate
         self.eventSearchBar.delegate = self.tableViewDataSource
@@ -54,6 +66,22 @@ class EventsListViewController: UIViewController {
         // Ensure the navigation bar is shown
         self.navigationController?.setNavigationBarHidden(false,
                                                           animated: false)
+    }
+
+    /// Remove as a listener if moving from parent
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if self.isMovingFromParent {
+            switch self.reachType {
+            case .event:
+                AppState.removeHomeEventsListener(self.tableViewDataSource)
+                break
+            case .official:
+                AppState.removeOfficialEventsListener(self.tableViewDataSource)
+                break
+            }
+        }
     }
 
     /// Segue to the event details view or the events create view

@@ -264,8 +264,7 @@ class Event: Comparable {
         ref = Event.db.addDocument(data: self.data) {(error) in
             if error == nil {
                 self.documentID = ref!.documentID
-                AppState.homeEvents.append(self)
-                AppState.homeEvents.sort()
+                AppState.addEvent(self)
             }
             return completion(self, error)
         }

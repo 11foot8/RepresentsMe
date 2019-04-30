@@ -34,10 +34,12 @@ class EventsTableViewDataSource: NSObject,
 
         self.reachType = reachType
         switch self.reachType {
-        case .official:
+        case .event:
             AppState.addHomeEventsListener(self)
+            break
         default:
             AppState.addOfficialEventsListener(self)
+            break
         }
         self.updateTableData()
     }

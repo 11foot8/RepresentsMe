@@ -144,6 +144,10 @@ class AppState {
         if let index = find(listener: listener, in: sandboxAddressListeners) {
             sandboxAddressListeners.remove(at: index)
         }
+
+        if sandboxAddressListeners.count == 0 {
+            sandboxOfficials.removeAll()
+        }
     }
     
     /// Adds a listener for changes in home Events
@@ -175,6 +179,20 @@ class AppState {
     static func removeOfficialEventsListener(_ listener: EventsListener) {
         if let index = find(listener: listener, in: officialEventsListeners) {
             officialEventsListeners.remove(at: index)
+        }
+
+        if officialEventsListeners.count == 0 {
+            officialEvents.removeAll()
+        }
+    }
+
+    static func addEvent(_ event: Event) {
+        AppState.homeEvents.append(event)
+        AppState.homeEvents.sort()
+
+        if (event.official == AppState.official) {
+            AppState.officialEvents.append(event)
+            AppState.officialEvents.sort()
         }
     }
 

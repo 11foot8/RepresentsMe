@@ -133,6 +133,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         if segue.identifier == OFFICIAL_EVENTS_SEGUE_IDENTIFIER,
             let destination = segue.destination as? EventsListViewController {
             destination.reachType = .official
+            destination.official = official
         }
     }
     
