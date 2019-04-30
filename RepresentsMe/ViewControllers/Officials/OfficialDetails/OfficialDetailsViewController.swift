@@ -151,6 +151,8 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         if let official = self.official, let portrait = official.photo {
             portraitImageView.image = portrait
         }
+
+        portraitImageView.layer.cornerRadius = 5.0
     }
     
     /// Centers the map view on the Official's Address
