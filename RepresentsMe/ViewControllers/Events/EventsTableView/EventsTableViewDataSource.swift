@@ -37,8 +37,11 @@ class EventsTableViewDataSource: NSObject,
         case .event:
             AppState.addHomeEventsListener(self)
             break
-        default:
+        case .official:
             AppState.addOfficialEventsListener(self)
+            break
+        case .user:
+            AppState.addUserEventsListener(self)
             break
         }
         self.updateTableData()
@@ -51,6 +54,10 @@ class EventsTableViewDataSource: NSObject,
 
     /// Updates the Events table when new Events are received
     func appStateReceivedOfficialEvents(events: [Event]) {
+        self.updateTableData()
+    }
+
+    func appStateReceivedUserEvents(events: [Event]) {
         self.updateTableData()
     }
     
@@ -98,8 +105,13 @@ class EventsTableViewDataSource: NSObject,
         switch reachType {
         case .event:
             eventList = AppState.homeEvents
+            break
         case .official:
             eventList = AppState.officialEvents
+            break
+        case .user:
+            eventList = AppState.userEvents
+            break
         }
 
         // Filter the Events

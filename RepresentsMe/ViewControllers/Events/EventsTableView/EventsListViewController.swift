@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 // EventsListViewController -> EventDetailsViewController
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
@@ -20,7 +21,8 @@ class EventsListViewController: UIViewController {
     /// The modes avaliable for the events list view controller
     enum ReachType {
         case event      // Mode for showing the user's home Events
-        case official   // Mode for showing Event for a selected Official
+        case official   // Mode for showing Events for a selected Official
+        case user       // Mode for shwoing Events for a selected User
     }
 
     @IBOutlet weak var eventTableView: UITableView!
@@ -53,6 +55,9 @@ class EventsListViewController: UIViewController {
         case .official:
             self.navigationItem.title = "\(official!.name)'s Events"
             break
+        case .user:
+            self.navigationItem.title = "User's Events"
+            break
         }
         
         // Set search bar delegate
@@ -79,6 +84,9 @@ class EventsListViewController: UIViewController {
                 break
             case .official:
                 AppState.removeOfficialEventsListener(self.tableViewDataSource)
+                break
+            case .user:
+                AppState.removeUserEventsListener(self.tableViewDataSource)
                 break
             }
         }

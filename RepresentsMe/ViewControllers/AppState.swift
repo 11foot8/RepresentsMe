@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 /// The protocol to implement to be notified when the home Officials or
 /// sandbox Officials change.
@@ -16,11 +17,12 @@ protocol OfficialsListener {
     func appStateReceivedSandboxOfficials(officials: [Official])
 }
 
-/// The protocol to implement to be notified when the home Events change
-/// Default implementations of both methods makes their implementation optional
+/// The protocol to implement to be notified when home, an Official, or
+/// a User's Events change
 protocol EventsListener {
     func appStateReceivedHomeEvents(events:[Event])
     func appStateReceivedOfficialEvents(events:[Event])
+    func appStateReceivedUserEvents(events:[Event])
 }
 
 /// Manages the Officials for the app.
@@ -84,6 +86,25 @@ class AppState {
         }
     }
 
+    /// The Events for a User
+    static var userEvents:[Event] = []
+
+    /// The Official for Events in officialEvents
+    static var userId:String? {
+        didSet {
+            if userId != nil {
+                loadUserEvents { (events) in
+                    userEvents = events
+                    for listener in userEventsListeners {
+                        listener.appStateReceivedUserEvents(
+                            events: officialEvents)
+                    }
+                }
+            }
+        }
+    }
+
+
     /// The Address for Officials in sandboxOfficials
     static var sandboxAddress:Address? {
         didSet {
@@ -110,6 +131,9 @@ class AppState {
 
     /// The listeners for Officials' Event changes
     private static var officialEventsListeners: [EventsListener] = []
+
+    /// The listeners for a User's Event changes
+    private static var userEventsListeners: [EventsListener] = []
     
     /// The listeners for sandbox address changes
     private static var sandboxAddressListeners:[OfficialsListener] = []
@@ -183,6 +207,26 @@ class AppState {
 
         if officialEventsListeners.count == 0 {
             officialEvents.removeAll()
+        }
+    }
+
+    /// Adds a listener for changes in a User's Events
+    ///
+    /// - Parameter listener:   the EventsListener to add
+    static func addUserEventsListener(_ listener: EventsListener) {
+        userEventsListeners.append(listener)
+    }
+
+    /// Removes a listener for changes in an User's Events
+    ///
+    /// - Parameter listener:   the EventsListener to remove
+    static func removeUserEventsListener(_ listener: EventsListener) {
+        if let index = find(listener: listener, in: userEventsListeners) {
+            userEventsListeners.remove(at: index)
+        }
+
+        if userEventsListeners.count == 0 {
+            userEvents.removeAll()
         }
     }
 
@@ -267,7 +311,7 @@ class AppState {
         }
     }
 
-    /// Loads in the Events for the home Officials
+    /// Loads in the Events for an Official
     ///
     /// - Parameter completion:     the completion handler
     private static func loadOfficialEvents(completion: @escaping ([Event]) -> ()) {
@@ -277,6 +321,27 @@ class AppState {
         // Get Events for each Official
         group.enter()
         Event.allWith(official: self.official!) {(events, error) in
+            // Append the Events and leave
+            result += events
+            group.leave()
+        }
+
+        // Wait until all Events are pulled before returning
+        group.notify(queue: .main) {
+            return completion(result.sorted())
+        }
+    }
+
+    /// Loads in the Events for a User
+    ///
+    /// - Parameter completion:     the completion handler
+    private static func loadUserEvents(completion: @escaping ([Event]) -> ()) {
+        let group = DispatchGroup()
+        var result:[Event] = []
+
+        // Get Events for each Official
+        group.enter()
+        Event.allWith(owner: userId!) { (events, error) in
             // Append the Events and leave
             result += events
             group.leave()

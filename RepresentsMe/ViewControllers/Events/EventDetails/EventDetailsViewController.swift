@@ -11,11 +11,14 @@ import UIKit
 import MapKit
 import EventKit
 import NVActivityIndicatorView
+import Firebase
 
 // EventDetailsViewController -> EventCreateViewController
 let EDIT_EVENT_SEGUE = "editEventSegue"
 // EventDetailsViewController -> OfficialDetailsViewController
 let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
+// EventDetailsViewController -> EventsListViewController
+let USER_EVENTS_SEGUE = "userEventsSegue"
 
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
@@ -110,6 +113,10 @@ class EventDetailsViewController: UIViewController {
         } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
             let destination = segue.destination as! OfficialDetailsViewController
             destination.official = event?.official
+        } else if segue.identifier == USER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.reachType = .user
+            AppState.userId = event!.owner
         }
     }
 
@@ -175,8 +182,13 @@ class EventDetailsViewController: UIViewController {
                 } else {
                     if let image = image {
                         self.eventOwnerImageView.image = image
+                        self.ownerLabel.isUserInteractionEnabled = true
                         self.loadingIndicator.isHidden = true
+                        self.loadingIndicator.isUserInteractionEnabled = false
                         self.ownerLabel.isHidden = false
+                        self.ownerLabel.isUserInteractionEnabled = false
+
+                        self.eventOwnerImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapEventOwnerImage)))
                     }
                 }
                 self.loadingIndicator.stopAnimating()
@@ -184,7 +196,11 @@ class EventDetailsViewController: UIViewController {
             eventOwnerImageView.layer.cornerRadius = 5.0
         }
     }
-    
+
+    @objc private func didTapEventOwnerImage() {
+        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+    }
+
     /// Centers the map on the location for the Event
     private func setupMapView() {
         if let event = self.event {
