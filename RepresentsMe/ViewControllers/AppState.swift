@@ -32,6 +32,9 @@ protocol EventsListener {
 /// New home Officials and new sandbox Officials can be scraped by setting
 /// the home Address and sandbox Address respectively.
 class AppState {
+
+    /// Cache of downloaded images, associated either with their URL or UID
+    static var imageCache = NSCache<NSString, UIImage>()
     
     /// The Address for Officials in homeOfficials
     static var homeAddress:Address? {

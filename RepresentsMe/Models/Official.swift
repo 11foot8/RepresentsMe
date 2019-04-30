@@ -173,10 +173,22 @@ class Official: Equatable, CustomStringConvertible {
             return completion(self, photo)
         }
 
+        if let photoURL = photoURL,
+            let image = AppState.imageCache.object(
+                forKey: NSString(string: photoURL.absoluteString)) {
+            self.photo = image
+            return completion(self, self.photo)
+        }
+
         DispatchQueue.global(qos: .background).async {
             if let photoURL = self.photoURL {
                 if let imageData = try? Data(contentsOf: photoURL) {
-                    self.photo = UIImage(data: imageData)
+                    if let image = UIImage(data: imageData) {
+                        AppState.imageCache.setObject(
+                            image, forKey: NSString(string: photoURL.absoluteString))
+                        self.photo = image
+                    }
+
                     return completion(self, self.photo)
                 }
             }
