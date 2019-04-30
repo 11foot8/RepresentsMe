@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import MessageUI
+import SafariServices
 
 // OfficialDetailsViewController -> OfficialContactViewController
 let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
@@ -98,24 +99,22 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
 
     /// Takes user to a safari webpage related to the selected official
     @IBAction func websiteButtonPressed(_ sender: Any) {
-        if let url = official!.urls[0] {
-            UIApplication.shared.open(url)
-        }
+        presentURL(wrappedURL: official!.urls[0])
     }
 
     /// Takes the user to a safari webpage for the official's facebook
     @IBAction func facebookButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(official!.facebookURL!)
+        presentURL(wrappedURL: official!.facebookURL)
     }
 
     /// Takes the user to a safari webpage for the official's twitter
     @IBAction func twitterButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(official!.twitterURL!)
+        presentURL(wrappedURL: official!.twitterURL)
     }
 
     /// Takes the user to a safari webpage for the official's youtube
     @IBAction func youtubeButtonPressed(_ sender: Any) {
-        UIApplication.shared.open(official!.youtubeURL!)
+        presentURL(wrappedURL: official!.youtubeURL)
     }
 
     @IBAction func eventsButtonPressed(_ sender: Any) {
@@ -195,6 +194,14 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
                                       button: self.emailButton)
             self.disableIfUnavailable(items: official.urls,
                                       button: self.linkButton)
+        }
+    }
+    
+    /// Presents valid URLS in an SFSafariViewController
+    private func presentURL(wrappedURL:URL?) {
+        if let url = wrappedURL {
+            let svc = SFSafariViewController(url: url)
+            present(svc, animated: true, completion: nil)
         }
     }
     
