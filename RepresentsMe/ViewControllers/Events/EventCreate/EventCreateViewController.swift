@@ -44,6 +44,7 @@ class EventCreateViewController: UIViewController,
     @IBOutlet weak var selectedDateLabel: UILabel!
     @IBOutlet weak var selectedLocationLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var importEventBarButton: UIBarButtonItem!
 
     // MARK: - Lifecycle
     /// Sets up the view for the Event if editing an Event
@@ -57,6 +58,12 @@ class EventCreateViewController: UIViewController,
 
         self.setupMapView()
         self.set(date: Date.init())
+
+        importEventBarButton.image = UIImage.fontAwesomeIcon(
+            name: .fileUpload,
+            style: .solid,
+            textColor: .blue,
+            size: CGSize(width: 24, height: 24))
     }
 
     // MARK: - Actions
