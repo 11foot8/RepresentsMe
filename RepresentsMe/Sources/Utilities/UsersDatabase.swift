@@ -86,12 +86,21 @@ class UsersDatabase {
     /// - Parameter completion: the completion handler to run after
     ///                         received server response
     static func getUserProfilePicture(uid: String, completion: @escaping (UIImage?, Error?) -> Void) {
+        if let image = AppState.imageCache.object(forKey: NSString(string: uid)) {
+            return completion(image, nil)
+        }
+
         let imageRef = imagesRef.child(uid)
         imageRef.getData(maxSize: MAX_PROF_PIC_SIZE) { (data, error) in
             if let _ = error {
                 completion(nil, error)
             } else {
                 let image = UIImage(data: data!)
+
+                if let image = image {
+                    AppState.imageCache.setObject(image, forKey: NSString(string: uid))
+                }
+
                 completion(image,nil)
             }
         }
@@ -236,6 +245,7 @@ class UsersDatabase {
                         completion(error)
                     } else {
                         AppState.profilePicture = image
+                        AppState.imageCache.setObject(image, forKey: NSString(string: uid))
                         imageRef.downloadURL(completion: { (url, error) in
                             if let _ = error {
                                 completion(error)
