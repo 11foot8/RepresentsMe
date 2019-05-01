@@ -123,7 +123,9 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
                 self.alert(title: "An Error Occured", message: error!.localizedDescription)
             } else {
                 self.imageButton.setImage(DEFAULT_NOT_LOADED, for: .normal)
-                self.alert(title: "Saved")
+                self.alert(title: "Saved", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

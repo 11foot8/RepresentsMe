@@ -71,7 +71,9 @@ class PasswordSettingsViewController: UIViewController {
                            message: error.localizedDescription)
             } else {
                 // Successfully saved the password
-                self.alert(title: "Saved")
+                self.alert(title: "Saved", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

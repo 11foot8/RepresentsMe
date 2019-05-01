@@ -44,7 +44,9 @@ class DisplayNameSettingsViewController: UIViewController {
             if let error = error {
                 self.alert(title: "Error", message: error.localizedDescription)
             } else {
-                self.alert(title: "Saved")
+                self.alert(title: "Saved", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

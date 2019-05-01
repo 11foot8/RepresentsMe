@@ -171,7 +171,9 @@ class AddressSettingsViewController: UIViewController, StatePopoverViewControlle
                     // TODO: Handle error
                 } else {
                     AppState.homeAddress = address
-                    self.alert(title: "Saved")
+                    self.alert(title: "Saved", completion: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
                 }
             }
         }

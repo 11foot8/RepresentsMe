@@ -494,7 +494,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-4C-tLE">
-                                <rect key="frame" x="16" y="74" width="382" height="662"/>
+                                <rect key="frame" x="16" y="74" width="382" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1113,7 +1113,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="j93-xL-khW">
-                                <rect key="frame" x="0.0" y="76" width="414" height="660"/>
+                                <rect key="frame" x="0.0" y="76" width="414" height="616"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="153" id="fYP-9H-zhh" customClass="EventCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -1357,7 +1357,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntz-hN-dZs" customClass="ToolbarView" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="718" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="674" width="414" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNp-ks-qYO">
                                         <rect key="frame" x="294" y="17.666666666666629" width="30" height="29"/>
@@ -1558,21 +1558,21 @@
                                 </connections>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHU-bZ-GVU" userLabel="SearchView" customClass="CustomSearchBar" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="72" width="398" height="40"/>
+                                <rect key="frame" x="8" y="28" width="398" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="CRH-sD-XDe"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="628" width="398" height="100"/>
+                                <rect key="frame" x="8" y="584" width="398" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHU-Ts-F5E" customClass="MapActionButtons" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="366" y="120" width="40" height="80"/>
+                                <rect key="frame" x="366" y="76" width="40" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="57K-43-DmL"/>
@@ -1694,7 +1694,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRJ-Ee-kRj">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="672"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q66-YJ-iRP">
                                         <rect key="frame" x="16" y="8" width="382" height="30"/>
@@ -1742,7 +1742,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-UP-JP0">
-                                        <rect key="frame" x="8" y="504.66666666666657" width="398" height="203.33333333333331"/>
+                                        <rect key="frame" x="8" y="504.66666666666657" width="398" height="159.33333333333331"/>
                                     </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K76-c1-nRC">
                                         <rect key="frame" x="325" y="472" width="30" height="29"/>
@@ -1898,7 +1898,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ojL-YN-xQu">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="672"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventImportCell" rowHeight="80" id="fRc-tz-cXt" customClass="EventImportCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -2600,9 +2600,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Yh7-ve-cIi"/>
-        <segue reference="rqM-GS-CRU"/>
+        <segue reference="kWx-5d-f1X"/>
         <segue reference="fvg-9z-gyX"/>
-        <segue reference="7wb-vX-DZx"/>
+        <segue reference="JrQ-Sz-hlR"/>
         <segue reference="EnH-nx-c8p"/>
         <segue reference="aS0-JL-Lkj"/>
     </inferredMetricsTieBreakers>
