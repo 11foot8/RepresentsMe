@@ -105,6 +105,24 @@ class UsersDatabase {
             }
         }
     }
+    
+    /// Gets a user's display name by their uid
+    ///
+    /// - Parameter for:            the user's id
+    /// - Parameter completion:     the completion handler
+    static func getDisplayName(for uid:String,
+                               completion: @escaping (String?, Error?) -> ()) {
+        let query = UsersDatabase.db.whereField("uid", isEqualTo: uid)
+        query.getDocuments {(data, error) in
+            if error == nil,
+                let data = data?.documents[0],
+                let displayName = data.data()["displayName"] as? String {
+                return completion(displayName, nil)
+            }
+            
+            return completion(nil, error)
+        }
+    }
 
     // MARK: Create User
 
@@ -137,14 +155,17 @@ class UsersDatabase {
                                 // User successfully logged in
                                 if let user = Auth.auth().currentUser {
                                     let uid = user.uid
-                                    UsersDatabase.db.document(uid).setData(["uid":uid], completion: { (error) in
-                                        if let _ = error {
-                                            // TODO: Handle error
+                                    let data:[String: Any] = [
+                                        "uid": uid,
+                                        "displayName": user.displayName ?? ""
+                                    ]
+                                    UsersDatabase.db.document(uid).setData(data) {(error) in
+                                        if let error = error {
                                             completion(error)
                                         } else {
                                             self.setUserAddress(uid: uid, address: address, completion: completion)
                                         }
-                                    })
+                                    }
                                 } else {
                                     // TODO: Handle no current user error
                                     let error:Error = NoCurrentUserError.noCurrentUser
@@ -215,18 +236,22 @@ class UsersDatabase {
         }
     }
 
-    func changeUserDisplayName(newDisplayName:String, completion: @escaping (Error?) -> Void) {
+    func changeUserDisplayName(newDisplayName:String,
+                               completion: @escaping (Error?) -> Void) {
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = newDisplayName
-        changeRequest?.commitChanges(completion: { (error) in
-            if let _ = error {
-                // TODO: Handle error
-                completion(error)
-                return
+        changeRequest?.commitChanges {(error) in
+            if let error = error {
+                return completion(error)
             } else {
-                completion(nil)
+                let document = UsersDatabase.db.document(
+                    UsersDatabase.currentUserUID!)
+                document.setData(["displayName": newDisplayName],
+                                 merge: true) {(error) in
+                    return completion(error)
+                }
             }
-        })
+        }
     }
 
     /// Changes the current user's profile picture to the provided UIImage
