@@ -105,6 +105,13 @@ class SettingsTableViewDataSource: NSObject, UITableViewDataSource {
                     icon: .userLock,
                     segueID: "BiometricSettingsSegue")
                 ]),
+            SettingsSection(name: "Preferences", entries: [
+                SettingsSegueEntry(
+                    parent: parent,
+                    name: "External Links",
+                    icon: .link,
+                    segueID: "ExternalLinkSegue")
+                ]),
             SettingsSection(name: "", entries: [
                 SettingsLogoutEntry(
                     parent: parent,
