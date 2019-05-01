@@ -19,8 +19,12 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = false
 
+        imageButton.contentMode = .scaleAspectFill
+        imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.setImage(AppState.profilePicture, for: .normal)
         imageButton.layer.cornerRadius = 100.0
+        imageButton.layer.borderColor = UIColor.black.cgColor
+        imageButton.layer.borderWidth = 0.5
         imageButton.clipsToBounds = true
     }
 
@@ -122,8 +126,6 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
                 self.alert(title: "Saved")
             }
         }
-
-
     }
     
     // MARK: - ImagePickerControllerDelegate
@@ -151,10 +153,10 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
 
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        if(widthRatio < heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: targetSize.height)
         } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+            newSize = CGSize(width: targetSize.width,  height: size.height * widthRatio)
         }
 
         // This is the rect that we've calculated out and this is what is actually used below

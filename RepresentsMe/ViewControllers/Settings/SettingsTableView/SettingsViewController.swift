@@ -59,7 +59,9 @@ class SettingsViewController: UIViewController,
             addressLabel.text = "\(address.addressLine1())\n\(address.addressLine2())"
         }
         profilePictureImageView.image = AppState.profilePicture
-        profilePictureImageView.layer.cornerRadius = 50
+        profilePictureImageView.layer.cornerRadius = 50.0
+        profilePictureImageView.layer.borderWidth = 0.5
+        profilePictureImageView.layer.borderColor = UIColor.black.cgColor
         profilePictureImageView.clipsToBounds = true
     }
 }
