@@ -54,7 +54,9 @@ class EmailSettingsViewController: UIViewController {
                            message: error.localizedDescription)
             } else {
                 // Successfully updated
-                self.alert(title: "Saved")
+                self.alert(title: "Saved", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

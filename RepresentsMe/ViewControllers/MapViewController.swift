@@ -34,6 +34,17 @@ class MapViewController: UIViewController {
         case map        // The sandbox mode
         case event      // The mode for selecting a location for an Event
         case settings   // The mode for selecting user's home location in settings
+
+        func title() -> String {
+            switch self {
+            case .map:
+                return "Sanbox"
+            case .event:
+                return "Event"
+            case .settings:
+                return "Settings"
+            }
+        }
     }
 
     // MARK: - Properties
@@ -57,6 +68,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var locationInfoView: LocationInfo!
     @IBOutlet weak var mapActionButtons: MapActionButtons!
     @IBOutlet weak var listButton: UIBarButtonItem!
+    var backButton: UIBarButtonItem?
 
     // MARK: - Lifecycle
     /// Sets up the map view and delegates
@@ -85,9 +97,10 @@ class MapViewController: UIViewController {
     /// Hide the navigation bar when the view appears
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationItem.title = reachType.title()
         switch reachType {
         case .map:
-            navigationController?.setNavigationBarHidden(false, animated: animated)
                 listButton.image = UIImage.fontAwesomeIcon(
                     name: .list,
                     style: .solid,
@@ -96,10 +109,10 @@ class MapViewController: UIViewController {
                 listButton.isEnabled = true
                 break
         default:
-            navigationController?.setNavigationBarHidden(true, animated: animated)
-                listButton.image = nil
-                listButton.isEnabled = false
-                break
+            backButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: nil)
+            listButton.image = nil
+            listButton.isEnabled = false
+            break
         }
     }
 

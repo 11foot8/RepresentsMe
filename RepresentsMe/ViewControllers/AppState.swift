@@ -32,7 +32,7 @@ protocol EventsListener {
 /// New home Officials and new sandbox Officials can be scraped by setting
 /// the home Address and sandbox Address respectively.
 class AppState {
-
+    // MARK: - Properties
     /// Cache of downloaded images, associated either with their URL or UID
     static var imageCache = NSCache<NSString, UIImage>()
     
@@ -141,6 +141,10 @@ class AppState {
     /// The listeners for sandbox address changes
     private static var sandboxAddressListeners:[OfficialsListener] = []
 
+    static var openExternalLinksInSafari:Bool = false
+    static var openCalendarOnEventExport:Bool = false
+
+    // MARK: - Methods
     /// Adds a listener for changes in the home address
     ///
     /// - Parameter listener:   the OfficialsListener to add
@@ -267,6 +271,16 @@ class AppState {
             } else {
                 if let image = image {
                     profilePicture = image
+                }
+            }
+        }
+        UsersDatabase.getUserPreferences(for: UsersDatabase.currentUserUID ?? "") { (preferences, error) in
+            if error != nil {
+                // TODO: Handle Error
+            } else {
+                if let preferences = preferences {
+                    AppState.openExternalLinksInSafari = preferences[EXTERNAL_LINK_PREFERENCES_KEY] as? Bool ?? false
+                    AppState.openCalendarOnEventExport = preferences[CALENDAR_EXPORT_PREFERENCES_KEY] as? Bool ?? false
                 }
             }
         }

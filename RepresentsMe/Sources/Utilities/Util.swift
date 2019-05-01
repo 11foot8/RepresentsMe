@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 /// Key for accessing rememberMeEnabled from UserDefaults
 let REMEMBER_ME_KEY = "rememberMeEnabled"
+let BIOMETRIC_KEY = "biometricAuthenticationEnabled"
 
 class Util {
     static func isValidEmail(testStr:String) -> Bool {
@@ -20,8 +22,23 @@ class Util {
 
     /// Whether rememberMe is enabled or not
     static var rememberMeEnabled:Bool {
-        let enabled = UserDefaults.standard.object(forKey: REMEMBER_ME_KEY) as? Bool
-        return enabled ?? false
+        get {
+            let enabled = UserDefaults.standard.object(forKey: REMEMBER_ME_KEY) as? Bool
+            return enabled ?? false
+        }
+        set(enabled) {
+            UserDefaults.standard.set(enabled, forKey: REMEMBER_ME_KEY)
+        }
+    }
+
+    static var biometricEnabled:Bool {
+        get {
+            let enabled = UserDefaults.standard.object(forKey: BIOMETRIC_KEY) as? Bool
+            return enabled ?? false
+        }
+        set(enabled) {
+            UserDefaults.standard.set(enabled, forKey: BIOMETRIC_KEY)
+        }
     }
 
     /// Reasons an address can be valid or invalid

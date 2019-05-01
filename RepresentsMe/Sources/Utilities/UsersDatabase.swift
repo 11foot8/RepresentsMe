@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 
 let MAX_PROF_PIC_SIZE: Int64 = 10 * 1024 * 1024 // MAX profile pic size is 10 MB
+let EXTERNAL_LINK_PREFERENCES_KEY = "openExternalLinksInSafari"
+let CALENDAR_EXPORT_PREFERENCES_KEY = "openExportedEventsInCalendar"
 
 class UsersDatabase {
     static let collection = "users" // Database collection
@@ -124,7 +126,22 @@ class UsersDatabase {
         }
     }
 
-    // MARK: Create User
+    static func getUserPreferences(for uid:String, completion: @escaping ([String:Any]?, Error?) -> ()) {
+        let query = UsersDatabase.db.whereField("uid", isEqualTo: uid)
+        query.getDocuments { (data, error) in
+            if error == nil,
+                let data = data?.documents[0],
+                let externalLinkPreference = data.data()[EXTERNAL_LINK_PREFERENCES_KEY] as? Bool,
+                let calendarExportPreference = data.data()[CALENDAR_EXPORT_PREFERENCES_KEY] as? Bool {
+                var dict = [EXTERNAL_LINK_PREFERENCES_KEY:externalLinkPreference,
+                            CALENDAR_EXPORT_PREFERENCES_KEY:calendarExportPreference]
+                return completion(dict,nil)
+            }
+            return completion(nil, error)
+        }
+    }
+
+    // MARK: - Create User
 
     /// Builds a User
     ///
@@ -157,7 +174,9 @@ class UsersDatabase {
                                     let uid = user.uid
                                     let data:[String: Any] = [
                                         "uid": uid,
-                                        "displayName": user.displayName ?? ""
+                                        "displayName": user.displayName ?? "",
+                                        EXTERNAL_LINK_PREFERENCES_KEY: false,
+                                        CALENDAR_EXPORT_PREFERENCES_KEY: false
                                     ]
                                     UsersDatabase.db.document(uid).setData(data) {(error) in
                                         if let error = error {
@@ -321,6 +340,20 @@ class UsersDatabase {
         }
     }
 
+    /// Sets current user's preference for opening external links in Safari.
+    /// If true, links will be opened in safari by default
+    func setCurrentUserExternalLinkPreference(openExternalLinkInSafari:Bool, completion:@escaping (Error?) -> Void) {
+        let userData = [EXTERNAL_LINK_PREFERENCES_KEY: openExternalLinkInSafari]
+        UsersDatabase.db.document(UsersDatabase.currentUserUID ?? "").updateData(userData, completion: completion)
+    }
+
+    /// Sets current user's preference for opening calendar app when exporting events.
+    /// If true, calendar will be opened automatically when exporting an app.
+    func setCurrentUserCalendarExportPreference(openCalendarOnEventExport:Bool, completion:@escaping (Error?) -> Void) {
+        let userData = [CALENDAR_EXPORT_PREFERENCES_KEY: openCalendarOnEventExport]
+        UsersDatabase.db.document(UsersDatabase.currentUserUID ?? "").updateData(userData, completion: completion)
+    }
+
     // MARK: - Login/Logout
     func loginUser(withEmail email:String, password:String, completion:@escaping (String?, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
@@ -338,6 +371,8 @@ class UsersDatabase {
     func logoutUser(completion: @escaping (Error?) -> Void) {
         // TODO: Log user out
         do {
+            Util.rememberMeEnabled = false
+            Util.biometricEnabled = false
             try Auth.auth().signOut()
             completion(nil)
         } catch let signOutError as NSError {

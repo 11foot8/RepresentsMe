@@ -19,23 +19,55 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = false
 
-        imageView.image = AppState.profilePicture
-        imageView.layer.cornerRadius = 100.0
-        imageView.clipsToBounds = true
+        imageButton.contentMode = .scaleAspectFill
+        imageButton.imageView?.contentMode = .scaleAspectFill
+        imageButton.setImage(AppState.profilePicture, for: .normal)
+        imageButton.layer.cornerRadius = 100.0
+        imageButton.layer.borderColor = UIColor.black.cgColor
+        imageButton.layer.borderWidth = 0.5
+        imageButton.clipsToBounds = true
     }
 
     // MARK: - Outlets
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageButton: UIButton!
 
     // MARK: - Actions
-    @IBAction func selectPictureTouchUp(_ sender: Any) {
-        self.present(imagePicker, animated: true, completion: nil)
+    @IBAction func imageButtonTouchUp(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let selectPhoto = UIAlertAction(title: "Select Photo form Library", style: .default) { (action) in
+            // TODO: Select photo
+            self.selectFromLibrary()
+        }
+
+        let takePhoto = UIAlertAction(title: "Take Photo with Camera", style: .default) { (action) in
+            // TODO: Take Photo
+            self.takeWithCamera()
+        }
+
+        let removePhoto = UIAlertAction(title: "Remove Photo", style: .destructive) { (action) in
+            // TODO: Remove photo
+            self.remove()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            // TODO: Cancel
+        }
+
+        actionSheet.addAction(selectPhoto)
+        actionSheet.addAction(takePhoto)
+        actionSheet.addAction(removePhoto)
+        actionSheet.addAction(cancelAction)
+
+        self.present(actionSheet, animated: true, completion: nil)
+
     }
+
     @IBAction func saveTouchUp(_ sender: Any) {
         // Hide the keyboard
         self.view.endEditing(true)
 
-        if let image = imageView.image {
+        if let image = imageButton.image(for: .normal) {
             if image == DEFAULT_NOT_LOADED {
                 // no new image
                 self.alert(title: "No Image",
@@ -47,8 +79,14 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
         }
     }
 
-    @IBAction func removeTouchUp(_ sender: Any) {
-        self.remove()
+    private func selectFromLibrary() {
+        imagePicker.sourceType = .photoLibrary
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+
+    private func takeWithCamera() {
+        imagePicker.sourceType = .camera
+        self.present(imagePicker, animated: true, completion: nil)
     }
 
     /// Saves the image.
@@ -84,12 +122,12 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
             if let _ = error {
                 self.alert(title: "An Error Occured", message: error!.localizedDescription)
             } else {
-                self.imageView.image = DEFAULT_NOT_LOADED
-                self.alert(title: "Saved")
+                self.imageButton.setImage(DEFAULT_NOT_LOADED, for: .normal)
+                self.alert(title: "Saved", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
-
-
     }
     
     // MARK: - ImagePickerControllerDelegate
@@ -97,7 +135,7 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let newSize = CGSize(width: 1000, height: 1000)
             if let resizedImage = resizeImage(image: pickedImage, targetSize: newSize) {
-                imageView.image = resizedImage
+                imageButton.setImage(resizedImage, for: .normal)
             } else {
                 // TODO: Handle error
                 print("Failed to resize image")
@@ -117,10 +155,10 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
 
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        if(widthRatio < heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: targetSize.height)
         } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+            newSize = CGSize(width: targetSize.width,  height: size.height * widthRatio)
         }
 
         // This is the rect that we've calculated out and this is what is actually used below

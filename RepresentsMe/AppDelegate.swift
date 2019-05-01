@@ -18,16 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        // If user still logged in
         if Auth.auth().currentUser != nil {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "mainTabBarViewController")
-            self.window?.rootViewController = viewController
-            
-            AppState.setup()
-        } else {
-            // TODO: nothing?
+            // If biometric authentication not enabled, proceed to MainTabBarViewController
+            if !Util.biometricEnabled {
+                // User is still logged in and does not require authentication to stay logged in
+                switchViewControllers()
+            }
         }
-
         return true
     }
 
@@ -107,6 +105,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+
+    // MARK: - Switching view controllers
+    func switchViewControllers() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "mainTabBarViewController")
+        self.window?.rootViewController = viewController
+
+        AppState.setup()
     }
 
 }

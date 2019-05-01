@@ -31,7 +31,18 @@ let NOT_GOING_RED = UIColor.red
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
 class EventDetailsViewController: UIViewController {
+    // MARK: - Properties
+    var toolbarOut: CGPoint = CGPoint()
+    var toolbarIn: CGPoint = CGPoint()
 
+    var event:Event?                              // The Event to display
+    var delegate:EventListDelegate?               // The delegate to update
+    var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
+    // for the current user
+
+    let eventStore = EKEventStore()
+
+    // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var eventOwnerImageView: UIImageView!
@@ -54,16 +65,8 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var notGoingButton: UIButton!
     @IBOutlet weak var notGoingButtonLabel: UILabel!
     @IBOutlet weak var toolbarView: UIView!
-    var toolbarOut: CGPoint = CGPoint()
-    var toolbarIn: CGPoint = CGPoint()
 
-    var event:Event?                              // The Event to display
-    var delegate:EventListDelegate?               // The delegate to update
-    var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
-                                                  // for the current user
-
-    let eventStore = EKEventStore()
-
+    // MARK: - Lifecycle
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
         if event != nil {
@@ -87,6 +90,7 @@ class EventDetailsViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
     /// Segue to edit the Event
     @IBAction func editButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: EDIT_EVENT_SEGUE, sender: self)
@@ -102,38 +106,6 @@ class EventDetailsViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         })
-    }
-
-    /// Prepare to segue to edit the Event
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == EDIT_EVENT_SEGUE {
-            let destination = segue.destination as! EventCreateViewController
-            destination.event = event
-            destination.delegate = delegate
-        } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
-            let destination = segue.destination as! OfficialDetailsViewController
-            destination.official = event?.official
-        } else if segue.identifier == USER_EVENTS_SEGUE {
-            let destination = segue.destination as! EventsListViewController
-            destination.reachType = .user
-            AppState.userId = event!.owner
-        }
-    }
-
-    private func setupToolbar() {
-        toolbarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToolbar(tapGestureRecognizer:))))
-
-        var bottomArea: CGFloat = 0.0
-
-        if let tabBarHeight = tabBarController?.tabBar.frame.height {
-            bottomArea += tabBarHeight
-        }
-
-        toolbarIn = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - 16)
-        toolbarOut = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - toolbarView.frame.size.height)
-
-        toolbarView.center = toolbarIn;
-        view.layoutIfNeeded()
     }
 
     @objc func didTapToolbar(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -161,6 +133,43 @@ class EventDetailsViewController: UIViewController {
     
             // Set the location
             self.eventLocationLabel.text = event.address.description
+        }
+    }
+
+    @IBAction func setRSVPGoing(_ sender: Any) {
+        setRSVPStatus(status: .going)
+    }
+
+    @IBAction func setRSVPMaybe(_ sender: Any) {
+        setRSVPStatus(status: .maybe)
+    }
+
+    @IBAction func setRSVPNotGoing(_ sender: Any) {
+        setRSVPStatus(status: .notGoing)
+    }
+
+    @IBAction func exportEvent(_ sender: Any) {
+        let name = self.event?.name
+        let startDate = self.event?.date
+        // Set end date to be an hour after the start date
+        // TODO: add end date field to Event model
+        let endDate = startDate!.addingTimeInterval(60*60)
+
+        // If the authorization status for calendar access isn't authorized, request
+        // access again and then export the event. Otherwise, just export the event
+        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+            eventStore.requestAccess(to: .event, completion: {
+                (granted, error) in
+                self.saveEvent(eventStore:self.eventStore,
+                               title:name!,
+                               startDate: startDate! as NSDate,
+                               endDate: endDate as NSDate)
+            })
+        } else {
+            saveEvent(eventStore:eventStore,
+                      title:name!,
+                      startDate: startDate! as NSDate,
+                      endDate: endDate as NSDate)
         }
     }
     
@@ -201,6 +210,38 @@ class EventDetailsViewController: UIViewController {
         performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
     }
 
+    /// Prepare to segue to edit the Event
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == EDIT_EVENT_SEGUE {
+            let destination = segue.destination as! EventCreateViewController
+            destination.event = event
+            destination.delegate = delegate
+        } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
+            let destination = segue.destination as! OfficialDetailsViewController
+            destination.official = event?.official
+        } else if segue.identifier == USER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.reachType = .user
+            AppState.userId = event!.owner
+        }
+    }
+
+    private func setupToolbar() {
+        toolbarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToolbar(tapGestureRecognizer:))))
+
+        var bottomArea: CGFloat = 0.0
+
+        if let tabBarHeight = tabBarController?.tabBar.frame.height {
+            bottomArea += tabBarHeight
+        }
+
+        toolbarIn = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - 16)
+        toolbarOut = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - bottomArea - toolbarView.frame.size.height)
+
+        toolbarView.center = toolbarIn;
+        view.layoutIfNeeded()
+    }
+
     /// Centers the map on the location for the Event
     private func setupMapView() {
         if let event = self.event {
@@ -213,18 +254,6 @@ class EventDetailsViewController: UIViewController {
                                                   discipline: "",
                                                   coordinate: event.location))
         }
-    }
-
-    @IBAction func setRSVPGoing(_ sender: Any) {
-        setRSVPStatus(status: .going)
-    }
-
-    @IBAction func setRSVPMaybe(_ sender: Any) {
-        setRSVPStatus(status: .maybe)
-    }
-
-    @IBAction func setRSVPNotGoing(_ sender: Any) {
-        setRSVPStatus(status: .notGoing)
     }
 
     func setRSVPStatus(status: RSVPType) {
@@ -276,31 +305,6 @@ class EventDetailsViewController: UIViewController {
             break
         }
     }
-
-    @IBAction func exportEvent(_ sender: Any) {
-        let name = self.event?.name
-        let startDate = self.event?.date
-        // Set end date to be an hour after the start date
-        // TODO: add end date field to Event model
-        let endDate = startDate!.addingTimeInterval(60*60)
-        
-        // If the authorization status for calendar access isn't authorized, request
-        // access again and then export the event. Otherwise, just export the event
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event, completion: {
-                (granted, error) in
-                self.saveEvent(eventStore:self.eventStore,
-                                 title:name!,
-                                 startDate: startDate! as NSDate,
-                                 endDate: endDate as NSDate)
-            })
-        } else {
-            saveEvent(eventStore:eventStore,
-                        title:name!,
-                        startDate: startDate! as NSDate,
-                        endDate: endDate as NSDate)
-        }
-    }
     
     func saveEvent(eventStore:EKEventStore, title:String, startDate:NSDate, endDate:NSDate) {
         let event = EKEvent(eventStore:eventStore)
@@ -317,7 +321,13 @@ class EventDetailsViewController: UIViewController {
         // If succeeded, give the user the option to open up the calendar app.g
         do {
             try eventStore.save(event,span:.thisEvent)
-            exportEventAlert(date: startDate as Date)
+            if AppState.openCalendarOnEventExport {
+                let interval = startDate.timeIntervalSinceReferenceDate
+                UIApplication.shared.open(NSURL(string: "calshow:\(interval)")! as URL)
+
+            } else {
+                exportEventAlert(date: startDate as Date)
+            }
         } catch {
             self.alert(title: "Error", message: "Unable to export event to calendar")
         }
@@ -341,8 +351,7 @@ class EventDetailsViewController: UIViewController {
         // Present the alert
         self.present(alert, animated: true)
     }
-    
-    
+
     /// Sets up the edit views based on whether or not the user is allowed to
     /// edit the Event
     private func setEditable() {
