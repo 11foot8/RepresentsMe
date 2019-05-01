@@ -34,6 +34,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var youtubeButton: UIButton!
+    @IBOutlet weak var calendarButton: UIButton!
 
     /// Set the scroll view content size
     override func viewDidLoad() {
