@@ -20,6 +20,8 @@ let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
 // EventDetailsViewController -> EventsListViewController
 let USER_EVENTS_SEGUE = "userEventsSegue"
 
+let EVENT_MAP_VIEW_POPOVER_SEGUE = "eventMapViewPopoverSegue"
+
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
                           green: 204.0 / 255.0,
@@ -38,7 +40,7 @@ class EventDetailsViewController: UIViewController {
     var event:Event?                              // The Event to display
     var delegate:EventListDelegate?               // The delegate to update
     var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
-    // for the current user
+                                                  // for the current user
 
     let eventStore = EKEventStore()
 
@@ -88,6 +90,9 @@ class EventDetailsViewController: UIViewController {
             // Set user's RSVP status
             self.setRSVPButtons()
         }
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        mapView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     // MARK: - Actions
@@ -172,6 +177,12 @@ class EventDetailsViewController: UIViewController {
                       endDate: endDate as NSDate)
         }
     }
+
+    @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
+        if let _ = event?.location {
+            performSegue(withIdentifier: EVENT_MAP_VIEW_POPOVER_SEGUE, sender: self)
+        }
+    }
     
     /// Sets the photo for the Event
     private func setPhotos() {
@@ -223,6 +234,10 @@ class EventDetailsViewController: UIViewController {
             let destination = segue.destination as! EventsListViewController
             destination.reachType = .user
             AppState.userId = event!.owner
+        } else if segue.identifier == EVENT_MAP_VIEW_POPOVER_SEGUE,
+            let destination = segue.destination as? LocationMapViewPopoverViewController {
+            destination.setPinInfo(location: event!.location, title: event!.name, subtitle: event!.address.addressLine1())
+            destination.setup(in: self.view)
         }
     }
 

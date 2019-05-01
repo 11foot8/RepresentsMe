@@ -17,10 +17,14 @@ let OFFICIAL_CONTACT_SEGUE_IDENTIFIER = "contactSegueIdentifier"
 // OfficialDetailsViewController -> EventsListViewController
 let OFFICIAL_EVENTS_SEGUE_IDENTIFIER = "officialEventsSegueIdentifier"
 
+let OFFICIALS_MAP_VIEW_POPOVER_SEGUE_IDENTIFIER = "officialsDetailsMapViewPopoverSegue"
+
 /// The view controller to show the details for an Official
-class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
+class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate,
+UIPopoverPresentationControllerDelegate{
     // MARK: - Properties
     var official:Official?
+    var location:CLLocationCoordinate2D?
 
     // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
@@ -44,6 +48,9 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         scrollViewOutlet.contentSize = CGSize(
             width: self.view.frame.size.width,
             height: self.view.frame.size.height + 100)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        officeLocationMapView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     /// Sets up the view for the Official
@@ -126,6 +133,12 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         performSegue(withIdentifier: OFFICIAL_EVENTS_SEGUE_IDENTIFIER, sender: self)
     }
 
+    @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
+        if let _ = location {
+            performSegue(withIdentifier: OFFICIALS_MAP_VIEW_POPOVER_SEGUE_IDENTIFIER, sender: self)
+        }
+    }
+
     // MARK: - Methods
     /// Prepare to segue to the contacts view for the Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -138,6 +151,12 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
             let destination = segue.destination as? EventsListViewController {
             destination.reachType = .official
             destination.official = official
+        }
+
+        if segue.identifier == OFFICIALS_MAP_VIEW_POPOVER_SEGUE_IDENTIFIER,
+            let destination = segue.destination as? LocationMapViewPopoverViewController {
+            destination.setPinInfo(location: location!, title: official?.name ?? "", subtitle: official?.addresses.first?.addressLine1() ?? "")
+            destination.setup(in: self.view)
         }
     }
     
@@ -171,6 +190,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
                 if error == nil,
                     let placemarks = placemarks,
                     let location = placemarks.first?.location {
+                    self.location = location.coordinate
                     
                     // Center the map on the placemark
                     let span = MKCoordinateSpan(latitudeDelta: 0.1,
