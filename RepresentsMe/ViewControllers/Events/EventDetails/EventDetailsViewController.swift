@@ -314,12 +314,32 @@ class EventDetailsViewController: UIViewController {
         event.calendar = eventStore.defaultCalendarForNewEvents
         
         // Alert the user to let them know if the export succeeded or failed
+        // If succeeded, give the user the option to open up the calendar app.g
         do {
             try eventStore.save(event,span:.thisEvent)
-            self.alert(title: "Success!", message: "The event has been exported to your calendar")
+            exportEventAlert(date: startDate as Date)
         } catch {
             self.alert(title: "Error", message: "Unable to export event to calendar")
         }
+    }
+    
+    /// Presents an alert specific to when an event is exported. Takes user to the
+    /// calendar app if they so desire
+    ///
+    /// - Parameter date:      the date at which the exported event is taking place.
+    private func exportEventAlert(date: Date) {
+        let interval = date.timeIntervalSinceReferenceDate
+        let alert = UIAlertController(
+            title: "Success",
+            message: "The event has been exported to your calendar. Would you like to open up the calendar app?",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in
+            UIApplication.shared.open(NSURL(string: "calshow:\(interval)")! as URL)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // Present the alert
+        self.present(alert, animated: true)
     }
     
     
