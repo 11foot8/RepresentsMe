@@ -20,15 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         // If user still logged in
         if Auth.auth().currentUser != nil {
-            // If biometric authentication enabled, require successful authentication to remain logged in
-            if Util.biometricEnabled {
-            } else {
+            // If biometric authentication not enabled, proceed to MainTabBarViewController
+            if !Util.biometricEnabled {
+                // User is still logged in and does not require authentication to stay logged in
                 switchViewControllers()
             }
-        } else {
-            // TODO: nothing?
         }
-
         return true
     }
 

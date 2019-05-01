@@ -47,7 +47,6 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // If user currently logged in
-//        authenticateUserUsingBiometrics()
         if UsersDatabase.currentUser != nil {
             // If biometric authentication enabled
             if Util.biometricEnabled {
@@ -60,7 +59,6 @@ class LoginViewController: UIViewController {
         } else {
             checkRememberedCredentials()
         }
-
     }
 
     // MARK: - Actions

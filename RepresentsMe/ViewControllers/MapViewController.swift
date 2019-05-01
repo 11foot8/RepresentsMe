@@ -109,7 +109,7 @@ class MapViewController: UIViewController {
                 listButton.isEnabled = true
                 break
         default:
-            backButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(backButtonTapped))
+            backButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: nil)
             listButton.image = nil
             listButton.isEnabled = false
             break
@@ -155,10 +155,6 @@ class MapViewController: UIViewController {
 
     @IBAction func listButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: LIST_MODAL_SEGUE_IDENTIFIER, sender: self)
-    }
-
-    @objc func backButtonTapped(_ sender: Any) {
-
     }
 
     // MARK: - Methods
