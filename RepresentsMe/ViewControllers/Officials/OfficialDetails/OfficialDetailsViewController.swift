@@ -19,9 +19,10 @@ let OFFICIAL_EVENTS_SEGUE_IDENTIFIER = "officialEventsSegueIdentifier"
 
 /// The view controller to show the details for an Official
 class OfficialDetailsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
-    
+    // MARK: - Properties
     var official:Official?
-    
+
+    // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var seatLabel: UILabel!
     @IBOutlet weak var partyLabel: UILabel!
@@ -36,6 +37,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var youtubeButton: UIButton!
     @IBOutlet weak var calendarButton: UIButton!
 
+    // MARK: - Lifecycle
     /// Set the scroll view content size
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         self.disableUnavailableButtons()
     }
 
+    // MARK: - Actions
     /// Starts a call with the official based on the phone number provided in
     /// the database
     @IBAction func callButtonPressed(_ sender: Any) {
@@ -123,6 +126,7 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
         performSegue(withIdentifier: OFFICIAL_EVENTS_SEGUE_IDENTIFIER, sender: self)
     }
 
+    // MARK: - Methods
     /// Prepare to segue to the contacts view for the Official
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == OFFICIAL_CONTACT_SEGUE_IDENTIFIER,
@@ -201,8 +205,12 @@ class OfficialDetailsViewController: UIViewController, MFMessageComposeViewContr
     /// Presents valid URLS in an SFSafariViewController
     private func presentURL(wrappedURL:URL?) {
         if let url = wrappedURL {
-            let svc = SFSafariViewController(url: url)
-            present(svc, animated: true, completion: nil)
+            if AppState.openExternalLinksInSafari {
+                UIApplication.shared.open(url)
+            } else {
+                let svc = SFSafariViewController(url: url)
+                present(svc, animated: true, completion: nil)
+            }
         }
     }
     

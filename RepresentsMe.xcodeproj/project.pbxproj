@@ -51,16 +51,14 @@
 		13E0E03D22776F9700512141 /* EventImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03C22776F9700512141 /* EventImportCell.swift */; };
 		13E0E03F227775A300512141 /* EventImportDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E0E03E227775A300512141 /* EventImportDelegate.swift */; };
 		165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */; };
+		166E6E2D227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E6E2C227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
 		1683D03B2253D2A300350471 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03A2253D2A300350471 /* SignupViewController.swift */; };
 		1683D03D2253D35500350471 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D03C2253D35500350471 /* LoginViewController.swift */; };
 		1695ED2E22663C18007992CB /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1695ED2D22663C18007992CB /* LocalAuthentication.framework */; };
-		1695ED3022663CBC007992CB /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */; };
-		1695ED3222663CFC007992CB /* KeychainConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ED3122663CFC007992CB /* KeychainConfiguration.swift */; };
 		1697B508226F6592009FA082 /* BiometricSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */; };
-		1697B50A226F8AF2009FA082 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B509226F8AF2009FA082 /* KeychainService.swift */; };
 		1697B514226FCBAE009FA082 /* SearchBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B512226FCBAE009FA082 /* SearchBarTableViewCell.swift */; };
 		1697B517226FCEF4009FA082 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1697B516226FCEF4009FA082 /* SearchBarViewController.swift */; };
 		169EB6BE225D015200090CDA /* GeocoderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169EB6BD225D015200090CDA /* GeocoderWrapper.swift */; };
@@ -165,6 +163,7 @@
 		13E0E03C22776F9700512141 /* EventImportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportCell.swift; sourceTree = "<group>"; };
 		13E0E03E227775A300512141 /* EventImportDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImportDelegate.swift; sourceTree = "<group>"; };
 		165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupAddressViewController.swift; sourceTree = "<group>"; };
+		166E6E2C227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinksSettingsViewController.swift; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -172,10 +171,7 @@
 		1683D03C2253D35500350471 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1695ED2C22663B65007992CB /* RepresentsMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RepresentsMe.entitlements; sourceTree = "<group>"; };
 		1695ED2D22663C18007992CB /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
-		1695ED3122663CFC007992CB /* KeychainConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConfiguration.swift; sourceTree = "<group>"; };
 		1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricSettingsViewController.swift; sourceTree = "<group>"; };
-		1697B509226F8AF2009FA082 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		1697B512226FCBAE009FA082 /* SearchBarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarTableViewCell.swift; sourceTree = "<group>"; };
 		1697B516226FCEF4009FA082 /* SearchBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarViewController.swift; path = RepresentsMe/ViewControllers/SearchBarViewController.swift; sourceTree = SOURCE_ROOT; };
 		169EB6BD225D015200090CDA /* GeocoderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderWrapper.swift; sourceTree = "<group>"; };
@@ -318,9 +314,6 @@
 				3BE4384222556D4700EC049B /* LocationManager.swift */,
 				169EB6BD225D015200090CDA /* GeocoderWrapper.swift */,
 				13A4F611225F80090023E150 /* UIViewControllerExt.swift */,
-				1695ED2F22663CBC007992CB /* KeychainPasswordItem.swift */,
-				1697B509226F8AF2009FA082 /* KeychainService.swift */,
-				1695ED3122663CFC007992CB /* KeychainConfiguration.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -523,6 +516,7 @@
 				13A4F613225F83A80023E150 /* AddressSettingsViewController.swift */,
 				169EB6C1225D09CD00090CDA /* PasswordSettingsViewController.swift */,
 				169EB6C3225D09D700090CDA /* DisplayNameSettingsViewController.swift */,
+				166E6E2C227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift */,
 				16A0DCDB2264D838007D0617 /* ProfilePictureSettingsViewController.swift */,
 				1697B507226F6592009FA082 /* BiometricSettingsViewController.swift */,
 			);
@@ -873,14 +867,12 @@
 				134F9221225E587F00B797B4 /* EventsTableViewDelegate.swift in Sources */,
 				1352711C221F793800442AA6 /* ParserError.swift in Sources */,
 				1697B517226FCEF4009FA082 /* SearchBarViewController.swift in Sources */,
+				166E6E2D227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift in Sources */,
 				16A0DCDC2264D838007D0617 /* ProfilePictureSettingsViewController.swift in Sources */,
-				1695ED3022663CBC007992CB /* KeychainPasswordItem.swift in Sources */,
-				1695ED3222663CFC007992CB /* KeychainConfiguration.swift in Sources */,
 				3BCC1662225C4B890088D757 /* DatePopoverViewController.swift in Sources */,
 				3B45F0B52222452D00FA5B8B /* OfficialCell.swift in Sources */,
 				3B649F052237264800E88430 /* SettingsCell.swift in Sources */,
 				13BD31B6223021F1000A6BEE /* TabBarViewController.swift in Sources */,
-				1697B50A226F8AF2009FA082 /* KeychainService.swift in Sources */,
 				16ECF811225516C9003DEA68 /* StatePopoverViewController.swift in Sources */,
 				13527118221F74AC00442AA6 /* OfficialScraper.swift in Sources */,
 				3BE4384322556D4700EC049B /* LocationManager.swift in Sources */,
