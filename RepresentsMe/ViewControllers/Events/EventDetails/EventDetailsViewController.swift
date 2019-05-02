@@ -155,10 +155,8 @@ class EventDetailsViewController: UIViewController {
 
     @IBAction func exportEvent(_ sender: Any) {
         let name = self.event?.name
-        let startDate = self.event?.date
-        // Set end date to be an hour after the start date
-        // TODO: add end date field to Event model
-        let endDate = startDate!.addingTimeInterval(60*60)
+        let startDate = self.event?.startDate
+        let endDate = self.event?.endDate
 
         // If the authorization status for calendar access isn't authorized, request
         // access again and then export the event. Otherwise, just export the event
@@ -168,13 +166,13 @@ class EventDetailsViewController: UIViewController {
                 self.saveEvent(eventStore:self.eventStore,
                                title:name!,
                                startDate: startDate! as NSDate,
-                               endDate: endDate as NSDate)
+                               endDate: endDate! as NSDate)
             })
         } else {
             saveEvent(eventStore:eventStore,
                       title:name!,
                       startDate: startDate! as NSDate,
-                      endDate: endDate as NSDate)
+                      endDate: endDate! as NSDate)
         }
     }
 

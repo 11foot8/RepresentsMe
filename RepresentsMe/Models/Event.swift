@@ -54,9 +54,23 @@ class Event: Comparable {
     
     /// Gets the date formatted to "MMMM d, h:mm a"
     var formattedDate:String {
+        // Format the start date
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, h:mm a"
-        return formatter.string(from: startDate)
+        formatter.dateFormat = "MMM d, h:mm a"
+        let start = formatter.string(from: startDate)
+        
+        formatter.dateFormat = "MMM d"
+        if formatter.string(from: startDate) == formatter.string(from: endDate) {
+            // End date is on the same day, just get the time
+            formatter.dateFormat = "h:mm a"
+            let end = formatter.string(from: endDate)
+            return "\(start) - \(end)"
+        } else {
+            // End date is on a different day, get the full date
+            formatter.dateFormat = "MMM d, h:mm a"
+            let end = formatter.string(from: endDate)
+            return "\(start) - \(end)"
+        }
     }
 
     /// Creates a new Event given its attributes

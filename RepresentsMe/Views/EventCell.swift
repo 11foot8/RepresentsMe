@@ -21,7 +21,7 @@ class EventCell: UITableViewCell {
         didSet {
             nameLabel.text = event?.name
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
+            dateFormatter.dateFormat = "MMM dd h:mm a"
             dateLabel.text = dateFormatter.string(from: event!.startDate)
             detailsLabel.text = ""
             
