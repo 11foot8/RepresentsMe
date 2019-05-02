@@ -53,7 +53,6 @@
 		165B7F64225BE16C0095D9E1 /* SignupAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */; };
 		166E6E2D227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E6E2C227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift */; };
 		166E6E35227A4663005F6B19 /* LocationMapViewPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E6E33227A4663005F6B19 /* LocationMapViewPopoverViewController.swift */; };
-		166E6E36227A4663005F6B19 /* LocationMapViewPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166E6E34227A4663005F6B19 /* LocationMapViewPopoverViewController.xib */; };
 		1683D02F2253B6FF00350471 /* MapActionButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1683D02E2253B6FF00350471 /* MapActionButtons.xib */; };
 		1683D0312253B71F00350471 /* MapActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0302253B71F00350471 /* MapActionButtons.swift */; };
 		1683D0332253C17600350471 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683D0322253C17600350471 /* CustomSearchBar.swift */; };
@@ -167,7 +166,6 @@
 		165B7F63225BE16C0095D9E1 /* SignupAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupAddressViewController.swift; sourceTree = "<group>"; };
 		166E6E2C227A2C19005F6B19 /* ExternalLinksSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinksSettingsViewController.swift; sourceTree = "<group>"; };
 		166E6E33227A4663005F6B19 /* LocationMapViewPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapViewPopoverViewController.swift; sourceTree = "<group>"; };
-		166E6E34227A4663005F6B19 /* LocationMapViewPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationMapViewPopoverViewController.xib; sourceTree = "<group>"; };
 		1683D02E2253B6FF00350471 /* MapActionButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionButtons.xib; sourceTree = "<group>"; };
 		1683D0302253B71F00350471 /* MapActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButtons.swift; sourceTree = "<group>"; };
 		1683D0322253C17600350471 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
@@ -408,8 +406,6 @@
 		166E6E37227A4666005F6B19 /* Map Popover */ = {
 			isa = PBXGroup;
 			children = (
-				166E6E33227A4663005F6B19 /* LocationMapViewPopoverViewController.swift */,
-				166E6E34227A4663005F6B19 /* LocationMapViewPopoverViewController.xib */,
 			);
 			path = "Map Popover";
 			sourceTree = "<group>";
@@ -586,6 +582,7 @@
 			children = (
 				13A4F616225F848A0023E150 /* OfficialDetailsViewController.swift */,
 				3BE4383C2255347800EC049B /* OfficialContactViewController.swift */,
+				166E6E33227A4663005F6B19 /* LocationMapViewPopoverViewController.swift */,
 			);
 			path = OfficialDetails;
 			sourceTree = "<group>";
@@ -755,7 +752,6 @@
 				13BD31BB223025FC000A6BEE /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
 				16C72C32225FFC7C00D43215 /* OfficialCardView.xib in Resources */,
 				3B1EFD61221F06EC003176BF /* LaunchScreen.storyboard in Resources */,
-				166E6E36227A4663005F6B19 /* LocationMapViewPopoverViewController.xib in Resources */,
 				13BD31BA223025FC000A6BEE /* Font Awesome 5 Free-Regular-400.otf in Resources */,
 				13BD31BC223025FC000A6BEE /* Font Awesome 5 Free-Solid-900.otf in Resources */,
 				3B1EFD5E221F06EC003176BF /* Assets.xcassets in Resources */,

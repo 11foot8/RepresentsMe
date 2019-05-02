@@ -29,7 +29,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GQ8-gi-0eO">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="officialCell" rowHeight="99" id="1zF-WF-e3C" customClass="OfficialCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -276,7 +276,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-iC-oeO">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-iC-oeO">
                                 <rect key="frame" x="0.0" y="20" width="414" height="144"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="ogt-Hp-hKB"/>
@@ -474,6 +474,9 @@
                         <outlet property="twitterButton" destination="a19-Tz-BcN" id="a8a-fZ-aRF"/>
                         <outlet property="youtubeButton" destination="Pwh-CN-Hl4" id="kCD-9m-NhS"/>
                         <segue destination="bJG-fH-d8a" kind="show" identifier="officialEventsSegueIdentifier" id="fvg-9z-gyX"/>
+                        <segue destination="eFD-Yf-7wQ" kind="popoverPresentation" identifier="officialsDetailsMapViewPopoverSegue" popoverAnchorView="0Bs-8X-5li" id="8P8-8m-8WA">
+                            <popoverArrowDirection key="popoverArrowDirection"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mLd-dq-nU4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1231,7 +1234,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gEE-cq-WmL">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEE-cq-WmL">
                                 <rect key="frame" x="0.0" y="20" width="414" height="144"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="VDK-fC-GGL"/>
@@ -1513,6 +1516,9 @@
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
                         <segue destination="V5Z-GW-aU6" kind="show" identifier="eventOfficialSegue" id="VAu-dC-44h"/>
                         <segue destination="bJG-fH-d8a" kind="show" identifier="userEventsSegue" id="dgC-6z-aIX"/>
+                        <segue destination="eFD-Yf-7wQ" kind="popoverPresentation" identifier="eventMapViewPopoverSegue" popoverAnchorView="oaX-xy-IAX" id="mNe-f1-G1c">
+                            <popoverArrowDirection key="popoverArrowDirection"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="di1-Ze-rRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1524,6 +1530,36 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2784.8000000000002" y="-548.27586206896558"/>
+        </scene>
+        <!--Location Map View Popover View Controller-->
+        <scene sceneID="fvp-PZ-Z1r">
+            <objects>
+                <viewController id="eFD-Yf-7wQ" customClass="LocationMapViewPopoverViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vhd-X9-kaa">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OXG-OS-Tvj">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="OXG-OS-Tvj" firstAttribute="leading" secondItem="f2E-ku-kS9" secondAttribute="leading" id="2IP-py-otJ"/>
+                            <constraint firstItem="f2E-ku-kS9" firstAttribute="bottom" secondItem="OXG-OS-Tvj" secondAttribute="bottom" id="3nz-tc-SYk"/>
+                            <constraint firstItem="f2E-ku-kS9" firstAttribute="trailing" secondItem="OXG-OS-Tvj" secondAttribute="trailing" id="cpb-K6-IXb"/>
+                            <constraint firstItem="OXG-OS-Tvj" firstAttribute="top" secondItem="f2E-ku-kS9" secondAttribute="top" id="zpi-PK-gDK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="f2E-ku-kS9"/>
+                    </view>
+                    <size key="freeformSize" width="400" height="400"/>
+                    <connections>
+                        <outlet property="mapView" destination="OXG-OS-Tvj" id="bga-98-7Zz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hmE-aO-PUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3600.0000000000005" y="-576.35869565217399"/>
         </scene>
         <!--Officials-->
         <scene sceneID="bes-u0-kCt">
@@ -1566,7 +1602,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="584" width="398" height="100"/>
+                                <rect key="frame" x="8" y="628" width="398" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
@@ -2129,7 +2165,7 @@
                                 <state key="normal" title="Use Current Location"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFN-MG-w2u">
-                                <rect key="frame" x="376" y="111" width="30" height="29"/>
+                                <rect key="frame" x="283" y="108" width="123" height="32"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                 <state key="normal" title="map-marked-alt"/>
                                 <connections>
@@ -2719,10 +2755,11 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fZv-Vr-KZp"/>
-        <segue reference="kWx-5d-f1X"/>
+        <segue reference="7Am-r7-zXQ"/>
+        <segue reference="8P8-8m-8WA"/>
         <segue reference="fvg-9z-gyX"/>
-        <segue reference="JrQ-Sz-hlR"/>
+        <segue reference="7wb-vX-DZx"/>
         <segue reference="VAu-dC-44h"/>
-        <segue reference="MZX-gR-k2v"/>
+        <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>
 </document>

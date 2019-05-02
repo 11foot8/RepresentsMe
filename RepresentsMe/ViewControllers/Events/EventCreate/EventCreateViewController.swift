@@ -222,15 +222,11 @@ class EventCreateViewController: UIViewController,
         self.set(official: event.official)
 
         // Set the location
-        selectLocationButton.setTitle("", for: .normal)
-        GeocoderWrapper.reverseGeocodeCoordinates(
-            event.location) {(address: Address) in
-            self.set(location: event.location, address: address)
-        }
+        selectedLocationLabel.text = event.address.description
         
         // Set the date
         self.set(date: event.date)
-        selectDateButton.setTitle(event.formattedDate, for: .normal)
+        selectedDateLabel.text = event.formattedDate
     }
 
     /// Sets the Official for the Event
