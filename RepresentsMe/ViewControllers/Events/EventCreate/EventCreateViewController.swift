@@ -28,7 +28,8 @@ class EventCreateViewController: UIViewController,
 
     // MARK: - Properties
     var event: Event?                               // The Event if editing
-    var selectedDate: Date?                         // The selected date
+    var selectedStartDate: Date?                    // The selected start date
+    var selectedEndDate: Date?                      // The selected end date
     var selectedOfficial: Official?                 // The selected Official
     var selectedLocation: CLLocationCoordinate2D?   // The selected location
     var delegate:EventListDelegate?                 // The delegate to update
@@ -74,7 +75,8 @@ class EventCreateViewController: UIViewController,
         let description = ""            // TODO: fill in
         guard let official = selectedOfficial else {return}
         guard let location = selectedLocation else {return}
-        guard let date = selectedDate else {return}
+        guard let startDate = selectedStartDate else {return}
+        guard let endDate = selectedEndDate else {return}
         let name = self.eventNameTextField.text!
         guard !name.isEmpty else {return}
 
@@ -83,14 +85,16 @@ class EventCreateViewController: UIViewController,
             self.updateEvent(name: name,
                              official: official,
                              location: location,
-                             date: date)
+                             startDate: startDate,
+                             endDate: endDate)
         } else {
             // Not editing an Event, create a new Event
             self.createEvent(name: name,
                              description: description,
                              official: official,
                              location: location,
-                             date: date)
+                             startDate: startDate,
+                             endDate: endDate)
         }
     }
 
@@ -253,7 +257,7 @@ class EventCreateViewController: UIViewController,
     ///
     /// - Parameter date:   the Date for the Event
     private func set(date:Date) {
-        selectedDate = date
+        selectedStartDate = date
         
         // Format the date
         let formatter = DateFormatter()
@@ -267,15 +271,18 @@ class EventCreateViewController: UIViewController,
     /// - Parameter name:       the new name
     /// - Parameter official:   the new Official
     /// - Parameter location:   the new location
-    /// - Parameter date:       the new date
+    /// - Parameter startDate:  the new starting date
+    /// - Parameter endDate:    the new ending date
     private func updateEvent(name:String,
                              official:Official,
                              location:CLLocationCoordinate2D,
-                             date:Date) {
+                             startDate:Date,
+                             endDate:Date) {
         if let event = event {
             event.name = name
             event.location = location
-            event.startDate = date
+            event.startDate = startDate
+            event.endDate = endDate
             event.official = official
     
             // Save the changes
@@ -300,17 +307,20 @@ class EventCreateViewController: UIViewController,
     /// - Parameter description:    the description for the Event
     /// - Parameter official:       the Official for the Event
     /// - Parameter location:       the location for the Event
-    /// - Parameter date:           the date for the Event
+    /// - Parameter startDate:  the new starting date
+    /// - Parameter endDate:    the new ending date
     private func createEvent(name:String,
                              description:String,
                              official:Official,
                              location:CLLocationCoordinate2D,
-                             date:Date) {
+                             startDate:Date,
+                             endDate:Date) {
         Event.create(name: name,
                      owner: UsersDatabase.currentUserUID!,
                      description: description,
                      location: location,
-                     startDte: date,
+                     startDate: startDate,
+                     endDate: endDate,
                      official: official) {(event, error) in
             if (error != nil) {
                 // TODO: handle error
