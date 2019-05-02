@@ -25,7 +25,8 @@ class Event: Comparable {
     var owner:String                        // The owner of the event
     var description:String                  // The description of the event
     var location:CLLocationCoordinate2D     // The location of the event
-    var date:Date                           // The date of the event
+    var startDate:Date                      // The start date of the event
+    var endDate:Date                        // The start date of the event
     var official:Official?                  // The official related to event
     var address:Address                     // The Address for the event
     var attendees:[EventAttendee] = []      // The attendees for the event
@@ -38,7 +39,8 @@ class Event: Comparable {
             "description": description,
             "location": GeoPoint(latitude: location.latitude,
                                  longitude: location.longitude),
-            "date": date,
+            "startDate": startDate,
+            "endDate": endDate,
             "officialName": official?.name ?? "",
             "divisionOCDID": official?.divisionOCDID ?? "",
             "address": [
@@ -54,7 +56,7 @@ class Event: Comparable {
     var formattedDate:String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, h:mm a"
-        return formatter.string(from: date)
+        return formatter.string(from: startDate)
     }
 
     /// Creates a new Event given its attributes
@@ -63,21 +65,24 @@ class Event: Comparable {
     /// - Parameter owner:          the owner of the event
     /// - Parameter description:    the description of the event
     /// - Parameter location:       the location of the event
-    /// - Parameter date:           the date of the event
+    /// - Parameter startDate:      the start date of the event
+    /// - Parameter endDate:        the end date of the event
     /// - Parameter official:       the Official related to the event
     /// - Parameter address:        the Address for the event
     init(name:String,
          owner:String,
          description:String,
          location:CLLocationCoordinate2D,
-         date:Date,
+         startDate:Date,
+         endDate:Date,
          official:Official,
          address:Address) {
         self.name = name
         self.owner = owner
         self.description = description
         self.location = location
-        self.date = date
+        self.startDate = startDate
+        self.endDate = endDate
         self.official = official
         self.address = address
     }
@@ -93,7 +98,8 @@ class Event: Comparable {
         self.name = data["name"] as! String
         self.owner = data["owner"] as! String
         self.description = data["description"] as! String
-        self.date = (data["date"] as! Timestamp).dateValue()
+        self.startDate = (data["startDate"] as! Timestamp).dateValue()
+        self.endDate = (data["startDate"] as! Timestamp).dateValue()
         self.address = Address(with: data["address"] as! [String: String])
 
         // Build the location coordinate
@@ -295,14 +301,16 @@ class Event: Comparable {
     /// - Parameter name:           the name of the event
     /// - Parameter owner:          the owner of the event
     /// - Parameter location:       the location of the event
-    /// - Parameter date:           the date of the event
+    /// - Parameter startDate:      the start date of the event
+    /// - Parameter endDate:        the start date of the event
     /// - Parameter official:       the official related to the event
     /// - Parameter completion:     the completion handler
     static func create(name:String,
                        owner:String,
                        description:String,
                        location:CLLocationCoordinate2D,
-                       date:Date,
+                       startDate:Date,
+                       endDate:Date,
                        official:Official,
                        completion: @escaping completionHandler) {
         GeocoderWrapper.reverseGeocodeCoordinates(location) {(address) in
@@ -310,7 +318,8 @@ class Event: Comparable {
                               owner: owner,
                               description: description,
                               location: location,
-                              date: date,
+                              startDate: startDate,
+                              endDate: startDate,
                               official: official,
                               address: address)
             event.save(completion: completion)
@@ -424,10 +433,10 @@ class Event: Comparable {
             return lhs.official!.index > rhs.official!.index
         }
 
-        if lhs.date != rhs.date {
+        if lhs.startDate != rhs.startDate {
             // The events are for the same official on two different days,
             // the earlier event should come first
-            return lhs.date < rhs.date
+            return lhs.startDate < rhs.startDate
         }
         
         // The events are for the same official on the same day, sort based
@@ -446,7 +455,7 @@ class Event: Comparable {
             lhs.owner == rhs.owner &&
             lhs.location.latitude == rhs.location.latitude &&
             lhs.location.longitude == rhs.location.longitude &&
-            lhs.date == rhs.date &&
+            lhs.startDate == rhs.startDate &&
             lhs.official == rhs.official
     }
 }

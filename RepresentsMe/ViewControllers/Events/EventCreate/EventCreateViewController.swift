@@ -225,7 +225,7 @@ class EventCreateViewController: UIViewController,
         selectedLocationLabel.text = event.address.description
         
         // Set the date
-        self.set(date: event.date)
+        self.set(date: event.startDate)
         selectedDateLabel.text = event.formattedDate
     }
 
@@ -275,7 +275,7 @@ class EventCreateViewController: UIViewController,
         if let event = event {
             event.name = name
             event.location = location
-            event.date = date
+            event.startDate = date
             event.official = official
     
             // Save the changes
@@ -310,7 +310,7 @@ class EventCreateViewController: UIViewController,
                      owner: UsersDatabase.currentUserUID!,
                      description: description,
                      location: location,
-                     date: date,
+                     startDte: date,
                      official: official) {(event, error) in
             if (error != nil) {
                 // TODO: handle error

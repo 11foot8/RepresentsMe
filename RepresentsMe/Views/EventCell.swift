@@ -22,7 +22,7 @@ class EventCell: UITableViewCell {
             nameLabel.text = event?.name
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
-            dateLabel.text = dateFormatter.string(from: event!.date)
+            dateLabel.text = dateFormatter.string(from: event!.startDate)
             detailsLabel.text = ""
             
             eventImageView.image = nil
