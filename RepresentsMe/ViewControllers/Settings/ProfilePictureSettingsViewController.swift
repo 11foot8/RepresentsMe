@@ -35,7 +35,7 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
     @IBAction func imageButtonTouchUp(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let selectPhoto = UIAlertAction(title: "Select Photo form Library", style: .default) { (action) in
+        let selectPhoto = UIAlertAction(title: "Select Photo from Library", style: .default) { (action) in
             // TODO: Select photo
             self.selectFromLibrary()
         }
@@ -105,7 +105,9 @@ class ProfilePictureSettingsViewController: UIViewController, UIImagePickerContr
                 self.alert(title: "An Error Occured", message: error!.localizedDescription)
             } else {
                 AppState.profilePicture = image
-                self.alert(title: "Saved")
+                self.alert(title: "Saved", completion: {
+                     self.navigationController?.popViewController(animated: true)
+                })
             }
         })
     }

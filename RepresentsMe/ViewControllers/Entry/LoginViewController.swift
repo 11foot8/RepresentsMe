@@ -161,6 +161,7 @@ class LoginViewController: UIViewController {
                 }
             } else {
                 UsersDatabase.shared.logoutUser(completion: { (error) in })
+                self.rememberMeSwitch.isOn = Util.rememberMeEnabled
                 if let error = authError as? LAError {
                     self.showError(error: error)
                 }
@@ -177,7 +178,7 @@ class LoginViewController: UIViewController {
             break
         case LAError.userCancel:
             message = "Authentication was canceled by the user"
-            break
+            return
         case LAError.userFallback:
             message = "Authentication was canceled because the user tapped the fallback button"
             break

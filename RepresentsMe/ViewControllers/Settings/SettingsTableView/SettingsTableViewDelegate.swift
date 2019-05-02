@@ -37,4 +37,12 @@ class SettingsTableViewDelegate: NSObject, UITableViewDelegate {
                    didSelectRowAt indexPath: IndexPath) {
         self.parent.tableViewDataSource.selected(at: indexPath)
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 28
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
 }
