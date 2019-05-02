@@ -26,7 +26,7 @@ class Event: Comparable {
     var description:String                  // The description of the event
     var location:CLLocationCoordinate2D     // The location of the event
     var startDate:Date                      // The start date of the event
-    var endDate:Date                        // The start date of the event
+    var endDate:Date                        // The end date of the event
     var official:Official?                  // The official related to event
     var address:Address                     // The Address for the event
     var attendees:[EventAttendee] = []      // The attendees for the event
@@ -99,7 +99,7 @@ class Event: Comparable {
         self.owner = data["owner"] as! String
         self.description = data["description"] as! String
         self.startDate = (data["startDate"] as! Timestamp).dateValue()
-        self.endDate = (data["startDate"] as! Timestamp).dateValue()
+        self.endDate = (data["endDate"] as! Timestamp).dateValue()
         self.address = Address(with: data["address"] as! [String: String])
 
         // Build the location coordinate
@@ -302,7 +302,7 @@ class Event: Comparable {
     /// - Parameter owner:          the owner of the event
     /// - Parameter location:       the location of the event
     /// - Parameter startDate:      the start date of the event
-    /// - Parameter endDate:        the start date of the event
+    /// - Parameter endDate:        the end date of the event
     /// - Parameter official:       the official related to the event
     /// - Parameter completion:     the completion handler
     static func create(name:String,
@@ -319,7 +319,7 @@ class Event: Comparable {
                               description: description,
                               location: location,
                               startDate: startDate,
-                              endDate: startDate,
+                              endDate: endDate,
                               official: official,
                               address: address)
             event.save(completion: completion)
@@ -456,6 +456,7 @@ class Event: Comparable {
             lhs.location.latitude == rhs.location.latitude &&
             lhs.location.longitude == rhs.location.longitude &&
             lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate &&
             lhs.official == rhs.official
     }
 }
