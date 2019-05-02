@@ -20,6 +20,8 @@ let START_DATE_POPOVER_SEGUE = "startDatePopoverSegue"
 let END_DATE_POPOVER_SEGUE = "endDatePopoverSegue"
 // EventCreateViewController -> EventImportViewController
 let IMPORT_EVENT_SEGUE = "importEventSegue"
+// EventCreateViewController -> LocationMapPopoverViewController
+let CREATE_MAP_POPOVER_SEGUE = "createMapPopoverSegue"
 
 /// The view controller to handle creating and updating Events
 class EventCreateViewController: UIViewController,
@@ -34,9 +36,8 @@ class EventCreateViewController: UIViewController,
     var selectedEndDate: Date?                      // The selected end date
     var selectedOfficial: Official?                 // The selected Official
     var selectedLocation: CLLocationCoordinate2D?   // The selected location
+    var selectedAddress: Address?                   // The selected address
     var delegate:EventListDelegate?                 // The delegate to update
-    var mapViewAnnotation:MKAnnotation?             // The dropped pin on the mapview
-    let regionInMeters:CLLocationDistance = 7500
 
     // MARK: - Outlets
     @IBOutlet weak var eventOfficialCardView: OfficialCardView!
@@ -47,7 +48,6 @@ class EventCreateViewController: UIViewController,
     @IBOutlet weak var selectedStartDateLabel: UILabel!
     @IBOutlet weak var selectedEndDateLabel: UILabel!
     @IBOutlet weak var selectedLocationLabel: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var importEventBarButton: UIBarButtonItem!
 
     // MARK: - Lifecycle
@@ -60,15 +60,25 @@ class EventCreateViewController: UIViewController,
             self.setupFor(event: event)
         }
 
-        self.setupMapView()
         self.set(startDate: Date.init())
         self.set(endDate: Date.init())
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(handleTap))
+        selectedLocationLabel.addGestureRecognizer(tapGestureRecognizer)
 
         importEventBarButton.image = UIImage.fontAwesomeIcon(
             name: .fileUpload,
             style: .solid,
             textColor: .blue,
             size: CGSize(width: 24, height: 24))
+    }
+    
+    @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
+        if selectedLocation != nil {
+            performSegue(withIdentifier: CREATE_MAP_POPOVER_SEGUE,
+                         sender: self)
+        }
     }
 
     // MARK: - Actions
@@ -149,6 +159,12 @@ class EventCreateViewController: UIViewController,
         } else if segue.identifier == IMPORT_EVENT_SEGUE {
             let destination = segue.destination as! EventImportViewController
             destination.listener = self
+        } else if segue.identifier == CREATE_MAP_POPOVER_SEGUE,
+            let destination = segue.destination as? LocationMapViewPopoverViewController {
+            destination.setPinInfo(location: selectedLocation!,
+                                   title: eventNameTextField.text!,
+                                   subtitle: selectedAddress!.addressLine1())
+            destination.setup(in: self.view)
         }
     }
 
@@ -218,27 +234,6 @@ class EventCreateViewController: UIViewController,
         self.selectedLocationLabel.layer.borderWidth = 1.0
 
     }
-    /// Sets up mapView
-    func setupMapView() {
-        self.mapView.isScrollEnabled = false
-        self.mapView.layer.cornerRadius = 10
-        self.mapView.clipsToBounds = true
-        self.mapView.layer.borderColor = UIColor.lightGray.cgColor
-        self.mapView.layer.borderWidth = 1.0
-    }
-
-    func setMapViewLocation(location: CLLocationCoordinate2D,
-                            address: Address) {
-        if let annotation = self.mapViewAnnotation {
-            mapView.removeAnnotation(annotation)
-        }
-        self.mapViewAnnotation = DroppedPin(title: address.streetAddress, locationName: address.addressCityState(), discipline: "", coordinate: location)
-        self.mapView.addAnnotation(self.mapViewAnnotation!)
-        let region = MKCoordinateRegion(center: location,
-                                        latitudinalMeters: regionInMeters,
-                                        longitudinalMeters: regionInMeters)
-        mapView.setRegion(region, animated: false)
-    }
 
     /// Sets up the views for the given Event
     ///
@@ -274,8 +269,8 @@ class EventCreateViewController: UIViewController,
     /// - Parameter address:    the Address for the Event
     private func set(location:CLLocationCoordinate2D, address:Address) {
         selectedLocation = location
+        selectedAddress = address
         selectedLocationLabel.text = address.fullMultilineAddress()
-        self.setMapViewLocation(location: location, address: address)
     }
     
     /// Sets the start date for the Event

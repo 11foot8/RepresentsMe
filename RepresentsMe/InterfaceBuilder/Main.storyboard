@@ -1778,7 +1778,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Select a Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-al-5xJ">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Select a Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-al-5xJ">
                                         <rect key="frame" x="97" y="520.66666666666663" width="220" height="20.333333333333371"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="220" id="ITZ-vJ-S2M"/>
@@ -1787,9 +1787,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-UP-JP0">
-                                        <rect key="frame" x="8" y="561" width="398" height="147"/>
-                                    </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K76-c1-nRC">
                                         <rect key="frame" x="325" y="516.33333333333337" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
@@ -1830,25 +1827,21 @@
                                     <constraint firstItem="GGC-al-5xJ" firstAttribute="top" secondItem="I8Z-Td-LGH" secondAttribute="bottom" constant="20" id="2k4-u8-ZqO"/>
                                     <constraint firstAttribute="trailing" secondItem="Q66-YJ-iRP" secondAttribute="trailing" constant="16" id="3AI-ei-8az"/>
                                     <constraint firstItem="K76-c1-nRC" firstAttribute="leading" secondItem="GGC-al-5xJ" secondAttribute="trailing" constant="8" id="9bq-h6-1kt"/>
-                                    <constraint firstAttribute="trailing" secondItem="Waf-UP-JP0" secondAttribute="trailing" constant="8" id="AGx-UR-DJ3"/>
                                     <constraint firstItem="mQs-8w-Y2B" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="CwX-uA-LF7"/>
                                     <constraint firstItem="W8Z-Kb-cX9" firstAttribute="leading" secondItem="I8Z-Td-LGH" secondAttribute="trailing" constant="8" id="DeO-rI-Scr"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="JQC-6i-upi"/>
                                     <constraint firstItem="I8Z-Td-LGH" firstAttribute="top" secondItem="jjG-xj-KJq" secondAttribute="bottom" constant="20" id="LBe-bK-qeL"/>
-                                    <constraint firstItem="Waf-UP-JP0" firstAttribute="leading" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="8" id="NUG-g2-8Tp"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="top" secondItem="Q66-YJ-iRP" secondAttribute="bottom" constant="8" id="NbD-lE-s99"/>
                                     <constraint firstItem="I8Z-Td-LGH" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="T2I-eq-oWB"/>
                                     <constraint firstItem="Bgf-oc-jRz" firstAttribute="centerY" secondItem="jjG-xj-KJq" secondAttribute="centerY" id="Ts9-Rk-1Pq"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FgN-uW-RSe" secondAttribute="trailing" constant="16" id="Txy-6i-13k"/>
                                     <constraint firstItem="jjG-xj-KJq" firstAttribute="top" secondItem="mQs-8w-Y2B" secondAttribute="bottom" constant="16" id="a8f-oY-74b"/>
-                                    <constraint firstItem="Waf-UP-JP0" firstAttribute="top" secondItem="GGC-al-5xJ" secondAttribute="bottom" constant="20" id="cKn-1k-ULS"/>
                                     <constraint firstItem="Q66-YJ-iRP" firstAttribute="leading" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="16" id="eNc-t1-6gG"/>
                                     <constraint firstItem="GGC-al-5xJ" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="ezH-hc-DdZ"/>
                                     <constraint firstItem="mQs-8w-Y2B" firstAttribute="top" secondItem="FgN-uW-RSe" secondAttribute="bottom" constant="8" id="iyi-jH-d8c"/>
                                     <constraint firstItem="K76-c1-nRC" firstAttribute="centerY" secondItem="GGC-al-5xJ" secondAttribute="centerY" id="jbl-SR-aUa"/>
                                     <constraint firstItem="Bgf-oc-jRz" firstAttribute="leading" secondItem="jjG-xj-KJq" secondAttribute="trailing" constant="8" id="mXA-Hv-lcj"/>
                                     <constraint firstItem="jjG-xj-KJq" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="rgY-5s-E97"/>
-                                    <constraint firstAttribute="bottom" secondItem="Waf-UP-JP0" secondAttribute="bottom" constant="8" id="vuX-5K-hCs"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="16" id="ypo-gO-4VA"/>
                                     <constraint firstItem="Q66-YJ-iRP" firstAttribute="top" secondItem="aRJ-Ee-kRj" secondAttribute="top" constant="8" id="zDM-Bd-42f"/>
                                 </constraints>
@@ -1886,13 +1879,15 @@
                         <outlet property="eventNameTextField" destination="Q66-YJ-iRP" id="Quw-p8-fkX"/>
                         <outlet property="eventOfficialCardView" destination="FgN-uW-RSe" id="IOT-Yd-Hn3"/>
                         <outlet property="importEventBarButton" destination="CWy-BN-fTD" id="p0e-Ak-wll"/>
-                        <outlet property="mapView" destination="Waf-UP-JP0" id="YBr-Rr-y7P"/>
                         <outlet property="selectDateButton" destination="Bgf-oc-jRz" id="svF-ac-fPG"/>
                         <outlet property="selectLocationButton" destination="K76-c1-nRC" id="xsp-HU-wGU"/>
                         <outlet property="selectOfficialButton" destination="mQs-8w-Y2B" id="vME-mV-dtk"/>
                         <outlet property="selectedEndDateLabel" destination="I8Z-Td-LGH" id="vdG-av-HU4"/>
                         <outlet property="selectedLocationLabel" destination="GGC-al-5xJ" id="abC-1U-E1V"/>
                         <outlet property="selectedStartDateLabel" destination="jjG-xj-KJq" id="VLG-o6-Bre"/>
+                        <segue destination="eFD-Yf-7wQ" kind="popoverPresentation" identifier="createMapPopoverSegue" popoverAnchorView="aRJ-Ee-kRj" id="7MY-CE-1jT">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gmV-gu-uBE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2784,8 +2779,8 @@
         <segue reference="RHe-L4-IUD"/>
         <segue reference="fZv-Vr-KZp"/>
         <segue reference="7Am-r7-zXQ"/>
-        <segue reference="8P8-8m-8WA"/>
-        <segue reference="fvg-9z-gyX"/>
+        <segue reference="7MY-CE-1jT"/>
+        <segue reference="dgC-6z-aIX"/>
         <segue reference="7wb-vX-DZx"/>
         <segue reference="VAu-dC-44h"/>
         <segue reference="tjC-Zo-ayP"/>
