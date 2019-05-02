@@ -15,7 +15,9 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 // EventCreateViewController -> MapViewController
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 // EventCreateViewController -> DatePopoverViewController
-let DATE_POPOVER_SEGUE = "datePopoverSegue"
+let START_DATE_POPOVER_SEGUE = "datePopoverSegue"
+// EventCreateViewController -> DatePopoverViewController
+let END_DATE_POPOVER_SEGUE = "endDatePopoverSegue"
 // EventCreateViewController -> EventImportViewController
 let IMPORT_EVENT_SEGUE = "importEventSegue"
 
@@ -58,7 +60,8 @@ class EventCreateViewController: UIViewController,
         }
 
         self.setupMapView()
-        self.set(date: Date.init())
+        self.set(startDate: Date.init())
+        self.set(endDate: Date.init())
 
         importEventBarButton.image = UIImage.fontAwesomeIcon(
             name: .fileUpload,
@@ -130,10 +133,17 @@ class EventCreateViewController: UIViewController,
             let destination = segue.destination as! MapViewController
             destination.reachType = .event
             destination.delegate = self
-        } else if segue.identifier == DATE_POPOVER_SEGUE {
+        } else if segue.identifier == START_DATE_POPOVER_SEGUE {
             // Seguing to select a date
             let destination = segue.destination as! DatePopoverViewController
             destination.setup(in: self.view)
+            destination.dateType = .start
+            destination.delegate = self
+        } else if segue.identifier == END_DATE_POPOVER_SEGUE {
+            // Seguing to select a date
+            let destination = segue.destination as! DatePopoverViewController
+            destination.setup(in: self.view)
+            destination.dateType = .end
             destination.delegate = self
         } else if segue.identifier == IMPORT_EVENT_SEGUE {
             let destination = segue.destination as! EventImportViewController
@@ -162,15 +172,24 @@ class EventCreateViewController: UIViewController,
     /// Update the views when a date is selected
     /// Implements DatePopoverViewControllerDelegate
     ///
-    /// - Parameter date:   the selected date
-    func didSelectDate(date: Date) {
-        self.set(date: date)
+    /// - Parameter date:       the selected date
+    /// - Parameter dateType:   the type of the date
+    func didSelectDate(date: Date, dateType:DateType) {
+        switch dateType {
+        case .start:
+            self.set(startDate: date)
+            break
+        case .end:
+            self.set(endDate: date)
+            break
+        }
     }
     
     /// When an event is imported populate as many fields as possible with it
     func eventSelected(_ event: EKEvent) {
         self.eventNameTextField.text = event.title
-        self.set(date: event.startDate)
+        self.set(startDate: event.startDate)
+        self.set(endDate: event.endDate)
         
         if let location = event.location {
             GeocoderWrapper.geocodeAddressString(location) {(placemark) in
@@ -229,7 +248,7 @@ class EventCreateViewController: UIViewController,
         selectedLocationLabel.text = event.address.description
         
         // Set the date
-        self.set(date: event.startDate)
+        self.set(startDate: event.startDate)
         selectedDateLabel.text = event.formattedDate
     }
 
@@ -253,16 +272,29 @@ class EventCreateViewController: UIViewController,
         self.setMapViewLocation(location: location, address: address)
     }
     
-    /// Sets the date for the Event
+    /// Sets the start date for the Event
     ///
-    /// - Parameter date:   the Date for the Event
-    private func set(date:Date) {
-        selectedStartDate = date
+    /// - Parameter startDate:  the Date for the Event
+    private func set(startDate:Date) {
+        selectedStartDate = startDate
         
         // Format the date
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, YYYY h:mm a"
-        selectedDateLabel.text = formatter.string(from: date)
+        selectedDateLabel.text = formatter.string(from: startDate)
+    }
+    
+    /// Sets the end date for the Event
+    ///
+    /// - Parameter endDate:    the Date for the Event
+    private func set(endDate:Date) {
+        selectedStartDate = endDate
+        
+        // Format the date
+        // TODO: change when add end date labels
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, YYYY h:mm a"
+        selectedDateLabel.text = formatter.string(from: endDate)
     }
     
     /// Updates the Event.
