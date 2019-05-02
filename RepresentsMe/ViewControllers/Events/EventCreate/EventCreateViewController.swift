@@ -15,7 +15,7 @@ let SELECT_OFFICIAL_SEGUE = "selectOfficialSegue"
 // EventCreateViewController -> MapViewController
 let SELECT_LOCATION_SEGUE = "selectLocationSegue"
 // EventCreateViewController -> DatePopoverViewController
-let START_DATE_POPOVER_SEGUE = "datePopoverSegue"
+let START_DATE_POPOVER_SEGUE = "startDatePopoverSegue"
 // EventCreateViewController -> DatePopoverViewController
 let END_DATE_POPOVER_SEGUE = "endDatePopoverSegue"
 // EventCreateViewController -> EventImportViewController
@@ -44,7 +44,8 @@ class EventCreateViewController: UIViewController,
     @IBOutlet weak var selectOfficialButton: UIButton!
     @IBOutlet weak var selectLocationButton: UIButton!
     @IBOutlet weak var selectDateButton: UIButton!
-    @IBOutlet weak var selectedDateLabel: UILabel!
+    @IBOutlet weak var selectedStartDateLabel: UILabel!
+    @IBOutlet weak var selectedEndDateLabel: UILabel!
     @IBOutlet weak var selectedLocationLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var importEventBarButton: UIBarButtonItem!
@@ -201,10 +202,15 @@ class EventCreateViewController: UIViewController,
     }
 
     func setupLabels() {
-        self.selectedDateLabel.layer.cornerRadius = 8.0
-        self.selectedDateLabel.clipsToBounds = true
-        self.selectedDateLabel.layer.borderColor = UIColor.lightGray.cgColor
-        self.selectedDateLabel.layer.borderWidth = 1.0
+        self.selectedStartDateLabel.layer.cornerRadius = 8.0
+        self.selectedStartDateLabel.clipsToBounds = true
+        self.selectedStartDateLabel.layer.borderColor = UIColor.lightGray.cgColor
+        self.selectedStartDateLabel.layer.borderWidth = 1.0
+        
+        self.selectedEndDateLabel.layer.cornerRadius = 8.0
+        self.selectedEndDateLabel.clipsToBounds = true
+        self.selectedEndDateLabel.layer.borderColor = UIColor.lightGray.cgColor
+        self.selectedEndDateLabel.layer.borderWidth = 1.0
 
         self.selectedLocationLabel.layer.cornerRadius = 8.0
         self.selectedLocationLabel.clipsToBounds = true
@@ -249,7 +255,7 @@ class EventCreateViewController: UIViewController,
         
         // Set the date
         self.set(startDate: event.startDate)
-        selectedDateLabel.text = event.formattedDate
+        self.set(endDate: event.endDate)
     }
 
     /// Sets the Official for the Event
@@ -281,20 +287,19 @@ class EventCreateViewController: UIViewController,
         // Format the date
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, YYYY h:mm a"
-        selectedDateLabel.text = formatter.string(from: startDate)
+        selectedStartDateLabel.text = formatter.string(from: startDate)
     }
     
     /// Sets the end date for the Event
     ///
     /// - Parameter endDate:    the Date for the Event
     private func set(endDate:Date) {
-        selectedStartDate = endDate
+        selectedEndDate = endDate
         
         // Format the date
-        // TODO: change when add end date labels
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, YYYY h:mm a"
-        selectedDateLabel.text = formatter.string(from: endDate)
+        selectedEndDateLabel.text = formatter.string(from: endDate)
     }
     
     /// Updates the Event.
