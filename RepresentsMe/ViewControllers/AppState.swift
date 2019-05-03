@@ -264,7 +264,7 @@ class AppState {
                 }
             }
         }
-        UsersDatabase.getCurrentUserProfilePicture { (image, error) in
+        UsersDatabase.getCurrentUserProfilePicture { (uid, image, error) in
             if error != nil {
                 // TODO: Handle Error
                 print(error.debugDescription)

@@ -30,7 +30,7 @@ let NOT_GOING_RED = UIColor.red
 
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
-class EventDetailsViewController: UIViewController {
+class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     // MARK: - Properties
     var toolbarOut: CGPoint = CGPoint()
     var toolbarIn: CGPoint = CGPoint()
@@ -66,27 +66,32 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var notGoingButtonLabel: UILabel!
     @IBOutlet weak var toolbarView: UIView!
 
+    @IBOutlet weak var attendeeCollectionView: UICollectionView!
+    
     // MARK: - Lifecycle
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
         if event != nil {
             // Set the labels
-            self.setLabels()
+            setLabels()
 
             // Set the photos
-            self.setPhotos()
+            setPhotos()
 
             // Center the map on the location for the event
-            self.setupMapView()
+            setupMapView()
 
             // Set up toolbar
-            self.setupToolbar()
+            setupToolbar()
 
             // Set whether or not the user can edit the event
-            self.setEditable()
+            setEditable()
 
             // Set user's RSVP status
-            self.setRSVPButtons()
+            setRSVPButtons()
+
+            // Set the event attendees
+            setEventAttendees()
         }
     }
 
@@ -185,7 +190,7 @@ class EventDetailsViewController: UIViewController {
             loadingIndicator.color = .black
             loadingIndicator.startAnimating()
             ownerLabel.isHidden = true
-            UsersDatabase.getUserProfilePicture(uid: event.owner) { (image, error) in
+            UsersDatabase.getUserProfilePicture(uid: event.owner) { (uid, image, error) in
                 if (error != nil) {
                     self.eventOwnerImageView.isHidden = true
                 } else {
@@ -385,8 +390,11 @@ class EventDetailsViewController: UIViewController {
 
             if let event = event {
                 for attendee in event.attendees {
-                    self.currentUserEventAttendee = attendee
+                    DispatchQueue.main.async {
+                        self.attendeeCollectionView.reloadData()
+                    }
                     if attendee.userID == UsersDatabase.currentUserUID! {
+                        self.currentUserEventAttendee = attendee
                         switch attendee.status {
                         case .going:
                             self.setRSVPGoingLayout()
@@ -407,6 +415,34 @@ class EventDetailsViewController: UIViewController {
             }
         })
     }
+
+    private func setEventAttendees() {
+        attendeeCollectionView.delegate = self
+        attendeeCollectionView.dataSource = self
+
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let event = event {
+            return event.attendees.count
+        }
+
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let event = event {
+            let attendeeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "attendeeCell", for: indexPath) as! AttendeeCell
+            attendeeCell.attendee = event.attendees[indexPath.row]
+            attendeeCell.profileImageView.layer.cornerRadius = 5.0
+
+            return attendeeCell
+        }
+
+        return UICollectionViewCell()
+    }
+
 
     func setNoResponseLayout() {
         goingButton.setTitleColor(GOING_GREEN, for: .normal)

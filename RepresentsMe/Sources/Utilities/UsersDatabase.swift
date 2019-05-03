@@ -74,12 +74,12 @@ class UsersDatabase {
     ///
     /// - Parameter completion: the completion handler to run after
     ///                         received server response
-    static func getCurrentUserProfilePicture(completion:@escaping (UIImage?, Error?) -> Void) {
+    static func getCurrentUserProfilePicture(completion:@escaping (String?, UIImage?, Error?) -> Void) {
         if let uid = currentUserUID {
             getUserProfilePicture(uid: uid, completion: completion)
         } else {
             // TODO: Handle no current user error
-            completion(nil, NilValueError.runtimeError("Nil User ID"))
+            completion(nil, nil, NilValueError.runtimeError("Nil User ID"))
         }
     }
 
@@ -87,15 +87,15 @@ class UsersDatabase {
     ///
     /// - Parameter completion: the completion handler to run after
     ///                         received server response
-    static func getUserProfilePicture(uid: String, completion: @escaping (UIImage?, Error?) -> Void) {
+    static func getUserProfilePicture(uid: String, completion: @escaping (String?, UIImage?, Error?) -> Void) {
         if let image = AppState.imageCache.object(forKey: NSString(string: uid)) {
-            return completion(image, nil)
+            return completion(uid, image, nil)
         }
 
         let imageRef = imagesRef.child(uid)
         imageRef.getData(maxSize: MAX_PROF_PIC_SIZE) { (data, error) in
             if let _ = error {
-                completion(nil, error)
+                completion(uid, nil, error)
             } else {
                 let image = UIImage(data: data!)
 
@@ -103,7 +103,7 @@ class UsersDatabase {
                     AppState.imageCache.setObject(image, forKey: NSString(string: uid))
                 }
 
-                completion(image,nil)
+                completion(uid, image,nil)
             }
         }
     }
