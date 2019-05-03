@@ -66,8 +66,14 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var notGoingButtonLabel: UILabel!
     @IBOutlet weak var toolbarView: UIView!
 
+    @IBOutlet weak var goingNumberLabel: UILabel!
+    @IBOutlet weak var maybeNumberLabel: UILabel!
+
     @IBOutlet weak var attendeeCollectionView: UICollectionView!
-    
+
+    var goingAttendees:[EventAttendee] = []
+    var maybeAttendees:[EventAttendee] = []
+
     // MARK: - Lifecycle
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
@@ -389,10 +395,23 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             }
 
             if let event = event {
+                DispatchQueue.main.async {
+                    self.attendeeCollectionView.reloadData()
+                }
+
+                self.goingAttendees = event.attendees.filter({ (attendee) -> Bool in
+                    return attendee.status == .going
+                })
+
+                self.goingNumberLabel.text = String(self.goingAttendees.count)
+
+                self.maybeAttendees = event.attendees.filter({ (attendee) -> Bool in
+                    return attendee.status == .maybe
+                })
+
+                self.maybeNumberLabel.text = String(self.maybeAttendees.count)
+
                 for attendee in event.attendees {
-                    DispatchQueue.main.async {
-                        self.attendeeCollectionView.reloadData()
-                    }
                     if attendee.userID == UsersDatabase.currentUserUID! {
                         self.currentUserEventAttendee = attendee
                         switch attendee.status {
@@ -419,8 +438,6 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     private func setEventAttendees() {
         attendeeCollectionView.delegate = self
         attendeeCollectionView.dataSource = self
-
-
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
