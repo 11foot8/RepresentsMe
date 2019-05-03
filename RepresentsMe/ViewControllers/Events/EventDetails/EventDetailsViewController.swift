@@ -71,6 +71,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
     @IBOutlet weak var attendeeCollectionView: UICollectionView!
 
+    var attendeeDataGoing:Bool = true
+
     var goingAttendees:[EventAttendee] = []
     var maybeAttendees:[EventAttendee] = []
 
@@ -282,9 +284,12 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
                 currentUserEventAttendee = nil
 
+                reloadAttendeeViews(status: .notGoing)
+
                 return
             } else {
                 attendee.setStatus(to: status)
+                reloadAttendeeViews(status: status)
             }
         } else {
             // If user has not yet RSVPed, add self
@@ -296,6 +301,7 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     }
 
                                     self.currentUserEventAttendee = attendee
+                                    self.reloadAttendeeViews(status: status)
                 })
             } else {
                 self.alert(title: "Error",
@@ -435,29 +441,72 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         })
     }
 
+    private func reloadAttendeeViews(status: RSVPType) {
+        self.maybeAttendees.removeAll { (attendee) -> Bool in
+            return attendee.userID == self.currentUserEventAttendee?.userID
+        }
+
+        self.goingAttendees.removeAll { (attendee) -> Bool in
+            return attendee.userID == self.currentUserEventAttendee?.userID
+        }
+
+        if (status == .going) {
+            self.goingAttendees.append(self.currentUserEventAttendee!)
+        } else if (status == .maybe) {
+            self.maybeAttendees.append(self.currentUserEventAttendee!)
+        }
+
+        self.goingNumberLabel.text = String(self.goingAttendees.count)
+        self.maybeNumberLabel.text = String(self.maybeAttendees.count)
+
+        DispatchQueue.main.async {
+            self.attendeeCollectionView.reloadData()
+        }
+    }
+
     private func setEventAttendees() {
         attendeeCollectionView.delegate = self
         attendeeCollectionView.dataSource = self
+        attendeeCollectionView.isHidden = true
+
+        goingNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goingNumberLabelTapped)))
+
+        maybeNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maybeNumberLabelTapped)))
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let event = event {
-            return event.attendees.count
-        }
+    @objc func goingNumberLabelTapped() {
+        attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && attendeeDataGoing
+        attendeeDataGoing = true
+        attendeeCollectionView.reloadData()
+    }
 
-        return 0
+    @objc func maybeNumberLabelTapped() {
+        attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && !attendeeDataGoing
+        attendeeDataGoing = false
+        attendeeCollectionView.reloadData()
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if attendeeDataGoing {
+            return goingAttendees.count
+        } else {
+            return maybeAttendees.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let event = event {
-            let attendeeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "attendeeCell", for: indexPath) as! AttendeeCell
-            attendeeCell.attendee = event.attendees[indexPath.row]
-            attendeeCell.profileImageView.layer.cornerRadius = 5.0
+        let attendeeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "attendeeCell", for: indexPath) as! AttendeeCell
 
-            return attendeeCell
+        if attendeeDataGoing {
+            attendeeCell.attendee = goingAttendees[indexPath.row]
+        } else {
+            attendeeCell.attendee = maybeAttendees[indexPath.row]
         }
 
-        return UICollectionViewCell()
+        attendeeCell.profileImageView.layer.cornerRadius = 5.0
+
+        return attendeeCell
     }
 
 
