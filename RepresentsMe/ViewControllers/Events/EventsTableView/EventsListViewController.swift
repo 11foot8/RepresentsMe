@@ -33,6 +33,7 @@ class EventsListViewController: UIViewController {
 
     var reachType:ReachType = .event
     var official:Official?
+    var displayName:String?
     
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
@@ -56,7 +57,7 @@ class EventsListViewController: UIViewController {
             self.navigationItem.title = "\(official!.name)'s Events"
             break
         case .user:
-            self.navigationItem.title = "User's Events"
+            self.navigationItem.title = "\(displayName!)'s Events"
             break
         }
         

@@ -35,11 +35,19 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     var toolbarOut: CGPoint = CGPoint()
     var toolbarIn: CGPoint = CGPoint()
 
-    var event:Event?                              // The Event to display
+    var event:Event? {                            // The Event to display
+        didSet {
+            if let userID = event?.owner {
+                UsersDatabase.getDisplayName(for: userID) { (displayName, error) in
+                    self.eventOwnerDisplayName = displayName
+                }
+            }
+        }
+    }
+    var eventOwnerDisplayName:String?
     var delegate:EventListDelegate?               // The delegate to update
     var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
-    // for the current user
-
+                                                  // for the current user
     let eventStore = EKEventStore()
 
     // MARK: - Outlets
@@ -234,6 +242,7 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             destination.official = event?.official
         } else if segue.identifier == USER_EVENTS_SEGUE {
             let destination = segue.destination as! EventsListViewController
+            destination.displayName = eventOwnerDisplayName
             destination.reachType = .user
             AppState.userId = event!.owner
         }
