@@ -103,7 +103,7 @@ class UsersDatabase {
                     AppState.imageCache.setObject(image, forKey: NSString(string: uid))
                 }
 
-                completion(uid, image,nil)
+                completion(uid, image, nil)
             }
         }
     }

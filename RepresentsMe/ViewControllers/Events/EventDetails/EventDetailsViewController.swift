@@ -282,9 +282,9 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     self.setNoResponseLayout()
                 })
 
-                currentUserEventAttendee = nil
-
                 reloadAttendeeViews(status: .notGoing)
+
+                currentUserEventAttendee = nil
 
                 return
             } else {

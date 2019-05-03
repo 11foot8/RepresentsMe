@@ -14,7 +14,7 @@ class AttendeeCell: UICollectionViewCell {
 
     var attendee:EventAttendee? {
         didSet {
-            profileImageView.image = nil
+            profileImageView.image = DEFAULT_NOT_LOADED
 
             if let attendee = attendee {
                 switch attendee.status {
