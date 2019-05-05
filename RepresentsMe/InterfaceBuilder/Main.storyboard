@@ -1634,7 +1634,8 @@
                         <outlet property="toolbarView" destination="Ntz-hN-dZs" id="bgz-iu-oda"/>
                         <segue destination="BQt-xH-cRm" kind="show" identifier="editEventSegue" id="fZv-Vr-KZp"/>
                         <segue destination="V5Z-GW-aU6" kind="show" identifier="eventOfficialSegue" id="VAu-dC-44h"/>
-                        <segue destination="bJG-fH-d8a" kind="show" identifier="userEventsSegue" id="dgC-6z-aIX"/>
+                        <segue destination="bJG-fH-d8a" kind="show" identifier="ownerEventsSegue" id="dgC-6z-aIX"/>
+                        <segue destination="bJG-fH-d8a" kind="show" identifier="userEventsSegue" id="uZM-VQ-zNw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="di1-Ze-rRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2840,9 +2841,9 @@
         <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fZv-Vr-KZp"/>
+        <segue reference="Yh7-ve-cIi"/>
         <segue reference="kWx-5d-f1X"/>
-        <segue reference="dgC-6z-aIX"/>
+        <segue reference="uZM-VQ-zNw"/>
         <segue reference="JrQ-Sz-hlR"/>
         <segue reference="VAu-dC-44h"/>
         <segue reference="MZX-gR-k2v"/>

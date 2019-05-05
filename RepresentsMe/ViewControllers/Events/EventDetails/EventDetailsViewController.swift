@@ -18,6 +18,8 @@ let EDIT_EVENT_SEGUE = "editEventSegue"
 // EventDetailsViewController -> OfficialDetailsViewController
 let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
 // EventDetailsViewController -> EventsListViewController
+let OWNER_EVENTS_SEGUE = "ownerEventsSegue"
+// EventDetailsViewController -> EventsListViewController
 let USER_EVENTS_SEGUE = "userEventsSegue"
 
 // RSVP colors
@@ -228,7 +230,7 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     }
 
     @objc private func didTapEventOwnerImage() {
-        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+        performSegue(withIdentifier: OWNER_EVENTS_SEGUE, sender: self)
     }
 
     /// Prepare to segue to edit the Event
@@ -240,11 +242,29 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
             let destination = segue.destination as! OfficialDetailsViewController
             destination.official = event?.official
-        } else if segue.identifier == USER_EVENTS_SEGUE {
+        } else if segue.identifier == OWNER_EVENTS_SEGUE {
             let destination = segue.destination as! EventsListViewController
             destination.displayName = eventOwnerDisplayName
             destination.reachType = .user
             AppState.userId = event!.owner
+        } else if segue.identifier == USER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.reachType = .user
+
+            if let rowNum =  attendeeCollectionView.indexPathsForSelectedItems?.first?.row {
+                if attendeeDataGoing {
+                    AppState.userId = goingAttendees[rowNum].userID
+                } else {
+                    AppState.userId = goingAttendees[rowNum].userID
+                }
+
+                destination.displayName = nil
+                UsersDatabase.getDisplayName(for: AppState.userId!) { (displayName, error) in
+                    if let displayName = displayName {
+                        destination.navigationItem.title = "\(displayName)'s Events"
+                    }
+                }
+            }
         }
     }
 
@@ -518,6 +538,9 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         return attendeeCell
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+    }
 
     func setNoResponseLayout() {
         goingButton.setTitleColor(GOING_GREEN, for: .normal)

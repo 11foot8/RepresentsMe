@@ -57,7 +57,11 @@ class EventsListViewController: UIViewController {
             self.navigationItem.title = "\(official!.name)'s Events"
             break
         case .user:
-            self.navigationItem.title = "\(displayName!)'s Events"
+            if let displayName = displayName {
+                self.navigationItem.title = "\(displayName)'s Events"
+            } else {
+                self.navigationItem.title = ""
+            }
             break
         }
         
