@@ -309,6 +309,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     }
 
                     self.setNoResponseLayout()
+
+                    AppState.removeRSVP(event: self.event)
                 })
 
                 reloadAttendeeViews(status: .notGoing)
@@ -331,6 +333,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
                                     self.currentUserEventAttendee = attendee
                                     self.reloadAttendeeViews(status: status)
+
+                                    AppState.addRSVP(event: self.event)
                 })
             } else {
                 self.alert(title: "Error",

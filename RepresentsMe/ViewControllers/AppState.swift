@@ -263,6 +263,27 @@ class AppState {
         }
     }
 
+    static func addRSVP(event: Event?) {
+        if let event = event {
+            AppState.rsvpedEvents.append(event)
+
+            for listener in rsvpedEventsListeners {
+                listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
+            }
+        }
+    }
+
+    static func removeRSVP(event: Event?) {
+        if let event = event {
+            AppState.rsvpedEvents.removeAll { (rsvpedEvent) -> Bool in
+                return rsvpedEvent.documentID == event.documentID
+            }
+            
+            for listener in rsvpedEventsListeners {
+                listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
+            }
+        }
+    }
 
     static func addEvent(_ event: Event) {
         AppState.homeEvents.append(event)
@@ -308,6 +329,20 @@ class AppState {
                 if let preferences = preferences {
                     AppState.openExternalLinksInSafari = preferences[EXTERNAL_LINK_PREFERENCES_KEY] as? Bool ?? false
                     AppState.openCalendarOnEventExport = preferences[CALENDAR_EXPORT_PREFERENCES_KEY] as? Bool ?? false
+                }
+            }
+        }
+        EventAttendee.allWith(userID: UsersDatabase.currentUserUID!) { (eventAttendees, error) in
+            if error != nil {
+                // TODO: Handle error
+            } else {
+                rsvpedEvents = eventAttendees.map({ (eventAttendee) -> Event? in
+                    return eventAttendee.event
+                }).filter({ (event) -> Bool in
+                    return event != nil
+                }) as! [Event]
+                for listener in rsvpedEventsListeners {
+                    listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
                 }
             }
         }

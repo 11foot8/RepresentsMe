@@ -33,7 +33,6 @@ class MyEventsViewController: UIViewController {
         eventsTableView.dataSource = rsvpedTableViewDataSource
 
         eventsSearchBar.delegate = rsvpedTableViewDataSource
-
     }
 
     override func viewDidDisappear(_ animated: Bool) {
