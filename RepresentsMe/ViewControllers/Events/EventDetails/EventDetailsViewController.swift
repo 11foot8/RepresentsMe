@@ -251,11 +251,11 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             let destination = segue.destination as! EventsListViewController
             destination.reachType = .user
 
-            if let rowNum =  attendeeCollectionView.indexPathsForSelectedItems?.first?.row {
+            if let rowNum = attendeeCollectionView.indexPathsForSelectedItems?.first?.row {
                 if attendeeDataGoing {
                     AppState.userId = goingAttendees[rowNum].userID
                 } else {
-                    AppState.userId = goingAttendees[rowNum].userID
+                    AppState.userId = maybeAttendees[rowNum].userID
                 }
 
                 destination.displayName = nil

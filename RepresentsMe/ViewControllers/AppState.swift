@@ -267,6 +267,8 @@ class AppState {
         if let event = event {
             AppState.rsvpedEvents.append(event)
 
+            rsvpedEvents.sort()
+
             for listener in rsvpedEventsListeners {
                 listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
             }
@@ -278,6 +280,8 @@ class AppState {
             AppState.rsvpedEvents.removeAll { (rsvpedEvent) -> Bool in
                 return rsvpedEvent.documentID == event.documentID
             }
+
+            rsvpedEvents.sort()
             
             for listener in rsvpedEventsListeners {
                 listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
@@ -341,6 +345,9 @@ class AppState {
                 }).filter({ (event) -> Bool in
                     return event != nil
                 }) as! [Event]
+
+                rsvpedEvents.sort()
+                
                 for listener in rsvpedEventsListeners {
                     listener.appStateReceivedRSVPedEvents(events: rsvpedEvents)
                 }
