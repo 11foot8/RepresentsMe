@@ -116,6 +116,7 @@ class LoginViewController: UIViewController {
             withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
         if let appDel = UIApplication.shared.delegate as? AppDelegate {
             appDel.window?.rootViewController = tabBarViewController
+            navigationController?.popToRootViewController(animated: false)
         }
     }
 
