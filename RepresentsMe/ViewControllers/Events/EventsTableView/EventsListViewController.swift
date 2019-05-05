@@ -27,6 +27,7 @@ class EventsListViewController: UIViewController {
         case user       // Mode for shwoing Events for a selected User
     }
 
+    // MARK: - Properties
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
     @IBOutlet weak var myEventsBarButton: UIBarButtonItem!
@@ -38,6 +39,7 @@ class EventsListViewController: UIViewController {
     var official:Official?
     var displayName:String?
     
+    // MARK: - Lifecycle
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,15 +90,19 @@ class EventsListViewController: UIViewController {
             }
             break
         }
-        
+
+        // Hide keyboard when tableView interacted with
+        eventTableView.keyboardDismissMode = .interactive
+        eventTableView.keyboardDismissMode = .onDrag
+
         // Set search bar delegate
         self.eventSearchBar.delegate = self.tableViewDataSource
     }
-    
+
     /// Update the events being displayed if the user's address changed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // Ensure the navigation bar is shown
         self.navigationController?.setNavigationBarHidden(false,
                                                           animated: false)
@@ -138,5 +144,10 @@ class EventsListViewController: UIViewController {
         } else if segue.identifier == MY_EVENTS_SEGUE_IDENTIFIER {
             AppState.userId = UsersDatabase.currentUserUID
         }
+    }
+
+    /// Hide keyboard when tapping out of SearchBar
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // MARK: - Remember Me
         // Log user out if Remember me not on
-        if !Util.rememberMeEnabled {
+        if !Util.rememberMeEnabled && !Util.biometricEnabled {
             UsersDatabase.shared.logoutUser { (error) in
                 // Do nothing
             }

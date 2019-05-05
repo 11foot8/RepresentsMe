@@ -95,6 +95,10 @@ class EventsTableViewDataSource: NSObject,
         updateTableData()
     }
 
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
     /// The number of rows is the number of events
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {

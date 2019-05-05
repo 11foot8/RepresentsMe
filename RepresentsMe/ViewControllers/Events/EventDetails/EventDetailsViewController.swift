@@ -22,6 +22,8 @@ let OWNER_EVENTS_SEGUE = "ownerEventsSegue"
 // EventDetailsViewController -> EventsListViewController
 let USER_EVENTS_SEGUE = "userEventsSegue"
 
+let EVENT_MAP_VIEW_POPOVER_SEGUE = "eventMapViewPopoverSegue"
+
 // RSVP colors
 let GOING_GREEN = UIColor(displayP3Red: 51.0 / 255.0,
                           green: 204.0 / 255.0,
@@ -111,6 +113,9 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             // Set the event attendees
             setEventAttendees()
         }
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        mapView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     // MARK: - Actions
@@ -173,10 +178,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
     @IBAction func exportEvent(_ sender: Any) {
         let name = self.event?.name
-        let startDate = self.event?.date
-        // Set end date to be an hour after the start date
-        // TODO: add end date field to Event model
-        let endDate = startDate!.addingTimeInterval(60*60)
+        let startDate = self.event?.startDate
+        let endDate = self.event?.endDate
 
         // If the authorization status for calendar access isn't authorized, request
         // access again and then export the event. Otherwise, just export the event
@@ -186,13 +189,19 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                 self.saveEvent(eventStore:self.eventStore,
                                title:name!,
                                startDate: startDate! as NSDate,
-                               endDate: endDate as NSDate)
+                               endDate: endDate! as NSDate)
             })
         } else {
             saveEvent(eventStore:eventStore,
                       title:name!,
                       startDate: startDate! as NSDate,
-                      endDate: endDate as NSDate)
+                      endDate: endDate! as NSDate)
+        }
+    }
+
+    @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
+        if let _ = event?.location {
+            performSegue(withIdentifier: EVENT_MAP_VIEW_POPOVER_SEGUE, sender: self)
         }
     }
     
@@ -265,6 +274,10 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     }
                 }
             }
+        } else if segue.identifier == EVENT_MAP_VIEW_POPOVER_SEGUE,
+            let destination = segue.destination as? LocationMapViewPopoverViewController {
+            destination.setPinInfo(location: event!.location, title: event!.name, subtitle: event!.address.addressLine1())
+            destination.setup(in: self.view)
         }
     }
 
