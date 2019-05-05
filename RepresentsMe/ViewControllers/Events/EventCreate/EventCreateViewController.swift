@@ -75,10 +75,7 @@ class EventCreateViewController: UIViewController,
     }
     
     @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
-        if selectedLocation != nil {
-            performSegue(withIdentifier: CREATE_MAP_POPOVER_SEGUE,
-                         sender: self)
-        }
+        openMapView()
     }
 
     // MARK: - Actions
@@ -130,6 +127,16 @@ class EventCreateViewController: UIViewController,
     // Hide keyboard when edit location is tapped
     @IBAction func editLocationTouchUp(_ sender: Any) {
         self.view.endEditing(true)
+    }
+    @IBAction func mapButtonTouchUp(_ sender: Any) {
+        openMapView()
+    }
+
+    func openMapView() {
+        if selectedLocation != nil {
+            performSegue(withIdentifier: CREATE_MAP_POPOVER_SEGUE,
+                         sender: self)
+        }
     }
 
     /// Prepare for segues to select the Official, location, and date
