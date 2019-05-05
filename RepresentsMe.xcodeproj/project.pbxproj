@@ -403,13 +403,6 @@
 			path = Entry;
 			sourceTree = "<group>";
 		};
-		166E6E37227A4666005F6B19 /* Map Popover */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Map Popover";
-			sourceTree = "<group>";
-		};
 		16C72C30225FFC6500D43215 /* OfficialCardView */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,7 +529,6 @@
 			isa = PBXGroup;
 			children = (
 				13895F30225F8EAA00FE405D /* AppState.swift */,
-				166E6E37227A4666005F6B19 /* Map Popover */,
 				165B7F65225BE1800095D9E1 /* Entry */,
 				13BD31B5223021F1000A6BEE /* TabBarViewController.swift */,
 				16B6B2C522209D8100DB3A5B /* MapViewController.swift */,

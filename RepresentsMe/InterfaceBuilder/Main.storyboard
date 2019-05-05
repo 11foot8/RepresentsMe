@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
     <device id="retina5_9" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wIp-Hi-1OM">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -556,7 +558,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" image="11foot8" translatesAutoresizingMaskIntoConstraints="NO" id="M5k-21-xbs">
-                                <rect key="frame" x="137.66666666666666" y="648" width="100" height="100"/>
+                                <rect key="frame" x="157" y="606" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="100" id="9gc-9V-Yz4"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="Jqn-g3-8iY"/>
@@ -781,37 +783,37 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MO0-vM-Kod">
-                                <rect key="frame" x="46.666666666666664" y="148.33333333333334" width="12" height="12"/>
+                                <rect key="frame" x="46.666666666666664" y="124.33333333333331" width="12" height="12"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95X-UE-pWA">
-                                <rect key="frame" x="70.666666666666671" y="204.66666666666666" width="12" height="12"/>
+                                <rect key="frame" x="70.666666666666671" y="181" width="12" height="12"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times-circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18G-av-dFq">
-                                <rect key="frame" x="119" y="261.66666666666669" width="12" height="12"/>
+                                <rect key="frame" x="119" y="237.66666666666666" width="12" height="12"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8im-Lx-TU4">
-                                <rect key="frame" x="66.666666666666671" y="146.66666666666666" width="70.000000000000014" height="15"/>
+                                <rect key="frame" x="66.666666666666671" y="123" width="70.000000000000014" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Tz-hY-Lbv">
-                                <rect key="frame" x="90.666666666666686" y="203.33333333333334" width="94" height="15"/>
+                                <rect key="frame" x="90.666666666666686" y="179.33333333333334" width="94" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anM-yK-34J">
-                                <rect key="frame" x="139" y="260" width="94" height="15"/>
+                                <rect key="frame" x="139" y="236" width="94" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1750,7 +1752,7 @@
                                         </state>
                                         <connections>
                                             <action selector="editDateTouchUp:" destination="BQt-xH-cRm" eventType="touchUpInside" id="6M5-lN-aa9"/>
-                                            <segue destination="2a5-Ma-HVC" kind="popoverPresentation" identifier="datePopoverSegue" popoverAnchorView="Bgf-oc-jRz" id="RHe-L4-IUD">
+                                            <segue destination="2a5-Ma-HVC" kind="popoverPresentation" identifier="startDatePopoverSegue" popoverAnchorView="Bgf-oc-jRz" id="RHe-L4-IUD">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -1772,8 +1774,17 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Select a Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-al-5xJ">
-                                        <rect key="frame" x="77.666666666666686" y="476.33333333333337" width="220" height="20.333333333333314"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="January 1, 1970 12:00 PM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8Z-Td-LGH">
+                                        <rect key="frame" x="97" y="480.33333333333331" width="220" height="20.333333333333314"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="LmZ-oP-kuw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Select a Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-al-5xJ">
+                                        <rect key="frame" x="97" y="520.66666666666663" width="220" height="20.333333333333371"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="220" id="ITZ-vJ-S2M"/>
                                         </constraints>
@@ -1781,11 +1792,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-UP-JP0">
-                                        <rect key="frame" x="8" y="504.66666666666657" width="359" height="221.33333333333331"/>
-                                    </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K76-c1-nRC">
-                                        <rect key="frame" x="305.66666666666669" y="472" width="30" height="29"/>
+                                        <rect key="frame" x="325" y="516.33333333333337" width="30" height="29"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
                                         <state key="normal" title="edit">
                                             <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1804,28 +1812,41 @@
                                             <constraint firstAttribute="width" secondItem="FgN-uW-RSe" secondAttribute="height" multiplier="1:1" id="l69-Zb-sMI"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8Z-Kb-cX9">
+                                        <rect key="frame" x="325" y="472.66666666666669" width="30" height="29"/>
+                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Regular" family="Font Awesome 5 Free" pointSize="17"/>
+                                        <state key="normal" title="edit">
+                                            <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editDateTouchUp:" destination="BQt-xH-cRm" eventType="touchUpInside" id="uJf-wW-oYm"/>
+                                            <segue destination="2a5-Ma-HVC" kind="popoverPresentation" identifier="endDatePopoverSegue" popoverAnchorView="W8Z-Kb-cX9" id="YHx-nR-ZAh">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="GGC-al-5xJ" firstAttribute="top" secondItem="jjG-xj-KJq" secondAttribute="bottom" constant="16" id="2k4-u8-ZqO"/>
+                                    <constraint firstItem="W8Z-Kb-cX9" firstAttribute="top" secondItem="Bgf-oc-jRz" secondAttribute="bottom" constant="8" id="0qs-Zr-Krh"/>
+                                    <constraint firstItem="GGC-al-5xJ" firstAttribute="top" secondItem="I8Z-Td-LGH" secondAttribute="bottom" constant="20" id="2k4-u8-ZqO"/>
                                     <constraint firstAttribute="trailing" secondItem="Q66-YJ-iRP" secondAttribute="trailing" constant="16" id="3AI-ei-8az"/>
                                     <constraint firstItem="K76-c1-nRC" firstAttribute="leading" secondItem="GGC-al-5xJ" secondAttribute="trailing" constant="8" id="9bq-h6-1kt"/>
-                                    <constraint firstAttribute="trailing" secondItem="Waf-UP-JP0" secondAttribute="trailing" constant="8" id="AGx-UR-DJ3"/>
                                     <constraint firstItem="mQs-8w-Y2B" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="CwX-uA-LF7"/>
+                                    <constraint firstItem="W8Z-Kb-cX9" firstAttribute="leading" secondItem="I8Z-Td-LGH" secondAttribute="trailing" constant="8" id="DeO-rI-Scr"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="JQC-6i-upi"/>
-                                    <constraint firstItem="Waf-UP-JP0" firstAttribute="leading" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="8" id="NUG-g2-8Tp"/>
+                                    <constraint firstItem="I8Z-Td-LGH" firstAttribute="top" secondItem="jjG-xj-KJq" secondAttribute="bottom" constant="20" id="LBe-bK-qeL"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="top" secondItem="Q66-YJ-iRP" secondAttribute="bottom" constant="8" id="NbD-lE-s99"/>
+                                    <constraint firstItem="I8Z-Td-LGH" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="T2I-eq-oWB"/>
                                     <constraint firstItem="Bgf-oc-jRz" firstAttribute="centerY" secondItem="jjG-xj-KJq" secondAttribute="centerY" id="Ts9-Rk-1Pq"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FgN-uW-RSe" secondAttribute="trailing" constant="16" id="Txy-6i-13k"/>
                                     <constraint firstItem="jjG-xj-KJq" firstAttribute="top" secondItem="mQs-8w-Y2B" secondAttribute="bottom" constant="16" id="a8f-oY-74b"/>
-                                    <constraint firstItem="Waf-UP-JP0" firstAttribute="top" secondItem="GGC-al-5xJ" secondAttribute="bottom" constant="8" id="cKn-1k-ULS"/>
                                     <constraint firstItem="Q66-YJ-iRP" firstAttribute="leading" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="16" id="eNc-t1-6gG"/>
                                     <constraint firstItem="GGC-al-5xJ" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="ezH-hc-DdZ"/>
                                     <constraint firstItem="mQs-8w-Y2B" firstAttribute="top" secondItem="FgN-uW-RSe" secondAttribute="bottom" constant="8" id="iyi-jH-d8c"/>
                                     <constraint firstItem="K76-c1-nRC" firstAttribute="centerY" secondItem="GGC-al-5xJ" secondAttribute="centerY" id="jbl-SR-aUa"/>
                                     <constraint firstItem="Bgf-oc-jRz" firstAttribute="leading" secondItem="jjG-xj-KJq" secondAttribute="trailing" constant="8" id="mXA-Hv-lcj"/>
                                     <constraint firstItem="jjG-xj-KJq" firstAttribute="centerX" secondItem="aRJ-Ee-kRj" secondAttribute="centerX" id="rgY-5s-E97"/>
-                                    <constraint firstAttribute="bottom" secondItem="Waf-UP-JP0" secondAttribute="bottom" constant="8" id="vuX-5K-hCs"/>
                                     <constraint firstItem="FgN-uW-RSe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aRJ-Ee-kRj" secondAttribute="leading" constant="16" id="ypo-gO-4VA"/>
                                     <constraint firstItem="Q66-YJ-iRP" firstAttribute="top" secondItem="aRJ-Ee-kRj" secondAttribute="top" constant="8" id="zDM-Bd-42f"/>
                                 </constraints>
@@ -1863,17 +1884,20 @@
                         <outlet property="eventNameTextField" destination="Q66-YJ-iRP" id="Quw-p8-fkX"/>
                         <outlet property="eventOfficialCardView" destination="FgN-uW-RSe" id="IOT-Yd-Hn3"/>
                         <outlet property="importEventBarButton" destination="CWy-BN-fTD" id="p0e-Ak-wll"/>
-                        <outlet property="mapView" destination="Waf-UP-JP0" id="YBr-Rr-y7P"/>
                         <outlet property="selectDateButton" destination="Bgf-oc-jRz" id="svF-ac-fPG"/>
                         <outlet property="selectLocationButton" destination="K76-c1-nRC" id="xsp-HU-wGU"/>
                         <outlet property="selectOfficialButton" destination="mQs-8w-Y2B" id="vME-mV-dtk"/>
-                        <outlet property="selectedDateLabel" destination="jjG-xj-KJq" id="VLG-o6-Bre"/>
+                        <outlet property="selectedEndDateLabel" destination="I8Z-Td-LGH" id="vdG-av-HU4"/>
                         <outlet property="selectedLocationLabel" destination="GGC-al-5xJ" id="abC-1U-E1V"/>
+                        <outlet property="selectedStartDateLabel" destination="jjG-xj-KJq" id="VLG-o6-Bre"/>
+                        <segue destination="eFD-Yf-7wQ" kind="popoverPresentation" identifier="createMapPopoverSegue" popoverAnchorView="aRJ-Ee-kRj" id="7MY-CE-1jT">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gmV-gu-uBE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="-1258.3743842364534"/>
+            <point key="canvasLocation" x="2794.202898550725" y="-1258.6956521739132"/>
         </scene>
         <!--Date Popover View Controller-->
         <scene sceneID="RU0-Hg-46Z">
@@ -2168,7 +2192,7 @@
                                 <state key="normal" title="Use Current Location"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFN-MG-w2u">
-                                <rect key="frame" x="337" y="135" width="30" height="29"/>
+                                <rect key="frame" x="376" y="111" width="30" height="29"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                 <state key="normal" title="map-marked-alt"/>
                                 <connections>
@@ -2765,12 +2789,12 @@
         <image name="11foot8" width="1966" height="1958"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dla-CR-CGj"/>
-        <segue reference="Yh7-ve-cIi"/>
-        <segue reference="kWx-5d-f1X"/>
-        <segue reference="mNe-f1-G1c"/>
+        <segue reference="RHe-L4-IUD"/>
+        <segue reference="fZv-Vr-KZp"/>
+        <segue reference="7Am-r7-zXQ"/>
+        <segue reference="7MY-CE-1jT"/>
         <segue reference="dgC-6z-aIX"/>
-        <segue reference="JrQ-Sz-hlR"/>
+        <segue reference="7wb-vX-DZx"/>
         <segue reference="VAu-dC-44h"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>
