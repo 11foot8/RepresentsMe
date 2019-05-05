@@ -436,12 +436,16 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
                 self.goingAttendees = event.attendees.filter({ (attendee) -> Bool in
                     return attendee.status == .going
+                }).sorted(by: { (attendee1, attendee2) -> Bool in
+                    attendee1.userID < attendee2.userID
                 })
 
                 self.goingNumberLabel.text = String(self.goingAttendees.count)
 
                 self.maybeAttendees = event.attendees.filter({ (attendee) -> Bool in
                     return attendee.status == .maybe
+                }).sorted(by: { (attendee1, attendee2) -> Bool in
+                    attendee1.userID < attendee2.userID
                 })
 
                 self.maybeNumberLabel.text = String(self.maybeAttendees.count)
@@ -517,10 +521,14 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if attendeeDataGoing {
-            return goingAttendees.count
+        if !attendeeCollectionView.isHidden {
+            if attendeeDataGoing {
+                return goingAttendees.count
+            } else {
+                return maybeAttendees.count
+            }
         } else {
-            return maybeAttendees.count
+            return 0
         }
     }
 
