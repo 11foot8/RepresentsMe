@@ -896,14 +896,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGQ-sY-7NA">
-                                <rect key="frame" x="159.66666666666666" y="272.66666666666669" width="111.99999999999997" height="26"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <state key="normal" title="Use Current Location"/>
-                                <connections>
-                                    <action selector="useCurrentLocationTouchUp:" destination="15G-as-B8d" eventType="touchUpInside" id="9gj-Se-DH2"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Street Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EaW-Ve-Q0C">
                                 <rect key="frame" x="8" y="174" width="398" height="30"/>
                                 <nil key="textColor"/>
@@ -973,7 +965,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ize-ek-P7i">
-                                <rect key="frame" x="143" y="330.66666666666669" width="128" height="64"/>
+                                <rect key="frame" x="143" y="292.66666666666669" width="128" height="64"/>
                                 <color key="backgroundColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="c8M-ZE-ZoN"/>
@@ -992,18 +984,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxk-6D-lI9">
+                                <rect key="frame" x="376" y="137" width="30" height="29"/>
+                                <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
+                                <state key="normal" title="map-marked-alt"/>
+                                <connections>
+                                    <segue destination="XZG-Pc-5F1" kind="show" identifier="CreateAccountSelectLocationSegue" id="XQX-Ey-Ryc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EaW-Ve-Q0C" firstAttribute="top" secondItem="fEe-cE-k6g" secondAttribute="bottom" constant="4" id="38J-c9-sTT"/>
                             <constraint firstItem="ize-ek-P7i" firstAttribute="centerX" secondItem="r5d-0J-mq7" secondAttribute="centerX" id="5cq-eX-WS1"/>
-                            <constraint firstItem="ize-ek-P7i" firstAttribute="top" secondItem="ZGQ-sY-7NA" secondAttribute="bottom" constant="32" id="5nf-Ey-axX"/>
                             <constraint firstItem="vJi-fY-u14" firstAttribute="trailing" secondItem="65j-Os-Tae" secondAttribute="trailing" constant="8" id="6BL-ZJ-p0e"/>
                             <constraint firstItem="vJi-fY-u14" firstAttribute="bottom" secondItem="sM3-D0-Bem" secondAttribute="bottom" constant="8" id="6ig-Lk-EJh"/>
                             <constraint firstItem="Q3S-u5-PSR" firstAttribute="top" secondItem="CDL-HG-ves" secondAttribute="top" id="A4F-fx-XSA"/>
                             <constraint firstItem="CDL-HG-ves" firstAttribute="top" secondItem="wza-l8-Hxu" secondAttribute="bottom" constant="4" id="Adt-Yr-4vo"/>
-                            <constraint firstItem="ZGQ-sY-7NA" firstAttribute="centerX" secondItem="r5d-0J-mq7" secondAttribute="centerX" constant="8.5" id="E9r-FU-BGT"/>
+                            <constraint firstItem="vJi-fY-u14" firstAttribute="trailing" secondItem="rxk-6D-lI9" secondAttribute="trailing" constant="8" id="Apj-Nv-vNy"/>
                             <constraint firstItem="fEe-cE-k6g" firstAttribute="top" secondItem="bD7-nP-jPY" secondAttribute="bottom" constant="8" id="EDD-pV-UDQ"/>
+                            <constraint firstItem="EaW-Ve-Q0C" firstAttribute="top" secondItem="rxk-6D-lI9" secondAttribute="bottom" constant="8" id="IKC-K1-rh0"/>
                             <constraint firstItem="bD7-nP-jPY" firstAttribute="centerX" secondItem="r5d-0J-mq7" secondAttribute="centerX" constant="8" id="L52-Xp-lYe"/>
                             <constraint firstItem="yGD-di-Avo" firstAttribute="leading" secondItem="Q3S-u5-PSR" secondAttribute="trailing" constant="8" id="LIa-py-UcQ"/>
                             <constraint firstItem="Y0Q-HD-uG0" firstAttribute="leading" secondItem="yGD-di-Avo" secondAttribute="leading" id="Lay-IU-zk6"/>
@@ -1013,7 +1013,7 @@
                             <constraint firstItem="Y0Q-HD-uG0" firstAttribute="top" secondItem="EaW-Ve-Q0C" secondAttribute="bottom" constant="8" id="Tco-2s-xFT"/>
                             <constraint firstItem="vJi-fY-u14" firstAttribute="trailing" secondItem="yGD-di-Avo" secondAttribute="trailing" constant="8" id="VYv-Jg-e3U"/>
                             <constraint firstItem="oE7-7K-7na" firstAttribute="top" secondItem="EaW-Ve-Q0C" secondAttribute="bottom" constant="8" id="Wkr-QB-BRF"/>
-                            <constraint firstItem="ZGQ-sY-7NA" firstAttribute="top" secondItem="Q3S-u5-PSR" secondAttribute="bottom" constant="12" id="YPE-0X-Gkl"/>
+                            <constraint firstItem="ize-ek-P7i" firstAttribute="top" secondItem="CDL-HG-ves" secondAttribute="bottom" constant="32" id="eg5-2J-4Bx"/>
                             <constraint firstItem="fEe-cE-k6g" firstAttribute="leading" secondItem="vJi-fY-u14" secondAttribute="leading" constant="8" id="fNy-3w-ghw"/>
                             <constraint firstItem="65j-Os-Tae" firstAttribute="centerX" secondItem="r5d-0J-mq7" secondAttribute="centerX" id="ggD-Sg-MC7"/>
                             <constraint firstItem="bD7-nP-jPY" firstAttribute="top" secondItem="65j-Os-Tae" secondAttribute="bottom" constant="16" id="i2Z-Gx-SQQ"/>
@@ -1605,7 +1605,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Got-PF-0XK" customClass="LocationInfo" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="8" y="754" width="398" height="100"/>
+                                <rect key="frame" x="8" y="705" width="398" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fqz-9c-CNW"/>
@@ -2226,7 +2226,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="postal-code"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaF-bB-UyF">
-                                <rect key="frame" x="190" y="336.66666666666669" width="34" height="30"/>
+                                <rect key="frame" x="190" y="290.66666666666669" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="saveAddress:" destination="NYw-uG-psZ" eventType="touchUpInside" id="R8F-sQ-TBP"/>
@@ -2244,11 +2244,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30g-da-NIS">
-                                <rect key="frame" x="134" y="274.66666666666669" width="146" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Use Current Location"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFN-MG-w2u">
                                 <rect key="frame" x="376" y="135" width="30" height="29"/>
                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
@@ -2285,12 +2280,11 @@
                             <constraint firstItem="WHS-WS-824" firstAttribute="trailing" secondItem="NSz-rd-p9z" secondAttribute="trailing" constant="8" id="BD8-t8-w1H"/>
                             <constraint firstItem="JkG-tY-Ugn" firstAttribute="leading" secondItem="WHS-WS-824" secondAttribute="leading" constant="8" id="BgV-ZB-ahU"/>
                             <constraint firstItem="G2O-Rm-x1Q" firstAttribute="centerY" secondItem="xna-9x-NEp" secondAttribute="centerY" id="Ldz-Nd-uG1"/>
+                            <constraint firstItem="PaF-bB-UyF" firstAttribute="top" secondItem="JkG-tY-Ugn" secondAttribute="bottom" constant="32" id="M0t-sw-d3u"/>
                             <constraint firstItem="skm-De-KXT" firstAttribute="top" secondItem="6vH-6Q-pog" secondAttribute="bottom" constant="4" id="M9o-YQ-he6"/>
-                            <constraint firstItem="30g-da-NIS" firstAttribute="top" secondItem="JkG-tY-Ugn" secondAttribute="bottom" constant="16" id="Mdw-Lv-0Oc"/>
                             <constraint firstItem="dc0-yb-K9g" firstAttribute="leading" secondItem="a2F-ZM-KqV" secondAttribute="leading" id="NYg-cZ-g2V"/>
                             <constraint firstItem="skm-De-KXT" firstAttribute="top" secondItem="uFN-MG-w2u" secondAttribute="bottom" constant="8" id="S88-99-sZg"/>
                             <constraint firstItem="gFh-1P-ZlY" firstAttribute="centerX" secondItem="oLA-6p-5Qi" secondAttribute="centerX" id="UGr-bx-Mmh"/>
-                            <constraint firstItem="PaF-bB-UyF" firstAttribute="top" secondItem="30g-da-NIS" secondAttribute="bottom" constant="32" id="UHp-T2-dCF"/>
                             <constraint firstItem="xna-9x-NEp" firstAttribute="top" secondItem="skm-De-KXT" secondAttribute="bottom" constant="8" id="Yil-3w-tpI"/>
                             <constraint firstItem="xna-9x-NEp" firstAttribute="leading" secondItem="WHS-WS-824" secondAttribute="leading" constant="8" id="ZBb-wO-hux"/>
                             <constraint firstItem="PaF-bB-UyF" firstAttribute="centerX" secondItem="oLA-6p-5Qi" secondAttribute="centerX" id="aqV-Py-nPc"/>
@@ -2299,7 +2293,6 @@
                             <constraint firstItem="JkG-tY-Ugn" firstAttribute="top" secondItem="xna-9x-NEp" secondAttribute="bottom" constant="4" id="hzi-Kg-jqP"/>
                             <constraint firstItem="NSz-rd-p9z" firstAttribute="centerY" secondItem="JkG-tY-Ugn" secondAttribute="centerY" id="i9M-au-O3P"/>
                             <constraint firstItem="a2F-ZM-KqV" firstAttribute="bottom" secondItem="JkG-tY-Ugn" secondAttribute="bottom" id="ipN-Tw-6bD"/>
-                            <constraint firstItem="30g-da-NIS" firstAttribute="centerX" secondItem="oLA-6p-5Qi" secondAttribute="centerX" id="jWg-tW-9Py"/>
                             <constraint firstItem="WHS-WS-824" firstAttribute="trailing" secondItem="skm-De-KXT" secondAttribute="trailing" constant="8" id="jwW-Ea-aBJ"/>
                             <constraint firstItem="NSz-rd-p9z" firstAttribute="leading" secondItem="a2F-ZM-KqV" secondAttribute="trailing" constant="8" id="kbC-0e-CfI"/>
                             <constraint firstItem="G2O-Rm-x1Q" firstAttribute="leading" secondItem="NSz-rd-p9z" secondAttribute="leading" id="nnN-cy-jUT"/>
@@ -2849,10 +2842,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="RHe-L4-IUD"/>
         <segue reference="fZv-Vr-KZp"/>
-        <segue reference="7Am-r7-zXQ"/>
+        <segue reference="kWx-5d-f1X"/>
         <segue reference="7MY-CE-1jT"/>
         <segue reference="dgC-6z-aIX"/>
-        <segue reference="7wb-vX-DZx"/>
+        <segue reference="JrQ-Sz-hlR"/>
         <segue reference="EnH-nx-c8p"/>
         <segue reference="tjC-Zo-ayP"/>
     </inferredMetricsTieBreakers>

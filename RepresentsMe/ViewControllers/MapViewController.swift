@@ -34,6 +34,7 @@ class MapViewController: UIViewController {
         case map        // The sandbox mode
         case event      // The mode for selecting a location for an Event
         case settings   // The mode for selecting user's home location in settings
+        case createAccount
 
         func title() -> String {
             switch self {
@@ -43,6 +44,8 @@ class MapViewController: UIViewController {
                 return "Event"
             case .settings:
                 return "Settings"
+            case .createAccount:
+                return "Create Account"
             }
         }
     }
@@ -433,7 +436,12 @@ extension MapViewController: LocationInfoDelegate {
             performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
                          sender: self)
             break
-        case .event, .settings:
+        case .createAccount:
+            delegate?.didSelectLocation(location: self.annotation!.coordinate,
+                                        address: address)
+            self.dismiss(animated: true, completion: nil)
+            break
+        default:
             // Selected a location for the Event, send location to the delegate
             // and dismiss
             // OR Selected a location for changing user's home address in settings,
