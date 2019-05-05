@@ -277,13 +277,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-iC-oeO">
-                                <rect key="frame" x="0.0" y="64" width="414" height="144"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="144"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="ogt-Hp-hKB"/>
                                 </constraints>
                             </mapView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cxU-Qv-kIJ">
-                                <rect key="frame" x="132" y="104" width="150" height="150"/>
+                                <rect key="frame" x="132" y="60" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Upf-uZ-uMd"/>
                                     <constraint firstAttribute="height" constant="150" id="j5n-Jw-ALG"/>
@@ -489,13 +489,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33Z-Aa-XWP">
-                                <rect key="frame" x="16" y="86" width="382" height="24"/>
+                                <rect key="frame" x="16" y="42" width="382" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-4C-tLE">
-                                <rect key="frame" x="16" y="118" width="382" height="569"/>
+                                <rect key="frame" x="16" y="74" width="382" height="662"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1114,7 +1114,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="j93-xL-khW">
-                                <rect key="frame" x="0.0" y="120" width="414" height="567"/>
+                                <rect key="frame" x="0.0" y="76" width="414" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="153" id="fYP-9H-zhh" customClass="EventCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -1191,7 +1191,7 @@
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="PTZ-dg-p0b">
-                                <rect key="frame" x="0.0" y="64" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
@@ -1210,7 +1210,8 @@
                     <navigationItem key="navigationItem" title="Home Events" id="VMj-x0-7e5">
                         <barButtonItem key="leftBarButtonItem" id="gfQ-Nc-0us">
                             <connections>
-                                <segue destination="VsM-WN-Ve9" kind="presentation" id="adt-4q-Sl0"/>
+                                <action selector="myEventsButtonTapped:" destination="bJG-fH-d8a" id="qSm-FN-CWr"/>
+                                <segue destination="VsM-WN-Ve9" kind="show" identifier="myEventsSegue" id="adt-4q-Sl0"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="faG-7q-37o">
@@ -1223,7 +1224,6 @@
                         <outlet property="eventSearchBar" destination="PTZ-dg-p0b" id="1WW-dh-cqB"/>
                         <outlet property="eventTableView" destination="j93-xL-khW" id="PKL-uY-loS"/>
                         <outlet property="myEventsBarButton" destination="gfQ-Nc-0us" id="PLT-7t-DwR"/>
-                        <outlet property="rsvpedEventsBarButton" destination="gfQ-Nc-0us" id="L18-Jd-Q7s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TdE-fb-ibY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1239,13 +1239,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gEE-cq-WmL">
-                                <rect key="frame" x="0.0" y="64" width="414" height="144"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="144"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="VDK-fC-GGL"/>
                                 </constraints>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-RO-Enc">
-                                <rect key="frame" x="0.0" y="208" width="414" height="300"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="300"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC2-E6-8xR">
                                         <rect key="frame" x="8" y="63.999999999999993" width="398" height="28.666666666666664"/>
@@ -1375,14 +1375,14 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vdf-XQ-iMh">
-                                <rect key="frame" x="132" y="100" width="150" height="150"/>
+                                <rect key="frame" x="132" y="56" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="57J-Y5-qmj"/>
                                     <constraint firstAttribute="height" constant="150" id="w8m-I3-k4m"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntz-hN-dZs" customClass="ToolbarView" customModule="RepresentsMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="669" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="718" width="414" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNp-ks-qYO">
                                         <rect key="frame" x="294" y="17.666666666666629" width="30" height="29"/>
@@ -1458,21 +1458,21 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1b3-4g-GkD">
-                                <rect key="frame" x="225" y="214" width="50" height="50"/>
+                                <rect key="frame" x="225" y="170" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Lip-5N-QK8"/>
                                     <constraint firstAttribute="width" constant="50" id="THu-Cw-5dj"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OWNER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f06-MX-y8b">
-                                <rect key="frame" x="225" y="252" width="50" height="12"/>
+                                <rect key="frame" x="225" y="208" width="50" height="12"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dnC-NP-8TV" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
-                                <rect key="frame" x="244.33333333333337" y="214" width="50" height="50"/>
+                                <rect key="frame" x="244.33333333333337" y="170" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="cLj-3i-MLQ"/>
@@ -1486,7 +1486,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pDt-Z9-fha">
-                                <rect key="frame" x="4" y="564" width="406" height="51"/>
+                                <rect key="frame" x="4" y="520" width="406" height="51"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="hSf-fo-gDR"/>
@@ -1532,7 +1532,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1X-jl-Kh4">
-                                <rect key="frame" x="0.0" y="508" width="414" height="52"/>
+                                <rect key="frame" x="0.0" y="464" width="414" height="52"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THG-wA-r7b">
                                         <rect key="frame" x="76" y="8" width="118" height="21"/>
@@ -1816,10 +1816,10 @@
             </objects>
             <point key="canvasLocation" x="2015" y="913"/>
         </scene>
-        <!--View Controller-->
+        <!--My Events View Controller-->
         <scene sceneID="tqn-8P-jQ8">
             <objects>
-                <viewController id="VsM-WN-Ve9" sceneMemberID="viewController">
+                <viewController id="VsM-WN-Ve9" customClass="MyEventsViewController" customModule="RepresentsMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vxy-X8-oIx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1830,9 +1830,13 @@
                                     <segment title="RSVPed"/>
                                     <segment title="My Events"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlChanged:" destination="LNP-gx-bHe" eventType="valueChanged" id="841-Ni-HgI"/>
+                                    <action selector="segmentedControlValueChanged:" destination="VsM-WN-Ve9" eventType="valueChanged" id="hbP-LK-aQV"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JnG-HP-HAf">
-                                <rect key="frame" x="0.0" y="104" width="414" height="632"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="631"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="153" id="2lZ-df-d7w" customClass="EventCell" customModule="RepresentsMe" customModuleProvider="target">
@@ -1903,12 +1907,13 @@
                                             <outlet property="eventImageView" destination="CS3-Gd-1QX" id="dwp-EL-qCj"/>
                                             <outlet property="loadingIndicator" destination="Q1w-Ui-Ul1" id="ssq-Wy-gUb"/>
                                             <outlet property="nameLabel" destination="gYL-nv-Q71" id="06C-lo-loM"/>
+                                            <segue destination="egU-99-xc4" kind="show" identifier="eventDetailsSegue" id="r3z-R4-qh7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="B1O-J0-8J8">
-                                <rect key="frame" x="0.0" y="48" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="49" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
@@ -1922,13 +1927,19 @@
                             <constraint firstItem="B1O-J0-8J8" firstAttribute="trailing" secondItem="XOZ-51-HcX" secondAttribute="trailing" id="XT4-fp-PMZ"/>
                             <constraint firstItem="JnG-HP-HAf" firstAttribute="trailing" secondItem="XOZ-51-HcX" secondAttribute="trailing" id="hhj-K8-Eiz"/>
                             <constraint firstItem="lP5-np-MGz" firstAttribute="leading" secondItem="XOZ-51-HcX" secondAttribute="leading" id="jdu-3F-cFc"/>
-                            <constraint firstItem="B1O-J0-8J8" firstAttribute="top" secondItem="lP5-np-MGz" secondAttribute="bottom" id="qs0-38-Eqa"/>
+                            <constraint firstItem="B1O-J0-8J8" firstAttribute="top" secondItem="lP5-np-MGz" secondAttribute="bottom" constant="1" id="qs0-38-Eqa"/>
                             <constraint firstItem="lP5-np-MGz" firstAttribute="top" secondItem="XOZ-51-HcX" secondAttribute="top" id="tGm-w6-yc6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XOZ-51-HcX"/>
                     </view>
+                    <connections>
+                        <outlet property="eventsSearchBar" destination="B1O-J0-8J8" id="D0X-b0-yYg"/>
+                        <outlet property="eventsTableView" destination="JnG-HP-HAf" id="0xQ-0l-LdN"/>
+                        <outlet property="segmentedControl" destination="lP5-np-MGz" id="kMd-yp-DxX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuD-4L-VWM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="LNP-gx-bHe" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2013.0434782608697" y="-1259.5108695652175"/>
         </scene>
@@ -2966,7 +2977,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="Yh7-ve-cIi"/>
         <segue reference="7Am-r7-zXQ"/>
-        <segue reference="ZBP-Ht-VVI"/>
+        <segue reference="r3z-R4-qh7"/>
+        <segue reference="uZM-VQ-zNw"/>
         <segue reference="JrQ-Sz-hlR"/>
         <segue reference="VAu-dC-44h"/>
         <segue reference="tjC-Zo-ayP"/>

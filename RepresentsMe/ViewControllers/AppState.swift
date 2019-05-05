@@ -23,6 +23,7 @@ protocol EventsListener {
     func appStateReceivedHomeEvents(events:[Event])
     func appStateReceivedOfficialEvents(events:[Event])
     func appStateReceivedUserEvents(events:[Event])
+    func appStateReceivedRSVPedEvents(events:[Event])
 }
 
 /// Manages the Officials for the app.
@@ -71,6 +72,9 @@ class AppState {
     /// The Events for the user's home address
     static var homeEvents:[Event] = []
 
+    /// The Events the user has RSVPed to
+    static var rsvpedEvents:[Event] = []
+
     /// The Events for an Official
     static var officialEvents:[Event] = []
 
@@ -107,7 +111,6 @@ class AppState {
         }
     }
 
-
     /// The Address for Officials in sandboxOfficials
     static var sandboxAddress:Address? {
         didSet {
@@ -137,6 +140,9 @@ class AppState {
 
     /// The listeners for a User's Event changes
     private static var userEventsListeners: [EventsListener] = []
+
+    /// The listeners for the User's Event changes
+    private static var rsvpedEventsListeners: [EventsListener] = []
     
     /// The listeners for sandbox address changes
     private static var sandboxAddressListeners:[OfficialsListener] = []
@@ -236,6 +242,27 @@ class AppState {
             userEvents.removeAll()
         }
     }
+
+    /// Adds a listener for changes in a User's RSVPed Events
+    ///
+    /// - Parameter listener:   the EventsListener to add
+    static func addRSVPedEventsListener(_ listener: EventsListener) {
+        rsvpedEventsListeners.append(listener)
+    }
+
+    /// Removes a listener for changes in a User's RSVPed Events
+    ///
+    /// - Parameter listener:   the EventsListener to remove
+    static func removeRSVPedEventsListener(_ listener: EventsListener) {
+        if let index = find(listener: listener, in: rsvpedEventsListeners) {
+            rsvpedEventsListeners.remove(at: index)
+        }
+
+        if rsvpedEventsListeners.count == 0 {
+            rsvpedEvents.removeAll()
+        }
+    }
+
 
     static func addEvent(_ event: Event) {
         AppState.homeEvents.append(event)
