@@ -40,6 +40,7 @@ class EventCreateViewController: UIViewController,
     var selectedLocation: CLLocationCoordinate2D?   // The selected location
     var selectedAddress: Address?                   // The selected address
     var delegate:EventListDelegate?                 // The delegate to update
+    var previousOffset:CGPoint?
 
 
     // MARK: - Outlets
@@ -74,7 +75,7 @@ class EventCreateViewController: UIViewController,
         selectedLocationLabel.addGestureRecognizer(tapGestureRecognizer)
 
         let otherTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
-//        scrollView.addGestureRecognizer(otherTapGesture)
+        scrollView.addGestureRecognizer(otherTapGesture)
 
         importEventBarButton.image = UIImage.fontAwesomeIcon(
             name: .fileUpload,
@@ -107,17 +108,32 @@ class EventCreateViewController: UIViewController,
     }
 
     @objc func keyboardWillShow(notification:Notification) {
+        self.previousOffset = scrollView.contentOffset
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             bottomSpaceConstraint.constant = keyboardSize.height + 8
-//            if descriptionTextView.isFirstResponder {
+            if descriptionTextView.isFirstResponder {
                 let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height + keyboardSize.height - scrollView.bounds.size.height)
                 scrollView.setContentOffset(bottomOffset, animated: true)
-//            }
+            }
         }
     }
 
     @objc func keyboardWillHide(notification:Notification) {
-        bottomSpaceConstraint.constant = 8
+        if let keyboardSize =
+            (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
+                if let _ = self.previousOffset {
+                    self.scrollView.contentOffset = self.previousOffset!
+                } else {
+                    let bottomOffset = CGPoint(x:0, y: self.scrollView.contentSize.height - keyboardSize.height - self.scrollView.bounds.size.height )
+                    self.scrollView.contentOffset = bottomOffset
+                }
+            }) { (finished) in
+                self.bottomSpaceConstraint.constant = 8.0
+            }
+        }
+
     }
 
     // MARK: - Actions
@@ -125,7 +141,7 @@ class EventCreateViewController: UIViewController,
     /// If successfully saves, segues back a view controller
     @IBAction func saveTapped(_ sender: Any) {
         // Ensure selected attributes are valid
-        let description = ""            // TODO: fill in
+        guard let description = descriptionTextView.text else {return}
         guard let official = selectedOfficial else {return}
         guard let location = selectedLocation else {return}
         guard let startDate = selectedStartDate else {return}
@@ -175,11 +191,15 @@ class EventCreateViewController: UIViewController,
     }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
-        removePlaceholderText()
+        self.scrollView.isScrollEnabled = false
+        if descriptionTextView.textColor == UIColor.lightGray {
+            removePlaceholderText()
+        }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        if descriptionTextView.textColor == UIColor.lightGray {
+        self.scrollView.isScrollEnabled = true
+        if descriptionTextView.text.isEmpty {
             showPlaceholderText()
         }
     }
@@ -438,5 +458,9 @@ class EventCreateViewController: UIViewController,
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         self.resignFirstResponder()
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        self.view.endEditing(true)
     }
 }
