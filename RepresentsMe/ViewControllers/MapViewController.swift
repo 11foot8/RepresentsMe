@@ -38,7 +38,7 @@ class MapViewController: UIViewController {
         func title() -> String {
             switch self {
             case .map:
-                return "Sanbox"
+                return "Sandbox"
             case .event:
                 return "Event"
             case .settings:

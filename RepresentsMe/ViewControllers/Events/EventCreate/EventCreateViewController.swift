@@ -28,7 +28,9 @@ class EventCreateViewController: UIViewController,
                                  OfficialSelectionDelegate,
                                  LocationSelectionDelegate,
                                  DatePopoverViewControllerDelegate,
-                                 EventImportListener {
+                                 EventImportListener,
+                                 UITextViewDelegate,
+                                 UIScrollViewDelegate{
 
     // MARK: - Properties
     var event: Event?                               // The Event if editing
@@ -38,6 +40,7 @@ class EventCreateViewController: UIViewController,
     var selectedLocation: CLLocationCoordinate2D?   // The selected location
     var selectedAddress: Address?                   // The selected address
     var delegate:EventListDelegate?                 // The delegate to update
+
 
     // MARK: - Outlets
     @IBOutlet weak var eventOfficialCardView: OfficialCardView!
@@ -49,6 +52,9 @@ class EventCreateViewController: UIViewController,
     @IBOutlet weak var selectedEndDateLabel: UILabel!
     @IBOutlet weak var selectedLocationLabel: UILabel!
     @IBOutlet weak var importEventBarButton: UIBarButtonItem!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var bottomSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet var scrollView: UIScrollView!
 
     // MARK: - Lifecycle
     /// Sets up the view for the Event if editing an Event
@@ -67,15 +73,51 @@ class EventCreateViewController: UIViewController,
             target: self, action: #selector(handleTap))
         selectedLocationLabel.addGestureRecognizer(tapGestureRecognizer)
 
+        let otherTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
+//        scrollView.addGestureRecognizer(otherTapGesture)
+
         importEventBarButton.image = UIImage.fontAwesomeIcon(
             name: .fileUpload,
             style: .solid,
             textColor: .blue,
             size: CGSize(width: 24, height: 24))
+
+        descriptionTextView.layer.cornerRadius = 4.0
+        descriptionTextView.layer.borderWidth = 0.5
+        descriptionTextView.layer.borderColor = UIColor.darkGray.cgColor
+        descriptionTextView.clipsToBounds = true
+
+        descriptionTextView.delegate = self
+        scrollView.delegate = self
+
+        showPlaceholderText()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+
     }
     
     @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
         openMapView()
+    }
+
+    @objc func scrollViewTapped(_ gestureRecognizer: UIGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
+    @objc func keyboardWillShow(notification:Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            bottomSpaceConstraint.constant = keyboardSize.height + 8
+//            if descriptionTextView.isFirstResponder {
+                let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height + keyboardSize.height - scrollView.bounds.size.height)
+                scrollView.setContentOffset(bottomOffset, animated: true)
+//            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification:Notification) {
+        bottomSpaceConstraint.constant = 8
     }
 
     // MARK: - Actions
@@ -132,11 +174,31 @@ class EventCreateViewController: UIViewController,
         openMapView()
     }
 
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        removePlaceholderText()
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if descriptionTextView.textColor == UIColor.lightGray {
+            showPlaceholderText()
+        }
+    }
+
     func openMapView() {
         if selectedLocation != nil {
             performSegue(withIdentifier: CREATE_MAP_POPOVER_SEGUE,
                          sender: self)
         }
+    }
+
+    func showPlaceholderText() {
+        descriptionTextView.text = "Description"
+        descriptionTextView.textColor = UIColor.lightGray
+    }
+
+    func removePlaceholderText() {
+        descriptionTextView.text = nil
+        descriptionTextView.textColor = UIColor.black
     }
 
     /// Prepare for segues to select the Official, location, and date
@@ -375,5 +437,6 @@ class EventCreateViewController: UIViewController,
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        self.resignFirstResponder()
     }
 }
