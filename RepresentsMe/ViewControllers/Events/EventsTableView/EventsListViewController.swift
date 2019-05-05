@@ -27,7 +27,8 @@ class EventsListViewController: UIViewController {
 
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var eventSearchBar: UISearchBar!
-    
+    @IBOutlet weak var myEventsBarButton: UIBarButtonItem!
+
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
 
@@ -38,6 +39,12 @@ class EventsListViewController: UIViewController {
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        myEventsBarButton.image = UIImage.fontAwesomeIcon(name: .idCardAlt,
+                                                          style: .solid,
+                                                          textColor: .blue,
+                                                          size: CGSize(width: 24, height: 24))
+        
         
         // Set table view delegate
         self.tableViewDelegate = EventsTableViewDelegate()
