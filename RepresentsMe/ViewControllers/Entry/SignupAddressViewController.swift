@@ -7,21 +7,25 @@
 //
 
 import UIKit
+import MapKit
 
 // SignupAddressViewController -> StatePopoverViewController
 let POPOVER_SEGUE_IDENTIFIER = "SignupPickerPopoverSegue"
 
+let CREATE_ACCOUNT_SELECT_LOCATION_SEGUE = "CreateAccountSelectLocationSegue"
+
 /// The view controller to have the user select an address and create their
 /// account.
 class SignupAddressViewController: UIViewController,
-                                   StatePopoverViewControllerDelegate {
-
+                                   StatePopoverViewControllerDelegate,
+LocationSelectionDelegate {
     // MARK: - Properties
     
     var email:String?
     var password:String?
     var displayName:String?
     var pickerData:[String] = []
+    var previousVC:UIViewController?
 
     // MARK: - Outlets
     @IBOutlet weak var streetAddressTextField: UITextField!
@@ -57,7 +61,15 @@ class SignupAddressViewController: UIViewController,
     @IBAction func cancelTouchUp(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    
+
+    func didSelectLocation(location: CLLocationCoordinate2D, address: Address) {
+        self.streetAddressTextField.text = address.streetAddress
+        self.cityTextField.text = address.city
+        self.stateButton.setTitle(address.state, for: .normal)
+        self.zipcodeTextField.text = address.zipcode
+    }
+
+
     func attemptCreateUser() {
         // Check all values are valid
         // TODO: Check that email is in correct form
@@ -106,6 +118,8 @@ class SignupAddressViewController: UIViewController,
                     storyBoard.instantiateViewController(
                         withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
                 if let appDel = UIApplication.shared.delegate as? AppDelegate {
+                    self.dismiss(animated: false, completion: nil)
+                    self.previousVC?.dismiss(animated: false, completion: nil)
                     appDel.window?.rootViewController = tabBarViewController
                 }
             }
@@ -125,6 +139,10 @@ class SignupAddressViewController: UIViewController,
             destination.setup(in: self.view)
             destination.delegate = self
             destination.selectedValue = stateButton.title(for: .normal)
+        } else if segue.identifier == CREATE_ACCOUNT_SELECT_LOCATION_SEGUE {
+            let destination = segue.destination as! MapViewController
+            destination.reachType = .createAccount
+            destination.delegate = self
         }
     }
 

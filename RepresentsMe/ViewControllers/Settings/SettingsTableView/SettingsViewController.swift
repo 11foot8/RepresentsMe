@@ -42,10 +42,10 @@ class SettingsViewController: UIViewController,
     /// Sets up views when the view appears
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.frame = CGRect(x: tableView.frame.origin.x,
+        /*tableView.frame = CGRect(x: tableView.frame.origin.x,
                                  y: tableView.frame.origin.y,
                                  width: tableView.frame.size.width,
-                                 height: tableView.contentSize.height)
+                                 height: tableView.contentSize.height)*/
         tableView.reloadData()
         setupCurrentUserInfo()
     }
@@ -59,7 +59,7 @@ class SettingsViewController: UIViewController,
             addressLabel.text = "\(address.addressLine1())\n\(address.addressLine2())"
         }
         profilePictureImageView.image = AppState.profilePicture
-        profilePictureImageView.layer.cornerRadius = 50.0
+        profilePictureImageView.layer.cornerRadius = 44.0
         profilePictureImageView.layer.borderWidth = 0.5
         profilePictureImageView.layer.borderColor = UIColor.black.cgColor
         profilePictureImageView.clipsToBounds = true

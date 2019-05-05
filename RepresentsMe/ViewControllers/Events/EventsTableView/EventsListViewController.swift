@@ -25,23 +25,26 @@ class EventsListViewController: UIViewController {
         case user       // Mode for shwoing Events for a selected User
     }
 
-    @IBOutlet weak var eventTableView: UITableView!
-    @IBOutlet weak var eventSearchBar: UISearchBar!
-    
+    // MARK: - Properties
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
 
     var reachType:ReachType = .event
     var official:Official?
-    
+
+    // MARK: - Outlets
+    @IBOutlet weak var eventTableView: UITableView!
+    @IBOutlet weak var eventSearchBar: UISearchBar!
+
+    // MARK: - Lifecycle
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Set table view delegate
         self.tableViewDelegate = EventsTableViewDelegate()
         self.eventTableView.delegate = self.tableViewDelegate
-        
+
         // Set table view data source
         self.tableViewDataSource = EventsTableViewDataSource(
             for: self.eventTableView, with: reachType)
@@ -59,15 +62,19 @@ class EventsListViewController: UIViewController {
             self.navigationItem.title = "User's Events"
             break
         }
-        
+
+        // Hide keyboard when tableView interacted with
+        eventTableView.keyboardDismissMode = .interactive
+        eventTableView.keyboardDismissMode = .onDrag
+
         // Set search bar delegate
         self.eventSearchBar.delegate = self.tableViewDataSource
     }
-    
+
     /// Update the events being displayed if the user's address changed
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // Ensure the navigation bar is shown
         self.navigationController?.setNavigationBarHidden(false,
                                                           animated: false)
@@ -92,6 +99,9 @@ class EventsListViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
+
+    // MARK: - Methods
     /// Segue to the event details view or the events create view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EVENT_SEGUE_IDENTIFIER,
@@ -103,5 +113,13 @@ class EventsListViewController: UIViewController {
             let destination = segue.destination as? EventCreateViewController {
             destination.delegate = self.tableViewDataSource
         }
+    }
+
+
+
+
+    /// Hide keyboard when tapping out of SearchBar
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
