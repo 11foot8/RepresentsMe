@@ -139,6 +139,7 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     // TODO: handle error
                 } else {
                     self.delegate?.eventDeletedDelegate(event: event!)
+                    AppState.removeRSVP(event: event!)
                     self.navigationController?.popViewController(animated: true)
                 }
             })
