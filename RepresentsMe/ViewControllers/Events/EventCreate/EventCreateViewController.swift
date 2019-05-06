@@ -339,6 +339,8 @@ class EventCreateViewController: UIViewController,
         self.set(official: event.official)
 
         // Set the location
+        selectedLocation = event.location
+        selectedAddress = event.address
         selectedLocationLabel.text = event.address.description
         
         // Set the date
