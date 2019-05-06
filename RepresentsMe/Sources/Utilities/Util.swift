@@ -24,7 +24,7 @@ class Util {
     static var rememberMeEnabled:Bool {
         get {
             let enabled = UserDefaults.standard.object(forKey: REMEMBER_ME_KEY) as? Bool
-            return enabled ?? false
+            return enabled ?? true
         }
         set(enabled) {
             UserDefaults.standard.set(enabled, forKey: REMEMBER_ME_KEY)
