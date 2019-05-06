@@ -19,16 +19,23 @@ class EventsTableViewDataSource: NSObject,
                                  EventListDelegate,
                                  EventsListener {
 
+    enum ReachType {
+        case event      // Mode for showing the user's home Events
+        case official   // Mode for showing Events for a selected Official
+        case user       // Mode for shwoing Events for a selected User
+        case rsvp       // Mode for shwoing the user's RSVPs
+    }
+
     var tableView:UITableView   // The table view this is the data source for
     var events:[Event] = []     // The Events being displayed
     var filter:String = ""      // The current filter for Events
-    var reachType:EventsListViewController.ReachType = .event
+    var reachType:EventsTableViewDataSource.ReachType = .event
 
     /// Initializes this data source for the given table view
     ///
     /// - Parameter for:    the table view this is the data source for
     /// - Parameter with:   the reach type of the table view, which determines the source
-    init(for tableView:UITableView, with reachType:EventsListViewController.ReachType) {
+    init(for tableView:UITableView, with reachType:EventsTableViewDataSource.ReachType) {
         self.tableView = tableView
         super.init()
 
@@ -43,43 +50,49 @@ class EventsTableViewDataSource: NSObject,
         case .user:
             AppState.addUserEventsListener(self)
             break
+        case .rsvp:
+            AppState.addRSVPedEventsListener(self)
         }
-        self.updateTableData()
+        updateTableData()
     }
     
     /// Updates the Events table when new Events are received
     func appStateReceivedHomeEvents(events: [Event]) {
-        self.updateTableData()
+        updateTableData()
     }
 
     /// Updates the Events table when new Events are received
     func appStateReceivedOfficialEvents(events: [Event]) {
-        self.updateTableData()
+        updateTableData()
     }
 
     func appStateReceivedUserEvents(events: [Event]) {
-        self.updateTableData()
+        updateTableData()
+    }
+
+    func appStateReceivedRSVPedEvents(events: [Event]) {
+        updateTableData()
     }
     
     /// Filters and updates the table data after an Event is created
     func eventCreatedDelegate(event: Event) {
-        self.updateTableData()
+        updateTableData()
     }
     
     /// Filters and updates the table data after an Event is updated
     func eventUpdatedDelegate(event: Event) {
-        self.updateTableData()
+        updateTableData()
     }
     
     /// Updates the table data after an Event is deleted
     func eventDeletedDelegate(event: Event) {
-        self.updateTableData()
+        updateTableData()
     }
     
     /// When the search text changes, filter the events
     func searchBar(_ searchBar:UISearchBar, textDidChange:String) {
-        self.filter = textDidChange
-        self.updateTableData()
+        filter = textDidChange
+        updateTableData()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -89,7 +102,7 @@ class EventsTableViewDataSource: NSObject,
     /// The number of rows is the number of events
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
+        return events.count
     }
     
     /// Sets the event for the given cell
@@ -99,7 +112,7 @@ class EventsTableViewDataSource: NSObject,
             withIdentifier: EVENT_CELL_IDENTIFIER,
             for: indexPath) as! EventCell
         
-        cell.event = self.events[indexPath.row]
+        cell.event = events[indexPath.row]
         return cell
     }
     
@@ -116,10 +129,12 @@ class EventsTableViewDataSource: NSObject,
         case .user:
             eventList = AppState.userEvents
             break
+        case .rsvp:
+            eventList = AppState.rsvpedEvents
         }
 
         // Filter the Events
-        self.events = eventList.filter {(event) in
+        events = eventList.filter {(event) in
             event.matches(self.filter)
         }
         

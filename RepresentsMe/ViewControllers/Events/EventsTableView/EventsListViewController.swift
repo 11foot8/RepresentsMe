@@ -14,6 +14,8 @@ import Firebase
 let EVENT_SEGUE_IDENTIFIER = "eventSegueIdentifier"
 // EventsListViewController -> EventCreateViewController
 let CREATE_EVENT_SEGUE_IDENTIFIER = "createEventSegue"
+let MY_EVENTS_SEGUE_IDENTIFIER = "myEventsSegue"
+
 
 /// The view controller to show the list of Events for the user's home Address
 class EventsListViewController: UIViewController {
@@ -26,29 +28,51 @@ class EventsListViewController: UIViewController {
     }
 
     // MARK: - Properties
+    @IBOutlet weak var eventTableView: UITableView!
+    @IBOutlet weak var eventSearchBar: UISearchBar!
+    @IBOutlet weak var myEventsBarButton: UIBarButtonItem!
+
     var tableViewDelegate:EventsTableViewDelegate!
     var tableViewDataSource:EventsTableViewDataSource!
 
     var reachType:ReachType = .event
     var official:Official?
-
-    // MARK: - Outlets
-    @IBOutlet weak var eventTableView: UITableView!
-    @IBOutlet weak var eventSearchBar: UISearchBar!
-
+    var displayName:String?
+    
     // MARK: - Lifecycle
     /// Set the table view delegate and datasource
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set table view delegate
-        self.tableViewDelegate = EventsTableViewDelegate()
-        self.eventTableView.delegate = self.tableViewDelegate
+        if self.navigationController?.topViewController == self && self.navigationController?.viewControllers.count ?? 0 > 1 {
+            self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem;
+        } else {
+            myEventsBarButton.image = UIImage.fontAwesomeIcon(name: .idCardAlt,
+                                                              style: .solid,
+                                                              textColor: .blue,
+                                                              size: CGSize(width: 24, height: 24))
+        }
 
+        // Set table view delegate
+        tableViewDelegate = EventsTableViewDelegate()
+        eventTableView.delegate = tableViewDelegate
+        
         // Set table view data source
-        self.tableViewDataSource = EventsTableViewDataSource(
-            for: self.eventTableView, with: reachType)
-        self.eventTableView.dataSource = self.tableViewDataSource
+        switch reachType {
+        case .event:
+            tableViewDataSource = EventsTableViewDataSource(
+                for: eventTableView, with: .event)
+            break
+        case .official:
+            tableViewDataSource = EventsTableViewDataSource(
+                for: eventTableView, with: .official)
+            break
+        case .user:
+            tableViewDataSource = EventsTableViewDataSource(
+                for: eventTableView, with: .user)
+            break
+        }
+        eventTableView.dataSource = tableViewDataSource
 
         // Set navigation bar title
         switch reachType {
@@ -59,7 +83,11 @@ class EventsListViewController: UIViewController {
             self.navigationItem.title = "\(official!.name)'s Events"
             break
         case .user:
-            self.navigationItem.title = "User's Events"
+            if let displayName = displayName {
+                self.navigationItem.title = "\(displayName)'s Events"
+            } else {
+                self.navigationItem.title = ""
+            }
             break
         }
 
@@ -99,9 +127,10 @@ class EventsListViewController: UIViewController {
         }
     }
 
-    // MARK: - Actions
+    @IBAction func myEventsButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: MY_EVENTS_SEGUE_IDENTIFIER, sender: self)
+    }
 
-    // MARK: - Methods
     /// Segue to the event details view or the events create view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == EVENT_SEGUE_IDENTIFIER,
@@ -112,11 +141,10 @@ class EventsListViewController: UIViewController {
         } else if segue.identifier == CREATE_EVENT_SEGUE_IDENTIFIER,
             let destination = segue.destination as? EventCreateViewController {
             destination.delegate = self.tableViewDataSource
+        } else if segue.identifier == MY_EVENTS_SEGUE_IDENTIFIER {
+            AppState.userId = UsersDatabase.currentUserUID
         }
     }
-
-
-
 
     /// Hide keyboard when tapping out of SearchBar
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

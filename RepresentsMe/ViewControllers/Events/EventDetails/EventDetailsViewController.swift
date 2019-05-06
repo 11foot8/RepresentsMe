@@ -18,6 +18,8 @@ let EDIT_EVENT_SEGUE = "editEventSegue"
 // EventDetailsViewController -> OfficialDetailsViewController
 let EVENT_OFFICIAL_SEGUE = "eventOfficialSegue"
 // EventDetailsViewController -> EventsListViewController
+let OWNER_EVENTS_SEGUE = "ownerEventsSegue"
+// EventDetailsViewController -> EventsListViewController
 let USER_EVENTS_SEGUE = "userEventsSegue"
 
 let EVENT_MAP_VIEW_POPOVER_SEGUE = "eventMapViewPopoverSegue"
@@ -32,16 +34,24 @@ let NOT_GOING_RED = UIColor.red
 
 /// The view controller to display the details for an Event and allow the
 /// owner of the Event to edit and delete the Event.
-class EventDetailsViewController: UIViewController {
+class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     // MARK: - Properties
     var toolbarOut: CGPoint = CGPoint()
     var toolbarIn: CGPoint = CGPoint()
 
-    var event:Event?                              // The Event to display
+    var event:Event? {                            // The Event to display
+        didSet {
+            if let userID = event?.owner {
+                UsersDatabase.getDisplayName(for: userID) { (displayName, error) in
+                    self.eventOwnerDisplayName = displayName
+                }
+            }
+        }
+    }
+    var eventOwnerDisplayName:String?
     var delegate:EventListDelegate?               // The delegate to update
     var currentUserEventAttendee:EventAttendee?   // The EventAttendee instance
                                                   // for the current user
-
     let eventStore = EKEventStore()
 
     // MARK: - Outlets
@@ -68,27 +78,40 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var notGoingButtonLabel: UILabel!
     @IBOutlet weak var toolbarView: UIView!
 
+    @IBOutlet weak var goingNumberLabel: UILabel!
+    @IBOutlet weak var maybeNumberLabel: UILabel!
+
+    @IBOutlet weak var attendeeCollectionView: UICollectionView!
+
+    var attendeeDataGoing:Bool = true
+
+    var goingAttendees:[EventAttendee] = []
+    var maybeAttendees:[EventAttendee] = []
+
     // MARK: - Lifecycle
     /// Sets up the view for the Event to display
     override func viewWillAppear(_ animated: Bool) {
         if event != nil {
             // Set the labels
-            self.setLabels()
+            setLabels()
 
             // Set the photos
-            self.setPhotos()
+            setPhotos()
 
             // Center the map on the location for the event
-            self.setupMapView()
+            setupMapView()
 
             // Set up toolbar
-            self.setupToolbar()
+            setupToolbar()
 
             // Set whether or not the user can edit the event
-            self.setEditable()
+            setEditable()
 
             // Set user's RSVP status
-            self.setRSVPButtons()
+            setRSVPButtons()
+
+            // Set the event attendees
+            setEventAttendees()
         }
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -194,7 +217,7 @@ class EventDetailsViewController: UIViewController {
             loadingIndicator.color = .black
             loadingIndicator.startAnimating()
             ownerLabel.isHidden = true
-            UsersDatabase.getUserProfilePicture(uid: event.owner) { (image, error) in
+            UsersDatabase.getUserProfilePicture(uid: event.owner) { (uid, image, error) in
                 if (error != nil) {
                     self.eventOwnerImageView.isHidden = true
                 } else {
@@ -216,7 +239,7 @@ class EventDetailsViewController: UIViewController {
     }
 
     @objc private func didTapEventOwnerImage() {
-        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
+        performSegue(withIdentifier: OWNER_EVENTS_SEGUE, sender: self)
     }
 
     /// Prepare to segue to edit the Event
@@ -228,10 +251,29 @@ class EventDetailsViewController: UIViewController {
         } else if segue.identifier == EVENT_OFFICIAL_SEGUE {
             let destination = segue.destination as! OfficialDetailsViewController
             destination.official = event?.official
+        } else if segue.identifier == OWNER_EVENTS_SEGUE {
+            let destination = segue.destination as! EventsListViewController
+            destination.displayName = eventOwnerDisplayName
+            destination.reachType = .user
+            AppState.userId = event!.owner
         } else if segue.identifier == USER_EVENTS_SEGUE {
             let destination = segue.destination as! EventsListViewController
             destination.reachType = .user
-            AppState.userId = event!.owner
+
+            if let rowNum = attendeeCollectionView.indexPathsForSelectedItems?.first?.row {
+                if attendeeDataGoing {
+                    AppState.userId = goingAttendees[rowNum].userID
+                } else {
+                    AppState.userId = maybeAttendees[rowNum].userID
+                }
+
+                destination.displayName = nil
+                UsersDatabase.getDisplayName(for: AppState.userId!) { (displayName, error) in
+                    if let displayName = displayName {
+                        destination.navigationItem.title = "\(displayName)'s Events"
+                    }
+                }
+            }
         } else if segue.identifier == EVENT_MAP_VIEW_POPOVER_SEGUE,
             let destination = segue.destination as? LocationMapViewPopoverViewController {
             destination.setPinInfo(location: event!.location, title: event!.name, subtitle: event!.address.addressLine1())
@@ -280,13 +322,18 @@ class EventDetailsViewController: UIViewController {
                     }
 
                     self.setNoResponseLayout()
+
+                    AppState.removeRSVP(event: self.event)
                 })
+
+                reloadAttendeeViews(status: .notGoing)
 
                 currentUserEventAttendee = nil
 
                 return
             } else {
                 attendee.setStatus(to: status)
+                reloadAttendeeViews(status: status)
             }
         } else {
             // If user has not yet RSVPed, add self
@@ -298,6 +345,9 @@ class EventDetailsViewController: UIViewController {
                                     }
 
                                     self.currentUserEventAttendee = attendee
+                                    self.reloadAttendeeViews(status: status)
+
+                                    AppState.addRSVP(event: self.event)
                 })
             } else {
                 self.alert(title: "Error",
@@ -397,9 +447,29 @@ class EventDetailsViewController: UIViewController {
             }
 
             if let event = event {
+                DispatchQueue.main.async {
+                    self.attendeeCollectionView.reloadData()
+                }
+
+                self.goingAttendees = event.attendees.filter({ (attendee) -> Bool in
+                    return attendee.status == .going
+                }).sorted(by: { (attendee1, attendee2) -> Bool in
+                    attendee1.userID < attendee2.userID
+                })
+
+                self.goingNumberLabel.text = String(self.goingAttendees.count)
+
+                self.maybeAttendees = event.attendees.filter({ (attendee) -> Bool in
+                    return attendee.status == .maybe
+                }).sorted(by: { (attendee1, attendee2) -> Bool in
+                    attendee1.userID < attendee2.userID
+                })
+
+                self.maybeNumberLabel.text = String(self.maybeAttendees.count)
+
                 for attendee in event.attendees {
-                    self.currentUserEventAttendee = attendee
                     if attendee.userID == UsersDatabase.currentUserUID! {
+                        self.currentUserEventAttendee = attendee
                         switch attendee.status {
                         case .going:
                             self.setRSVPGoingLayout()
@@ -419,6 +489,82 @@ class EventDetailsViewController: UIViewController {
                 self.enableRSVPButtons()
             }
         })
+    }
+
+    private func reloadAttendeeViews(status: RSVPType) {
+        self.maybeAttendees.removeAll { (attendee) -> Bool in
+            return attendee.userID == self.currentUserEventAttendee?.userID
+        }
+
+        self.goingAttendees.removeAll { (attendee) -> Bool in
+            return attendee.userID == self.currentUserEventAttendee?.userID
+        }
+
+        if (status == .going) {
+            self.goingAttendees.append(self.currentUserEventAttendee!)
+        } else if (status == .maybe) {
+            self.maybeAttendees.append(self.currentUserEventAttendee!)
+        }
+
+        self.goingNumberLabel.text = String(self.goingAttendees.count)
+        self.maybeNumberLabel.text = String(self.maybeAttendees.count)
+
+        DispatchQueue.main.async {
+            self.attendeeCollectionView.reloadData()
+        }
+    }
+
+    private func setEventAttendees() {
+        attendeeCollectionView.delegate = self
+        attendeeCollectionView.dataSource = self
+        attendeeCollectionView.isHidden = true
+
+        goingNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goingNumberLabelTapped)))
+
+        maybeNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maybeNumberLabelTapped)))
+    }
+
+    @objc func goingNumberLabelTapped() {
+        attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && attendeeDataGoing
+        attendeeDataGoing = true
+        attendeeCollectionView.reloadData()
+    }
+
+    @objc func maybeNumberLabelTapped() {
+        attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && !attendeeDataGoing
+        attendeeDataGoing = false
+        attendeeCollectionView.reloadData()
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if !attendeeCollectionView.isHidden {
+            if attendeeDataGoing {
+                return goingAttendees.count
+            } else {
+                return maybeAttendees.count
+            }
+        } else {
+            return 0
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let attendeeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "attendeeCell", for: indexPath) as! AttendeeCell
+
+        if attendeeDataGoing {
+            attendeeCell.attendee = goingAttendees[indexPath.row]
+        } else {
+            attendeeCell.attendee = maybeAttendees[indexPath.row]
+        }
+
+        attendeeCell.profileImageView.layer.cornerRadius = 5.0
+
+        return attendeeCell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: USER_EVENTS_SEGUE, sender: self)
     }
 
     func setNoResponseLayout() {
