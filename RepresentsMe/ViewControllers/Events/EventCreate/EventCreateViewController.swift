@@ -37,8 +37,13 @@ class EventCreateViewController: UIViewController,
     var selectedStartDate: Date?                    // The selected start date
     var selectedEndDate: Date?                      // The selected end date
     var selectedOfficial: Official?                 // The selected Official
-    var selectedLocation: CLLocationCoordinate2D?   // The selected location
+    var selectedLocation: CLLocationCoordinate2D? { // The selected location
+        didSet {
+            locationMapButton.setTitleColor(.blue, for: .normal)
+        }
+    }
     var selectedAddress: Address?                   // The selected address
+    var eventDescription: String?                    // The Event description
     var delegate:EventListDelegate?                 // The delegate to update
     var previousOffset:CGPoint?
 
@@ -56,6 +61,7 @@ class EventCreateViewController: UIViewController,
     @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var bottomSpaceConstraint: NSLayoutConstraint!
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet weak var locationMapButton: UIButton!
 
     // MARK: - Lifecycle
     /// Sets up the view for the Event if editing an Event
@@ -65,10 +71,11 @@ class EventCreateViewController: UIViewController,
         // If editing an Event, setup for that Event
         if let event = self.event {
             self.setupFor(event: event)
+        } else {
+            showPlaceholderText()
+            set(startDate: Date.init())
+            set(endDate: Date.init())
         }
-
-        self.set(startDate: Date.init())
-        self.set(endDate: Date.init())
         
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(handleTap))
@@ -91,12 +98,8 @@ class EventCreateViewController: UIViewController,
         descriptionTextView.delegate = self
         scrollView.delegate = self
 
-        showPlaceholderText()
-
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-
-
     }
     
     @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
@@ -155,7 +158,8 @@ class EventCreateViewController: UIViewController,
                              official: official,
                              location: location,
                              startDate: startDate,
-                             endDate: endDate)
+                             endDate: endDate,
+                             description: description)
         } else {
             // Not editing an Event, create a new Event
             self.createEvent(name: name,
@@ -340,6 +344,9 @@ class EventCreateViewController: UIViewController,
         // Set the date
         self.set(startDate: event.startDate)
         self.set(endDate: event.endDate)
+
+        // Set the description
+        self.set(description: event.description)
     }
 
     /// Sets the Official for the Event
@@ -385,6 +392,15 @@ class EventCreateViewController: UIViewController,
         formatter.dateFormat = "MMMM d, YYYY h:mm a"
         selectedEndDateLabel.text = formatter.string(from: endDate)
     }
+
+    /// Sets the description for the Event
+    ///
+    /// - Parameter description:    the String description for the Event
+    private func set(description:String) {
+        eventDescription = description
+        descriptionTextView.text = description
+        descriptionTextView.textColor = .black
+    }
     
     /// Updates the Event.
     /// Segues back a view controller if successfully updates
@@ -398,13 +414,15 @@ class EventCreateViewController: UIViewController,
                              official:Official,
                              location:CLLocationCoordinate2D,
                              startDate:Date,
-                             endDate:Date) {
+                             endDate:Date,
+                             description:String) {
         if let event = event {
             event.name = name
             event.location = location
             event.startDate = startDate
             event.endDate = endDate
             event.official = official
+            event.description = description
     
             // Save the changes
             event.save {(event, error) in

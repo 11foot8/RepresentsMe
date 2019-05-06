@@ -82,6 +82,9 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var maybeNumberLabel: UILabel!
 
     @IBOutlet weak var attendeeCollectionView: UICollectionView!
+    @IBOutlet weak var closeCollectionViewButton: UIButton!
+
+    @IBOutlet weak var descriptionTextView: UITextView!
 
     var attendeeDataGoing:Bool = true
 
@@ -126,14 +129,24 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
     /// Delete the Event and segue back to the Events list
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        self.event?.delete(completion: {(event, error) in
-            if (error != nil) {
-                // TODO: handle error
-            } else {
-                self.delegate?.eventDeletedDelegate(event: event!)
-                self.navigationController?.popViewController(animated: true)
-            }
-        })
+        let alert = UIAlertController(
+            title: "Are you sure?",
+            message: "Deleting an event cannot be undone.",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: {(alert: UIAlertAction!) in
+            self.event?.delete(completion: {(event, error) in
+                if (error != nil) {
+                    // TODO: handle error
+                } else {
+                    self.delegate?.eventDeletedDelegate(event: event!)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        // Present the alert
+        self.present(alert, animated: true)
     }
 
     @objc func didTapToolbar(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -161,6 +174,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     
             // Set the location
             self.eventLocationLabel.text = event.address.description
+
+            descriptionTextView.text = event.description
         }
     }
 
@@ -372,8 +387,8 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     func saveEvent(eventStore:EKEventStore, title:String, startDate:NSDate, endDate:NSDate) {
         let event = EKEvent(eventStore:eventStore)
         event.title = title
-        if let officialName = self.event?.official?.name {
-            event.notes = "Event with \(officialName). Exported from RepresentsMe."
+        if let officialName = self.event?.official?.name, let description = self.event?.description {
+            event.notes = "\(description)\n\nEvent with \(officialName). Exported from RepresentsMe."
         }
         event.location = self.event?.address.description
         event.startDate = startDate as Date?
@@ -518,24 +533,35 @@ class EventDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         attendeeCollectionView.delegate = self
         attendeeCollectionView.dataSource = self
         attendeeCollectionView.isHidden = true
+        closeCollectionViewButton.isHidden = true
 
         goingNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goingNumberLabelTapped)))
 
         maybeNumberLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maybeNumberLabelTapped)))
+
+        attendeeCollectionView.layer.borderColor = UIColor.black.cgColor
+        attendeeCollectionView.layer.borderWidth = 0.5
+        attendeeCollectionView.layer.cornerRadius = 3.0
     }
 
     @objc func goingNumberLabelTapped() {
+        closeCollectionViewButton.isHidden = !attendeeCollectionView.isHidden && attendeeDataGoing
         attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && attendeeDataGoing
         attendeeDataGoing = true
         attendeeCollectionView.reloadData()
     }
 
     @objc func maybeNumberLabelTapped() {
+        closeCollectionViewButton.isHidden = !attendeeCollectionView.isHidden && !attendeeDataGoing
         attendeeCollectionView.isHidden = !attendeeCollectionView.isHidden && !attendeeDataGoing
         attendeeDataGoing = false
         attendeeCollectionView.reloadData()
     }
 
+    @IBAction func closeCollectionViewButtonTapped(_ sender: Any) {
+        attendeeCollectionView.isHidden = true
+        closeCollectionViewButton.isHidden = true
+    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if !attendeeCollectionView.isHidden {
