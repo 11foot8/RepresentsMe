@@ -12,7 +12,7 @@ location within the fifty states that make up the United States. Additionally,
 the app facilitates organizing events related to any official as users can
 create events that their fellow users can attend.
 
-## Walkthorugh
+## Walkthrough
 ![RepresentsMe Walkthrough](https://github.com/11foot8/RepresentsMe/blob/master/walkthrough.gif)
 
 ## Functionality
