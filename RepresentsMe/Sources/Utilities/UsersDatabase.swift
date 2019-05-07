@@ -95,15 +95,14 @@ class UsersDatabase {
         let imageRef = imagesRef.child(uid)
         imageRef.getData(maxSize: MAX_PROF_PIC_SIZE) { (data, error) in
             if let _ = error {
-                completion(uid, nil, error)
+                return completion(uid, DEFAULT_NOT_LOADED, nil)
             } else {
-                let image = UIImage(data: data!)
-
-                if let image = image {
+                if let image = UIImage(data: data!) {
                     AppState.imageCache.setObject(image, forKey: NSString(string: uid))
+                    return completion(uid, image, nil)
+                } else {
+                    return completion(uid, DEFAULT_NOT_LOADED, nil)
                 }
-
-                completion(uid, image, nil)
             }
         }
     }
