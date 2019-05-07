@@ -12,6 +12,9 @@ location within the fifty states that make up the United States. Additionally,
 the app facilitates organizing events related to any official as users can
 create events that their fellow users can attend.
 
+## Walkthorugh
+![RepresentsMe Walkthrough](https://github.com/11foot8/RepresentsMe/blob/master/walkthrough.gif)
+
 ## Functionality
 
 🎉 The following functionality is completed: 🎉
@@ -24,7 +27,7 @@ create events that their fellow users can attend.
 - [X] Storyboard constraints
 - [X] Tab bar to allow navigation between views
 - [X] Display officials in home screen table
-- [X] Map view to select a location to display the officials of
+- [X] Map view to select a location to display officials
 - [X] Officials details view to show information about a single official
 
 ### Beta
