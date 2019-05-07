@@ -34,11 +34,11 @@ create events that their fellow users can attend.
 - [X] Creating, editing, deleting, and searching events
 
 ### Final
-- [ ] RSVPing for events
-- [ ] Embedding social media feeds to the officials details view
-- [ ] Front-end error checking on the map view
-- [ ] Importing events from the calendar
-- [ ] Exporting events from the calendar
+- [X] RSVPing for events
+- [X] Embedding social media feeds to the officials details view
+- [X] Front-end error checking on the map view
+- [X] Importing events from the calendar
+- [X] Exporting events from the calendar
 
 ## Pods Incorporated
 - [NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)

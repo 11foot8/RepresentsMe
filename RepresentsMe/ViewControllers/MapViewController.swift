@@ -436,11 +436,6 @@ extension MapViewController: LocationInfoDelegate {
             performSegue(withIdentifier: SANDBOX_OFFICIALS_SEGUE_IDENTIFIER,
                          sender: self)
             break
-        case .createAccount:
-            delegate?.didSelectLocation(location: self.annotation!.coordinate,
-                                        address: address)
-            self.dismiss(animated: true, completion: nil)
-            break
         default:
             // Selected a location for the Event, send location to the delegate
             // and dismiss

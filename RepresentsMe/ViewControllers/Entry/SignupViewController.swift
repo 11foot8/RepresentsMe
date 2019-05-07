@@ -62,6 +62,13 @@ class SignupViewController: UIViewController {
         
         // Set the initial state for the validity indicators
         checkFields()
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+
     }
 
     // MARK: - Actions
@@ -96,7 +103,6 @@ class SignupViewController: UIViewController {
             enterAddressViewController.email = emailTextField.text!
             enterAddressViewController.password = passwordTextField.text!
             enterAddressViewController.displayName = displayNameTextField.text!
-            enterAddressViewController.previousVC = self
         }
     }
 

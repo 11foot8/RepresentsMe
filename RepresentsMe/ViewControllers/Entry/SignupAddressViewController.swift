@@ -25,7 +25,6 @@ LocationSelectionDelegate {
     var password:String?
     var displayName:String?
     var pickerData:[String] = []
-    var previousVC:UIViewController?
 
     // MARK: - Outlets
     @IBOutlet weak var streetAddressTextField: UITextField!
@@ -44,6 +43,12 @@ LocationSelectionDelegate {
         stateButton.layer.borderColor = UIColor(white: 0.6, alpha: 0.6).cgColor
         stateButton.layer.cornerRadius = 5.0
         stateButton.layer.borderWidth = 0.5
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
 
     // MARK: - Actions
@@ -119,7 +124,6 @@ LocationSelectionDelegate {
                         withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
                 if let appDel = UIApplication.shared.delegate as? AppDelegate {
                     self.dismiss(animated: false, completion: nil)
-                    self.previousVC?.dismiss(animated: false, completion: nil)
                     appDel.window?.rootViewController = tabBarViewController
                 }
             }
