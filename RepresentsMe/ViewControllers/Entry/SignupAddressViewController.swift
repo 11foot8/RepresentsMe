@@ -25,7 +25,6 @@ LocationSelectionDelegate {
     var password:String?
     var displayName:String?
     var pickerData:[String] = []
-    var previousVC:UIViewController?
 
     // MARK: - Outlets
     @IBOutlet weak var streetAddressTextField: UITextField!
@@ -125,7 +124,6 @@ LocationSelectionDelegate {
                         withIdentifier: TAB_BAR_VIEW_CONTROLLER_NAME)
                 if let appDel = UIApplication.shared.delegate as? AppDelegate {
                     self.dismiss(animated: false, completion: nil)
-                    self.previousVC?.dismiss(animated: false, completion: nil)
                     appDel.window?.rootViewController = tabBarViewController
                 }
             }

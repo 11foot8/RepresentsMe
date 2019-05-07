@@ -103,7 +103,6 @@ class SignupViewController: UIViewController {
             enterAddressViewController.email = emailTextField.text!
             enterAddressViewController.password = passwordTextField.text!
             enterAddressViewController.displayName = displayNameTextField.text!
-            enterAddressViewController.previousVC = self
         }
     }
 
