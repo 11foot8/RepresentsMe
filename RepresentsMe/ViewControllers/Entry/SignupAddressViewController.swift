@@ -44,6 +44,12 @@ LocationSelectionDelegate {
         stateButton.layer.borderColor = UIColor(white: 0.6, alpha: 0.6).cgColor
         stateButton.layer.cornerRadius = 5.0
         stateButton.layer.borderWidth = 0.5
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
 
     // MARK: - Actions
